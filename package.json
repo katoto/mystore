@@ -1,0 +1,22 @@
+{
+  "name": "mystore",
+  "version": "1.0.0",
+  "description": "[![Build Status](https://travis-ci.org/sampsonli/mystore.svg?branch=master)](https://travis-ci.org/sampsonli/mystore)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sampsonli/mystore.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sampsonli/mystore/issues"
+  },
+  "homepage": "https://github.com/sampsonli/mystore#readme",
+  "engines": {
+    "node": ">=8.1.4"
+  }
+}
