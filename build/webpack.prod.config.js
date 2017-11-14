@@ -53,7 +53,14 @@ module.exports = Object.assign({}, base, {
                             fallback: 'style-loader',
                             use: 'css-loader'
                         })
-                    }
+                    },
+                    extractCSS: true,
+                    preserveWhitespace: false,
+                    postcss: [
+                        require('autoprefixer')({
+                            browsers: ['last 3 versions']
+                        })
+                    ]
                 }
             },
             {

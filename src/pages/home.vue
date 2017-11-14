@@ -3,52 +3,55 @@
         <header class="header l-box-center">微信商城</header>
         <section class="content">
 
-            <ul class="wrap">
-                <li class="item">
+            <div class="outer">
+                <ul class="wrap">
+                    <li class="item">
 
-                    1
+                        1
 
-                </li>
+                    </li>
 
-                <li class="item">
+                    <li class="item">
 
-                    2
+                        2
 
-                </li>
+                    </li>
 
-                <li class="item">
+                    <li class="item">
 
-                    3
+                        3
 
-                </li>
+                    </li>
 
-                <li class="item">
+                    <li class="item">
 
-                    4
+                        4
 
-                </li>
+                    </li>
 
-                <li class="item">
+                    <li class="item">
 
-                    5
+                        5
 
-                </li>
+                    </li>
 
-                <li class="item">
+                    <li class="item">
 
-                    6
+                        6
 
-                </li>
+                    </li>
 
-                <li class="item">
+                    <li class="item">
 
-                    7
+                        7
 
-                </li>
+                    </li>
 
 
 
-            </ul>
+                </ul>
+            </div>
+
 
         </section>
         <footer class="footer"></footer>
@@ -61,12 +64,20 @@
         font-size: .5rem;
         color: white;
     }
+    .content{
+        overflow: auto;
+    }
+    .outer{
+        display: flex;
+        flex-direction: row;
+    }
     .wrap {
-        overflow: hidden;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: row;
     }
     .item {
         width: 2.5rem;
-        float: left;
         height: 2.5rem;
         border: 1px solid red;
         box-sizing: border-box;

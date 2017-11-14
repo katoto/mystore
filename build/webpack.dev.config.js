@@ -33,7 +33,16 @@ module.exports = Object.assign({}, base, {
             {
                 test: /\.vue$/,
                 // exclude: /node_modules/,
-                use: 'vue-loader'
+                loader: 'vue-loader',
+                options: {
+                    extractCSS: false,
+                    preserveWhitespace: false,
+                    postcss: [
+                        require('autoprefixer')({
+                            browsers: ['last 3 versions']
+                        })
+                    ]
+                }
             },
             {
                 test: /\.css$/,
