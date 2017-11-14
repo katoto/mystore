@@ -9,7 +9,10 @@ before_install:
   -in id_rsa.enc -out ~/.ssh/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
 - echo -e "Host 172.96.210.200\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+script:
 after_success:
-- tar -zcf mystore.tar.gz *    # 打包并压缩代码
+  - npm run build
+after_success:
+- tar -zcf mystore.tar.gz dist/*    # 打包并压缩代码
 - scp mystore.tar.gz static@172.96.210.200:~/tmp/  # 复制到生产服务器上
 - ssh static@172.96.210.200 'rm -rf www/* && tar -zxf tmp/mystore.tar.gz -C www/'   # 解压
