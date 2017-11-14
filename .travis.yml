@@ -10,7 +10,6 @@ before_install:
 - chmod 600 ~/.ssh/id_rsa
 - echo -e "Host 172.96.210.200\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 script:
-after_success:
   - npm run build
 after_success:
 - tar -zcf mystore.tar.gz dist/*    # 打包并压缩代码
