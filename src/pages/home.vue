@@ -3,99 +3,97 @@
         <header class="header l-box-center">微信商城</header>
         <section class="content">
 
-            <div class="outer">
-                <ul class="wrap">
-                    <li class="item">
 
-                        1 hello
+            <ul class="wrap">
+                <li class="item">
 
-                    </li>
+                    1 hello
 
-                    <li class="item">
+                </li>
 
-                        2
+                <li class="item">
 
-                    </li>
+                    2
 
-                    <li class="item">
+                </li>
 
-                        3
+                <li class="item">
 
-                    </li>
+                    3
 
-                    <li class="item">
+                </li>
 
-                        4
+                <li class="item">
 
-                    </li>
+                    4
 
-                    <li class="item">
+                </li>
 
-                        5
+                <li class="item">
 
-                    </li>
+                    5
 
-                    <li class="item">
+                </li>
 
-                        6
+                <li class="item">
 
-                    </li>
+                    6
 
-                    <li class="item">
+                </li>
 
-                        7
+                <li class="item">
 
-                    </li>
-                    <li class="item">
+                    7
 
-                        7
+                </li>
+                <li class="item">
 
-                    </li>
-                    <li class="item">
+                    7
 
-                        7
+                </li>
+                <li class="item">
 
-                    </li>
-                    <li class="item">
+                    7
 
-                        7
+                </li>
+                <li class="item">
 
-                    </li>
-                    <li class="item">
+                    7
 
-                        7
+                </li>
+                <li class="item">
 
-                    </li>
-                    <li class="item">
+                    7
 
-                        7
+                </li>
+                <li class="item">
 
-                    </li>
-                    <li class="item">
+                    7
 
-                        7
+                </li>
+                <li class="item">
 
-                    </li>
-                    <li class="item">
+                    7
 
-                        7
+                </li>
+                <li class="item">
 
-                    </li>
-                    <li class="item">
+                    7
 
-                        7
+                </li>
+                <li class="item">
 
-                    </li>
-                    <li class="item">
+                    7
 
-                        7
+                </li>
+                <li class="item">
 
-                    </li>
+                    7
+
+                </li>
 
 
-
-                </ul>
-            </div>
+            </ul>
 
 
         </section>
@@ -103,34 +101,30 @@
     </section>
 </template>
 <style scoped>
-    .header{
+    .header {
         height: 1rem;
         background-color: red;
         font-size: .5rem;
         color: white;
     }
-    .content{
+
+    .content {
         overflow: auto;
     }
-    .outer{
-        display: flex;
-        flex-direction: row;
-    }
+
+    .
     .wrap {
-        flex-shrink: 0;
-        display: flex;
-        flex-direction: row;
+        overflow: hidden;
     }
+
     .item {
         width: 2.5rem;
         height: 2.5rem;
         border: 1px solid red;
         box-sizing: border-box;
-
+        float: left;
 
     }
-
-
 
 
 </style>
