@@ -7,7 +7,7 @@
             <ul class="wrap">
                 <li class="item">
 
-                    1 hello
+                    1
 
                 </li>
 
@@ -48,47 +48,58 @@
                 </li>
                 <li class="item">
 
-                    7
+                    8
 
                 </li>
                 <li class="item">
 
-                    7
+                    9
 
                 </li>
                 <li class="item">
 
-                    7
+                    10
 
                 </li>
                 <li class="item">
 
-                    7
+                    11
 
                 </li>
                 <li class="item">
 
-                    7
+                    12
 
                 </li>
                 <li class="item">
 
-                    7
+                    13
 
                 </li>
                 <li class="item">
 
-                    7
+                    14
 
                 </li>
                 <li class="item">
 
-                    7
+                    15
 
                 </li>
                 <li class="item">
 
-                    7
+                    16
+
+                </li>
+
+                <li class="item">
+
+                    17
+
+                </li>
+                <li class="item">
+
+                    18
 
                 </li>
 
@@ -110,6 +121,7 @@
 
     .content {
         overflow: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .
