@@ -3,7 +3,7 @@
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import List from '~pages/list'
+import Home from '~pages/home.vue'
 // const Test = () => import('./pages/Test.vue' /* webpackChunkName: "test" */)
 
 Vue.use(VueRouter)
@@ -12,12 +12,12 @@ export default new VueRouter({
     mode: 'hash',
     routes: [
         {
-            path: '/bhlist',
-            component: List
+            path: '/home',
+            component: Home
         },
         {
             path: '*',
-            redirect: '/bhlist'
+            redirect: '/home'
         }
 
     ]
