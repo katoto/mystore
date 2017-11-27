@@ -7,7 +7,7 @@
     "test": "",
     "build": "cross-env NODE_ENV=production webpack --config build/webpack.prod.config.js --hide-modules",
     "prod": "cross-env NODE_ENV=production node ./server.js",
-    "dev": "node ./server.js",
+    "dev": "cross-env NODE_ENV=development node ./server.js",
     "clean": "rimraf dist/*",
     "precommit": "lint-staged",
     "lint": "eslint --ext .js,.vue src",

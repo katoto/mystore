@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" class="l-full">
         <router-view></router-view>
     </div>
 </template>
@@ -39,5 +39,6 @@
         padding: 0;
         list-style: none;
     }
+
 
 </style>
