@@ -118,22 +118,22 @@
 
     }
 	 .tabs {
-	 	height: .8rem;
+	 	height: 80rem;
 		/*border: 1px solid red;*/
 		flex-direction: row;
 		background: white;
 	 }
 	 .tabs-item {
-	 	font-size: .3rem;
-		width: 1.2rem;
+	 	font-size: 30rem;
+		width: 120rem;
 		justify-content: center;
 		align-items: center;
 	 }
 	 .tabs-item-c {
 		justify-content: center;
 		align-items: center;
-	 	height: .75rem;
-		border-bottom: .1rem solid red;
+	 	height: 75rem;
+		border-bottom: 10rem solid red;
 	 }
 	 .tab-cur {
 	 	border-bottom: 2px solid red;
@@ -141,7 +141,7 @@
 
 	 .search {
 	 	background: white;
-		height: 2rem;
+		height: 200rem;
 		justify-content: center;
 		align-items: center;
 		/*margin: .2rem 0;*/
@@ -151,12 +151,12 @@
 		flex-direction: row;
 		background-color: #EEEEEE;
 		border: 1px solid darkgray;
-		border-radius: .3rem;
-		height: .6rem;
-		width: 6rem;
+		border-radius: 30rem;
+		height: 60rem;
+		width: 600rem;
 	}
 	.search-icon-w {
-		width: .8rem;
+		width: 80rem;
 		/*border-right: 1px solid red;*/
 		justify-content: center;
 		align-items: center;
@@ -164,15 +164,15 @@
 
 	}
 	.search-icon{
-		width: .4rem;
-		height: .4rem;
+		width: 40rem;
+		height: 40rem;
 		background-image: url(~assets/icon-search.png);
 		background-repeat: no-repeat;
 		background-size: contain;
 	}
 	.search-input {
 		flex: 1;
-		font-size: .3rem;
+		font-size: 30rem;
 		/*justify-content: center;*/
 		align-items: center;
 	}
@@ -182,16 +182,16 @@
 		align-items: center;
 		border: 1px solid red;
 		background: white;
-		height: 4rem;
+		height: 400rem;
 	}
 	.recomend-wrap {
 		border: 1px solid red;
-		height: 2.5rem;
-		width: 6rem;
+		height: 250rem;
+		width: 600rem;
 	}
 	.rqzj{
-		margin: .2rem 0;
-		padding: 0 .2rem;
+		margin: 20rem 0;
+		padding: 0 20rem;
 		flex-direction: column;
 		background: white;
 	}
@@ -205,35 +205,35 @@
 	}
 	.rqzj-h-l,.rqzj-h-r {
 		border: 1px solid blue;
-		line-height: .4rem;
-		font-size: .4rem;
+		line-height: 40rem;
+		font-size: 40rem;
 	}
 	.rqzj-content {
-		height: 2rem;
+		height: 200rem;
 		border: 1px solid blue;
 		flex-direction: row;
 		justify-content: space-around;
 		align-items: center;
 	}
 	.rqzj-c-item {
-		height: 1rem;
-		width: 1rem;
+		height: 100rem;
+		width: 100rem;
 		border: 1px solid red;
 	}
 	.rqzj-footer {
 
 	}
 	.rqzj-f-txt{
-		line-height: .4rem;
-		font-size: .3rem;
+		line-height: 40rem;
+		font-size: 30rem;
 	}
 
 
 
 	/*------------------------*/
 	.rmss{
-		margin: .2rem 0;
-		padding: 0 .2rem;
+		margin: 20rem 0;
+		padding: 0 20rem;
 		flex-direction: column;
 		background: white;
 	}
@@ -247,8 +247,8 @@
 	}
 	.rmss-h-l,.rmss-h-r {
 		border: 1px solid blue;
-		line-height: .4rem;
-		font-size: .4rem;
+		line-height: 40rem;
+		font-size: 40rem;
 	}
 	.rmss-desc {
 		flex-direction: row;
@@ -256,31 +256,31 @@
 	}
 	.rmss-desc-l {
 		flex: 1;
-		padding: .2rem;
+		padding: 20rem;
 	}
 	.rmss-desc-l-txt{
-		font-size: .3rem;
+		font-size: 30rem;
 	}
 	.rmss-desc-r {
 		width:　1rem;
 		border: 1px solid red;
 	}
 	.rmss-desc-r-txt {
-		font-size: .3rem;
+		font-size: 30rem;
 	}
 	.rmss-tj {
 		flex-direction: row;
 		justify-content: space-between;
 	}
 	.rmss-tj-l, .rmss-tj-r{
-		font-size: .3rem;
+		font-size: 30rem;
 	}
 	.rmss-content {
 		border: 1px solid blue;
-		height: 2rem;
+		height: 200rem;
 		/*width: 6rem;*/
 		/*margin: 0 auto;*/
-		border-radius: .1rem;
+		border-radius: 10rem;
 		flex-direction: column;
 	}
 	.rmss-c-h{
@@ -288,11 +288,11 @@
 		justify-content: space-between;
 	}
 	.rmss-c-h-l-txt, .rmss-c-h-r-txt {
-		font-size: .3rem;
+		font-size: 30rem;
 	}
 	.rmss-c-c {
 		flex-direction: row;
-		height: 2rem;
+		height: 200rem;
 		border: 1px solid red;
 	}
 	.rmss-c-c-l, .rmss-c-c-r{
@@ -304,12 +304,12 @@
 		justify-content: flex-end;
 	}
 	.rmss-c-c-l-txt, .rmss-c-c-r-txt {
-		font-size: .3rem;
+		font-size: 30rem;
 	}
 	.rmss-c-c-img {
 		display: inline-block;
-		width: .5rem;
-		height: .5rem;
+		width: 50rem;
+		height: 50rem;
 		border: 1px solid red;
 	}
 	.rmss-c-c-c {
@@ -319,7 +319,7 @@
 		border: 1px solid green;
 	}
 	.rmss-c-c-c-txt {
-		font-size: .3rem;
+		font-size: 30rem;
 	}
 
 </style>
