@@ -157,53 +157,49 @@
 
 
 
-		  <div class="rmss">
-		  	 <div class="rmss-header">
-		  		  <div class="rmss-h-l"><span class="rmss-h-l-txt">热门赛事</span></div>
-		  		  <div class="rmss-h-r"><span class="rmss-h-l-txt">换一换</span></div>
+		  <div class="jxtd">
+		  	 <div class="jxtd-header">
+		  		  <div class="jxtd-h-l"><span class="jxtd-h-l-txt">精选推单</span></div>
+		  		  <div class="jxtd-h-r"><span class="jxtd-h-l-txt">更多</span></div>
 		  	 </div>
-		  	 <div class="rmss-desc">
-		  		  <div class="rmss-desc-l"><span class="rmss-desc-l-txt">桥村太少， 啊呀可笑啊呀可笑GFCvs弥勒佛而（复人就是账单）</span></div>
-		  		  <div class="rmss-desc-r"><div class="rmss-desc-r-c"><span class="rmss-desc-r-txt">付费</span></div></div>
+		  	 <div class="jxtd-list">
+				 <div class="jxtd-list-item">
+					 <div class="jxtd-list-item-c">
+						 <div class="jxtd-list-item-c-l"><span class="jxtd-list-item-c-l-txt">桥村太少， 啊呀可笑啊呀可笑GFCvs弥勒佛而（复人就是账单）</span></div>
+	 		  		    <div class="jxtd-list-item-c-r"><span class="jxtd-list-item-c-r-txt">付费</span></div>
+					 </div>
+					 <div class="jxtd-list-item-f">
+						 <div class="jxtd-list-item-f-l"><span class="jxtd-list-item-f-l-txt">厉害了我的国 近10中9 3连红</span></div>
+ 						 <div class="jxtd-list-item-f-r"><span class="jxtd-list-item-f-r-txt">399 21：33</span></div>
+					 </div>
 
+			    </div>
+
+				 <div class="jxtd-list-item">
+					 <div class="jxtd-list-item-c">
+						 <div class="jxtd-list-item-c-l"><span class="jxtd-list-item-c-l-txt">桥村太少， 啊呀可笑啊呀可笑GFCvs弥勒佛而（复人就是账单）</span></div>
+	 		  		    <div class="jxtd-list-item-c-r"><span class="jxtd-list-item-c-r-txt">付费</span></div>
+					 </div>
+					 <div class="jxtd-list-item-f">
+						 <div class="jxtd-list-item-f-l"><span class="jxtd-list-item-f-l-txt">厉害了我的国 近10中9 3连红</span></div>
+ 						 <div class="jxtd-list-item-f-r"><span class="jxtd-list-item-f-r-txt">399 21：33</span></div>
+					 </div>
+
+			    </div>
+
+				 <div class="jxtd-list-item">
+					 <div class="jxtd-list-item-c">
+						 <div class="jxtd-list-item-c-l"><span class="jxtd-list-item-c-l-txt">桥村太少， 啊呀可笑啊呀可笑GFCvs弥勒佛而（复人就是账单）</span></div>
+	 		  		    <div class="jxtd-list-item-c-r"><span class="jxtd-list-item-c-r-txt">付费</span></div>
+					 </div>
+					 <div class="jxtd-list-item-f">
+						 <div class="jxtd-list-item-f-l"><span class="jxtd-list-item-f-l-txt">厉害了我的国 近10中9 3连红</span></div>
+ 						 <div class="jxtd-list-item-f-r"><span class="jxtd-list-item-f-r-txt">399 21：33</span></div>
+					 </div>
+
+			    </div>
 		  	 </div>
-		  	 <div class="rmss-tj">
-		  		  <div class="rmss-tj-l">
-		  				<span class="rmss-tj-txt">达拉斯妞妞三天胜率66.7近10中9</span>
 
-		  		  </div>
-		  		  <div class="rmss-tj-r">
-		  				<span class="rmss-tj-txt">1205 02:30</span>
-		  		  </div>
-
-		  	 </div>
-
-
-		  	 <div class="rmss-content">
-		  		  <div class="rmss-c-h">
-		  				<div class="rmss-c-h-l">
-		  					 <span class="rmss-c-h-l-txt">11-24 周四 18:00</span>
-
-		  				</div>
-		  				<div class="rmss-c-h-r">
-		  					 <span class="rmss-c-h-r-txt">12位专家解读</span>
-		  				</div>
-		  		  </div>
-		  		  <div class="rmss-c-c">
-		  				<div class="rmss-c-c-l">
-		  					 <span class="rmss-c-c-l-txt">利物浦</span><img src="http://img.m.500.com/esun/avatar/e1/f4/e1f45cc479a511e79a50.jpg?!100.webp&t=1501913902.55"></img>
-		  				</div>
-		  				<div class="rmss-c-c-c">
-		  					 <span class="rmss-c-c-c-txt">金杯赛</span>
-		  				</div>
-
-		  				<div class="rmss-c-c-r">
-		  					 <img src="http://img.m.500.com/esun/avatar/e1/f4/e1f45cc479a511e79a50.jpg?!100.webp&t=1501913902.55"></img><span class="rmss-c-c-r-txt">利物浦</span>
-		  				</div>
-
-		  		  </div>
-
-		  	 </div>
 
 
 		  </div>
@@ -225,6 +221,10 @@
     }
     .tabs {
         height: 80rem;
+		  position: fixed;
+		  top: 0;
+		  left: 0;
+		  right: 0;
         /*border: 1px solid red;*/
         flex-direction: row;
         background-color: white;
@@ -238,13 +238,15 @@
     .tabs-item-c {
         justify-content: center;
         align-items: center;
-        height: 75rem;
-        border-bottom-width: 10rem;
+        height: 76rem;
+        border-bottom-width: 4rem;
         border-bottom-color: red;
+		  border-bottom-style: solid;
     }
 
 
 	 .search {
+	 		margin-top: 80rem;
         background-color: white;
         height: 150rem;
         justify-content: center;
@@ -491,5 +493,69 @@
 		 border-radius: 5rem;
 		 padding: 0 5rem;
     }
+
+
+
+	 .jxtd {
+		 margin: 20px 0;
+ 		 padding: 0 20rem;
+ 		 flex-direction: column;
+ 		 background-color: white;
+	 }
+	 .jxtd-header {
+	 	height: 50rem;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom-width: 2px;
+		border-bottom-color: #DDDDDD;
+		border-bottom-style: solid;
+
+	 }
+	 .jxtd-h-l-txt, .jxtd-h-l-txt{
+	 	font-size: 25rem;
+	 }
+	 .jxtd-list {
+	 	flex-direction: column;
+	 }
+	 .jxtd-list-item {
+	 	flex-direction: column;
+		border-bottom-width: 2px;
+		border-bottom-color: #DDDDDD;
+		border-bottom-style: solid;
+	 }
+	 .jxtd-list-item-c{
+	 	flex-direction: row;
+	 }
+	 .jxtd-list-item-c-r {
+	 	width: 150rem;
+		justify-content: center;
+		align-items: center;
+	 }
+	 .jxtd-list-item-c-l {
+	 	flex: 1;
+		padding: 10rem;
+	 }
+	 .jxtd-list-item-c-l-txt{
+	 	font-size: 30rem;
+
+	 }
+	 .jxtd-list-item-c-r-txt{
+	 	font-size: 25rem;
+		color: white;
+		background-color: red;
+		border-radius: 5px;
+		padding: 0 5px;
+	 }
+    .jxtd-list-item-f {
+    	justify-content: space-between;
+
+    }
+	 .jxtd-list-item-f-l-txt {
+	 	font-size: 25rem;
+	 }
+	 .jxtd-list-item-f-r-txt{
+	 	font-size: 25rem;
+	 }
+
 
 </style>
