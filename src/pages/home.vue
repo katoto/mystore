@@ -31,22 +31,22 @@
 </div>
 </template>
 <script>
-import jxtdItem from "~components/home/jxtd-item.vue";
-import hotRace from "~components/home/hot-race.vue";
-import recomend from "~components/home/recomend.vue";
-import search from "~components/home/search.vue";
-import rqzj from "~components/home/rqzj.vue";
-import tabs from "~components/home/tabs.vue";
+import jxtdItem from '~components/home/jxtd-item.vue'
+import hotRace from '~components/home/hot-race.vue'
+import recomend from '~components/home/recomend.vue'
+import search from '~components/home/search.vue'
+import rqzj from '~components/home/rqzj.vue'
+import tabs from '~components/home/tabs.vue'
 export default {
-  components: {
-    jxtdItem,
-    hotRace,
-    recomend,
-    search,
-    rqzj,
-    tabs
-  }
-};
+    components: {
+        jxtdItem,
+        hotRace,
+        recomend,
+        search,
+        rqzj,
+        tabs
+    }
+}
 </script>
 <style scoped>
 .container,
