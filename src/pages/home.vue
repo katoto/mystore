@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-	<tabs></tabs>
+	<tabs :index="tab"></tabs>
 	<div class="content">
 		<search></search>
 
@@ -45,6 +45,11 @@ export default {
         search,
         rqzj,
         tabs
+    },
+    data () {
+        return {
+            tab: 'ssq'
+        }
     }
 }
 </script>
