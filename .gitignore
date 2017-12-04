@@ -10,3 +10,4 @@ yarn-error.log
 !/log/.gitkeep
 /sh.exe.stackdump
 log/
+.vscode

@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === 'production') {
         publicPath: webpackConfig.output.publicPath
     }))
     app.use(webpackHotMiddleware(compiler, {
-        log: () => {}
+        log: () => { }
     }))
     app.use((req, resp, next) => {
         if (~req.originalUrl.indexOf('/yijia')) {
