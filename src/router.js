@@ -7,6 +7,8 @@ import Home from '~pages/home.vue'
 import expertList from '~pages/expertList.vue'
 // const Test = () => import('./pages/Test.vue' /* webpackChunkName: "test" */)
 
+const Login = () => import('~pages/Login'  /* webpackChunkName: "chunks/Login" */)
+
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -19,6 +21,10 @@ export default new VueRouter({
         {
             path: '/list',
             component: expertList
+        },
+        {
+            path: '/login',
+            component: Login
         },
         {
             path: '*',
