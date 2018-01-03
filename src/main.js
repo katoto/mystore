@@ -9,6 +9,10 @@ import router from './router'
 import { sync } from 'vuex-router-sync'
 import vueTap from 'v-tap'
 
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+Vue.use( ElementUI );
 Vue.use(vueTap)
 const store = storeFactory()
 sync(store, router)
