@@ -1,5 +1,11 @@
 {
   "presets": [
-    ["vue-app"]
-  ]
+    ["vue-app","es2015"]
+  ],
+    "plugins": [["component", [
+        {
+            "libraryName": "element-ui",
+            "style": true
+        }
+    ]]]
 }
