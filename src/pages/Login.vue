@@ -20,29 +20,29 @@
 
 <script>
     export default {
-        data() {
+        data () {
             var checkName = (rule, value, callback) => {
                 if (!value) {
-                    return callback(new Error('用户名不能为空'));
+                    return callback(new Error('用户名不能为空'))
                 }
                 setTimeout(() => {
                     //  处理规则
-                    if( value === '' ){
+                    if (value === '') {
 
                     }
-                    callback();
-                }, 10);
-            };
+                    callback()
+                }, 10)
+            }
             var validatePass = (rule, value, callback) => {
                 if (value === '') {
-                    callback(new Error('请输入密码'));
+                    callback(new Error('请输入密码'))
                 } else {
                     if (this.ruleForm2.checkPass !== '') {
                         //  处理字符等
                     }
                 }
-                callback();
-            };
+                callback()
+            }
             return {
                 ruleForm2: {
                     pass: '',
@@ -56,26 +56,26 @@
                         { validator: checkName, trigger: 'blur' }
                     ]
                 }
-            };
-        },
+            }
+    },
         methods: {
-            submitForm(formName) {
+            submitForm (formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert('submit!');
+                        alert('submit!')
                     } else {
-                        console.log('error submit!!');
-                        return false;
+                        console.log('error submit!!')
+                        return false
                     }
-                });
+                })
             },
-            resetForm(formName) {
-                this.$refs[formName].resetFields();
+            resetForm (formName) {
+                this.$refs[formName].resetFields()
             }
         }
     }
 </script>
-<style>
+<style scoped>
     .el-main {
         color: #333;
         line-height: 60px;

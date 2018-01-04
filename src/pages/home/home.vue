@@ -2,7 +2,7 @@
     <el-container>
         <el-header>系统管理</el-header>
         <el-main>
-            <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tabs v-model="activeName"  @tab-click="handleClick">
                 <el-tab-pane label="系统管理" name="xtManage"></el-tab-pane>
                 <el-tab-pane label="推广员管理" name="tgyManage"></el-tab-pane>
                 <el-tab-pane label="一般运作" name="ybyz"></el-tab-pane>
@@ -16,28 +16,27 @@
 <script>
 
 export default {
-    data() {
+    data () {
         return {
             activeName: 'xtManage'
-        };
+        }
     },
     methods: {
-        handleClick(tab, event) {
-            if( this.activeName ){
-                switch ( this.activeName ){
-                    case 'xtManage':
-                        this.$router.push('/home/xtManage/xtSett')
-                        ;break;
-                    case 'tgyManage':
-                        this.$router.push('/home/tgyManage/tgyChild')
-                        ;break;
-                    case 'ybyz':;break;
-                    case 'htyz':;break;
-                    case 'zjbg':;break;
+        handleClick (tab, event) {
+            if (this.activeName) {
+                switch (this.activeName) {
+                case 'xtManage':
+                    this.$router.push('/home/xtManage/xtSet')
+                    break
+                case 'tgyManage':
+                    this.$router.push('/home/tgyManage/tgyChild')
+                    break
+                case 'ybyz':;break
+                case 'htyz':;break
+                case 'zjbg':;break
                 }
             }
-            console.log( this.activeName )
-            console.log( tab.label );
+            console.log(tab.label)
         }
     }
 }
