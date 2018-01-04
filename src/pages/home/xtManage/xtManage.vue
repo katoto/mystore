@@ -7,7 +7,6 @@
             <el-tab-pane label="用户登录IP记录" name="userIP"></el-tab-pane>
             <el-tab-pane label="后台运作操作记录" name="htRun"></el-tab-pane>
             <el-tab-pane label="系统日志" name="xtLog"></el-tab-pane>
-
             <!-- 暂时不用 -->
             <!--<el-tab-pane label="分享设置" name="htyz"></el-tab-pane>-->
             <!--<el-tab-pane label="增设游戏桌" name="zjbg"></el-tab-pane>-->
