@@ -77,11 +77,11 @@
 </script>
 <style>
     .el-main {
-        background-color: #E9EEF3;
         color: #333;
         line-height: 60px;
-        margin-top: 80px;
         font-size: 14px;
+        max-width: 600px;
+        margin: 80px auto;
     }
     .el-main .loginTitle{
         text-align: center;
