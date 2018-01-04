@@ -3,12 +3,19 @@
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '~pages/home.vue'
 import expertList from '~pages/expertList.vue'
 import detail from '~pages/detail.vue'
 import expert from '~pages/expert.vue'
 // const Test = () => import('./pages/Test.vue' /* webpackChunkName: "test" */)
 const Login = () => import('~pages/Login'  /* webpackChunkName: "chunks/Login" */)
+
+// home  first tab
+import Home from '~pages/home/home.vue'
+const xtManage = () => import('~pages/home/xtManage/xtManage.vue'  /* webpackChunkName: "chunks/home/xtManage/xtManage.vue" */);
+const xtSet = () => import('~pages/home/xtManage/xtSet.vue'  /* webpackChunkName: "chunks/home/xtManage/xtSet.vue" */);
+
+// 2
+const tgyManage = () => import('~pages/home/tgyManage/tgyManage.vue'  /* webpackChunkName: "chunks/home/tgyManage/tgyManage.vue" */);
 
 Vue.use(VueRouter);
 
@@ -17,7 +24,30 @@ export default new VueRouter({
     routes: [
         {
             path: '/home',
-            component: Home
+            component: Home,
+            requiresAuth: true,
+            children: [
+                {
+                    path: 'xtManage',
+                    component: xtManage,
+                    meta: { requireAuth: true },
+                    children: [
+                        {
+                            path: 'xtSet',
+                            component: xtSet
+                        },
+                    ]
+                },
+                {
+                    path: 'tgyManage',
+                    component: tgyManage,
+                    meta: { requireAuth: true },
+                },
+                {
+                    path: '*',
+                    redirect: '/home/xtManage/xtSet'
+                }
+            ]
         },
         {
             path: '/list',
@@ -37,7 +67,7 @@ export default new VueRouter({
         },
         {
             path: '*',
-            redirect: '/home'
+            redirect: '/home/xtManage/xtSet'
         }
 
     ]
