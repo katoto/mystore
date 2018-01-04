@@ -5,6 +5,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '~pages/home.vue'
 import expertList from '~pages/expertList.vue'
+import detail from '~pages/detail.vue'
+import expert from '~pages/expert.vue'
+// const Test = () => import('./pages/Test.vue' /* webpackChunkName: "test" */)
 // const Test = () => import('./pages/Test.vue' /* webpackChunkName: "test" */)
 
 Vue.use(VueRouter)
@@ -21,8 +24,16 @@ export default new VueRouter({
             component: expertList
         },
         {
+            path: '/detail',
+            component: detail
+        },
+        {
+            path: '/expert',
+            component: expert
+        },
+        {
             path: '*',
-            redirect: '/list'
+            redirect: '/home'
         }
 
     ]

@@ -36,6 +36,7 @@
     "axios": "^0.17.1",
     "element-ui": "^2.0.10",
     "es6-promise": "^4.1.1",
+    "sockjs-client": "^1.1.4",
     "v-tap": "^3.0.2",
     "vue": "^2.5.3",
     "vue-router": "^3.0.1",
