@@ -16,28 +16,28 @@
 <script>
 
 export default {
-    data() {
+    data () {
         return {
             activeName: 'xtManage'
-        };
+        }
     },
     methods: {
-        handleClick(tab, event) {
-            if( this.activeName ){
-                switch ( this.activeName ){
-                    case 'xtManage':
-                        this.$router.push('/home/xtManage/xtSett')
-                        ;break;
-                    case 'tgyManage':
-                        this.$router.push('/home/tgyManage/tgyChild')
-                        ;break;
-                    case 'ybyz':;break;
-                    case 'htyz':;break;
-                    case 'zjbg':;break;
+        handleClick (tab, event) {
+            if (this.activeName) {
+                switch (this.activeName) {
+                case 'xtManage':
+                    this.$router.push('/home/xtManage/xtSett')
+                    break
+                case 'tgyManage':
+                    this.$router.push('/home/tgyManage/tgyChild')
+                    break
+                case 'ybyz':;break
+                case 'htyz':;break
+                case 'zjbg':;break
                 }
             }
-            console.log( this.activeName )
-            console.log( tab.label );
+            console.log(this.activeName)
+            console.log(tab.label)
         }
     }
 }

@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        data(){
+        data () {
             return {
                 title: '我是頭部'
             }
@@ -14,7 +14,7 @@
         watch: {},
         methods: {},
         computed: {},
-        mounted(){
+        mounted () {
 
         }
     }
