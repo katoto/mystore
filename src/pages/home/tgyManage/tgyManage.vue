@@ -1,6 +1,7 @@
 <template>
     <div>
-        tgyManage
+        <h2>tgyManage</h2>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -15,7 +16,6 @@
         methods: {},
         computed: {},
         mounted () {
-
         }
     }
 </script>
