@@ -1,7 +1,7 @@
 <template>
-<div id="app" class="l-full">
-	<router-view></router-view>
-</div>
+    <div id="app" class="l-full">
+        <router-view></router-view>
+    </div>
 </template>
 <style>
 .container div {

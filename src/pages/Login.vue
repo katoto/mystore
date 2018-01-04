@@ -53,6 +53,7 @@ export default {
             }
         }
     },
+
     methods: {
         submitForm (formName) {
             this.$refs[formName].validate(valid => {
@@ -70,7 +71,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 .el-main {
   color: #333;
   line-height: 60px;
