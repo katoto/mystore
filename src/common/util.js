@@ -16,13 +16,13 @@ export const platform = (function () {
 })()
 
 export let getCk = function () {
-    if (!localStorage.getItem(src()+'ck') || localStorage.getItem(src()+'ck') === '' || localStorage.getItem(src()+'ck') === 'undefined') {
-        if (getCookie(src()+'ck') && getCookie(src()+'ck') !== '') {
-            return getCookie(src()+'ck')
+    if (!localStorage.getItem(src() + 'ck') || localStorage.getItem(src() + 'ck') === '' || localStorage.getItem(src() + 'ck') === 'undefined') {
+        if (getCookie(src() + 'ck') && getCookie(src() + 'ck') !== '') {
+            return getCookie(src() + 'ck')
         }
         return ''
     }
-    return localStorage.getItem(src()+'ck') || ''
+    return localStorage.getItem(src() + 'ck') || ''
 }
 
 // 数组转对象，对象的key 队友第二个参数
