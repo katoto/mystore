@@ -8,7 +8,7 @@ import expertList from '~pages/expertList.vue'
 import detail from '~pages/detail.vue'
 import expert from '~pages/expert.vue'
 // const Test = () => import('./pages/Test.vue' /* webpackChunkName: "test" */)
-// const Test = () => import('./pages/Test.vue' /* webpackChunkName: "test" */)
+const Login = () => import('~pages/Login'  /* webpackChunkName: "chunks/Login" */)
 
 Vue.use(VueRouter)
 
@@ -22,6 +22,10 @@ export default new VueRouter({
         {
             path: '/list',
             component: expertList
+        },
+        {
+            path: '/login',
+            component: Login
         },
         {
             path: '/detail',
