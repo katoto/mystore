@@ -1,6 +1,6 @@
 <template>
     <div>
-        tgyManage
+        child tyg
     </div>
 </template>
 
@@ -8,7 +8,7 @@
     export default {
         data(){
             return {
-                title: ''
+                title: '我是頭部'
             }
         },
         watch: {},

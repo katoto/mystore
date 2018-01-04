@@ -29,7 +29,7 @@ export default {
                         this.$router.push('/home/xtManage/xtSett')
                         ;break;
                     case 'tgyManage':
-
+                        this.$router.push('/home/tgyManage/tgyChild')
                         ;break;
                     case 'ybyz':;break;
                     case 'htyz':;break;

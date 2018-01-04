@@ -16,6 +16,7 @@ const xtSet = () => import('~pages/home/xtManage/xtSet.vue'  /* webpackChunkName
 
 // 2
 const tgyManage = () => import('~pages/home/tgyManage/tgyManage.vue'  /* webpackChunkName: "chunks/home/tgyManage/tgyManage.vue" */);
+const tgyChild = () => import('~pages/home/tgyManage/tgyChild.vue'  /* webpackChunkName: "chunks/home/tgyManage/tgyChild.vue" */);
 
 Vue.use(VueRouter);
 
@@ -42,6 +43,12 @@ export default new VueRouter({
                     path: 'tgyManage',
                     component: tgyManage,
                     meta: { requireAuth: true },
+                    children: [
+                        {
+                            path: 'tgyChild',
+                            component: tgyChild
+                        },
+                    ]
                 },
                 {
                     path: '*',
