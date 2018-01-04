@@ -10,7 +10,7 @@ import expert from '~pages/expert.vue'
 // const Test = () => import('./pages/Test.vue' /* webpackChunkName: "test" */)
 const Login = () => import('~pages/Login'  /* webpackChunkName: "chunks/Login" */)
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 export default new VueRouter({
     mode: 'hash',
