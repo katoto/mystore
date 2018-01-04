@@ -139,12 +139,6 @@
   height: 0;
 }
 
-body {
-  font-family: -apple-system, "Helvetica Neue", Arial, "PingFang SC",
-    "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
 ul,
 li {
   margin: 0;
