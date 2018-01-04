@@ -1,6 +1,9 @@
 <template>
 <div class="container">
-<h1>hello world</h1>
+<el-button @click="visible = true">Button</el-button>
+    <el-dialog :visible.sync="visible" title="Hello world">
+      <p>Try Element</p>
+    </el-dialog>
 
 
 
@@ -13,9 +16,7 @@ export default {
 
     },
     data () {
-        return {
-            tab: 'dlt'
-        }
+        return { visible: false }
     }
 }
 </script>
