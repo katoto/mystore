@@ -74,31 +74,29 @@
         <hr>
         <section>
             <p class="xtSetP">自动冻结设置（未活跃时间过长）：</p>
-            <el-select class="xtSetSel" v-model="value" placeholder="请选择">
+            <el-select class="xtSetSel" v-model="xtFreeVal" placeholder="请选择">
                 <el-option
-                    v-for="item in options2"
+                    v-for="item in xtfreeze"
                     :key="item.value"
                     :label="item.label"
-                    :value="item.value"
-                    :disabled="item.disabled">
+                    :value="item.value">
                 </el-option>
             </el-select>
         </section>
         <hr>
         <section>
             <p class="xtSetP">爆机设置（元宝）（总额超限）：</p>
-            <el-select class="xtSetSel" v-model="value" placeholder="请选择">
+            <el-select class="xtSetSel" v-model="xtbreakVal" placeholder="请选择">
                 <el-option
-                    v-for="item in options2"
+                    v-for="item in xtbreak"
                     :key="item.value"
                     :label="item.label"
-                    :value="item.value"
-                    :disabled="item.disabled">
+                    :value="item.value">
                 </el-option>
             </el-select>
         </section>
         <section>
-            <el-checkbox v-model="isOpenChat">会员注册验证开启</el-checkbox>
+            <el-checkbox v-model="openVIP">会员注册验证开启</el-checkbox>
         </section>
         <section>
             <el-button>更新</el-button>
@@ -277,6 +275,74 @@
                 xttgdjVal: '不设上限',
 
                 OpenChat:true,
+
+                xtfreeze: [
+                    {
+                        label: '2个月',
+                        value:2,
+
+                    },
+                    {
+                        label: '4个月',
+                        value:4
+                    },
+                    {
+                        label: '6个月',
+                        value:6
+                    },
+                    {
+                        label: '12个月',
+                        value:12
+                    },
+                    {
+                        label: '不设上限',
+                        value:-1
+                    },
+                ],
+                xtFreeVal: '不设上限',
+
+                xtbreak: [
+                    {
+                        label: '1万',
+                        value:10000,
+
+                    },
+                    {
+                        label: '2万',
+                        value:20000
+                    },
+                    {
+                        label: '5万',
+                        value:50000
+                    },
+                    {
+                        label: '10万',
+                        value:100000
+                    },
+                    {
+                        label: '15万',
+                        value:150000
+                    },
+                    {
+                        label: '20万',
+                        value:200000
+                    },
+                    {
+                        label: '50万',
+                        value:500000
+                    },
+                    {
+                        label: '100万',
+                        value:1000000
+                    },
+                    {
+                        label: '不设上限',
+                        value:-1
+                    },
+                ],
+                xtbreakVal: 1000000,
+
+                openVIP:false,
             }
         },
         watch: {},
