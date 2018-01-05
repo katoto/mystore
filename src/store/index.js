@@ -1,12 +1,13 @@
 /**
  * Created by lichun on 2017/1/19.
  */
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 // import SockJS from 'sockjs-client'
 import home from './home'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const state = {
     toast: {

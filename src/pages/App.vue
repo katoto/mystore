@@ -11,12 +11,47 @@ export default {
         }
     },
     async mounted () {
-        await this.$store.dispatch('initWebsocket')
+        await this.$store.dispatch('initWebsocket');
         this.ready = true
     }
 }
 </script>
 <style>
+    body,
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    ul,
+    ol,
+    li,
+    dl,
+    dt,
+    dd,
+    table,
+    th,
+    td,
+    form,
+    fieldset,
+    legend,
+    input,
+    textarea,
+    button,
+    select {
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        list-style: none
+    }
+    em,
+    i {
+        font-style: normal
+    }
+
 .l-box-center {
   display: -webkit-box;
   -webkit-box-align: center;
@@ -153,5 +188,8 @@ li {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+body{
+    font-size: 14px;
 }
 </style>
