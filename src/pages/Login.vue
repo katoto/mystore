@@ -19,72 +19,68 @@
 </template>
 
 <script>
-    export default {
-        data () {
-            var checkName = (rule, value, callback) => {
-                if (!value) {
-                    return callback(new Error('用户名不能为空'))
-                }
-                setTimeout(() => {
-                    //  处理规则
-                    if (value === '') {
-
-                    }
-                    callback()
-                }, 10)
+export default {
+    data () {
+        var checkName = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('用户名不能为空'))
             }
-            var validatePass = (rule, value, callback) => {
+            setTimeout(() => {
+                //  处理规则
                 if (value === '') {
-                    callback(new Error('请输入密码'))
-                } else {
-                    if (this.ruleForm2.checkPass !== '') {
-                        //  处理字符等
-                    }
                 }
                 callback()
-            }
-            return {
-                ruleForm2: {
-                    pass: '',
-                    name: ''
-                },
-                rules2: {
-                    pass: [
-                        { validator: validatePass, trigger: 'blur' }
-                    ],
-                    name: [
-                        { validator: checkName, trigger: 'blur' }
-                    ]
+            }, 10)
+        }
+        var validatePass = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请输入密码'))
+            } else {
+                if (this.ruleForm2.checkPass !== '') {
+                    //  处理字符等
                 }
             }
-    },
-        methods: {
-            submitForm (formName) {
-                this.$refs[formName].validate((valid) => {
-                    if (valid) {
-                        alert('submit!')
-                    } else {
-                        console.log('error submit!!')
-                        return false
-                    }
-                })
+            callback()
+        }
+        return {
+            ruleForm2: {
+                pass: '',
+                name: ''
             },
-            resetForm (formName) {
-                this.$refs[formName].resetFields()
+            rules2: {
+                pass: [{ validator: validatePass, trigger: 'blur' }],
+                name: [{ validator: checkName, trigger: 'blur' }]
             }
         }
+    },
+
+    methods: {
+        submitForm (formName) {
+            this.$refs[formName].validate(valid => {
+                if (valid) {
+                    alert('submit!')
+                } else {
+                    console.log('error submit!!')
+                    return false
+                }
+            })
+        },
+        resetForm (formName) {
+            this.$refs[formName].resetFields()
+        }
     }
+}
 </script>
 <style scoped>
-    .el-main {
-        color: #333;
-        line-height: 60px;
-        font-size: 14px;
-        max-width: 600px;
-        margin: 80px auto;
-    }
-    .el-main .loginTitle{
-        text-align: center;
-        font-size: 18px;
-    }
+.el-main {
+  color: #333;
+  line-height: 60px;
+  font-size: 14px;
+  max-width: 600px;
+  margin: 80px auto;
+}
+.el-main .loginTitle {
+  text-align: center;
+  font-size: 18px;
+}
 </style>

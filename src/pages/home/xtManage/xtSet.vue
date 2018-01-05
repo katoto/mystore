@@ -113,24 +113,24 @@
     export default {
         data () {
             return {
-                isOpenChat:true ,
+                isOpenChat: true,
                 options2: [
                     {
-                        value: '100万',
+                        value: '100万'
                     },
                     {
-                    value: '1000万',
-                    disabled: true
+                        value: '1000万',
+                        disabled: true
                     },
                     {
-                    value: '10万',
+                        value: '10万'
                     },
                     {
-                    value: '1万',
+                        value: '1万'
                     },
                     {
-                    value: '1000',
-                }],
+                        value: '1000'
+                    }],
                 value: '10万'
             }
         },
