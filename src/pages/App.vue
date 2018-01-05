@@ -1,13 +1,22 @@
 <template>
     <div id="app" class="l-full">
-        <router-view></router-view>
+        <router-view v-if="ready"></router-view>
     </div>
 </template>
-<style>
-.container div {
-  display: flex;
+<script>
+export default {
+    data () {
+        return {
+            ready: false
+        }
+    },
+    async mounted () {
+        await this.$store.dispatch('initWebsocket')
+        this.ready = true
+    }
 }
-
+</script>
+<style>
 .l-box-center {
   display: -webkit-box;
   -webkit-box-align: center;

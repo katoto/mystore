@@ -3,7 +3,7 @@
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
-import SockJS from 'sockjs-client'
+// import SockJS from 'sockjs-client'
 import home from './home'
 
 Vue.use(Vuex)
@@ -43,7 +43,7 @@ const actions = {
     initWebsocket ({commit, dispatch, state}) {
         return new Promise((resolve, reject) => {
             if (state.websocket.connect) return resolve()
-            let connect = new SockJS(`http://em.500.com/score/sock`)
+            let connect = new WebSocket(`ws://demo.oi8t5y.site.gplgg.cn:7999`)
             let interval = null
             let hasFinished = false
             connect.onmessage = function (e) {
