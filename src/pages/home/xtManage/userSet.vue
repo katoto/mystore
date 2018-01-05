@@ -58,14 +58,14 @@
                 :before-close="handleClose">
                     <section>
                         <div>
-                            <span>用户名：</span><el-input v-model="input" placeholder="请输入内容"></el-input>
+                            <span>用户名：</span><el-input v-model="userName" placeholder="请输入内容"></el-input>
                         </div>
                         <div>
                             <span>权限等级：</span>
-                            <el-radio-group v-model="radio2">
-                                <el-radio :label="3">系统管理员</el-radio>
-                                <el-radio :label="6">主管</el-radio>
-                                <el-radio :label="9">服务员</el-radio>
+                            <el-radio-group v-model="setLevel">
+                                <el-radio :label="1">系统管理员</el-radio>
+                                <el-radio :label="2">主管</el-radio>
+                                <el-radio :label="3">服务员</el-radio>
                             </el-radio-group>
                         </div>
                         <div>
@@ -93,10 +93,9 @@
     export default {
         data () {
             return {
-                input:1,
-                radio2: 3,
-                checkList: ['选中且禁用','复选框 A'],
-                title: '',
+                userName:1431231,
+                setLevel: 3,
+                checkList: ['赠送游戏币','扣除游戏币'],
                 dialogVisible: false
             }
         },

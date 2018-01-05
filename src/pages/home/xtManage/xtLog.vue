@@ -1,31 +1,42 @@
 <template>
     <div>
         <header>
-            <div class="block">
-                <el-date-picker
-                    v-model="value7"
-                    type="daterange"
-                    align="right"
-                    unlink-panels
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                    :picker-options="pickerOptions2">
-                </el-date-picker>
-            </div>
-            <div>
-                <p>查询id：</p>
-                <el-select v-model="value" placeholder="请选择">
-                    <el-option
-                        v-for="item in options2"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                        :disabled="item.disabled">
-                    </el-option>
-                </el-select>
-                <el-button type="primary">查询</el-button>
-            </div>
+            <el-row :gutter="10">
+                <el-col :span="8">
+                    <div class="dataTime grid-content bg-purple">
+                        <el-date-picker
+                            v-model="value7"
+                            type="daterange"
+                            align="right"
+                            size="small"
+                            unlink-panels
+                            range-separator="至"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"
+                            :picker-options="pickerOptions2">
+                        </el-date-picker>
+                    </div>
+                </el-col>
+                <el-col :span="5"><div class="grid-content bg-purple">
+                    <span>用户账号：</span>
+                    <el-select class="checkID" size="small" v-model="value" placeholder="请选择">
+                        <el-option
+                            v-for="item in options2"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
+                            :disabled="item.disabled">
+                        </el-option>
+                    </el-select>
+                </div>
+                </el-col>
+                <el-col :span="3">
+                    <el-input size="small" v-model="input" placeholder="请输入内容"></el-input>
+                </el-col>
+                <el-col :span="2">
+                    <el-button style="margin-left: 18px" size="small" type="primary">查询</el-button>
+                </el-col>
+            </el-row>
         </header>
         <section>
             <el-table
@@ -49,6 +60,15 @@
                     label="登陆IP">
                 </el-table-column>
             </el-table>
+            <div class="block">
+                <el-pagination
+                    @current-change="clickPage"
+                    background
+                    size="small"
+                    layout="prev, pager, next"
+                    :total="50">
+                </el-pagination>
+            </div>
         </section>
     </div>
 </template>
@@ -135,12 +155,28 @@
             };
         },
         watch: {},
-        methods: {},
+        methods: {
+            clickPage( size ){
+                // 分页
+                console.log(size);
+            }
+        },
         computed: {},
         mounted () {
-
         }
     }
 </script>
-<style>
+<style scoped>
+    header{
+        margin-bottom: 16px;
+    }
+    .checkID{
+        width: 60%;
+    }
+    .el-date-editor--daterange.el-input, .el-date-editor--daterange.el-input__inner, .el-date-editor--timerange.el-input, .el-date-editor--timerange.el-input__inner{
+        width: 95%;
+    }
+    .el-pagination{
+        text-align: center;
+    }
 </style>

@@ -369,6 +369,10 @@
         font-weight: 500;
         color: #303133;
     }
+    #xtSet p{
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
     #xtSet section{
         padding-top: 10px;
     }
@@ -379,4 +383,5 @@
     #xtSet .xtSetSel{
         width: 130px;
     }
+
 </style>
