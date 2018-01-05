@@ -1,15 +1,46 @@
 <template>
     <div id="app">
         <section id="xsSet">
-            <div class="list">
-                <h2>所有会员充值比例设置：</h2>
-                1游戏币 =<el-input v-model="xsAll" placeholder="请输入"></el-input> 元宝
-            </div>
-            <div class="list"></div>
-            <div class="list"></div>
-            <div class="list"></div>
-            <div class="list"></div>
-            <div class="list"></div>
+                <div class="list fl pd">
+                    <h2>所有会员充值比例设置：</h2>
+                    <p >1游戏币 =</p><el-input v-model="xsAll" placeholder="请输入"></el-input> <p>元宝</p>
+                </div>
+                <div class="list fl pd">
+                    <h2>直属推广员充值比例设置：</h2>
+                    <p>1游戏币 =</p><el-input v-model="xsZs" placeholder="请输入"></el-input> <p>元宝</p>
+                </div>
+                <div class="list pd">
+                    <el-checkbox v-model="isDjsq">开启远程充值兑奖申请</el-checkbox>
+                    <p>申请有效时限设置</p>
+                    <el-select v-model="sjsz" placeholder="请选择">
+                        <el-option
+                                v-for="item in options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"
+                                :disabled="item.disabled">
+                        </el-option>
+                    </el-select>
+                </div>
+                <div class="list">
+                    <el-checkbox v-model="isJjbgn">开启交接班功能</el-checkbox>
+                    <p></p>
+                    <el-radio-group v-model="jjb">
+                        <el-radio :label="3">不分更</el-radio>
+                        <el-radio :label="6">分AB两更</el-radio>
+                        <el-radio :label="9">分ABC三更</el-radio>
+                    </el-radio-group>
+                </div>
+                <div class="list">
+                    <el-checkbox v-model="isJhs">开启交互式密码输入</el-checkbox>
+                </div>
+                <div class="list">
+                    <el-checkbox v-model="isShop">开启商城、彩票城</el-checkbox>
+                </div>
+                <div class="btnBox">
+                    <el-button>更新</el-button>
+                    <el-button>重置</el-button>
+                </div>
         </section>
     </div>
 </template>
@@ -18,12 +49,24 @@
     export default {
         data () {
             return {
-                title: '我是頭部',
-                xsAll:'',
+              xsSet:'',
+              xsAll:'',
+              xsZs:'',
+              isDjsq:true,
+              sjsz:'',
+              isJjbgn:false,
+              jjb:'',
+              isJhs:false,
+              isShop:false,
+              options:[
+                {value:'10min',label:'10分钟'},
+                {value:'30min',label:'30分钟'}
+              ]
             }
         },
         watch: {},
-        methods: {},
+        methods: {
+        },
         computed: {},
         mounted () {
 
@@ -31,12 +74,32 @@
     }
 </script>
 <style scoped>
-    #xsSet .list{
-        border-bottom:1px solid #303133;
-        color: #303133;
+    p,div,h2{
+        margin:0;
+        padding:0;
     }
-    #xsSet h2{
+    #xsSet .list{
+        width:100%;
+        border-bottom:1px solid #ccc;
+        line-height:40px;
+        color: #303133;
+        overflow: hidden;
+    }
+    #xsSet .list.fl p, #xsSet .list.fl div{
+        float: left;
+    }
+    #xsSet .list.pd{
+        padding-bottom:20px;
+    }
+    #xsSet h2,#xsSet .el-radio{
         font-size: 16px;
         font-weight:bold;
+    }
+    #xsSet .el-input{
+        width:auto;
+        margin:0 10px;
+    }
+    .btnBox{
+        margin-top:20px;
     }
 </style>

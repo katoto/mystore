@@ -1,13 +1,11 @@
 <template>
-    <div>
-        <h2>tgyManage</h2>
-        <router-view></router-view>
+    <div id="app">
     </div>
 </template>
 
 <script>
     export default {
-        data () {
+        data(){
             return {
                 title: ''
             }
@@ -15,7 +13,8 @@
         watch: {},
         methods: {},
         computed: {},
-        mounted () {
+        mounted(){
+
         }
     }
 </script>
