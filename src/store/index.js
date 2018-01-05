@@ -43,7 +43,8 @@ const actions = {
     initWebsocket ({commit, dispatch, state}) {
         return new Promise((resolve, reject) => {
             if (state.websocket.connect) return resolve()
-            let connect = new WebSocket(`ws://demo.oi8t5y.site.gplgg.cn:7999`)
+            // let connect = new WebSocket(`ws://demo.oi8t5y.site.gplgg.cn:7999`)
+            let connect = new WebSocket(`ws://demo.oi8t5y.site.gplgg.cn:799`)
             let interval = null
             let hasFinished = false
             connect.onmessage = function (e) {
