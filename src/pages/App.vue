@@ -7,7 +7,7 @@
 export default {
     data () {
         return {
-            ready: false
+            ready: true
         }
     },
     async mounted () {
