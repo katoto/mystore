@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div>
         <section id="xsSet">
                 <div class="list fl pd">
                     <h2>所有会员充值比例设置：</h2>
@@ -38,8 +38,8 @@
                     <el-checkbox v-model="isShop">开启商城、彩票城</el-checkbox>
                 </div>
                 <div class="btnBox">
-                    <el-button>更新</el-button>
-                    <el-button>重置</el-button>
+                    <el-button size="small" type="primary">更新</el-button>
+                    <el-button size="small" >重置</el-button>
                 </div>
         </section>
     </div>
@@ -69,7 +69,6 @@
         },
         computed: {},
         mounted () {
-
         }
     }
 </script>
@@ -77,6 +76,7 @@
     p,div,h2{
         margin:0;
         padding:0;
+        font-size: 14px;
     }
     #xsSet .list{
         width:100%;

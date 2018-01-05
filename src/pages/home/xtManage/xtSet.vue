@@ -20,7 +20,7 @@
             <el-checkbox v-model="SQWarning">授权警告</el-checkbox></br>
             <el-row :gutter="20">
                 <el-col :span="9"><div class="grid-content bg-purple">
-                    <p>日累计充值数目（元宝）：</p>
+                    <p>日累计充值数目(元宝):</p>
                     <el-select class="xtSetSel" v-model="xtRczVal" placeholder="请选择">
                         <el-option
                             v-for="item in xtRcz"
@@ -31,7 +31,7 @@
                     </el-select>
                 </div></el-col>
                 <el-col :span="9"><div class="grid-content bg-purple">
-                    <p>日累计兑奖数目（元宝）：</p>
+                    <p>日累计兑奖数目(元宝):</p>
                     <el-select class="xtSetSel" v-model="xtRdjVal" placeholder="请选择">
                         <el-option
                             v-for="item in xtRdj"
@@ -44,7 +44,7 @@
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="9"><div class="grid-content bg-purple">
-                    <p>单个会员日兑奖数目（元宝）：</p>
+                    <p>单个会员日兑奖数目(元宝):</p>
                     <el-select class="xtSetSel" v-model="xthydjVal" placeholder="请选择">
                         <el-option
                             v-for="item in xthydj"
@@ -56,7 +56,7 @@
                 </div></el-col>
                 <el-col :span="9">
                     <div class="grid-content bg-purple">
-                        <p>单个推广员日兑奖数目（元宝）：</p>
+                        <p>单个推广员日兑奖数目(元宝)</p>
                         <el-select class="xtSetSel" v-model="xttgdjVal" placeholder="请选择">
                             <el-option
                                 v-for="item in xttgdj"
@@ -99,8 +99,8 @@
             <el-checkbox v-model="openVIP">会员注册验证开启</el-checkbox>
         </section>
         <section>
-            <el-button>更新</el-button>
-            <el-button>重置</el-button>
+            <el-button size="small" type="primary">更新</el-button>
+            <el-button size="small" >重置</el-button>
         </section>
     </section>
 </template>
@@ -356,6 +356,7 @@
 <style scoped>
     #xtSet hr{
         margin: 13px 0;
+        color: #000;
     }
     #xtSet .xtSetP{
         margin: 0 0 10px 0;

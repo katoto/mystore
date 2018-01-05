@@ -154,4 +154,7 @@ li {
   padding: 0;
   list-style: none;
 }
+body{
+    font-size: 14px;
+}
 </style>

@@ -9,8 +9,8 @@
                 <el-col :span="8">
                     <div class="usershow grid-content bg-purple">
                         <ul>
-                            <li>1234131231</li>
-                            <li>1234131231</li>
+                            <li >1234131231</li>
+                            <li class="active">1234131231</li>
                             <li>1234131231</li>
                             <li>1234131231</li>
                             <li>1234131231</li>
@@ -54,34 +54,36 @@
             <el-dialog
                 title="新增用户"
                 :visible.sync="dialogVisible"
-                width="30%"
+                width="38%"
                 :before-close="handleClose">
                     <section>
                         <div>
-                            用户名：<el-input v-model="input" placeholder="请输入内容"></el-input>
+                            <span>用户名：</span><el-input v-model="input" placeholder="请输入内容"></el-input>
                         </div>
                         <div>
-                            权限等级：
+                            <span>权限等级：</span>
                             <el-radio-group v-model="radio2">
-                                <el-radio :label="3">备选项</el-radio>
-                                <el-radio :label="6">备选项</el-radio>
-                                <el-radio :label="9">备选项</el-radio>
+                                <el-radio :label="3">系统管理员</el-radio>
+                                <el-radio :label="6">主管</el-radio>
+                                <el-radio :label="9">服务员</el-radio>
                             </el-radio-group>
                         </div>
                         <div>
-                            特殊操作：
+                            <span>特殊操作：</span>
                             <el-checkbox-group v-model="checkList">
-                                <el-checkbox label="复选框 A"></el-checkbox>
-                                <el-checkbox label="复选框 B"></el-checkbox>
-                                <el-checkbox label="复选框 C"></el-checkbox>
-                                <el-checkbox label="禁用" disabled></el-checkbox>
-                                <el-checkbox label="选中且禁用" disabled></el-checkbox>
+                                <el-checkbox label="删账单"></el-checkbox>
+                                <el-checkbox label="赠送游戏币"></el-checkbox>
+                                <el-checkbox label="扣除游戏币"></el-checkbox>
+                                <br>
+                                <el-checkbox label="游戏大厅管理" disabled></el-checkbox>
+                                <el-checkbox label="推广员管理" disabled></el-checkbox>
+                                <el-checkbox label="会员注册验证" disabled></el-checkbox>
                             </el-checkbox-group>
                         </div>
                     </section>
                     <span slot="footer" class="dialog-footer">
-                        <el-button @click="dialogVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+                        <el-button size="small" @click="dialogVisible = false">取 消</el-button>
+                        <el-button size="small" type="primary" @click="dialogVisible = false">确 定</el-button>
                      </span>
             </el-dialog>
         </div>
@@ -95,7 +97,7 @@
                 radio2: 3,
                 checkList: ['选中且禁用','复选框 A'],
                 title: '',
-                dialogVisible: true
+                dialogVisible: false
             }
         },
         watch: {},
@@ -156,14 +158,25 @@
     }
 </script>
 <style scoped>
-    #userSet .userAlert{
+    p,div,h2{
+        margin:0;
+        padding:0;
+        font-size: 14px;
+    }
+    #userSet .userAlert ,.el-input{
+        font-size: 14px;
+    }
+    #userSet .userAlert div{
+        padding: 5px;
+    }
+    .el-dialog span{
         font-size: 14px;
     }
     .el-row{
         margin-top: 20px;
     }
     .bg-purple {
-        background: #d3dce6;
+        background: #dde6f0;
     }
     .usershow{
         overflow-y: auto;
@@ -173,20 +186,27 @@
         max-height: 300px;
     }
     #userSet{
-        background-color: #21e6af;
-        width: 80%;
+        width: 85%;
+        border-top: 1px solid #000;
+        padding-top: 10px;
     }
     #userSet ul li{
         text-align: left;
         height: 28px;
         line-height: 28px;
         font-size: 16px;
+        padding-left: 5px;
     }
     #userSet ul li:hover{
         color: #409EFF;
         border-color: #c6e2ff;
         background-color: #ecf5ff;
         cursor: pointer;
+    }
+    #userSet ul li.active{
+        color: #409EFF;
+        border-color: #c6e2ff;
+        background-color: #ecf5ff;
     }
     #userSet section div{
         font-size: 18px;
