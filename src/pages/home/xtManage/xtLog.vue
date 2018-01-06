@@ -1,42 +1,31 @@
 <template>
-    <div>
-        <header>
-            <el-row :gutter="10">
-                <el-col :span="8">
-                    <div class="dataTime grid-content bg-purple">
-                        <el-date-picker
-                            v-model="value7"
-                            type="daterange"
-                            align="right"
-                            size="small"
-                            unlink-panels
-                            range-separator="至"
-                            start-placeholder="开始日期"
-                            end-placeholder="结束日期"
-                            :picker-options="pickerOptions2">
-                        </el-date-picker>
-                    </div>
-                </el-col>
-                <el-col :span="5"><div class="grid-content bg-purple">
-                    <span>用户账号：</span>
-                    <el-select class="checkID" size="small" v-model="value" placeholder="请选择">
-                        <el-option
-                            v-for="item in options2"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                            :disabled="item.disabled">
-                        </el-option>
-                    </el-select>
-                </div>
-                </el-col>
-                <el-col :span="3">
-                    <el-input size="small" v-model="input" placeholder="请输入内容"></el-input>
-                </el-col>
-                <el-col :span="2">
-                    <el-button style="margin-left: 18px" size="small" type="primary">查询</el-button>
-                </el-col>
-            </el-row>
+    <div id="xtLog">
+        <header class="clearfix">
+            <div class="xtPicker">
+                <el-date-picker
+                    v-model="value7"
+                    type="daterange"
+                    align="right"
+                    size="small"
+                    unlink-panels
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    :picker-options="pickerOptions2">
+                </el-date-picker>
+            </div>
+            <span class="xtSpan">用户账号：</span>
+            <el-select class="checkID xtSel" size="small" v-model="value" placeholder="请选择">
+                <el-option
+                    v-for="item in options2"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                    :disabled="item.disabled">
+                </el-option>
+            </el-select>
+            <el-input size="small" class="xtInp" v-model="input" placeholder="请输入内容"></el-input>
+            <el-button style="margin-left: 18px" size="small" type="primary">查询</el-button>
         </header>
         <section>
             <el-table
@@ -170,6 +159,31 @@
     header{
         margin-bottom: 16px;
     }
+    header .xtPicker{
+        margin-bottom: 16px;
+        max-width: 280px ;
+        float: left;
+    }
+    header .xtSpan{
+        float: left;
+        line-height: 32px;
+        margin-left: 10px;
+    }
+    header .xtSel{
+        max-width: 100px ;
+        float: left;
+        margin-left: 10px;
+    }
+    header .xtInp{
+        max-width: 120px ;
+        float: left;
+        margin-left: 10px;
+    }
+    header button{
+        float: left;
+    }
+
+
     .checkID{
         width: 60%;
     }
@@ -178,5 +192,6 @@
     }
     .el-pagination{
         text-align: center;
+        margin-top: 20px;
     }
 </style>

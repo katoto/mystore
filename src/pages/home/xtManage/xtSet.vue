@@ -98,9 +98,9 @@
         <section>
             <el-checkbox v-model="openVIP">会员注册验证开启</el-checkbox>
         </section>
-        <section>
+        <section style="margin-top: 20px">
             <el-button size="small" type="primary">更新</el-button>
-            <el-button size="small" >重置</el-button>
+            <el-button size="small" style="margin-left: 28px">重置</el-button>
         </section>
     </section>
 </template>
