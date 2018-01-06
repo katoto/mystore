@@ -49,19 +49,19 @@
     export default {
         data () {
             return {
-              xsSet:'',
-              xsAll:'',
-              xsZs:'',
-              isDjsq:true,
-              sjsz:'',
-              isJjbgn:false,
-              jjb:'',
-              isJhs:false,
-              isShop:false,
-              options:[
-                {value:'10min',label:'10分钟'},
-                {value:'30min',label:'30分钟'}
-              ]
+                xsSet: '',
+                xsAll: '',
+                xsZs: '',
+                isDjsq: true,
+                sjsz: '',
+                isJjbgn: false,
+                jjb: '',
+                isJhs: false,
+                isShop: false,
+                options: [
+                    {value: '10min', label: '10分钟'},
+                    {value: '30min', label: '30分钟'}
+                ]
             }
         },
         watch: {},

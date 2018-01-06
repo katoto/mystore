@@ -130,52 +130,52 @@
 
 <script>
     export default {
-        data() {
+        data () {
             return {
                 pickerOptions2: {
                     shortcuts: [{
                         text: '最近一周',
-                        onClick(picker) {
-                            const end = new Date();
-                            const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-                            picker.$emit('pick', [start, end]);
+                        onClick (picker) {
+                            const end = new Date()
+                            const start = new Date()
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+                            picker.$emit('pick', [start, end])
                         }
                     }, {
                         text: '最近一个月',
-                        onClick(picker) {
-                            const end = new Date();
-                            const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-                            picker.$emit('pick', [start, end]);
+                        onClick (picker) {
+                            const end = new Date()
+                            const start = new Date()
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+                            picker.$emit('pick', [start, end])
                         }
                     }, {
                         text: '最近三个月',
-                        onClick(picker) {
-                            const end = new Date();
-                            const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-                            picker.$emit('pick', [start, end]);
+                        onClick (picker) {
+                            const end = new Date()
+                            const start = new Date()
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+                            picker.$emit('pick', [start, end])
                         }
                     }]
                 },
                 value7: '',
                 options2: [
                     {
-                        value: '100万',
+                        value: '100万'
                     },
                     {
                         value: '1000万',
                         disabled: true
                     },
                     {
-                        value: '10万',
+                        value: '10万'
                     },
                     {
-                        value: '1万',
+                        value: '1万'
                     },
                     {
-                        value: '1000',
+                        value: '1000'
                     }],
                 value: '10万',
                 tableData3: [{
@@ -207,13 +207,13 @@
                     name: '王小虎',
                     address: '上海上海市上海市上海市上海市市 弄'
                 }]
-            };
-        },
+            }
+    },
         watch: {},
         methods: {
-            clickPage( size ){
+            clickPage (size) {
                 // 分页
-                console.log(size);
+                console.log(size)
             }
         },
         computed: {},

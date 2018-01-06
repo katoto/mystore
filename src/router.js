@@ -24,6 +24,20 @@ const xtLog = () => import('~pages/home/xtManage/xtLog.vue' /* webpackChunkName:
 const tgyManage = () => import('~pages/home/tgyManage/tgyManage.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyManage.vue" */)
 const tgyChild = () => import('~pages/home/tgyManage/tgyChild.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyChild.vue" */)
 
+// 5
+const allReport = () => import('~pages/home/allReport/allReport.vue' /* webpackChunkName: "chunks/home/allReport/allReport.vue" */)
+const dailyRecharge = () => import('~pages/home/allReport/dailyRecharge.vue' /* webpackChunkName: "chunks/home/allReport/dailyRecharge.vue" */)
+const dailyPrize = () => import('~pages/home/allReport/dailyPrize.vue' /* webpackChunkName: "chunks/home/allReport/dailyPrize.vue" */)
+const dailyAccount = () => import('~pages/home/allReport/dailyAccount.vue' /* webpackChunkName: "chunks/home/allReport/dailyAccount.vue" */)
+const monthAccount = () => import('~pages/home/allReport/monthAccount.vue' /* webpackChunkName: "chunks/home/allReport/monthAccount.vue" */)
+const gameRun = () => import('~pages/home/allReport/gameRun.vue' /* webpackChunkName: "chunks/home/allReport/gameRun.vue" */)
+const businessAccount = () => import('~pages/home/allReport/businessAccount.vue' /* webpackChunkName: "chunks/home/allReport/businessAccount.vue" */)
+const regisTotal = () => import('~pages/home/allReport/regisTotal.vue' /* webpackChunkName: "chunks/home/allReport/regisTotal.vue" */)
+const pvTotal = () => import('~pages/home/allReport/pvTotal.vue' /* webpackChunkName: "chunks/home/allReport/pvTotal.vue" */)
+const onlineTotal = () => import('~pages/home/allReport/onlineTotal.vue' /* webpackChunkName: "chunks/home/allReport/onlineTotal.vue" */)
+const keepOnline = () => import('~pages/home/allReport/keepOnline.vue' /* webpackChunkName: "chunks/home/allReport/keepOnline.vue" */)
+const payTotal = () => import('~pages/home/allReport/payTotal.vue' /* webpackChunkName: "chunks/home/allReport/payTotal.vue" */)
+
 Vue.use(VueRouter)
 export default new VueRouter({
     mode: 'hash',
@@ -72,6 +86,57 @@ export default new VueRouter({
                         {
                             path: 'tgyChild',
                             component: tgyChild
+                        }
+                    ]
+                },
+                {
+                    path: 'allReport',
+                    component: allReport,
+                    meta: { requireAuth: true },
+                    children: [
+                        {
+                            path: 'dailyRecharge',
+                            component: dailyRecharge
+                        },
+                        {
+                            path: 'dailyPrize',
+                            component: dailyPrize
+                        },
+                        {
+                            path: 'dailyAccount',
+                            component: dailyAccount
+                        },
+                        {
+                            path: 'monthAccount',
+                            component: monthAccount
+                        },
+                        {
+                            path: 'gameRun',
+                            component: gameRun
+                        },
+                        {
+                            path: 'businessAccount',
+                            component: businessAccount
+                        },
+                        {
+                            path: 'regisTotal',
+                            component: regisTotal
+                        },
+                        {
+                            path: 'pvTotal',
+                            component: pvTotal
+                        },
+                        {
+                            path: 'onlineTotal',
+                            component: onlineTotal
+                        },
+                        {
+                            path: 'keepOnline',
+                            component: keepOnline
+                        },
+                        {
+                            path: 'payTotal',
+                            component: payTotal
                         }
                     ]
                 },

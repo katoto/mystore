@@ -7,7 +7,7 @@ import Vuex from 'vuex'
 // import SockJS from 'sockjs-client'
 import home from './home'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 const state = {
     toast: {

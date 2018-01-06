@@ -93,25 +93,25 @@
     export default {
         data () {
             return {
-                userName:1431231,
+                userName: 1431231,
                 setLevel: 3,
-                checkList: ['赠送游戏币','扣除游戏币'],
+                checkList: ['赠送游戏币', '扣除游戏币'],
                 dialogVisible: false
             }
         },
         watch: {},
         methods: {
-            handleClose(done) {
-                this.dialogVisible = false;
+            handleClose (done) {
+                this.dialogVisible = false
             },
-            delUser() {
-                if( 0 ){
+            delUser () {
+                if (0) {
                     this.$message({
                         message: '请选择用户',
                         type: 'error',
-                        duration:1200
-                    });
-                }else{
+                        duration: 1200
+                    })
+                } else {
                     this.$confirm('是否删除选中用户', '警告', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
@@ -120,34 +120,33 @@
                         this.$message({
                             type: 'success',
                             message: '删除成功!',
-                            duration:1200
-                        });
+                            duration: 1200
+                        })
                     }).catch(() => {
                         this.$message({
                             type: 'info',
                             message: '已取消删除',
-                            duration:1200
-                        });
-                    });
+                            duration: 1200
+                        })
+                    })
                 }
-
             },
-            addUser() {
-                this.dialogVisible = true;
+            addUser () {
+                this.dialogVisible = true
             },
-            qxSet() {
+            qxSet () {
                 this.$message({
                     message: '请选择用户',
                     type: 'error',
-                    duration:1200
-                });
+                    duration: 1200
+                })
             },
-            resetPass() {
+            resetPass () {
                 this.$message({
                     message: '请选择用户',
                     type: 'error',
-                    duration:1200
-                });
+                    duration: 1200
+                })
             }
         },
         computed: {},

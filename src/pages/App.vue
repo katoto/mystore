@@ -11,7 +11,7 @@ export default {
         }
     },
     async mounted () {
-        await this.$store.dispatch('initWebsocket');
+        await this.$store.dispatch('initWebsocket')
         this.ready = true
     }
 }
