@@ -1,36 +1,30 @@
 <template>
     <div>
-        <header>
-            <el-row :gutter="20">
-                <el-col :span="7">
-                    <div class="dataTime grid-content bg-purple">
-                        <el-date-picker
-                            v-model="value7"
-                            type="daterange"
-                            align="right"
-                            size="small"
-                            unlink-panels
-                            range-separator="至"
-                            start-placeholder="开始日期"
-                            end-placeholder="结束日期"
-                            :picker-options="pickerOptions2">
-                        </el-date-picker>
-                    </div>
-                </el-col>
-                <el-col :span="9"><div class="grid-content bg-purple">
-                    <span>查询id：</span>
-                    <el-select class="checkID" size="small" v-model="value" placeholder="请选择">
-                        <el-option
-                            v-for="item in options2"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                            :disabled="item.disabled">
-                        </el-option>
-                    </el-select>
-                    <el-button style="margin-left: 18px" size="small" type="primary">查询</el-button>
-                </div></el-col>
-            </el-row>
+        <header class="clearfix">
+            <div  class="userPicker">
+                <el-date-picker
+                    v-model="value7"
+                    type="daterange"
+                    align="right"
+                    size="small"
+                    unlink-panels
+                    range-separator="至"
+                    start-placeholder="开始日期"
+                    end-placeholder="结束日期"
+                    :picker-options="pickerOptions2">
+                </el-date-picker>
+            </div>
+            <span class="userCX">查询id：</span>
+            <el-select class="checkID userSel" size="small" v-model="value" placeholder="请选择">
+                <el-option
+                    v-for="item in options2"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                    :disabled="item.disabled">
+                </el-option>
+            </el-select>
+            <el-button style="margin-left: 18px" size="small" type="primary">查询</el-button>
         </header>
         <section>
             <el-table
@@ -42,12 +36,12 @@
                 <el-table-column
                     prop="date"
                     label="时间"
-                    width="180">
+                    width="220">
                 </el-table-column>
                 <el-table-column
                     prop="name"
                     label="用户账号"
-                    width="180">
+                    width="200">
                 </el-table-column>
                 <el-table-column
                     prop="address"
@@ -164,10 +158,32 @@
     header{
         margin-bottom: 16px;
     }
+    header .userPicker{
+        margin-bottom: 16px;
+        max-width: 300px ;
+        float: left;
+    }
+    header .userCX{
+        float: left;
+        line-height: 32px;
+        margin-left: 10px;
+    }
+    header .userSel{
+        max-width: 130px ;
+        float: left;
+        margin-left: 10px;
+    }
+    header button{
+        float: left;
+    }
     .checkID{
-        width: 24%;
+        max-width: 250px;
     }
     .el-date-editor--daterange.el-input, .el-date-editor--daterange.el-input__inner, .el-date-editor--timerange.el-input, .el-date-editor--timerange.el-input__inner{
-        width: 90%;
+        width: 98%;
+    }
+    .el-pagination{
+        margin-top: 20px;
+        text-align: center;
     }
 </style>

@@ -54,7 +54,7 @@
             <el-dialog
                 title="新增用户"
                 :visible.sync="dialogVisible"
-                width="38%"
+                width="500"
                 :before-close="handleClose">
                     <section>
                         <div>
@@ -185,9 +185,11 @@
         max-height: 300px;
     }
     #userSet{
-        width: 85%;
+        width: 99%;
         border-top: 1px solid #000;
-        padding-top: 10px;
+    }
+    #userSet .el-button{
+        margin-top: 10px !important;
     }
     #userSet ul li{
         text-align: left;

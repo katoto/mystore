@@ -52,6 +52,17 @@ export default {
         font-style: normal
     }
 
+    .clearfix:after {
+        content: " ";
+        display: block;
+        clear: both;
+        height: 0;
+    }
+    .clearfix {
+        zoom: 1;
+    }
+
+
 .l-box-center {
   display: -webkit-box;
   -webkit-box-align: center;
