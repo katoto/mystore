@@ -24,6 +24,13 @@ const xtLog = () => import('~pages/home/xtManage/xtLog.vue' /* webpackChunkName:
 const tgyManage = () => import('~pages/home/tgyManage/tgyManage.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyManage.vue" */)
 const tgyChild = () => import('~pages/home/tgyManage/tgyChild.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyChild.vue" */)
 
+// 4
+const htyz = () => import('~pages/home/htyz/htyz.vue' /* webpackChunkName: "chunks/home/htyz/htyz.vue" */)
+const gameHomeGL = () => import('~pages/home/htyz/gameHomeGL.vue' /* webpackChunkName: "chunks/home/htyz/gameHomeGL.vue" */)
+const gameNoticeGL = () => import('~pages/home/htyz/gameNoticeGL.vue' /* webpackChunkName: "chunks/home/htyz/gameNoticeGL.vue" */)
+const actGL = () => import('~pages/home/htyz/actGL.vue' /* webpackChunkName: "chunks/home/htyz/actGL.vue" */)
+const logNoticeGL = () => import('~pages/home/htyz/logNoticeGL.vue' /* webpackChunkName: "chunks/home/htyz/logNoticeGL.vue" */)
+
 // 5
 const allReport = () => import('~pages/home/allReport/allReport.vue' /* webpackChunkName: "chunks/home/allReport/allReport.vue" */)
 const dailyRecharge = () => import('~pages/home/allReport/dailyRecharge.vue' /* webpackChunkName: "chunks/home/allReport/dailyRecharge.vue" */)
@@ -88,6 +95,28 @@ export default new VueRouter({
                             component: tgyChild
                         }
                     ]
+                },
+                {
+                    path: 'htyz',
+                    component: htyz,
+                    meta: { requireAuth: true },
+                    children: [
+                        {
+                            path: 'gameHomeGL',
+                            component: gameHomeGL
+                        },
+                        {
+                            path: 'gameNoticeGL',
+                            component: gameNoticeGL
+                        },
+                        {
+                            path: 'actGL',
+                            component: actGL
+                        },
+                        {
+                            path: 'logNoticeGL',
+                            component: logNoticeGL
+                        }]
                 },
                 {
                     path: 'allReport',
