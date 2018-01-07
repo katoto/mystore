@@ -6,6 +6,8 @@ import { mapActions, mapMutations } from '~common/util'
 
 const name = 'user'
 const state = {
+    loginInfo: null,
+    userList: null
 
 }
 const actionsInfo = mapActions({
@@ -14,19 +16,29 @@ const actionsInfo = mapActions({
             const args = await dispatch('invoke', {method: 'adminService/adminLogin', args: [name, pass, false, true, 0]})
             const result = args[0]
             if (result.success) {
-                console.log(JSON.stringify(result))
+                commit(mTypes.setLoginInfo, result)
+                // console.log(JSON.stringify(result))
             } else {
                 console.log(result.message)
             }
-            console.log(JSON.stringify(result))
         } catch (e) {
             console.log(e)
         }
+    },
+    async getUserList ({dispatch, commit}, args) {
+        let result = await dispatch('invoke', {method: 'memberService/getUserList', args: [name, pass, false, true, 0]})
+        commit(mTypes.setUserList, result[0])
     }
 
 }, name)
 
 const mutationsInfo = mapMutations({
+    setLoginInfo(state, info) {
+        state.loginInfo = info
+    },
+    setUserList (state, list) {
+        state.userList = list
+    }
 
 }, name)
 
