@@ -1,14 +1,14 @@
 <template>
     <div id="app" class="l-full">
-        <router-view v-if="ready"></router-view>
+        <router-view v-if="serverTime"></router-view>
     </div>
 </template>
 <script>
 export default {
-    data () {
-        return {
-            ready: false
-        }
+    computed: {
+      serverTime () {
+        return this.$store.state.serverTime
+      }
     },
     async mounted () {
         await this.$store.dispatch('initWebsocket')
