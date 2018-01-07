@@ -2,7 +2,7 @@
     <div>
         <header class="clearfix">
             <el-form ref="form" :model="form" label-width="80px">
-                <div>
+                <div style="height: 36px">
                     <el-button size="small" type="primary">详情</el-button>
                     <el-button size="small" type="primary">封号</el-button>
                     <el-button size="small" type="primary">解禁</el-button>
@@ -16,7 +16,6 @@
                     <el-button size="small" type="primary" disabled>删除异常</el-button>
                     <el-button size="small" type="primary">口令修改</el-button>
                 </div>
-
                 <el-form-item label="禁言：">
                     <el-radio-group v-model="form.resource">
                         <el-radio label="正常"></el-radio>
