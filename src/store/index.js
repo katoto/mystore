@@ -59,6 +59,7 @@ const actions = {
             if (state.websocket.connect) return resolve()
             const connect = new WebSocket(url)
             const tdecoder = new TextDecoder('utf-8')
+            let datacb = () => {}
             connect.onmessage = function (e) {
                 const binaryData = e.data
                 const dataArray = new Uint8Array(binaryData)
@@ -66,16 +67,12 @@ const actions = {
                 if (len === dataArray.length - 4) {
                     const newArray = new Uint8Array(binaryData, 4, len)
                     const dataStr = tdecoder.decode(newArray)
-                    // console.log(dataStr)
 
                     try {
                         // console.log(dataStr.toString())
                         const dataJSON = JSON.parse(dataStr)
-
-                        if (typeof state.websocket.ondata === 'function') {
-                            state.websocket.ondata(dataJSON)
-                        }
-                        commit('updateSocketData', dataJSON)
+                        if (typeof datacb === 'function') datacb(dataJSON)
+                        // commit('updateSocketData', dataJSON)
                     } catch (e) {
                         console.error(e.message)
                     }
@@ -84,15 +81,13 @@ const actions = {
             connect.onopen = function () {
                 connect.binaryType = 'arraybuffer'
                 commit('initSocket', {connect})
+                commit('setOndataCb', (cb) => {
+                    datacb = cb
+                })
                 resolve()
             }
             connect.onclose = function () {
-                // console.warn('5s后 websocket 重连')
                 commit('initSocket', {connect: null})
-                // setTimeout(() => {
-                //     commit('addConnectNum')
-                //     dispatch('initWebsocket')
-                // }, 5000)
             }
             connect.onerror = function (e) {
                 console.error('sock error')
@@ -134,7 +129,8 @@ const actions = {
                     return
                 }
                 let finished = false
-                commit('setOndataCb', (data) => {
+
+                state.websocket.ondata((data) => {
                     if (finished) return
 
                     if (~method.indexOf(data.method)) {
@@ -142,13 +138,14 @@ const actions = {
                     } else {
                         reject(new Error(data.args))
                     }
-                    commit('setOndataCb', null)
                     finished = true
+                    state.websocket.ondata()
                 })
+
                 setTimeout(() => {
                     if (!finished) {
                         reject(new Error('响应超时'))
-                        commit('setOndataCb', null)
+                        state.websocket.ondata()
                         finished = true
                     }
                 }, 2000)

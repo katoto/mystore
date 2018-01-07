@@ -16,7 +16,7 @@ export default {
             await this.$store.dispatch('getServerTime')
         } catch (e) {
             setTimeout(() => {
-                location.reload()
+                // location.reload()
             }, 5000)
         }
     }
