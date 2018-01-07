@@ -208,7 +208,7 @@
                     address: '上海上海市上海市上海市上海市市 弄'
                 }]
             }
-    },
+        },
         watch: {},
         methods: {
             clickPage (size) {

@@ -105,7 +105,7 @@
                 this.dialogVisible = false
             },
             delUser () {
-                if (0) {
+                if (false) {
                     this.$message({
                         message: '请选择用户',
                         type: 'error',

@@ -27,8 +27,8 @@
       },
       watch: {},
       methods: {
-          onSubmit() {
-              console.log('submit!');
+          onSubmit () {
+              console.log('submit!')
           }
       },
       computed: {},
