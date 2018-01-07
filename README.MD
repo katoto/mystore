@@ -1,4 +1,4 @@
-# 我的商城静态页面
+# 管理后台
 
 [![Build Status](https://travis-ci.org/sampsonli/mystore.svg?branch=master)](https://travis-ci.org/sampsonli/mystore)
-## ssssssssssss
+## ssssssss

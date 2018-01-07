@@ -214,7 +214,7 @@
     export default {
         data () {
             return {
-                input:'',
+                input: '',
                 centerDialogVisible: true,
                 form: {
                     name: '',
