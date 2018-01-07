@@ -61,7 +61,7 @@ export default {
                 if (valid) {
                     this.$store.dispatch(aTypes.login, this.ruleForm2)
 
-                    console.log(this.ruleForm2)
+                    // console.log(this.ruleForm2)
                     // alert('submit!')
                 } else {
                     console.log('error submit!!')

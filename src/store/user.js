@@ -20,7 +20,7 @@ const actionsInfo = mapActions({
             }
             console.log(JSON.stringify(result))
         } catch (e) {
-            console.log('用户名不存在')
+            console.log(e)
         }
     }
 

@@ -68,12 +68,17 @@ const actions = {
                     const dataStr = tdecoder.decode(newArray)
                     // console.log(dataStr)
 
-                    const dataJSON = JSON.parse(dataStr)
+                    try {
+                        // console.log(dataStr.toString())
+                        const dataJSON = JSON.parse(dataStr)
 
-                    if (typeof state.websocket.ondata === 'function') {
-                        state.websocket.ondata(dataJSON)
+                        if (typeof state.websocket.ondata === 'function') {
+                            state.websocket.ondata(dataJSON)
+                        }
+                        commit('updateSocketData', dataJSON)
+                    } catch (e) {
+                        console.error(e.message)
                     }
-                    commit('updateSocketData', dataJSON)
                 }
             }
             connect.onopen = function () {
@@ -82,12 +87,12 @@ const actions = {
                 resolve()
             }
             connect.onclose = function () {
-                console.warn('5s后 websocket 重连')
+                // console.warn('5s后 websocket 重连')
                 commit('initSocket', {connect: null})
-                setTimeout(() => {
-                    commit('addConnectNum')
-                    dispatch('initWebsocket')
-                }, 5000)
+                // setTimeout(() => {
+                //     commit('addConnectNum')
+                //     dispatch('initWebsocket')
+                // }, 5000)
             }
             connect.onerror = function (e) {
                 console.error('sock error')
