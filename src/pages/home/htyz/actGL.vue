@@ -7,7 +7,7 @@
             <el-button style="margin-left: 18px" size="small" type="success">活动期限设置</el-button>
         </header>
         <p>活动期限：</p>
-        <p>活动状态： 应该是ui li 可选中状态 </p>
+        <p>活动状态： 结构得改 </p>
         <section id="dailyAccP">
             <el-table
                 :data="tableData3"
