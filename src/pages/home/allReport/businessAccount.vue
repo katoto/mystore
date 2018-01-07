@@ -52,9 +52,12 @@
         </section>
         <section class="secBox">
             <div class="clearfix" >
-                <p style="float:left;margin:10px 0 10px 0;font-weight: 700">每更记录</p>
+                <p style="float:left;margin:10px 0 10px 0;font-weight: 700">每更记录</p>&nbsp;&nbsp;&nbsp;
+                <el-button type="success" plain>A 更</el-button>
+                <el-button type="info" plain>B 更</el-button>
+                <el-button type="warning" plain>C 更</el-button>
             </div>
-            <section >
+            <section style="margin-top: 10px">
                 <el-table
                     :data="tableData3"
                     height="300"
