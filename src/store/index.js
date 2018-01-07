@@ -65,14 +65,18 @@ const actions = {
                 const dataArray = new Uint8Array(binaryData)
                 const len = (dataArray[0] << 24) + (dataArray[1] << 16) + (dataArray[2] << 8) + (dataArray[3])
                 if (len === dataArray.length - 4) {
-                    const newArray = new Uint8Array(binaryData, 4, len)
-                    const dataStr = tdecoder.decode(newArray)
-
                     try {
+                        const newArray = new Uint8Array(binaryData, 4, len)
+                        const dataStr = tdecoder.decode(newArray)
+
                         // console.log(dataStr.toString())
                         const dataJSON = JSON.parse(dataStr)
-                        if (typeof datacb === 'function') datacb(dataJSON)
-                        // commit('updateSocketData', dataJSON)
+
+                        if (typeof datacb === 'function') {
+                            datacb(dataJSON)
+                        } else {
+                            commit('updateSocketData', dataJSON)
+                        }
                     } catch (e) {
                         console.error(e.message)
                     }
@@ -136,7 +140,8 @@ const actions = {
                     if (~method.indexOf(data.method)) {
                         resolve(data.args)
                     } else {
-                        reject(new Error(data.args))
+                        console.log(JSON.stringify(data))
+                        return commit('updateSocketData', data)
                     }
                     finished = true
                     state.websocket.ondata()
