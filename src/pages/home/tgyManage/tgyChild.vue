@@ -49,12 +49,12 @@
 <script>
     export default {
         methods: {
-            handleClick(row) {
-                console.log(row);
+            handleClick (row) {
+                console.log(row)
             }
         },
 
-        data() {
+        data () {
             return {
                 tableData: [{
                     date: '2016-05-03',

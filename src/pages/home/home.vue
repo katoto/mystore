@@ -7,7 +7,7 @@
                 <el-tab-pane label="推广员管理" name="tgyManage"></el-tab-pane>
                 <el-tab-pane label="一般运作" name="ybyz"></el-tab-pane>
                 <el-tab-pane label="后台运行" name="htyz"></el-tab-pane>
-                <el-tab-pane label="总结报告" name="zjbg"></el-tab-pane>
+                <el-tab-pane label="总结报告" name="allReport"></el-tab-pane>
             </el-tabs>
             <router-view></router-view>
         </el-main>
@@ -32,8 +32,12 @@ export default {
                     this.$router.push('/home/tgyManage/tgyChild')
                     break
                 case 'ybyz':;break
-                case 'htyz':;break
-                case 'zjbg':;break
+                case 'htyz':
+                    this.$router.push('/home/htyz/gameHomeGL')
+                    break
+                case 'allReport':
+                    this.$router.push('/home/allReport/dailyRecharge')
+                    break
                 }
             }
             console.log(tab.label)
