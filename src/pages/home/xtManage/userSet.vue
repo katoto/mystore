@@ -105,6 +105,7 @@
                 this.dialogVisible = false
             },
             delUser () {
+                // eslint-disable-next-line
                 if (false) {
                     this.$message({
                         message: '请选择用户',

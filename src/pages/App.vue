@@ -13,6 +13,7 @@ export default {
     async mounted () {
         await this.$store.dispatch('initWebsocket')
         this.ready = true
+        await this.$store.dispatch('getServerTime')
     }
 }
 </script>
