@@ -5,64 +5,70 @@
 </template>
 <script>
 export default {
-    computed: {
-      serverTime () {
-        return this.$store.state.serverTime
-      }
-    },
-    async mounted () {
-        await this.$store.dispatch('initWebsocket')
-        this.ready = true
-        await this.$store.dispatch('getServerTime')
+  computed: {
+    serverTime() {
+      return this.$store.state.serverTime;
     }
-}
+  },
+  async mounted() {
+    try {
+      await this.$store.dispatch("initWebsocket");
+      await this.$store.dispatch("getServerTime");
+    } catch (e) {
+      setTimeout(() => {
+        location.reload();
+      }, 5000)
+    }
+    
+    
+  }
+};
 </script>
 <style>
-    body,
-    p,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    ul,
-    ol,
-    li,
-    dl,
-    dt,
-    dd,
-    table,
-    th,
-    td,
-    form,
-    fieldset,
-    legend,
-    input,
-    textarea,
-    button,
-    select {
-        margin: 0;
-        padding: 0;
-    }
-    li {
-        list-style: none
-    }
-    em,
-    i {
-        font-style: normal
-    }
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+table,
+th,
+td,
+form,
+fieldset,
+legend,
+input,
+textarea,
+button,
+select {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+em,
+i {
+  font-style: normal;
+}
 
-    .clearfix:after {
-        content: " ";
-        display: block;
-        clear: both;
-        height: 0;
-    }
-    .clearfix {
-        zoom: 1;
-    }
-
+.clearfix:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+}
+.clearfix {
+  zoom: 1;
+}
 
 .l-box-center {
   display: -webkit-box;
@@ -201,7 +207,7 @@ li {
   padding: 0;
   list-style: none;
 }
-body{
-    font-size: 14px;
+body {
+  font-size: 14px;
 }
 </style>

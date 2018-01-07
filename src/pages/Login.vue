@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import {aTypes} from '../store/user'
 export default {
     data () {
         var checkName = (rule, value, callback) => {
@@ -58,7 +59,10 @@ export default {
         submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    alert('submit!')
+                    this.$store.dispatch(aTypes.login, this.ruleForm2)
+
+                    console.log(this.ruleForm2)
+                    // alert('submit!')
                 } else {
                     console.log('error submit!!')
                     return false

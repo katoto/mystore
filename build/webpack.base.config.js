@@ -27,7 +27,7 @@ module.exports = {
             {
                 test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
                 loader: 'file-loader'
-            },
+            }
 
         ]
     },
@@ -36,6 +36,7 @@ module.exports = {
         alias: {
             '~': srcPath,
             '~common': path.join(srcPath, 'common'),
+            '~store': path.join(srcPath, 'store'),
             '~components': path.join(srcPath, 'components'),
             '~pages': path.join(srcPath, 'pages'),
             '~assets': path.join(srcPath, 'assets'),

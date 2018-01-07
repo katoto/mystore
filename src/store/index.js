@@ -6,6 +6,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 // import SockJS from 'sockjs-client'
 import home from './home'
+import user from './user'
 import {wait} from '../common/util'
 
 Vue.use(Vuex)
@@ -164,6 +165,6 @@ export default () => new Vuex.Store({
     actions,
     mutations,
     modules: {
-        home
+        home, user
     }
 })
