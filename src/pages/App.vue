@@ -5,24 +5,22 @@
 </template>
 <script>
 export default {
-  computed: {
-    serverTime() {
-      return this.$store.state.serverTime;
+    computed: {
+        serverTime () {
+            return this.$store.state.serverTime
+        }
+    },
+    async mounted () {
+        try {
+            await this.$store.dispatch('initWebsocket')
+            await this.$store.dispatch('getServerTime')
+        } catch (e) {
+            setTimeout(() => {
+                location.reload()
+            }, 5000)
+        }
     }
-  },
-  async mounted() {
-    try {
-      await this.$store.dispatch("initWebsocket");
-      await this.$store.dispatch("getServerTime");
-    } catch (e) {
-      setTimeout(() => {
-        location.reload();
-      }, 5000)
-    }
-    
-    
-  }
-};
+}
 </script>
 <style>
 body,
