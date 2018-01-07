@@ -165,6 +165,10 @@
         methods: {
             onSubmit () {
                 console.log('submit!')
+            },
+            clickPage (size) {
+                // 分页
+                console.log(size)
             }
         },
         computed: {},
