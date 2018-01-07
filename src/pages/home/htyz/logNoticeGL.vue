@@ -5,7 +5,7 @@
                 <el-input size="small" placeholder="请输入标题" v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item label="正文">
-                <el-input size="small" placeholder="请输入正文" type="textarea" v-model="form.desc"></el-input>
+                <el-input size="small" rows=8 placeholder="请输入正文" type="textarea" v-model="form.desc"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button size="small" type="primary">更新</el-button>
