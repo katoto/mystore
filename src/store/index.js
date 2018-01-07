@@ -45,22 +45,34 @@ const actions = {
         return new Promise((resolve, reject) => {
             if (state.websocket.connect) return resolve()
             // let connect = new WebSocket(`ws://demo.oi8t5y.site.gplgg.cn:7999`)
-            let connect = new WebSocket(`ws://demo.oi8t5y.site.gplgg.cn:799`)
+            let connect = new WebSocket(`ws://demo.oi8t5y.site.gplgg.cn:7979`)
             let interval = null
             let hasFinished = false
+            const tdecoder = new TextDecoder('utf-8')
             connect.onmessage = function (e) {
-                let data = JSON.parse(e.data)
-                commit('updateSocketData', data)
+                const binaryData = e.data
+                const dataArray = new Uint8Array(binaryData)
+                const len = (dataArray[0] << 24) + (dataArray[1] << 16) + (dataArray[2] << 8) + (dataArray[3])
+                if (len === dataArray.length - 4) {
+                    const newArray = new Uint8Array(binaryData, 4, len)
+                    // if(key != null){
+                    //     //解密
+
+                    // }
+                    const dataStr = tdecoder.decode(newArray)
+                    console.log(dataStr)
+                    commit('updateSocketData', JSON.parse(dataStr))
+                }
             }
             connect.onopen = function () {
                 interval = setInterval(() => {
-                    connect.send(JSON.stringify({
-                        'action': 'ping',
-                        'from': {
-                            url: window.location.href,
-                            time: new Date().getTime()
-                        }
-                    }))
+                    // connect.send(JSON.stringify({
+                    //     'action': 'ping',
+                    //     'from': {
+                    //         url: window.location.href,
+                    //         time: new Date().getTime()
+                    //     }
+                    // }))
                 }, 15000)
                 if (hasFinished) return
                 hasFinished = true
@@ -90,6 +102,28 @@ const actions = {
                 reject(error)
             }, 2000)
         })
+    },
+    sendMsg ({state}, obj) {
+        if (state.websocket.connect) {
+            const argsArray = []
+            argsArray.push('AsETVVgugYm92HxSsADoBfk7lmZRJ6vRHRKjnafEC4OY8BOu0/MSoMy2bJr2ECCXZSnFPKxW15nWvVXiNmGy0I8=') // 该参数需要动态生成,值为RSA生成的公钥
+
+            const data = {
+                method: 'adminService/login_getEncrytKey',
+                version: '1.2.14',
+                args: argsArray,
+                time: NaN
+            }
+
+            const encodedData = JSON.stringify(data)
+            const len = encodedData.length
+            const lenInfo = new Uint8Array([(len >> 24) & 0xFF, (len >> 16) & 0xFF, (len >> 8) & 0xFF, (len) & 0xFF])
+
+            // 发送4字节的长度信息
+            state.websocket.connect.send(lenInfo)
+            // 发送消息内容
+            state.websocket.connect.send(encodedData)
+        }
     },
     showToast ({commit}, msg) {
         commit('showToast', msg)
