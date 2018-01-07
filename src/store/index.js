@@ -149,13 +149,18 @@ const actions = {
 
                 setTimeout(() => {
                     if (!finished) {
-                        reject(new Error('响应超时'))
+                        const e = new Error('响应超时')
+                        e.code = 101
+                        reject(e)
                         state.websocket.ondata()
                         finished = true
                     }
                 }, 2000)
             } else {
-                reject(new Error('已经断开链接'))
+                const e = new Error('已经断开链接')
+                e.code = 102
+                reject(e)
+    
             }
         })
     },

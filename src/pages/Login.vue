@@ -59,10 +59,24 @@ export default {
         submitForm (formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    this.$store.dispatch(aTypes.login, this.ruleForm2)
-
-                    // console.log(this.ruleForm2)
-                    // alert('submit!')
+                    (async () => {
+                        try {
+                            await this.$store.dispatch(aTypes.login, this.ruleForm2)
+                            this.$message({
+                                message: '登录成功',
+                                type: 'success',
+                                duration: 1200
+                            })
+                        } catch(e) {
+                            this.$message({
+                                message: e.message,
+                                type: 'error',
+                                duration: 1200
+                            })
+                        }
+                              
+                    })()
+     
                 } else {
                     console.log('error submit!!')
                     return false

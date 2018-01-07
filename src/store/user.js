@@ -20,9 +20,11 @@ const actionsInfo = mapActions({
                 // console.log(JSON.stringify(result))
             } else {
                 console.log(result.message)
+                throw new Error(result.message)
+                
             }
         } catch (e) {
-            console.log(e)
+            throw e
         }
     },
     async getUserList ({dispatch, commit}, args) {
