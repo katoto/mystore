@@ -10,8 +10,18 @@ const state = {
 }
 const actionsInfo = mapActions({
     async login ({dispatch, commit}, {name, pass}) {
-        const args = await dispatch('invoke', {method: 'adminService/adminLogin', args: [name, pass, false, true, 0]})
-        console.log(args)
+        try {
+            const args = await dispatch('invoke', {method: 'adminService/adminLogin', args: [name, pass, false, true, 0]})
+            const result = args[0]
+            if (result.success) {
+                console.log(JSON.stringify(result))
+            } else {
+                console.log(result.message)
+            }
+            console.log(JSON.stringify(result))
+        } catch (e) {
+            console.log('用户名不存在')
+        }
     }
 
 }, name)

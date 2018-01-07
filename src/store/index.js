@@ -128,14 +128,25 @@ const actions = {
                     resolve(true)
                     return
                 }
+                let finished = false
                 commit('setOndataCb', (data) => {
+                    if (finished) return
+
                     if (~method.indexOf(data.method)) {
                         resolve(data.args)
                     } else {
-                        reject(new Error('没有获取到数据'))
+                        reject(new Error(data.args))
                     }
                     commit('setOndataCb', null)
+                    finished = true
                 })
+                setTimeout(() => {
+                    if (!finished) {
+                        reject(new Error('响应超时'))
+                        commit('setOndataCb', null)
+                        finished = true
+                    }
+                }, 2000)
             } else {
                 reject(new Error('已经断开链接'))
             }
