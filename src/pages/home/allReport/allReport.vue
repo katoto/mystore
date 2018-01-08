@@ -6,7 +6,7 @@
             <el-tab-pane label="每日账目详单" name="dailyAccount"></el-tab-pane>
             <el-tab-pane label="每月账目详单" name="monthAccount"></el-tab-pane>
             <el-tab-pane label="游戏运行统计" name="gameRun"></el-tab-pane>
-            <el-tab-pane label="营业账目统计" name="businessAccount"></el-tab-pane>
+            <el-tab-pane label="营业日账目统计" name="businessAccount"></el-tab-pane>
             <el-tab-pane label="新注册分析" name="regisTotal"></el-tab-pane>
             <el-tab-pane label="日活跃分析" name="pvTotal"></el-tab-pane>
             <el-tab-pane label="同时在线分析" name="onlineTotal"></el-tab-pane>

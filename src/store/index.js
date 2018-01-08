@@ -160,7 +160,6 @@ const actions = {
                 const e = new Error('已经断开链接')
                 e.code = 102
                 reject(e)
-    
             }
         })
     },

@@ -67,16 +67,14 @@ export default {
                                 type: 'success',
                                 duration: 1200
                             })
-                        } catch(e) {
+                        } catch (e) {
                             this.$message({
                                 message: e.message,
                                 type: 'error',
                                 duration: 1200
                             })
                         }
-                              
                     })()
-     
                 } else {
                     console.log('error submit!!')
                     return false
