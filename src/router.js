@@ -24,6 +24,12 @@ const xtLog = () => import('~pages/home/xtManage/xtLog.vue' /* webpackChunkName:
 const tgyManage = () => import('~pages/home/tgyManage/tgyManage.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyManage.vue" */)
 const tgyChild = () => import('~pages/home/tgyManage/tgyChild.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyChild.vue" */)
 
+
+// 3
+const ybyz = () => import('~pages/home/ybyz/ybyz.vue' /* webpackChunkName: "chunks/home/ybyz/ybyz.vue" */)
+const vipOperate = () => import('~pages/home/ybyz/vipOperate.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate.vue" */)
+const rentSearch = () => import('~pages/home/ybyz/rentSearch.vue' /* webpackChunkName: "chunks/home/ybyz/rentSearch.vue" */)
+
 // 4
 const htyz = () => import('~pages/home/htyz/htyz.vue' /* webpackChunkName: "chunks/home/htyz/htyz.vue" */)
 const gameHomeGL = () => import('~pages/home/htyz/gameHomeGL.vue' /* webpackChunkName: "chunks/home/htyz/gameHomeGL.vue" */)
@@ -97,6 +103,21 @@ export default new VueRouter({
                         {
                             path: 'tgyChild',
                             component: tgyChild
+                        }
+                    ]
+                },
+                {
+                    path: 'ybyz',
+                    component: ybyz,
+                    meta: { requireAuth: true },
+                    children: [
+                        {
+                            path: 'vipOperate',
+                            component: vipOperate
+                        },
+                        {
+                            path: 'rentSearch',
+                            component: rentSearch
                         }
                     ]
                 },

@@ -31,7 +31,9 @@ export default {
                 case 'tgyManage':
                     this.$router.push('/home/tgyManage/tgyChild')
                     break
-                case 'ybyz':;break
+                case 'ybyz':
+                    this.$router.push('/home/ybyz/vipOperate')
+                    ;break
                 case 'htyz':
                     this.$router.push('/home/htyz/gameHomeGL')
                     break
