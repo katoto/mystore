@@ -67,6 +67,7 @@ export default {
                                 type: 'success',
                                 duration: 1200
                             })
+                            this.$router.replace({path: '/home/xtManage/xtSet'})
                         } catch (e) {
                             this.$message({
                                 message: e.message,
