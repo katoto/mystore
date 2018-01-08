@@ -53,9 +53,9 @@ module.exports = {
             template: path.join(srcPath, 'index.ejs'),
             chunks: ['manifest', 'vendor', 'app']
         })
-
         /* new CopyWebpackPlugin([
          {from: 'login', to: 'login'},
          ]) */
+
     ]
 }

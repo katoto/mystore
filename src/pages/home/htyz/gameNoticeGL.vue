@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4 style="margin-left: 40px">新建公告：</h4>
+        <h4 style="margin-left: 25px">新建公告：</h4>
         <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="范围：">
                 <el-radio-group v-model="form.resource">

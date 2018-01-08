@@ -20,6 +20,7 @@
 
 <script>
 import {aTypes} from '../store/user'
+import {wait} from '../common/util'
 export default {
     data () {
         var checkName = (rule, value, callback) => {
@@ -67,7 +68,9 @@ export default {
                                 type: 'success',
                                 duration: 1200
                             })
-                            this.$router.replace({path: '/home/xtManage/xtSet'})
+                            await wait(1200)
+                            this.$router.replace('/home/xtManage/xtSet')
+                            return false
                         } catch (e) {
                             this.$message({
                                 message: e.message,
