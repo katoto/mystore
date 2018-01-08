@@ -30,6 +30,10 @@ const gameHomeGL = () => import('~pages/home/htyz/gameHomeGL.vue' /* webpackChun
 const gameNoticeGL = () => import('~pages/home/htyz/gameNoticeGL.vue' /* webpackChunkName: "chunks/home/htyz/gameNoticeGL.vue" */)
 const actGL = () => import('~pages/home/htyz/actGL.vue' /* webpackChunkName: "chunks/home/htyz/actGL.vue" */)
 const logNoticeGL = () => import('~pages/home/htyz/logNoticeGL.vue' /* webpackChunkName: "chunks/home/htyz/logNoticeGL.vue" */)
+const emailXT = () => import('~pages/home/htyz/emailXT.vue' /* webpackChunkName: "chunks/home/htyz/emailXT.vue" */)
+const vvipGL = () => import('~pages/home/htyz/vvipGL.vue' /* webpackChunkName: "chunks/home/htyz/vvipGL.vue" */)
+const businessGL = () => import('~pages/home/htyz/businessGL.vue' /* webpackChunkName: "chunks/home/htyz/businessGL.vue" */)
+const dataBackup = () => import('~pages/home/htyz/dataBackup.vue' /* webpackChunkName: "chunks/home/htyz/dataBackup.vue" */)
 
 // 5
 const allReport = () => import('~pages/home/allReport/allReport.vue' /* webpackChunkName: "chunks/home/allReport/allReport.vue" */)
@@ -116,6 +120,22 @@ export default new VueRouter({
                         {
                             path: 'logNoticeGL',
                             component: logNoticeGL
+                        },
+                        {
+                            path: 'emailXT',
+                            component: emailXT
+                        },
+                        {
+                            path: 'vvipGL',
+                            component: vvipGL
+                        },
+                        {
+                            path: 'businessGL',
+                            component: businessGL
+                        },
+                        {
+                            path: 'dataBackup',
+                            component: dataBackup
                         }]
                 },
                 {

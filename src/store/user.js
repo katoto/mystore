@@ -21,7 +21,6 @@ const actionsInfo = mapActions({
             } else {
                 console.log(result.message)
                 throw new Error(result.message)
-                
             }
         } catch (e) {
             throw e
@@ -35,7 +34,7 @@ const actionsInfo = mapActions({
 }, name)
 
 const mutationsInfo = mapMutations({
-    setLoginInfo(state, info) {
+    setLoginInfo (state, info) {
         state.loginInfo = info
     },
     setUserList (state, list) {

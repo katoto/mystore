@@ -1,17 +1,20 @@
 <template>
     <div>
-        <h4 style="margin-left: 40px">新建公告：</h4>
+        <h4 style="margin-left: 40px">新建邮件：</h4>
         <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="范围：">
                 <el-radio-group v-model="form.resource">
-                    <el-radio label="全服，所有在线会员"></el-radio>
+                    <el-radio label="全服（在线+离线）"></el-radio>
                     <el-radio label="新手练习厅所有桌"></el-radio>
                     <el-radio label="欢乐竞技厅所有桌"></el-radio>
                     <el-radio label="会员账号（多账号，xxx;xxx此格式填写）"></el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="正文：">
-                <el-input size="small" placeholder="请输入正文" type="textarea" v-model="form.desc"></el-input>
+            <el-form-item label="标题：">
+                <el-input size="small" placeholder="请输入标题" v-model="form.name"></el-input>
+            </el-form-item>
+            <el-form-item label="内容：">
+                <el-input size="small" placeholder="请输入内容" type="textarea" v-model="form.desc"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button size="small" type="primary">发送</el-button>
@@ -20,7 +23,7 @@
         </el-form>
         <section style="margin-bottom: 50px">
             <header class="clearfix" style="padding: 10px 0;border-top: 1px solid #000">
-                <span>已发公告：</span>
+                <span>发件箱（已发邮件）：</span>
                 <el-button style="margin-left: 18px" size="small" type="primary">再次发送</el-button>
                 <el-button style="margin-left: 18px" size="small" disabled  type="primary">再次发送</el-button>
                 <el-button style="margin-left: 18px" size="small" type="danger">删除</el-button>
@@ -34,13 +37,17 @@
                     style="width: 100%">
                     <el-table-column
                         prop="date"
-                        label="范围"
+                        label="收件人"
                         width="220">
                     </el-table-column>
                     <el-table-column
                         prop="name"
-                        label="正文"
+                        label="标题"
                         width="200">
+                    </el-table-column>
+                    <el-table-column
+                        prop="address"
+                        label="内容">
                     </el-table-column>
                     <el-table-column
                         prop="address"
@@ -49,6 +56,10 @@
                     <el-table-column
                         prop="address"
                         label="发布人">
+                    </el-table-column>
+                    <el-table-column
+                        prop="address"
+                        label="奖励总计">
                     </el-table-column>
                 </el-table>
                 <div class="block">
