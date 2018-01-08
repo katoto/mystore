@@ -66,6 +66,7 @@
     export default {
         data () {
             return {
+                input:'',
                 pickerOptions2: {
                     shortcuts: [{
                         text: '最近一周',
