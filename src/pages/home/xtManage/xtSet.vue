@@ -100,7 +100,7 @@
         </section>
         <section style="margin-top: 20px">
             <el-button size="small" type="primary">更新</el-button>
-            <el-button size="small" style="margin-left: 28px">重置</el-button>
+            <el-button size="small" style="margin-left: 28px" v-tap="{ methods:setXTInit,params: loginInfo }">重置</el-button>
         </section>
     </section>
     <div v-else>
@@ -346,12 +346,13 @@
             }
         },
         watch: {
-            loginInfo ( loginInfo ) {
-                this.setXTInit( loginInfo );
+            loginInfo (loginInfo) {
+                this.setXTInit({ params: loginInfo })
             }
         },
         methods: {
-            setXTInit( loginInfo ){
+            setXTInit ({ params }) {
+                let loginInfo = params
                 if (loginInfo && loginInfo.config) {
                     if (loginInfo.config.authorize && loginInfo.config.authorize === 1) {
                         this.SQWarning = true
@@ -384,14 +385,14 @@
                     }
                     if (loginInfo.config.promoterSumMoney) {
                         try {
-                            this.xttgdjVal = parseInt(loginInfo.config.promoterSumMoney) / 10000 +'万'
+                            this.xttgdjVal = parseInt(loginInfo.config.promoterSumMoney) / 10000 + '万'
                         } catch (e) {
                             console.error('promoterSumMoney error at 387')
                         }
                     }
                     if (loginInfo.config.sumExpiryMoney) {
                         try {
-                            this.xtRdjVal = parseInt(loginInfo.config.sumExpiryMoney) / 10000 +'万'
+                            this.xtRdjVal = parseInt(loginInfo.config.sumExpiryMoney) / 10000 + '万'
                         } catch (e) {
                             console.error('sumExpiryMoney error at 387')
                         }
@@ -399,14 +400,14 @@
 
                     if (loginInfo.config.sumPayMoney) {
                         try {
-                            this.xtRczVal = parseInt(loginInfo.config.sumPayMoney) / 10000 +'万'
+                            this.xtRczVal = parseInt(loginInfo.config.sumPayMoney) / 10000 + '万'
                         } catch (e) {
                             console.error('sumPayMoney error at 387')
                         }
                     }
-                    if ( loginInfo.config.userSumMoney ) {
+                    if (loginInfo.config.userSumMoney) {
                         try {
-                            this.xthydjVal = parseInt(loginInfo.config.userSumMoney) / 10000 +'万'
+                            this.xthydjVal = parseInt(loginInfo.config.userSumMoney) / 10000 + '万'
                         } catch (e) {
                             console.error('userSumMoney error at 387')
                         }
@@ -416,13 +417,13 @@
         },
         computed: {
             loginInfo () {
-                return this.$store.state.user.loginInfo;
+                return this.$store.state.user.loginInfo
             }
         },
         mounted () {
-            if( this.loginInfo ){
-                this.setXTInit( this.loginInfo );
-            }else{
+            if (this.loginInfo) {
+                this.setXTInit({ params: this.loginInfo })
+            } else {
                 // 重新取config 数据
                 this.$router.push('/login')
             }
