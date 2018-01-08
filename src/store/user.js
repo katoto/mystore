@@ -17,7 +17,7 @@ const actionsInfo = mapActions({
             const result = args[0]
             if (result.success) {
                 commit(mTypes.setLoginInfo, result)
-                // console.log(JSON.stringify(result))
+                console.log(JSON.stringify(result))
             } else {
                 console.log(result.message)
                 throw new Error(result.message)
@@ -27,7 +27,7 @@ const actionsInfo = mapActions({
         }
     },
     async getUserList ({dispatch, commit}, args) {
-        let result = await dispatch('invoke', {method: 'memberService/getUserList', args: [name, pass, false, true, 0]})
+        let result = await dispatch('invoke', {method: 'memberService/getUserList', args: [name, null, false, true, 0]})
         commit(mTypes.setUserList, result[0])
     }
 

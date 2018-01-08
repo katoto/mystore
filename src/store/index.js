@@ -139,12 +139,12 @@ const actions = {
 
                     if (~method.indexOf(data.method)) {
                         resolve(data.args)
+                        finished = true
+                        state.websocket.ondata()
                     } else {
                         console.log(JSON.stringify(data))
                         return commit('updateSocketData', data)
                     }
-                    finished = true
-                    state.websocket.ondata()
                 })
 
                 setTimeout(() => {
