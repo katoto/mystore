@@ -27,8 +27,24 @@ const tgyChild = () => import('~pages/home/tgyManage/tgyChild.vue' /* webpackChu
 
 // 3
 const ybyz = () => import('~pages/home/ybyz/ybyz.vue' /* webpackChunkName: "chunks/home/ybyz/ybyz.vue" */)
-const vipOperate = () => import('~pages/home/ybyz/vipOperate.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate.vue" */)
 const rentSearch = () => import('~pages/home/ybyz/rentSearch.vue' /* webpackChunkName: "chunks/home/ybyz/rentSearch.vue" */)
+// 3.1
+const vipOperate = () => import('~pages/home/ybyz/vipOperate/vipOperate.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/vipOperate.vue" */)
+const giftExchange = () => import('~pages/home/ybyz/vipOperate/giftExchange.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/giftExchange.vue" */)
+const flatRent = () => import('~pages/home/ybyz/vipOperate/flatRent.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/flatRent.vue" */)
+const rentReturn = () => import('~pages/home/ybyz/vipOperate/rentReturn.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/rentReturn.vue" */)
+const rechargeSearch = () => import('~pages/home/ybyz/vipOperate/rechargeSearch.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/rechargeSearch.vue" */)
+const DJSearch = () => import('~pages/home/ybyz/vipOperate/DJSearch.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/DJSearch.vue" */)
+const giveSearch = () => import('~pages/home/ybyz/vipOperate/giveSearch.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/giveSearch.vue" */)
+const delSearch = () => import('~pages/home/ybyz/vipOperate/delSearch.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/delSearch.vue" */)
+const rentList = () => import('~pages/home/ybyz/vipOperate/rentList.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/rentList.vue" */)
+const playList = () => import('~pages/home/ybyz/vipOperate/playList.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/playList.vue" */)
+const vipLoginList = () => import('~pages/home/ybyz/vipOperate/vipLoginList.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/vipLoginList.vue" */)
+const BPList = () => import('~pages/home/ybyz/vipOperate/BPList.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/BPList.vue" */)
+const bindingList = () => import('~pages/home/ybyz/vipOperate/bindingList.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/bindingList.vue" */)
+const giveGoodsList = () => import('~pages/home/ybyz/vipOperate/giveGoodsList.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/giveGoodsList.vue" */)
+const weeklyList = () => import('~pages/home/ybyz/vipOperate/weeklyList.vue' /* webpackChunkName: "chunks/home/ybyz/vipOperate/weeklyList.vue" */)
+
 
 // 4
 const htyz = () => import('~pages/home/htyz/htyz.vue' /* webpackChunkName: "chunks/home/htyz/htyz.vue" */)
