@@ -127,7 +127,7 @@
     export default {
         data () {
             return {
-                input:'',
+                input: '',
                 activeName: 'vipOperate',
                 tableData3: [{
                     date: '2016-05-03',
@@ -162,7 +162,7 @@
                         onClick (picker) {
                             const end = new Date()
                             const start = new Date()
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
                             picker.$emit('pick', [start, end])
                         }
                     }]
@@ -181,59 +181,58 @@
                     {
                         value: '1万'
                     }],
-                value: '10万',
+                value: '10万'
             }
         },
         methods: {
             handleClick (tab, event) {
                 if (this.activeName) {
                     switch (this.activeName) {
-                        case 'vipOperate':
-                            this.$router.push('/home/ybyz/vipOperate');
-                            break;
-                        case 'giftExchange':
-                            this.$router.push('/home/ybyz/giftExchange');
-                            break;
-                        case 'flatRent':
-                            this.$router.push('/home/ybyz/flatRent');
-                            break;
-                        case 'rentReturn':
-                            this.$router.push('/home/ybyz/rentReturn');
-                            break;
-                        case 'rechargeSearch':
-                            this.$router.push('/home/ybyz/rechargeSearch');
-                            break;
-                        case 'DJSearch':
-                            this.$router.push('/home/ybyz/DJSearch');
-                            break;
-                        case 'giveSearch':
-                            this.$router.push('/home/ybyz/giveSearch');
-                            break;
-                        case 'delSearch':
-                            this.$router.push('/home/ybyz/delSearch');
-                            break;
-                        case 'rentList':
-                            this.$router.push('/home/ybyz/rentList');
-                            break;
-                        case 'playList':
-                            this.$router.push('/home/ybyz/playList');
-                            break;
-                        case 'vipLoginList':
-                            this.$router.push('/home/ybyz/vipLoginList');
-                            break;
-                        case 'BPList':
-                            this.$router.push('/home/ybyz/BPList');
-                            break;
-                        case 'bindingList':
-                            this.$router.push('/home/ybyz/bindingList');
-                            break;
-                        case 'giveGoodsList':
-                            this.$router.push('/home/ybyz/giveGoodsList');
-                            break;
-                        case 'weeklyList':
-                            this.$router.push('/home/ybyz/weeklyList');
-                            break;
-
+                    case 'vipOperate':
+                        this.$router.push('/home/ybyz/vipOperate')
+                        break
+                    case 'giftExchange':
+                        this.$router.push('/home/ybyz/giftExchange')
+                        break
+                    case 'flatRent':
+                        this.$router.push('/home/ybyz/flatRent')
+                        break
+                    case 'rentReturn':
+                        this.$router.push('/home/ybyz/rentReturn')
+                        break
+                    case 'rechargeSearch':
+                        this.$router.push('/home/ybyz/rechargeSearch')
+                        break
+                    case 'DJSearch':
+                        this.$router.push('/home/ybyz/DJSearch')
+                        break
+                    case 'giveSearch':
+                        this.$router.push('/home/ybyz/giveSearch')
+                        break
+                    case 'delSearch':
+                        this.$router.push('/home/ybyz/delSearch')
+                        break
+                    case 'rentList':
+                        this.$router.push('/home/ybyz/rentList')
+                        break
+                    case 'playList':
+                        this.$router.push('/home/ybyz/playList')
+                        break
+                    case 'vipLoginList':
+                        this.$router.push('/home/ybyz/vipLoginList')
+                        break
+                    case 'BPList':
+                        this.$router.push('/home/ybyz/BPList')
+                        break
+                    case 'bindingList':
+                        this.$router.push('/home/ybyz/bindingList')
+                        break
+                    case 'giveGoodsList':
+                        this.$router.push('/home/ybyz/giveGoodsList')
+                        break
+                    case 'weeklyList':
+                        this.$router.push('/home/ybyz/weeklyList')
+                        break
                     }
                 }
             },

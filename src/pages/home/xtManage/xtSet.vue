@@ -1,5 +1,5 @@
 <template>
-    <section id="xtSet">
+    <section id="xtSet" v-if="loginInfo">
         <!-- 数据之后要处理对应一下 -->
         <template>
             <el-checkbox v-model="openUserChat">用户检查</el-checkbox></br>
@@ -103,15 +103,18 @@
             <el-button size="small" style="margin-left: 28px">重置</el-button>
         </section>
     </section>
+    <div v-else>
+         登陆msg error 无返回loginInfo
+    </div>
 </template>
 
 <script>
     export default {
         data () {
             return {
-                openUserChat: true,
-                checkPay: 1000,
-                checkDJ: 100,
+                openUserChat: false,
+                checkPay: 0,
+                checkDJ: 0,
                 SQWarning: false,
                 xtRcz: [
                     {
@@ -270,12 +273,10 @@
                     }
                 ],
                 xtRczVal: 10000,
-                xtRdjVal: 100000,
-                xthydjVal: 150000,
+                xtRdjVal: 10000,
+                xthydjVal: 10000,
                 xttgdjVal: '不设上限',
-
-                OpenChat: true,
-
+                OpenChat: false,
                 xtfreeze: [
                     {
                         label: '2个月',
@@ -300,7 +301,6 @@
                     }
                 ],
                 xtFreeVal: '不设上限',
-
                 xtbreak: [
                     {
                         label: '1万',
@@ -340,16 +340,92 @@
                         value: -1
                     }
                 ],
-                xtbreakVal: 1000000,
+                xtbreakVal: 0,
 
                 openVIP: false
             }
         },
-        watch: {},
-        methods: {},
-        computed: {},
-        mounted () {
+        watch: {
+            loginInfo ( loginInfo ) {
+                this.setXTInit( loginInfo );
+            }
+        },
+        methods: {
+            setXTInit( loginInfo ){
+                if (loginInfo && loginInfo.config) {
+                    if (loginInfo.config.authorize && loginInfo.config.authorize === 1) {
+                        this.SQWarning = true
+                    }
+                    if (loginInfo.config.chat && loginInfo.config.chat === 1) {
+                        this.OpenChat = true
+                    }
+                    if (loginInfo.config.registVerify && loginInfo.config.registVerify === 1) {
+                        this.openVIP = true
+                    }
+                    if (loginInfo.config.userCheck && loginInfo.config.userCheck === 1) {
+                        this.openUserChat = true
+                    }
 
+                    if (loginInfo.config.moneyOverrun) {
+                        this.xtbreakVal = loginInfo.config.moneyOverrun
+                    }
+                    if (loginInfo.config.notActive) {
+                        try {
+                            this.xtFreeVal = parseInt(loginInfo.config.notActive) / 30 + '个月'
+                        } catch (e) {
+                            console.error('notActive error at 366')
+                        }
+                    }
+                    if (loginInfo.config.expiryCheckMoney) {
+                        this.checkDJ = loginInfo.config.expiryCheckMoney
+                    }
+                    if (loginInfo.config.payCheckMoney) {
+                        this.checkPay = loginInfo.config.payCheckMoney
+                    }
+                    if (loginInfo.config.promoterSumMoney) {
+                        try {
+                            this.xttgdjVal = parseInt(loginInfo.config.promoterSumMoney) / 10000 +'万'
+                        } catch (e) {
+                            console.error('promoterSumMoney error at 387')
+                        }
+                    }
+                    if (loginInfo.config.sumExpiryMoney) {
+                        try {
+                            this.xtRdjVal = parseInt(loginInfo.config.sumExpiryMoney) / 10000 +'万'
+                        } catch (e) {
+                            console.error('sumExpiryMoney error at 387')
+                        }
+                    }
+
+                    if (loginInfo.config.sumPayMoney) {
+                        try {
+                            this.xtRczVal = parseInt(loginInfo.config.sumPayMoney) / 10000 +'万'
+                        } catch (e) {
+                            console.error('sumPayMoney error at 387')
+                        }
+                    }
+                    if ( loginInfo.config.userSumMoney ) {
+                        try {
+                            this.xthydjVal = parseInt(loginInfo.config.userSumMoney) / 10000 +'万'
+                        } catch (e) {
+                            console.error('userSumMoney error at 387')
+                        }
+                    }
+                }
+            }
+        },
+        computed: {
+            loginInfo () {
+                return this.$store.state.user.loginInfo;
+            }
+        },
+        mounted () {
+            if( this.loginInfo ){
+                this.setXTInit( this.loginInfo );
+            }else{
+                // 重新取config 数据
+                this.$router.push('/login')
+            }
         }
     }
 </script>

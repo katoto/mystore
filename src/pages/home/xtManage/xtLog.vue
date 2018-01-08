@@ -66,7 +66,7 @@
     export default {
         data () {
             return {
-                input:'',
+                input: '',
                 pickerOptions2: {
                     shortcuts: [{
                         text: '最近一周',
@@ -89,7 +89,7 @@
                         onClick (picker) {
                             const end = new Date()
                             const start = new Date()
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
                             picker.$emit('pick', [start, end])
                         }
                     }]

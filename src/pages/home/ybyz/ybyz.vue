@@ -20,12 +20,12 @@
             handleClick (tab, event) {
                 if (this.activeName) {
                     switch (this.activeName) {
-                        case 'vipOperate':
-                            this.$router.push('/home/ybyz/vipOperate');
-                            break;
-                        case 'rentSearch':
-                            this.$router.push('/home/ybyz/rentSearch');
-                            break;
+                    case 'vipOperate':
+                        this.$router.push('/home/ybyz/vipOperate')
+                        break
+                    case 'rentSearch':
+                        this.$router.push('/home/ybyz/rentSearch')
+                        break
                     }
                 }
             }

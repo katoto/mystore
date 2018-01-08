@@ -33,7 +33,7 @@ export default {
                     break
                 case 'ybyz':
                     this.$router.push('/home/ybyz/vipOperate')
-                    ;break
+                    break
                 case 'htyz':
                     this.$router.push('/home/htyz/gameHomeGL')
                     break
