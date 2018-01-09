@@ -7,6 +7,7 @@ import Vuex from 'vuex'
 // import SockJS from 'sockjs-client'
 import home from './home'
 import user from './user'
+import xtManager from './xtManager'
 import {wait} from '../common/util'
 
 Vue.use(Vuex)
@@ -187,6 +188,6 @@ export default () => new Vuex.Store({
     actions,
     mutations,
     modules: {
-        home, user
+        home, user, xtManager
     }
 })
