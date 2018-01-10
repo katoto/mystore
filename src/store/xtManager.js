@@ -42,7 +42,7 @@ const actionsInfo = mapActions({
     async upxtSetMsg ({dispatch, commit}, args = [{}]) {
         const argsData = await dispatch('invoke', {
             method: 'systemConfigService/updateConfig',
-            args
+            args: args
         })
         return argsData[0]
     }

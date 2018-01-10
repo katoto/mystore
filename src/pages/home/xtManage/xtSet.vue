@@ -113,10 +113,10 @@
     export default {
         data () {
             return {
-                openUserChat: false,
+                openUserChat: 0,
                 checkPay: 0,
                 checkDJ: 0,
-                SQWarning: false,
+                SQWarning: 0,
                 xtRcz: [
                     {
                         label: '1万',
@@ -277,24 +277,24 @@
                 xtRdjVal: 10000,
                 xthydjVal: 10000,
                 xttgdjVal: '不设上限',
-                OpenChat: false,
+                OpenChat: 0,
                 xtfreeze: [
                     {
                         label: '2个月',
-                        value: 2
+                        value: 60
 
                     },
                     {
                         label: '4个月',
-                        value: 4
+                        value: 120
                     },
                     {
                         label: '6个月',
-                        value: 6
+                        value: 180
                     },
                     {
                         label: '12个月',
-                        value: 12
+                        value: 360
                     },
                     {
                         label: '不设上限',
@@ -306,7 +306,6 @@
                     {
                         label: '1万',
                         value: 10000
-
                     },
                     {
                         label: '2万',
@@ -343,7 +342,7 @@
                 ],
                 xtbreakVal: 0,
 
-                openVIP: false
+                openVIP: 0
             }
         },
         watch: {
@@ -356,16 +355,16 @@
                 let loginInfo = params
                 if (loginInfo && loginInfo.config) {
                     if (loginInfo.config.authorize && loginInfo.config.authorize === 1) {
-                        this.SQWarning = true
+                        this.SQWarning = 1
                     }
                     if (loginInfo.config.chat && loginInfo.config.chat === 1) {
-                        this.OpenChat = true
+                        this.OpenChat = 1
                     }
                     if (loginInfo.config.registVerify && loginInfo.config.registVerify === 1) {
-                        this.openVIP = true
+                        this.openVIP = 1
                     }
                     if (loginInfo.config.userCheck && loginInfo.config.userCheck === 1) {
-                        this.openUserChat = true
+                        this.openUserChat = 1
                     }
 
                     if (loginInfo.config.moneyOverrun) {
@@ -373,7 +372,7 @@
                     }
                     if (loginInfo.config.notActive) {
                         try {
-                            this.xtFreeVal = parseInt(loginInfo.config.notActive) / 30 + '个月'
+                            this.xtFreeVal = loginInfo.config.notActive
                         } catch (e) {
                             console.error('notActive error at 366')
                         }
@@ -386,14 +385,14 @@
                     }
                     if (loginInfo.config.promoterSumMoney) {
                         try {
-                            this.xttgdjVal = parseInt(loginInfo.config.promoterSumMoney) / 10000 + '万'
+                            this.xttgdjVal = loginInfo.config.promoterSumMoney
                         } catch (e) {
                             console.error('promoterSumMoney error at 387')
                         }
                     }
                     if (loginInfo.config.sumExpiryMoney) {
                         try {
-                            this.xtRdjVal = parseInt(loginInfo.config.sumExpiryMoney) / 10000 + '万'
+                            this.xtRdjVal = loginInfo.config.sumExpiryMoney
                         } catch (e) {
                             console.error('sumExpiryMoney error at 387')
                         }
@@ -401,14 +400,14 @@
 
                     if (loginInfo.config.sumPayMoney) {
                         try {
-                            this.xtRczVal = parseInt(loginInfo.config.sumPayMoney) / 10000 + '万'
+                            this.xtRczVal = loginInfo.config.sumPayMoney
                         } catch (e) {
                             console.error('sumPayMoney error at 387')
                         }
                     }
                     if (loginInfo.config.userSumMoney) {
                         try {
-                            this.xthydjVal = parseInt(loginInfo.config.userSumMoney) / 10000 + '万'
+                            this.xthydjVal = loginInfo.config.userSumMoney
                         } catch (e) {
                             console.error('userSumMoney error at 387')
                         }
@@ -425,19 +424,32 @@
             },
             async upxtSetMsg () {
                 // 更新系统设置
-                let result = await this.$store.dispatch(aTypes.getXtLog, [{
-                    'authorize': 1,
-                    'chat': 0,
-                    'moneyOverrun': 500000,
-                    'notActive': 120,
-                    'expiryCheckMoney': 5000,
-                    'payCheckMoney': 10000,
-                    'promoterSumMoney': 150000,
-                    'registVerify': 1,
-                    'sumExpiryMoney': 50000,
-                    'sumPayMoney': 20000,
-                    'userCheck': 1,
-                    'userSumMoney': 100000,
+                let result = await this.$store.dispatch(aTypes.upxtSetMsg, [{
+                    'authorize': this.SQWarning,
+                    'chat': this.OpenChat,
+                    'moneyOverrun': this.xtbreakVal,
+                    'notActive': this.xtFreeVal,
+                    'expiryCheckMoney': this.checkDJ,
+                    'payCheckMoney': this.checkPay,
+                    'promoterSumMoney': this.xttgdjVal,
+                    'registVerify': this.openVIP,
+                    'sumExpiryMoney': this.xtRdjVal,
+                    'sumPayMoney': this.xtRczVal,
+                    'userCheck': this.openUserChat,
+                    'userSumMoney': this.xthydjVal,
+
+                    //                    "authorize":0,
+                    //                    "chat":0,
+                    //                    "moneyOverrun":500000,
+                    //                    "notActive":120,
+                    //                    "expiryCheckMoney":5000,"payCheckMoney":10000,
+                    //                    "promoterSumMoney":150000,
+                    //                    "registVerify":1,
+                    //                    "sumExpiryMoney":50000,
+                    //                    "sumPayMoney":20000,
+                    //                    "userCheck":0,
+                    //                    "userSumMoney":100000,
+
                     // none
                     'baodanPwd': '',
                     'baodanStatus': 0,
