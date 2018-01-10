@@ -175,7 +175,8 @@ const actions = {
         }
     },
     showToast ({commit}, msg) {
-        commit('showToast', msg)
+        commit('showToast', msg);
+        console.log( msg );
         setTimeout(() => {
             commit('hideToast')
         }, 3000)

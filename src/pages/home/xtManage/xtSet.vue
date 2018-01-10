@@ -100,7 +100,7 @@
         </section>
         <section style="margin-top: 20px">
             <el-button size="small" type="primary">更新</el-button>
-            <el-button size="small" style="margin-left: 28px" v-tap="{ methods:setXTInit,params: loginInfo }">重置</el-button>
+            <el-button size="small" style="margin-left: 28px" v-tap="{ methods:setXTInit,params: loginInfo ,showTips:true }">重置</el-button>
         </section>
     </section>
     <div v-else>
@@ -351,8 +351,8 @@
             }
         },
         methods: {
-            setXTInit ({ params }) {
-                let loginInfo = params
+            setXTInit ({ params , showTips }) {
+                let loginInfo = params;
                 if (loginInfo && loginInfo.config) {
                     if (loginInfo.config.authorize && loginInfo.config.authorize === 1) {
                         this.SQWarning = true
@@ -413,6 +413,13 @@
                         }
                     }
                 }
+
+                if( showTips ){
+                    this.$store.dispatch('showToast','重置成功');
+                    console.log(showTips);
+
+                }
+
             }
         },
         computed: {

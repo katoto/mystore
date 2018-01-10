@@ -147,7 +147,12 @@ export default new VueRouter({
                                 {
                                     path: 'tgyChildYwjl',
                                     component: tgyChildYwjl
-                                }
+                                },
+                                {
+                                    path: '/',
+                                    redirect: tgyChildCz
+                                },
+
                             ]
                         }
                     ]
