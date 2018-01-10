@@ -34,9 +34,9 @@ const actionsInfo = mapActions({
         const args = await dispatch('invoke', {
             method: 'statementService/getSystemLog',
             args: [
-                firstParam , starttime, endtime, {pageNumber, pageSize, totalCount, pageCount, orderBy, order, list}
+                firstParam , starttime, endtime, {pageNumber, pageSize, totalCount, pageCount, orderBy, order, list},'',''
             ]
-        })
+        });
         return args[0]
     }
 
