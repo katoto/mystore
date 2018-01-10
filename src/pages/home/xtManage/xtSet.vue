@@ -425,7 +425,7 @@
                 this.setXTInit({ params: this.loginInfo })
             } else {
                 // 重新取config 数据
-                this.$router.push('/login')
+                this.$router.push('/login');
             }
         }
     }
