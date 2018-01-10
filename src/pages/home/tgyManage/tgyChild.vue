@@ -108,32 +108,31 @@
         methods: {
             handleClick (tab, event) {
                 switch (this.activeName) {
-                    case 'tgyChildCz':
-                        this.$router.push('/home/tgyManage/tgyChild/tgyChildCz')
-                        break;
-                    case 'tgyChildDh':
-                        this.$router.push('/home/tgyManage/tgyChild/tgyChildDh')
-                        break;
-                    case 'tgyChildCzcx':
-                        this.$router.push('/home/tgyManage/tgyChild/tgyChildCzcx')
-                        break;
-                    case 'tgyChildDjcx':
-                        this.$router.push('/home/tgyManage/tgyChild/tgyChildDjcx')
-                        break;
-                    case 'tgyChildYwjl':
-                        this.$router.push('/home/tgyManage/tgyChild/tgyChildYwjl')
-                        break;
-                    case 'tgyChildIpjl':
-                        this.$router.push('/home/tgyManage/tgyChild/tgyChildIpjl')
-                        break;
-
+                case 'tgyChildCz':
+                    this.$router.push('/home/tgyManage/tgyChild/tgyChildCz')
+                    break
+                case 'tgyChildDh':
+                    this.$router.push('/home/tgyManage/tgyChild/tgyChildDh')
+                    break
+                case 'tgyChildCzcx':
+                    this.$router.push('/home/tgyManage/tgyChild/tgyChildCzcx')
+                    break
+                case 'tgyChildDjcx':
+                    this.$router.push('/home/tgyManage/tgyChild/tgyChildDjcx')
+                    break
+                case 'tgyChildYwjl':
+                    this.$router.push('/home/tgyManage/tgyChild/tgyChildYwjl')
+                    break
+                case 'tgyChildIpjl':
+                    this.$router.push('/home/tgyManage/tgyChild/tgyChildIpjl')
+                    break
                 }
             },
-            handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
+            handleSizeChange (val) {
+                console.log(`每页 ${val} 条`)
             },
-            handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+            handleCurrentChange (val) {
+                console.log(`当前页: ${val}`)
             }
         },
         data () {
@@ -148,16 +147,16 @@
                     rechargeNumber: '上海市普陀区金沙江路 1518 弄',
                     status: '上海市普陀区金沙江路 1518 弄',
                     time: '上海市普陀区金沙江路 1518 弄',
-                    remarks: '上海市普陀区金沙江路 15181518151815181518 弄',
+                    remarks: '上海市普陀区金沙江路 15181518151815181518 弄'
                 }],
                 currentPage1: 5,
                 currentPage2: 5,
                 currentPage3: 5,
                 currentPage4: 4,
-                value:'',
-                input:'',
-                options:'',
-                activeName:'tgyChildCz',
+                value: '',
+                input: '',
+                options: '',
+                activeName: 'tgyChildCz'
             }
         }
     }

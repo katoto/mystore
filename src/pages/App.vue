@@ -12,7 +12,7 @@ export default {
         },
         showToast () {
             return this.$store.state.showToast
-        },
+        }
     },
     async mounted () {
         try {

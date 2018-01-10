@@ -99,7 +99,7 @@
             <el-checkbox v-model="openVIP">会员注册验证开启</el-checkbox>
         </section>
         <section style="margin-top: 20px">
-            <el-button size="small" type="primary">更新</el-button>
+            <el-button size="small" type="primary" v-tap="{ methods: upxtSetMsg  }">更新</el-button>
             <el-button size="small" style="margin-left: 28px" v-tap="{ methods:setXTInit,params: loginInfo ,showTips:true }">重置</el-button>
         </section>
     </section>
@@ -109,6 +109,7 @@
 </template>
 
 <script>
+    import {aTypes} from '~store/xtManager'
     export default {
         data () {
             return {
@@ -351,8 +352,8 @@
             }
         },
         methods: {
-            setXTInit ({ params , showTips }) {
-                let loginInfo = params;
+            setXTInit ({ params, showTips }) {
+                let loginInfo = params
                 if (loginInfo && loginInfo.config) {
                     if (loginInfo.config.authorize && loginInfo.config.authorize === 1) {
                         this.SQWarning = true
@@ -414,12 +415,63 @@
                     }
                 }
 
-                if( showTips ){
-                    this.$store.dispatch('showToast','重置成功');
-                    console.log(showTips);
-
+                if (showTips) {
+                    this.$message({
+                        message: '重置成功',
+                        type: 'success',
+                        duration: 1200
+                    })
                 }
+            },
+            async upxtSetMsg () {
+                // 更新系统设置
+                let result = await this.$store.dispatch(aTypes.getXtLog, [{
+                    'authorize': 1,
+                    'chat': 0,
+                    'moneyOverrun': 500000,
+                    'notActive': 120,
+                    'expiryCheckMoney': 5000,
+                    'payCheckMoney': 10000,
+                    'promoterSumMoney': 150000,
+                    'registVerify': 1,
+                    'sumExpiryMoney': 50000,
+                    'sumPayMoney': 20000,
+                    'userCheck': 1,
+                    'userSumMoney': 100000,
+                    // none
+                    'baodanPwd': '',
+                    'baodanStatus': 0,
+                    'content': '',
+                    'expiry': 30,
+                    'gameStatus': 0,
+                    'id': 0,
+                    'interactPassword': 1,
+                    'lackBaodanStatus': 0,
+                    'leaseCheck': 1,
+                    'openBulletGame': 0,
+                    'openCardGame': 0,
+                    'openFishGame': 0,
+                    'openJoyGame': 0,
+                    'openLackGame': 0,
+                    'openLuckGame': 1,
+                    'openMermaidGame': 0,
+                    'openThousandFishGame': 0,
+                    'openWaterGame': 1,
+                    'operationDate': '',
+                    'operationStatus': 0,
+                    'operationStopDate': 0,
+                    'payScale': 100,
+                    'promoterPayScale': 300,
+                    'switchType': 1,
+                    'tempPromoterSumMoney': 0,
+                    'tempSumExpiryMoney': 100000,
+                    'tempSumPayMoney': 100000,
+                    'tempUserSumMoney': 20000,
+                    'weihuTime': -1
 
+                }])
+                console.log(result)
+                console.log(result)
             }
         },
         computed: {
@@ -432,7 +484,7 @@
                 this.setXTInit({ params: this.loginInfo })
             } else {
                 // 重新取config 数据
-                this.$router.push('/login');
+                this.$router.push('/login')
             }
         }
     }
