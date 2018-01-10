@@ -28,6 +28,16 @@ const actionsInfo = mapActions({
             ]
         })
         return args[0]
+    },
+    async getXtLog ({dispatch, commit}, {firstParam , starttime, endtime, pageNumber = 1, pageSize = 16, totalCount = 0, pageCount = 0,
+        orderBy = '', order = '', list = null}) {
+        const args = await dispatch('invoke', {
+            method: 'statementService/getSystemLog',
+            args: [
+                firstParam , starttime, endtime, {pageNumber, pageSize, totalCount, pageCount, orderBy, order, list}
+            ]
+        })
+        return args[0]
     }
 
 }, name)
