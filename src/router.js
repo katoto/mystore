@@ -23,6 +23,12 @@ const xtLog = () => import('~pages/home/xtManage/xtLog.vue' /* webpackChunkName:
 // 2
 const tgyManage = () => import('~pages/home/tgyManage/tgyManage.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyManage.vue" */)
 const tgyChild = () => import('~pages/home/tgyManage/tgyChild.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyChild.vue" */)
+const tgyChildCz = () => import('~pages/home/tgyManage/tgyChildCz.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyChildCz.vue" */)
+const tgyChildCzcx = () => import('~pages/home/tgyManage/tgyChildCzcx.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyChildCzcx.vue" */)
+const tgyChildDh = () => import('~pages/home/tgyManage/tgyChildDh.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyChildDh.vue" */)
+const tgyChildDjcx = () => import('~pages/home/tgyManage/tgyChildDjcx.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyChildDjcx.vue" */)
+const tgyChildIpjl = () => import('~pages/home/tgyManage/tgyChildIpjl.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyChildIpjl.vue" */)
+const tgyChildYwjl = () => import('~pages/home/tgyManage/tgyChildYwjl.vue' /* webpackChunkName: "chunks/home/tgyManage/tgyChildYwjl.vue" */)
 
 // 3
 const ybyz = () => import('~pages/home/ybyz/ybyz.vue' /* webpackChunkName: "chunks/home/ybyz/ybyz.vue" */)
@@ -116,7 +122,33 @@ export default new VueRouter({
                     children: [
                         {
                             path: 'tgyChild',
-                            component: tgyChild
+                            component: tgyChild,
+                            children: [
+                                {
+                                    path: 'tgyChildCz',
+                                    component: tgyChildCz
+                                },
+                                {
+                                    path: 'tgyChildCzcx',
+                                    component: tgyChildCzcx
+                                },
+                                {
+                                    path: 'tgyChildDh',
+                                    component: tgyChildDh
+                                },
+                                {
+                                    path: 'tgyChildDjcx',
+                                    component: tgyChildDjcx
+                                },
+                                {
+                                    path: 'tgyChildIpjl',
+                                    component: tgyChildIpjl
+                                },
+                                {
+                                    path: 'tgyChildYwjl',
+                                    component: tgyChildYwjl
+                                }
+                            ]
                         }
                     ]
                 },
