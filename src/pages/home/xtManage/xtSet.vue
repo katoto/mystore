@@ -99,8 +99,8 @@
             <el-checkbox v-model="openVIP">会员注册验证开启</el-checkbox>
         </section>
         <section style="margin-top: 20px">
-            <el-button size="small" type="primary">更新</el-button>
-            <el-button size="small" style="margin-left: 28px" v-tap="{ methods:setXTInit,params: loginInfo }">重置</el-button>
+            <el-button size="small" type="primary" v-tap="{ methods: upxtSetMsg  }">更新</el-button>
+            <el-button size="small" style="margin-left: 28px" v-tap="{ methods:setXTInit,params: loginInfo ,showTips:true }">重置</el-button>
         </section>
     </section>
     <div v-else>
@@ -109,13 +109,14 @@
 </template>
 
 <script>
+    import {aTypes} from '~store/xtManager'
     export default {
         data () {
             return {
-                openUserChat: false,
+                openUserChat: 0,
                 checkPay: 0,
                 checkDJ: 0,
-                SQWarning: false,
+                SQWarning: 0,
                 xtRcz: [
                     {
                         label: '1万',
@@ -276,24 +277,24 @@
                 xtRdjVal: 10000,
                 xthydjVal: 10000,
                 xttgdjVal: '不设上限',
-                OpenChat: false,
+                OpenChat: 0,
                 xtfreeze: [
                     {
                         label: '2个月',
-                        value: 2
+                        value: 60
 
                     },
                     {
                         label: '4个月',
-                        value: 4
+                        value: 120
                     },
                     {
                         label: '6个月',
-                        value: 6
+                        value: 180
                     },
                     {
                         label: '12个月',
-                        value: 12
+                        value: 360
                     },
                     {
                         label: '不设上限',
@@ -305,7 +306,6 @@
                     {
                         label: '1万',
                         value: 10000
-
                     },
                     {
                         label: '2万',
@@ -342,7 +342,7 @@
                 ],
                 xtbreakVal: 0,
 
-                openVIP: false
+                openVIP: 0
             }
         },
         watch: {
@@ -351,20 +351,20 @@
             }
         },
         methods: {
-            setXTInit ({ params }) {
+            setXTInit ({ params, showTips }) {
                 let loginInfo = params
                 if (loginInfo && loginInfo.config) {
                     if (loginInfo.config.authorize && loginInfo.config.authorize === 1) {
-                        this.SQWarning = true
+                        this.SQWarning = 1
                     }
                     if (loginInfo.config.chat && loginInfo.config.chat === 1) {
-                        this.OpenChat = true
+                        this.OpenChat = 1
                     }
                     if (loginInfo.config.registVerify && loginInfo.config.registVerify === 1) {
-                        this.openVIP = true
+                        this.openVIP = 1
                     }
                     if (loginInfo.config.userCheck && loginInfo.config.userCheck === 1) {
-                        this.openUserChat = true
+                        this.openUserChat = 1
                     }
 
                     if (loginInfo.config.moneyOverrun) {
@@ -372,7 +372,7 @@
                     }
                     if (loginInfo.config.notActive) {
                         try {
-                            this.xtFreeVal = parseInt(loginInfo.config.notActive) / 30 + '个月'
+                            this.xtFreeVal = loginInfo.config.notActive
                         } catch (e) {
                             console.error('notActive error at 366')
                         }
@@ -385,14 +385,14 @@
                     }
                     if (loginInfo.config.promoterSumMoney) {
                         try {
-                            this.xttgdjVal = parseInt(loginInfo.config.promoterSumMoney) / 10000 + '万'
+                            this.xttgdjVal = loginInfo.config.promoterSumMoney
                         } catch (e) {
                             console.error('promoterSumMoney error at 387')
                         }
                     }
                     if (loginInfo.config.sumExpiryMoney) {
                         try {
-                            this.xtRdjVal = parseInt(loginInfo.config.sumExpiryMoney) / 10000 + '万'
+                            this.xtRdjVal = loginInfo.config.sumExpiryMoney
                         } catch (e) {
                             console.error('sumExpiryMoney error at 387')
                         }
@@ -400,19 +400,90 @@
 
                     if (loginInfo.config.sumPayMoney) {
                         try {
-                            this.xtRczVal = parseInt(loginInfo.config.sumPayMoney) / 10000 + '万'
+                            this.xtRczVal = loginInfo.config.sumPayMoney
                         } catch (e) {
                             console.error('sumPayMoney error at 387')
                         }
                     }
                     if (loginInfo.config.userSumMoney) {
                         try {
-                            this.xthydjVal = parseInt(loginInfo.config.userSumMoney) / 10000 + '万'
+                            this.xthydjVal = loginInfo.config.userSumMoney
                         } catch (e) {
                             console.error('userSumMoney error at 387')
                         }
                     }
                 }
+
+                if (showTips) {
+                    this.$message({
+                        message: '重置成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                }
+            },
+            async upxtSetMsg () {
+                // 更新系统设置
+                let result = await this.$store.dispatch(aTypes.upxtSetMsg, [{
+                    'authorize': this.SQWarning,
+                    'chat': this.OpenChat,
+                    'moneyOverrun': this.xtbreakVal,
+                    'notActive': this.xtFreeVal,
+                    'expiryCheckMoney': this.checkDJ,
+                    'payCheckMoney': this.checkPay,
+                    'promoterSumMoney': this.xttgdjVal,
+                    'registVerify': this.openVIP,
+                    'sumExpiryMoney': this.xtRdjVal,
+                    'sumPayMoney': this.xtRczVal,
+                    'userCheck': this.openUserChat,
+                    'userSumMoney': this.xthydjVal,
+
+                    //                    "authorize":0,
+                    //                    "chat":0,
+                    //                    "moneyOverrun":500000,
+                    //                    "notActive":120,
+                    //                    "expiryCheckMoney":5000,"payCheckMoney":10000,
+                    //                    "promoterSumMoney":150000,
+                    //                    "registVerify":1,
+                    //                    "sumExpiryMoney":50000,
+                    //                    "sumPayMoney":20000,
+                    //                    "userCheck":0,
+                    //                    "userSumMoney":100000,
+
+                    // none
+                    'baodanPwd': '',
+                    'baodanStatus': 0,
+                    'content': '',
+                    'expiry': 30,
+                    'gameStatus': 0,
+                    'id': 0,
+                    'interactPassword': 1,
+                    'lackBaodanStatus': 0,
+                    'leaseCheck': 1,
+                    'openBulletGame': 0,
+                    'openCardGame': 0,
+                    'openFishGame': 0,
+                    'openJoyGame': 0,
+                    'openLackGame': 0,
+                    'openLuckGame': 1,
+                    'openMermaidGame': 0,
+                    'openThousandFishGame': 0,
+                    'openWaterGame': 1,
+                    'operationDate': '',
+                    'operationStatus': 0,
+                    'operationStopDate': 0,
+                    'payScale': 100,
+                    'promoterPayScale': 300,
+                    'switchType': 1,
+                    'tempPromoterSumMoney': 0,
+                    'tempSumExpiryMoney': 100000,
+                    'tempSumPayMoney': 100000,
+                    'tempUserSumMoney': 20000,
+                    'weihuTime': -1
+
+                }])
+                console.log(result)
+                console.log(result)
             }
         },
         computed: {
@@ -425,7 +496,7 @@
                 this.setXTInit({ params: this.loginInfo })
             } else {
                 // 重新取config 数据
-                this.$router.push('/login');
+                this.$router.push('/login')
             }
         }
     }
