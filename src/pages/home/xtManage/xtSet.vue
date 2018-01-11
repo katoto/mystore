@@ -341,7 +341,6 @@
                     }
                 ],
                 xtbreakVal: 0,
-
                 openVIP: 0
             }
         },
@@ -423,31 +422,54 @@
             },
             async upxtSetMsg () {
                 // 更新系统设置
-                let result = await this.$store.dispatch(aTypes.upxtSetMsg, [{
-//                    'authorize': this.SQWarning,
-//                    'chat': this.OpenChat,
-//                    'moneyOverrun': this.xtbreakVal,
-//                    'notActive': this.xtFreeVal,
-//                    'expiryCheckMoney': this.checkDJ,
-//                    'payCheckMoney': this.checkPay,
-//                    'promoterSumMoney': this.xttgdjVal,
-//                    'registVerify': this.openVIP,
-//                    'sumExpiryMoney': this.xtRdjVal,
-//                    'sumPayMoney': this.xtRczVal,
-//                    'userCheck': this.openUserChat,
-//                    'userSumMoney': this.xthydjVal,
+                console.log('=======')
+                console.log(this.openVIP)
+                if( this.openVIP ){
+                    this.openVIP = 1
+                }else{
+                    this.openVIP = 0
+                }
+                if( this.SQWarning ){
+                    this.SQWarning = 1
+                }else{
+                    this.SQWarning = 0
+                }
+                if( this.OpenChat ){
+                    this.OpenChat = 1
+                }else{
+                    this.OpenChat = 0
+                }
+                if( this.openUserChat ){
+                    this.openUserChat = 1
+                }else{
+                    this.openUserChat = 0
+                }
 
-                                        "authorize":0,
-                                        "chat":0,
-                                        "moneyOverrun":500000,
-                                        "notActive":120,
-                                        "expiryCheckMoney":5000,"payCheckMoney":10000,
-                                        "promoterSumMoney":150000,
-                                        "registVerify":1,
-                                        "sumExpiryMoney":50000,
-                                        "sumPayMoney":20000,
-                                        "userCheck":0,
-                                        "userSumMoney":100000,
+                let result = await this.$store.dispatch(aTypes.upxtSetMsg, [{
+                    'authorize': this.SQWarning,
+                    'chat': this.OpenChat,
+                    'moneyOverrun': this.xtbreakVal,
+                    'notActive': this.xtFreeVal,
+                    'expiryCheckMoney': this.checkDJ,
+                    'payCheckMoney': this.checkPay,
+                    'promoterSumMoney': this.xttgdjVal,
+                    'registVerify': this.openVIP,
+                    'sumExpiryMoney': this.xtRdjVal,
+                    'sumPayMoney': this.xtRczVal,
+                    'userCheck': this.openUserChat,
+                    'userSumMoney': this.xthydjVal,
+
+//                                        "authorize":0,
+//                                        "chat":0,
+//                                        "moneyOverrun":500000,
+//                                        "notActive":120,
+//                                        "expiryCheckMoney":5000,"payCheckMoney":10000,
+//                                        "promoterSumMoney":150000,
+//                                        "registVerify":1,
+//                                        "sumExpiryMoney":50000,
+//                                        "sumPayMoney":20000,
+//                                        "userCheck":0,
+//                                        "userSumMoney":100000,
 
                     // none
                     'baodanPwd': '',
