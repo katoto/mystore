@@ -1,5 +1,5 @@
 <template>
-    <section id="xtSet" v-if="loginInfo">
+    <section id="xtSet" v-if="!!loginInfoConfig">
         <!-- 数据之后要处理对应一下 -->
         <template>
             <el-checkbox v-model="openUserChat">用户检查</el-checkbox></br>
@@ -100,7 +100,7 @@
         </section>
         <section style="margin-top: 20px">
             <el-button size="small" type="primary" v-tap="{ methods: upxtSetMsg  }">更新</el-button>
-            <el-button size="small" style="margin-left: 28px" v-tap="{ methods:setXTInit,params: loginInfo ,showTips:true }">重置</el-button>
+            <el-button size="small" style="margin-left: 28px" v-tap="{ methods:setXTInit,params: loginInfoConfig ,showTips:true }">重置</el-button>
         </section>
     </section>
     <div v-else>
@@ -109,14 +109,15 @@
 </template>
 
 <script>
-    import {aTypes} from '~store/xtManager'
+    import { actionTypes ,mutationTypes } from '~store/xtManager'
+
     export default {
         data () {
             return {
                 openUserChat: 0,
                 checkPay: 0,
-                checkDJ: 0,
-                SQWarning: 0,
+                checkDJ: 1,
+                SQWarning: 1,
                 xtRcz: [
                     {
                         label: '1万',
@@ -277,7 +278,7 @@
                 xtRdjVal: 10000,
                 xthydjVal: 10000,
                 xttgdjVal: '不设上限',
-                OpenChat: 0,
+                OpenChat: true,
                 xtfreeze: [
                     {
                         label: '2个月',
@@ -345,68 +346,77 @@
             }
         },
         watch: {
-            loginInfo (loginInfo) {
-                this.setXTInit({ params: loginInfo })
+            loginInfoConfig( loginInfoConfig ){
+                console.log(111);
+                console.log('============');
+                this.setXTInit({ params: loginInfoConfig })
             }
         },
         methods: {
             setXTInit ({ params, showTips }) {
-                let loginInfo = params
-                if (loginInfo && loginInfo.config) {
-                    if (loginInfo.config.authorize && loginInfo.config.authorize === 1) {
-                        this.SQWarning = 1
+                let loginInfoConfig = params
+                if (loginInfoConfig) {
+                    if (loginInfoConfig.authorize  ) {
+                        this.SQWarning = true
+                    }else{
+                        this.SQWarning = false
                     }
-                    if (loginInfo.config.chat && loginInfo.config.chat === 1) {
-                        this.OpenChat = 1
+                    if (loginInfoConfig.chat ) {
+                        this.OpenChat = true
+                    }else{
+                        this.OpenChat = false
                     }
-                    if (loginInfo.config.registVerify && loginInfo.config.registVerify === 1) {
-                        this.openVIP = 1
+                    if (loginInfoConfig.registVerify) {
+                        this.openVIP = true
+                    }else{
+                        this.openVIP = false
                     }
-                    if (loginInfo.config.userCheck && loginInfo.config.userCheck === 1) {
-                        this.openUserChat = 1
+                    if (loginInfoConfig.userCheck ) {
+                        this.openUserChat = true
+                    }else{
+                        this.openUserChat = false
                     }
 
-                    if (loginInfo.config.moneyOverrun) {
-                        this.xtbreakVal = loginInfo.config.moneyOverrun
+                    if (loginInfoConfig.moneyOverrun) {
+                        this.xtbreakVal = loginInfoConfig.moneyOverrun
                     }
-                    if (loginInfo.config.notActive) {
+                    if (loginInfoConfig.notActive) {
                         try {
-                            this.xtFreeVal = loginInfo.config.notActive
+                            this.xtFreeVal = loginInfoConfig.notActive
                         } catch (e) {
                             console.error('notActive error at 366')
                         }
                     }
-                    if (loginInfo.config.expiryCheckMoney) {
-                        this.checkDJ = loginInfo.config.expiryCheckMoney
+                    if (loginInfoConfig.expiryCheckMoney) {
+                        this.checkDJ = loginInfoConfig.expiryCheckMoney
                     }
-                    if (loginInfo.config.payCheckMoney) {
-                        this.checkPay = loginInfo.config.payCheckMoney
+                    if (loginInfoConfig.payCheckMoney) {
+                        this.checkPay = loginInfoConfig.payCheckMoney
                     }
-                    if (loginInfo.config.promoterSumMoney) {
+                    if (loginInfoConfig.promoterSumMoney) {
                         try {
-                            this.xttgdjVal = loginInfo.config.promoterSumMoney
+                            this.xttgdjVal = loginInfoConfig.promoterSumMoney
                         } catch (e) {
                             console.error('promoterSumMoney error at 387')
                         }
                     }
-                    if (loginInfo.config.sumExpiryMoney) {
+                    if (loginInfoConfig.sumExpiryMoney) {
                         try {
-                            this.xtRdjVal = loginInfo.config.sumExpiryMoney
+                            this.xtRdjVal = loginInfoConfig.sumExpiryMoney
                         } catch (e) {
                             console.error('sumExpiryMoney error at 387')
                         }
                     }
-
-                    if (loginInfo.config.sumPayMoney) {
+                    if (loginInfoConfig.sumPayMoney) {
                         try {
-                            this.xtRczVal = loginInfo.config.sumPayMoney
+                            this.xtRczVal = loginInfoConfig.sumPayMoney
                         } catch (e) {
                             console.error('sumPayMoney error at 387')
                         }
                     }
-                    if (loginInfo.config.userSumMoney) {
+                    if (loginInfoConfig.userSumMoney) {
                         try {
-                            this.xthydjVal = loginInfo.config.userSumMoney
+                            this.xthydjVal = loginInfoConfig.userSumMoney
                         } catch (e) {
                             console.error('userSumMoney error at 387')
                         }
@@ -420,33 +430,16 @@
                     })
                 }
             },
+
             async upxtSetMsg () {
                 // 更新系统设置
-                console.log('=======')
-                console.log(this.openVIP)
                 let newUpxtSetMsg
-                if( this.openVIP ){
-                    this.openVIP = 1
-                }else{
-                    this.openVIP = 0
-                }
-                if( this.SQWarning ){
-                    this.SQWarning = 1
-                }else{
-                    this.SQWarning = 0
-                }
-                if( this.OpenChat ){
-                    this.OpenChat = 1
-                }else{
-                    this.OpenChat = 0
-                }
-                if( this.openUserChat ){
-                    this.openUserChat = 1
-                }else{
-                    this.openUserChat = 0
-                }
-                if( this.loginInfo && this.loginInfo.config ){
-                    let copyLoginConfig = this.loginInfo.config;
+                this.openVIP = this.openVIP ?  1 : 0
+                this.SQWarning = this.SQWarning ?  1 : 0
+                this.OpenChat = this.OpenChat ?  1 : 0
+                this.openUserChat = this.openUserChat ?  1 : 0
+                if( this.loginInfoConfig ){
+                    let copyLoginConfig = this.loginInfoConfig;
                         newUpxtSetMsg = [{
                         'authorize': this.SQWarning,
                         'chat': this.OpenChat,
@@ -498,27 +491,34 @@
                         duration: 1200
                     })
                 }
-                let result = await this.$store.dispatch(aTypes.upxtSetMsg, newUpxtSetMsg )
-                console.log(result)
-                console.log(111)
+                let result = await this.$store.dispatch(actionTypes.upxtSetMsg, newUpxtSetMsg );
+                console.log( result );
                 // 需要再一次 更新用户信息 !!!!!
-                if( result && result.success ){
+                if( result && result.success===true ){
                     this.$message({
                         message: '更新成功',
                         type: 'success',
                         duration: 1200
-                    })
+                    });
+                    newUpxtSetMsg[0].registVerify = !!this.openVIP ;
+                    newUpxtSetMsg[0].authorize = !!this.SQWarning ;
+                    newUpxtSetMsg[0].chat = !!this.OpenChat ;
+                    newUpxtSetMsg[0].userCheck = !!this.openUserChat ;
+                    this.$store.dispatch( actionTypes.upLocalMsg, newUpxtSetMsg[0] ) ;
                 }
             }
         },
         computed: {
-            loginInfo () {
-                return this.$store.state.user.loginInfo
+            loginInfoConfig(){
+                if( this.$store.state.user.loginInfo ){
+                    return this.$store.state.user.loginInfo.config
+                }
+                return false
             }
         },
         mounted () {
-            if (this.loginInfo) {
-                this.setXTInit({ params: this.loginInfo })
+            if (this.loginInfoConfig) {
+                this.setXTInit({ params: this.loginInfoConfig })
             } else {
                 // 重新取config 数据
                 this.$router.push('/login')
