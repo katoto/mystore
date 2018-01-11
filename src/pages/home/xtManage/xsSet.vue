@@ -69,9 +69,89 @@
         },
         watch: {},
         methods: {
+            setXTInit ({ params, showTips }) {
+                let loginInfo = params
+                if (loginInfo && loginInfo.config) {
+                    if (loginInfo.config.authorize && loginInfo.config.authorize === 1) {
+                        this.SQWarning = 1
+                    }
+                    if (loginInfo.config.chat && loginInfo.config.chat === 1) {
+                        this.OpenChat = 1
+                    }
+                    if (loginInfo.config.registVerify && loginInfo.config.registVerify === 1) {
+                        this.openVIP = 1
+                    }
+                    if (loginInfo.config.userCheck && loginInfo.config.userCheck === 1) {
+                        this.openUserChat = 1
+                    }
+
+                    if (loginInfo.config.moneyOverrun) {
+                        this.xtbreakVal = loginInfo.config.moneyOverrun
+                    }
+                    if (loginInfo.config.notActive) {
+                        try {
+                            this.xtFreeVal = loginInfo.config.notActive
+                        } catch (e) {
+                            console.error('notActive error at 366')
+                        }
+                    }
+                    if (loginInfo.config.expiryCheckMoney) {
+                        this.checkDJ = loginInfo.config.expiryCheckMoney
+                    }
+                    if (loginInfo.config.payCheckMoney) {
+                        this.checkPay = loginInfo.config.payCheckMoney
+                    }
+                    if (loginInfo.config.promoterSumMoney) {
+                        try {
+                            this.xttgdjVal = loginInfo.config.promoterSumMoney
+                        } catch (e) {
+                            console.error('promoterSumMoney error at 387')
+                        }
+                    }
+                    if (loginInfo.config.sumExpiryMoney) {
+                        try {
+                            this.xtRdjVal = loginInfo.config.sumExpiryMoney
+                        } catch (e) {
+                            console.error('sumExpiryMoney error at 387')
+                        }
+                    }
+
+                    if (loginInfo.config.sumPayMoney) {
+                        try {
+                            this.xtRczVal = loginInfo.config.sumPayMoney
+                        } catch (e) {
+                            console.error('sumPayMoney error at 387')
+                        }
+                    }
+                    if (loginInfo.config.userSumMoney) {
+                        try {
+                            this.xthydjVal = loginInfo.config.userSumMoney
+                        } catch (e) {
+                            console.error('userSumMoney error at 387')
+                        }
+                    }
+                }
+                if (showTips) {
+                    this.$message({
+                        message: '重置成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                }
+            },
         },
-        computed: {},
+        computed: {
+            loginInfo () {
+                return this.$store.state.user.loginInfo
+            }
+        },
         mounted () {
+            if (this.loginInfo) {
+                this.setXTInit({ params: this.loginInfo })
+            } else {
+                // 重新取config 数据
+                this.$router.push('/login')
+            }
         }
     }
 </script>

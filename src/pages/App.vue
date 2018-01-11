@@ -10,13 +10,10 @@ export default {
         serverTime () {
             return this.$store.state.serverTime
         },
-        showToast () {
-            return this.$store.state.showToast
-        }
     },
     async mounted () {
         try {
-            await this.$store.dispatch('initWebsocket')
+            await this.$store.dispatch('initWebsocket');
             await this.$store.dispatch('getServerTime')
         } catch (e) {
             setTimeout(() => {
