@@ -11,30 +11,33 @@
             </div>
             <div class="list pd">
                 <el-checkbox v-model="isDjsq">开启远程充值兑奖申请</el-checkbox>
-                <p>申请有效时限设置</p>
-                <el-select v-model="sjsz" placeholder="请选择">
-                    <el-option
+                <template v-if="isDjsq">
+                    <p>申请有效时限设置</p>
+                    <el-select v-model="sjsz" placeholder="请选择">
+                        <el-option
                             v-for="item in options"
                             :key="item.value"
                             :label="item.label"
                             :value="item.value"
                             :disabled="item.disabled">
-                    </el-option>
-                </el-select>
+                        </el-option>
+                    </el-select>
+                </template>
             </div>
             <div class="list">
                 <el-checkbox v-model="isJjbgn">开启交接班功能</el-checkbox>
-                <p></p>
-                <el-radio-group v-model="jjb">
-                    <el-radio :label="3">不分更</el-radio>
-                    <el-radio :label="6">分AB两更</el-radio>
-                    <el-radio :label="9">分ABC三更</el-radio>
-                </el-radio-group>
+                <div v-if="isJjbgn">
+                    <el-radio-group v-model="jjb">
+                        <el-radio :label="3">不分更</el-radio>
+                        <el-radio :label="6">分AB两更</el-radio>
+                        <el-radio :label="9">分ABC三更</el-radio>
+                    </el-radio-group>
+                </div>
             </div>
             <div class="list">
                 <el-checkbox v-model="isJhs">开启交互式密码输入</el-checkbox>
             </div>
-            <div class="list">
+            <div class="list" style="display: none">
                 <el-checkbox v-model="isShop">开启商城、彩票城</el-checkbox>
             </div>
             <div class="btnBox" style="margin-top: 20px">
