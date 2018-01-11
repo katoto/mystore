@@ -424,6 +424,7 @@
                 // 更新系统设置
                 console.log('=======')
                 console.log(this.openVIP)
+                let newUpxtSetMsg
                 if( this.openVIP ){
                     this.openVIP = 1
                 }else{
@@ -444,66 +445,70 @@
                 }else{
                     this.openUserChat = 0
                 }
-
-                let result = await this.$store.dispatch(aTypes.upxtSetMsg, [{
-                    'authorize': this.SQWarning,
-                    'chat': this.OpenChat,
-                    'moneyOverrun': this.xtbreakVal,
-                    'notActive': this.xtFreeVal,
-                    'expiryCheckMoney': this.checkDJ,
-                    'payCheckMoney': this.checkPay,
-                    'promoterSumMoney': this.xttgdjVal,
-                    'registVerify': this.openVIP,
-                    'sumExpiryMoney': this.xtRdjVal,
-                    'sumPayMoney': this.xtRczVal,
-                    'userCheck': this.openUserChat,
-                    'userSumMoney': this.xthydjVal,
-
-//                                        "authorize":0,
-//                                        "chat":0,
-//                                        "moneyOverrun":500000,
-//                                        "notActive":120,
-//                                        "expiryCheckMoney":5000,"payCheckMoney":10000,
-//                                        "promoterSumMoney":150000,
-//                                        "registVerify":1,
-//                                        "sumExpiryMoney":50000,
-//                                        "sumPayMoney":20000,
-//                                        "userCheck":0,
-//                                        "userSumMoney":100000,
-
-                    // none
-                    'baodanPwd': '',
-                    'baodanStatus': 0,
-                    'content': '',
-                    'expiry': 30,
-                    'gameStatus': 0,
-                    'id': 0,
-                    'interactPassword': 1,
-                    'lackBaodanStatus': 0,
-                    'leaseCheck': 1,
-                    'openBulletGame': 0,
-                    'openCardGame': 0,
-                    'openFishGame': 0,
-                    'openJoyGame': 0,
-                    'openLackGame': 0,
-                    'openLuckGame': 1,
-                    'openMermaidGame': 0,
-                    'openThousandFishGame': 0,
-                    'openWaterGame': 1,
-                    'operationDate': '',
-                    'operationStatus': 0,
-                    'operationStopDate': 0,
-                    'payScale': 100,
-                    'promoterPayScale': 300,
-                    'switchType': 1,
-                    'tempPromoterSumMoney': 0,
-                    'tempSumExpiryMoney': 100000,
-                    'tempSumPayMoney': 100000,
-                    'tempUserSumMoney': 20000,
-                    'weihuTime': -1
-
-                }])
+                if( this.loginInfo && this.loginInfo.config ){
+                    let copyLoginConfig = this.loginInfo.config;
+                        newUpxtSetMsg = [{
+                        'authorize': this.SQWarning,
+                        'chat': this.OpenChat,
+                        'moneyOverrun': this.xtbreakVal,
+                        'notActive': this.xtFreeVal,
+                        'expiryCheckMoney': this.checkDJ,
+                        'payCheckMoney': this.checkPay,
+                        'promoterSumMoney': this.xttgdjVal,
+                        'registVerify': this.openVIP,
+                        'sumExpiryMoney': this.xtRdjVal,
+                        'sumPayMoney': this.xtRczVal,
+                        'userCheck': this.openUserChat,
+                        'userSumMoney': this.xthydjVal,
+                        // none
+                        'baodanPwd': copyLoginConfig.baodanPwd ,
+                        'baodanStatus': copyLoginConfig.baodanStatus ,
+                        'content': copyLoginConfig.content,
+                        'expiry': copyLoginConfig.expiry,
+                        'gameStatus': copyLoginConfig.gameStatus,
+                        'id': copyLoginConfig.id,
+                        'interactPassword': copyLoginConfig.interactPassword,
+                        'lackBaodanStatus': copyLoginConfig.lackBaodanStatus,
+                        'leaseCheck': copyLoginConfig.leaseCheck,
+                        'openBulletGame': copyLoginConfig.openBulletGame,
+                        'openCardGame': copyLoginConfig.openCardGame,
+                        'openFishGame': copyLoginConfig.openFishGame,
+                        'openJoyGame': copyLoginConfig.openJoyGame,
+                        'openLackGame': copyLoginConfig.openLackGame,
+                        'openLuckGame': copyLoginConfig.openLuckGame,
+                        'openMermaidGame': copyLoginConfig.openMermaidGame,
+                        'openThousandFishGame': copyLoginConfig.openThousandFishGame,
+                        'openWaterGame': copyLoginConfig.openWaterGame,
+                        'operationDate': copyLoginConfig.operationDate ,
+                        'operationStatus': copyLoginConfig.operationStatus,
+                        'operationStopDate': copyLoginConfig.operationStopDate,
+                        'payScale': copyLoginConfig.payScale,
+                        'promoterPayScale': copyLoginConfig.promoterPayScale,
+                        'switchType': copyLoginConfig.switchType,
+                        'tempPromoterSumMoney': copyLoginConfig.tempPromoterSumMoney,
+                        'tempSumExpiryMoney': copyLoginConfig.tempSumExpiryMoney,
+                        'tempSumPayMoney': copyLoginConfig.tempSumPayMoney,
+                        'tempUserSumMoney': copyLoginConfig.tempUserSumMoney,
+                        'weihuTime': copyLoginConfig.weihuTime
+                    }]
+                }else{
+                    this.$message({
+                        message: 'loginInfo data error ',
+                        type: 'error',
+                        duration: 1200
+                    })
+                }
+                let result = await this.$store.dispatch(aTypes.upxtSetMsg, newUpxtSetMsg )
                 console.log(result)
+                console.log(111)
+                // 需要再一次 更新用户信息 !!!!!
+                if( result && result.success ){
+                    this.$message({
+                        message: '更新成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                }
             }
         },
         computed: {
