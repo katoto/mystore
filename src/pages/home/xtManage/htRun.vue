@@ -129,7 +129,7 @@
 </template>
 
 <script>
-    import {aTypes} from '~store/xtManager'
+    import {actionTypes} from '~store/xtManager'
     export default {
         data () {
             return {

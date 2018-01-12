@@ -3,6 +3,7 @@
  */
 // import ajax from '~common/ajax'
 import { mapActions, mapMutations } from '~common/util'
+import { mTypes } from '~store/user'
 
 const name = 'xtManager'
 const state = {
@@ -45,15 +46,22 @@ const actionsInfo = mapActions({
             args: args
         })
         return argsData[0]
+    },
+
+    upLocalMsg ({dispatch, commit},data ) {
+        commit(mTypes.setLoginInfoConfig , data )
     }
+
 }, name)
 
 const mutationsInfo = mapMutations({
+    setLoginInfoCofig (state, info) {
 
+    },
 }, name)
 
 const actions = actionsInfo.actions
 const mutations = mutationsInfo.mutations
-export const aTypes = actionsInfo.aTypes
-export const mTypes = mutationsInfo.mTypes
+export const actionTypes = actionsInfo.aTypes
+export const mutationTypes = mutationsInfo.mTypes
 export default { state, actions, mutations }
