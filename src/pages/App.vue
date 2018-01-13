@@ -9,9 +9,24 @@ export default {
     computed: {
         serverTime () {
             return this.$store.state.serverTime
+        },
+        loginInfo () {
+          return this.$store.state.user.loginInfo
         }
+      
+    },
+    watch: {
+      loginInfo (loginInfo) {
+        if(!loginInfo) {
+          this.$router.replace('/login')
+        }
+      }
+
     },
     async mounted () {
+        if(this.$route.path !== '/login') {
+          this.$router.replace('/login')
+        }
         try {
             await this.$store.dispatch('initWebsocket')
             await this.$store.dispatch('getServerTime')
