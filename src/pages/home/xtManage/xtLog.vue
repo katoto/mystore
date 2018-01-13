@@ -25,7 +25,7 @@
                 </el-option>
             </el-select>
             <el-input size="small" class="xtInp" v-model="xtInpVal" placeholder="请输入内容"></el-input>
-            <el-button style="margin-left: 18px" size="small" type="primary">查询</el-button>
+            <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
         </header>
         <section>
             <el-table
@@ -73,16 +73,16 @@
     export default {
         data () {
             return {
-                totalCount:20,
-                pageNumber:1,
-                pageSize:16,
+                totalCount: 20,
+                pageNumber: 1,
+                pageSize: 16,
                 xtLogList: [
-                {
-                    admin: 'admin',
-                    authority: '超级管理员',
-                    content: '登陆管理后台',
-                    datetime: '2018-01-08 15:33:59'
-                }],
+                    {
+                        admin: 'admin',
+                        authority: '超级管理员',
+                        content: '登陆管理后台',
+                        datetime: '2018-01-08 15:33:59'
+                    }],
                 xtInpVal: '',
 
                 pickerOptions: {
@@ -131,7 +131,7 @@
                     {
                         value: '1000'
                     }],
-                xtUserSel: '10万',
+                xtUserSel: '10万'
 
             }
         },
@@ -173,16 +173,15 @@
             console.log(copyResult)
 
             if (copyResult.args[0].list || 1) {
-                let copyList = copyResult.args[0].list;
-                this.xtLogList = copyList;
+                let copyList = copyResult.args[0].list
+                this.xtLogList = copyList
                 // 处理页码
                 this.totalCount = copyResult.args[0].totalCount,
                 this.pageNumber = copyResult.args[0].pageNumber,
                 this.pageSize = copyResult.args[0].pageSize
-
             }
 
-            let result = await this.$store.dispatch(actionTypes.getXtLog, { firstParam: '-1', starttime: '2018-01-01', endtime: '2018-01-08'})
+            let result = await this.$store.dispatch(actionTypes.getXtLog, { firstParam: '-1', starttime: '2018-01-01', endtime: '2018-01-13'})
             console.log(result)
             console.log(result)
         }

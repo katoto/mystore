@@ -37,8 +37,15 @@ const actionsInfo = mapActions({
             method: 'statementService/getSystemLog',
             args: [
                 // firstParam, starttime, endtime, {pageNumber, pageSize, totalCount, pageCount, orderBy, order, list}, '', ''
-                firstParam, starttime, endtime, [ pageNumber, pageSize, totalCount, pageCount, orderBy, order, list ], '', ''
-            ]
+                firstParam, starttime, endtime,{
+                    "list": [],
+                    "order": "",
+                    "orderBy": "",
+                    "pageCount": 0,
+                    "pageNumber": 1,
+                    "pageSize": 16,
+                    "totalCount": 0
+                },  '']
         })
         return args[0]
     },
