@@ -53,23 +53,20 @@
         data () {
             return {
                 switchType: false,
-                switchTypeVal:0,
+                switchTypeVal: 0,
 
-                expiry:null,
-                expiryVal:'10分钟',
+                expiry: null,
+                expiryVal: '10分钟',
                 expiryOptions: [
                     {value: '10', label: '10分钟'},
                     {value: '30', label: '30分钟'}
                 ],
-
 
                 xsSet: '',
                 payScale: '',
                 promoterPayScale: '',
                 isDjsq: true,
                 sjsz: '',
-
-
 
                 jjb: '',
                 interactPassword: false,
@@ -91,26 +88,26 @@
             setXTInit ({ params, showTips }) {
                 let loginInfoConfig = params
                 if (loginInfoConfig) {
-                    if( loginInfoConfig.switchType !== -1 ){
-                        this.switchTypeVal = loginInfoConfig.switchType ;
+                    if (loginInfoConfig.switchType !== -1) {
+                        this.switchTypeVal = loginInfoConfig.switchType
                         this.switchType = true
-                        console.log(  loginInfoConfig.switchTypeVal )
-                        console.log(  '====switchTypeVal====' )
-                    }else{
+                        console.log(loginInfoConfig.switchTypeVal)
+                        console.log('====switchTypeVal====')
+                    } else {
                         this.switchType = false
                     }
-                    if( loginInfoConfig.expiry !== 0 ){
-                        this.expiryVal = loginInfoConfig.expiry + '分钟' ;
+                    if (loginInfoConfig.expiry !== 0) {
+                        this.expiryVal = loginInfoConfig.expiry + '分钟'
                         this.expiry = true
-                        console.log(  this.expiryVal )
-                        console.log(  '====expiryVal====' )
-                    }else{
+                        console.log(this.expiryVal)
+                        console.log('====expiryVal====')
+                    } else {
                         this.expiry = false
                     }
-                    if( loginInfoConfig.interactPassword === -1 ){
-                        this.interactPassword = false;
-                    }else if( loginInfoConfig.interactPassword === 1 ){
-                        this.interactPassword = true;
+                    if (loginInfoConfig.interactPassword === -1) {
+                        this.interactPassword = false
+                    } else if (loginInfoConfig.interactPassword === 1) {
+                        this.interactPassword = true
                     }
                     if (loginInfoConfig.payScale) {
                         try {
@@ -126,7 +123,6 @@
                             console.error('userSumMoney error at 387')
                         }
                     }
-
                 }
                 if (showTips) {
                     this.$message({
@@ -138,31 +134,31 @@
             },
 
             async upxtSetMsg () {
-                let newInteractPassword = null ;
-                let newSwitchType = null ;
-                let newExpiry = null ;
+                let newInteractPassword = null
+                let newSwitchType = null
+                let newExpiry = null
 
-                if( this.switchType ){
-                    if( this.switchTypeVal !== undefined ){
-                        newSwitchType =  this.switchTypeVal;
+                if (this.switchType) {
+                    if (this.switchTypeVal !== undefined) {
+                        newSwitchType = this.switchTypeVal
                     }
-                }else{
+                } else {
                     newSwitchType = -1
                 }
-                if( this.expiry ){
-                    if( this.expiryVal !== undefined ){
-                        newExpiry = Number( this.expiryVal.replace('分钟',''));
+                if (this.expiry) {
+                    if (this.expiryVal !== undefined) {
+                        newExpiry = Number(this.expiryVal.replace('分钟', ''))
                     }
-                }else{
-                    newExpiry = 0 ;
+                } else {
+                    newExpiry = 0
                 }
-                if( this.interactPassword ){
+                if (this.interactPassword) {
                     newInteractPassword = 1
-                }else{
+                } else {
                     newInteractPassword = -1
                 }
 
-                let result = await this.$store.dispatch(actionTypes.updateSales, [this.payScale/100+'' , this.promoterPayScale/100+'', newSwitchType , newInteractPassword , newExpiry ] )
+                let result = await this.$store.dispatch(actionTypes.updateSales, [this.payScale / 100 + '', this.promoterPayScale / 100 + '', newSwitchType, newInteractPassword, newExpiry ])
                 console.log(result)
                 // 需要再一次 更新用户信息 !!!!!
                 if (result && result.success === true) {
@@ -171,11 +167,11 @@
                         type: 'success',
                         duration: 1200
                     })
-//                    newUpxtSetMsg[0].registVerify = !!this.openVIP
-//                    newUpxtSetMsg[0].authorize = !!this.SQWarning
-//                    newUpxtSetMsg[0].chat = !!this.OpenChat
-//                    newUpxtSetMsg[0].userCheck = !!this.openUserChat
-//                    this.$store.dispatch(actionTypes.upLocalMsg, newUpxtSetMsg[0])
+                //                    newUpxtSetMsg[0].registVerify = !!this.openVIP
+                //                    newUpxtSetMsg[0].authorize = !!this.SQWarning
+                //                    newUpxtSetMsg[0].chat = !!this.OpenChat
+                //                    newUpxtSetMsg[0].userCheck = !!this.openUserChat
+                //                    this.$store.dispatch(actionTypes.upLocalMsg, newUpxtSetMsg[0])
                 }
             }
         },

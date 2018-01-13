@@ -11,21 +11,21 @@ export default {
             return this.$store.state.serverTime
         },
         loginInfo () {
-          return this.$store.state.user.loginInfo
+            return this.$store.state.user.loginInfo
         }
-      
+
     },
     watch: {
-      loginInfo (loginInfo) {
-        if(!loginInfo) {
-          this.$router.replace('/login')
+        loginInfo (loginInfo) {
+            if (!loginInfo) {
+                this.$router.replace('/login')
+            }
         }
-      }
 
     },
     async mounted () {
-        if(this.$route.path !== '/login') {
-          this.$router.replace('/login')
+        if (this.$route.path !== '/login') {
+            this.$router.replace('/login')
         }
         try {
             await this.$store.dispatch('initWebsocket')
