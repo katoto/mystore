@@ -23,13 +23,12 @@ export default {
     },
     computed: {
         socketData () {
-          return this.$store.state.websocket.data
+            return this.$store.state.websocket.data
         }
     },
     watch: {
         socketData (socketData) {
             // 处理登出的情况
-
 
         }
     },

@@ -78,7 +78,7 @@ const actionsInfo = mapActions({
 
     // 获取用户
     async adminList ({dispatch, commit}, args = []) {
-        console.log( args );
+        console.log(args)
         const argsData = await dispatch('invoke', {
             method: 'adminService/adminList',
             args: args
