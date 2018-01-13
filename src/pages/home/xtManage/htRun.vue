@@ -219,7 +219,7 @@
         },
         computed: {},
         async mounted () {
-            let result = await this.$store.dispatch(aTypes.getGameAdminLog, {starttime: '2018-01-01', endtime: '2018-01-08'})
+            let result = await this.$store.dispatch(actionTypes.getGameAdminLog, {starttime: '2018-01-01', endtime: '2018-01-08'})
             console.log(result)
         }
     }

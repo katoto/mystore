@@ -32,14 +32,17 @@ const actionsInfo = mapActions({
     },
     async getXtLog ({dispatch, commit}, {firstParam, starttime, endtime, pageNumber = 1, pageSize = 16, totalCount = 0, pageCount = 0,
         orderBy = '', order = '', list = null}) {
+        console.log('start getXtLog')
         const args = await dispatch('invoke', {
             method: 'statementService/getSystemLog',
             args: [
-                firstParam, starttime, endtime, {pageNumber, pageSize, totalCount, pageCount, orderBy, order, list}, '', ''
+                // firstParam, starttime, endtime, {pageNumber, pageSize, totalCount, pageCount, orderBy, order, list}, '', ''
+                firstParam, starttime, endtime, [ pageNumber, pageSize, totalCount, pageCount, orderBy, order, list ], '', ''
             ]
         })
         return args[0]
     },
+    // 用户信息
     async upxtSetMsg ({dispatch, commit}, args = [{}]) {
         const argsData = await dispatch('invoke', {
             method: 'systemConfigService/updateConfig',
@@ -47,9 +50,8 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-
-    upLocalMsg ({dispatch, commit},data ) {
-        commit(mTypes.setLoginInfoConfig , data )
+    upLocalMsg ({dispatch, commit}, data) {
+        commit(mTypes.setLoginInfoConfig, data)
     }
 
 }, name)
@@ -57,7 +59,7 @@ const actionsInfo = mapActions({
 const mutationsInfo = mapMutations({
     setLoginInfoCofig (state, info) {
 
-    },
+    }
 }, name)
 
 const actions = actionsInfo.actions

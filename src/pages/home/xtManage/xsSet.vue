@@ -138,7 +138,7 @@
                         duration: 1200
                     })
                 }
-            },
+            }
         },
         computed: {
             loginInfo () {
