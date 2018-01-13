@@ -161,10 +161,9 @@
                 console.log(size);
                 let result = null;
                 if( !this.xtStartTime || !this.xtEndTime || !this.xtUserSel  ){
-                    result = await this.$store.dispatch(actionTypes.getXtLog, { userId: -1, starttime: '2018-01-01', endtime: this.format( new Date() ) ,pageNumber:size})
+                    result = await this.$store.dispatch(actionTypes.getXtLog, { userId: -1, starttime: this.format( new Date().getTime() - 3600 * 1000 * 24 * 10 ) , endtime: this.format( new Date() ) ,pageNumber:size})
                     console.log('全部分页')
                     console.log(result)
-
                 }else{
                     result = await this.$store.dispatch(actionTypes.getXtLog, { userId: this.xtUserSel  , starttime:this.xtStartTime , endtime:this.xtEndTime ,pageNumber:size})
                     console.log('选择分页')
@@ -227,7 +226,7 @@
               console.error( 'adminList error at xtLog' )
             }
 
-            let result = await this.$store.dispatch(actionTypes.getXtLog, { userId: -1, starttime: '2018-01-01', endtime: this.format( new Date() ),pageNumber:1})
+            let result = await this.$store.dispatch(actionTypes.getXtLog, { userId: -1, starttime: this.format( new Date().getTime() - 3600 * 1000 * 24 * 10 ), endtime: this.format( new Date() ),pageNumber:1})
             console.log(result)
             if (result && result.list) {
                 let copyList = result.list
