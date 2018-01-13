@@ -4,7 +4,7 @@
             <el-tab-pane label="系统管理" name="xtSet"></el-tab-pane>
             <el-tab-pane label="销售管理" name="xsSet"></el-tab-pane>
             <el-tab-pane label="用户设置" name="userSet"></el-tab-pane>
-            <el-tab-pane label="用户登录IP记录" name="userIP"></el-tab-pane>
+            <!--<el-tab-pane label="用户登录IP记录" name="userIP"></el-tab-pane>-->
             <el-tab-pane label="后台运作操作记录" name="htRun"></el-tab-pane>
             <el-tab-pane label="系统日志" name="xtLog"></el-tab-pane>
             <!-- 暂时不用 -->

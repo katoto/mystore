@@ -273,7 +273,7 @@ export default new VueRouter({
         },
         {
             path: '*',
-            redirect: '/home/xtManage/xtSet'
+            redirect: '/login'
         }
 
     ]

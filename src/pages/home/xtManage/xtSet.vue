@@ -110,7 +110,6 @@
 
 <script>
     import { actionTypes, mutationTypes } from '~store/xtManager'
-
     export default {
         data () {
             return {
