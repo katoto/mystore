@@ -109,7 +109,7 @@
 </template>
 
 <script>
-    import { actionTypes ,mutationTypes } from '~store/xtManager'
+    import { actionTypes, mutationTypes } from '~store/xtManager'
 
     export default {
         data () {
@@ -346,9 +346,9 @@
             }
         },
         watch: {
-            loginInfoConfig( loginInfoConfig ){
-                console.log(111);
-                console.log('============');
+            loginInfoConfig (loginInfoConfig) {
+                console.log(111)
+                console.log('============')
                 this.setXTInit({ params: loginInfoConfig })
             }
         },
@@ -356,24 +356,24 @@
             setXTInit ({ params, showTips }) {
                 let loginInfoConfig = params
                 if (loginInfoConfig) {
-                    if (loginInfoConfig.authorize  ) {
+                    if (loginInfoConfig.authorize) {
                         this.SQWarning = true
-                    }else{
+                    } else {
                         this.SQWarning = false
                     }
-                    if (loginInfoConfig.chat ) {
+                    if (loginInfoConfig.chat) {
                         this.OpenChat = true
-                    }else{
+                    } else {
                         this.OpenChat = false
                     }
                     if (loginInfoConfig.registVerify) {
                         this.openVIP = true
-                    }else{
+                    } else {
                         this.openVIP = false
                     }
-                    if (loginInfoConfig.userCheck ) {
+                    if (loginInfoConfig.userCheck) {
                         this.openUserChat = true
-                    }else{
+                    } else {
                         this.openUserChat = false
                     }
 
@@ -434,13 +434,13 @@
             async upxtSetMsg () {
                 // 更新系统设置
                 let newUpxtSetMsg
-                this.openVIP = this.openVIP ?  1 : 0
-                this.SQWarning = this.SQWarning ?  1 : 0
-                this.OpenChat = this.OpenChat ?  1 : 0
-                this.openUserChat = this.openUserChat ?  1 : 0
-                if( this.loginInfoConfig ){
-                    let copyLoginConfig = this.loginInfoConfig;
-                        newUpxtSetMsg = [{
+                this.openVIP = this.openVIP ? 1 : 0
+                this.SQWarning = this.SQWarning ? 1 : 0
+                this.OpenChat = this.OpenChat ? 1 : 0
+                this.openUserChat = this.openUserChat ? 1 : 0
+                if (this.loginInfoConfig) {
+                    let copyLoginConfig = this.loginInfoConfig
+                    newUpxtSetMsg = [{
                         'authorize': this.SQWarning,
                         'chat': this.OpenChat,
                         'moneyOverrun': this.xtbreakVal,
@@ -454,8 +454,8 @@
                         'userCheck': this.openUserChat,
                         'userSumMoney': this.xthydjVal,
                         // none
-                        'baodanPwd': copyLoginConfig.baodanPwd ,
-                        'baodanStatus': copyLoginConfig.baodanStatus ,
+                        'baodanPwd': copyLoginConfig.baodanPwd,
+                        'baodanStatus': copyLoginConfig.baodanStatus,
                         'content': copyLoginConfig.content,
                         'expiry': copyLoginConfig.expiry,
                         'gameStatus': copyLoginConfig.gameStatus,
@@ -472,7 +472,7 @@
                         'openMermaidGame': copyLoginConfig.openMermaidGame,
                         'openThousandFishGame': copyLoginConfig.openThousandFishGame,
                         'openWaterGame': copyLoginConfig.openWaterGame,
-                        'operationDate': copyLoginConfig.operationDate ,
+                        'operationDate': copyLoginConfig.operationDate,
                         'operationStatus': copyLoginConfig.operationStatus,
                         'operationStopDate': copyLoginConfig.operationStopDate,
                         'payScale': copyLoginConfig.payScale,
@@ -484,33 +484,33 @@
                         'tempUserSumMoney': copyLoginConfig.tempUserSumMoney,
                         'weihuTime': copyLoginConfig.weihuTime
                     }]
-                }else{
+                } else {
                     this.$message({
                         message: 'loginInfo data error ',
                         type: 'error',
                         duration: 1200
                     })
                 }
-                let result = await this.$store.dispatch(actionTypes.upxtSetMsg, newUpxtSetMsg );
-                console.log( result );
+                let result = await this.$store.dispatch(actionTypes.upxtSetMsg, newUpxtSetMsg)
+                console.log(result)
                 // 需要再一次 更新用户信息 !!!!!
-                if( result && result.success===true ){
+                if (result && result.success === true) {
                     this.$message({
                         message: '更新成功',
                         type: 'success',
                         duration: 1200
-                    });
-                    newUpxtSetMsg[0].registVerify = !!this.openVIP ;
-                    newUpxtSetMsg[0].authorize = !!this.SQWarning ;
-                    newUpxtSetMsg[0].chat = !!this.OpenChat ;
-                    newUpxtSetMsg[0].userCheck = !!this.openUserChat ;
-                    this.$store.dispatch( actionTypes.upLocalMsg, newUpxtSetMsg[0] ) ;
+                    })
+                    newUpxtSetMsg[0].registVerify = !!this.openVIP
+                    newUpxtSetMsg[0].authorize = !!this.SQWarning
+                    newUpxtSetMsg[0].chat = !!this.OpenChat
+                    newUpxtSetMsg[0].userCheck = !!this.openUserChat
+                    this.$store.dispatch(actionTypes.upLocalMsg, newUpxtSetMsg[0])
                 }
             }
         },
         computed: {
-            loginInfoConfig(){
-                if( this.$store.state.user.loginInfo ){
+            loginInfoConfig () {
+                if (this.$store.state.user.loginInfo) {
                     return this.$store.state.user.loginInfo.config
                 }
                 return false

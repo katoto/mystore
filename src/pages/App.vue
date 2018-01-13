@@ -9,11 +9,11 @@ export default {
     computed: {
         serverTime () {
             return this.$store.state.serverTime
-        },
+        }
     },
     async mounted () {
         try {
-            await this.$store.dispatch('initWebsocket');
+            await this.$store.dispatch('initWebsocket')
             await this.$store.dispatch('getServerTime')
         } catch (e) {
             setTimeout(() => {

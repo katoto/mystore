@@ -40,10 +40,10 @@ const mutationsInfo = mapMutations({
         state.loginInfo = info
     },
     setLoginInfoConfig (state, config) {
-        if( state.loginInfo ){
-            state.loginInfo.config = config ;
-        }else{
-            console.error( 'commit Infoconfig error' );
+        if (state.loginInfo) {
+            state.loginInfo.config = config
+        } else {
+            console.error('commit Infoconfig error')
         }
     },
     setUserList (state, list) {
