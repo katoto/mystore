@@ -50,6 +50,65 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
+    // 保单箱密码修改
+    async updateBaodanPwd ({dispatch, commit}, args = [123456]) {
+        const argsData = await dispatch('invoke', {
+            method: 'systemConfigService/updateBaodanPwd',
+            args: ['123456']
+        })
+        return argsData[0]
+    },
+
+    // 增设游戏桌
+    async getCheckCode ({dispatch, commit}, args = ['demo.oi8t5y.site.gplgg.cn,']) {
+        const argsData = await dispatch('invoke', {
+            method: 'adminService/getCheckCode',
+            args: ['demo.oi8t5y.site.gplgg.cn',]
+        })
+        return argsData[0]
+    },
+
+    // 增设游戏桌
+    async registDesk ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'adminService/registDesk',
+            args: ['AS3AFy', '123456', 'demo.oi8t5y.site.gplgg.cn']
+        })
+        return argsData[0]
+    },
+
+
+ // 获取用户
+    async adminList ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'adminService/adminList',
+            args: [1]
+        })
+        return argsData[0]
+    },
+
+
+     // 新增服务员（权限按从左至右从上至下的顺序排序）args":["fuwuyuan",3,false,false,false,false,false,false]
+    //   新增主管: "args":["zhuguan",2,true,true,false,true,false,true]
+    //新增系统管理员 "args":["guanliyuan",1,true,true,true,true,true,true]
+     async addAdmin ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'adminService/addAdmin',
+            args: ["fuwuyuan",3,false,false,false,false,false,false]
+        })
+        return argsData[0]
+    },
+
+     //
+     async deleteAdmin ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'adminService/deleteAdmin',
+            args: ['15']
+        })
+        return argsData[0]
+    },
+
+
     upLocalMsg ({dispatch, commit}, data) {
         commit(mTypes.setLoginInfoConfig, data)
     }
