@@ -103,10 +103,30 @@ const actionsInfo = mapActions({
      async deleteAdmin ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'adminService/deleteAdmin',
-            args: ['15']
+            args: [15]
         })
         return argsData[0]
     },
+    
+     // 设置权限
+    //  给主管设置权限  "args":[14,2,true,true,true,true,true,true]
+    // 给管理员设置权限 "args":[16,1,true,true,true,true,false,true]
+     async updateAuth ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'adminService/updateAuth',
+            args: [14,2,true,true,true,true,true,true]
+        })
+        return argsData[0]
+    },
+    // 重置密码
+     async resetPassword ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'adminService/resetPassword',
+            args: [16]
+        })
+        return argsData[0]
+    },
+
 
 
     upLocalMsg ({dispatch, commit}, data) {
