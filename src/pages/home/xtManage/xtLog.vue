@@ -8,9 +8,11 @@
                     align="right"
                     size="small"
                     unlink-panels
+                    format="yyyy-MM-dd"
                     range-separator="至"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
+                    @change="logTimeChange"
                     :picker-options="pickerOptions">
                 </el-date-picker>
             </div>
@@ -24,7 +26,7 @@
                     :disabled="item.disabled">
                 </el-option>
             </el-select>
-            <el-input size="small" class="xtInp" v-model="xtInpVal" placeholder="请输入内容"></el-input>
+            <el-input size="small" class="xtInp" disabled v-model="xtInpVal" placeholder="请输入内容"></el-input>
             <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
         </header>
         <section>
@@ -84,8 +86,10 @@
                         datetime: '2018-01-08 15:33:59'
                     }],
                 xtInpVal: '',
-
                 pickerOptions: {
+//                    disabledDate(time) {
+//                        return time.getTime() > Date.now() - 8.64e7;
+//                    },
                     shortcuts: [{
                         text: '最近一周',
                         onClick (picker) {
@@ -137,9 +141,40 @@
         },
         watch: {},
         methods: {
+            logTimeChange(val){
+                console.log( this.format( val[0] ) );
+                console.log( this.format( val[1] ) );
+//                取到值
+            },
+            format (time, format = 'yyyy-MM-dd') {
+                let t = new Date(time)
+                let tf = function (i) {
+                    return (i < 10 ? '0' : '') + i
+                }
+                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+                    switch (a) {
+                        case 'yyyy':
+                            return tf(t.getFullYear())
+                        case 'MM':
+                            return tf(t.getMonth() + 1)
+                        case 'mm':
+                            return tf(t.getMinutes())
+                        case 'dd':
+                            return tf(t.getDate())
+                        case 'HH':
+                            return tf(t.getHours())
+                        case 'ss':
+                            return tf(t.getSeconds())
+                    }
+                })
+            },
             clickPage (size) {
                 // 分页  请求数据 ，更新数据
                 console.log(size)
+            },
+            getMsg(){
+                console.log('getMsg');
+                console.log( this.xtLogTime )
             }
         },
         computed: {},
@@ -180,8 +215,6 @@
                 this.pageNumber = copyResult.args[0].pageNumber,
                 this.pageSize = copyResult.args[0].pageSize
             }
-
-
             let result = await this.$store.dispatch(actionTypes.getXtLog, { firstParam: -1, starttime: '2018-01-01', endtime: '2018-01-08'})
             console.log(result)
             console.log(result)
