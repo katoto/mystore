@@ -181,7 +181,8 @@
                 this.pageSize = copyResult.args[0].pageSize
             }
 
-            let result = await this.$store.dispatch(actionTypes.getXtLog, { firstParam: '-1', starttime: '2018-01-01', endtime: '2018-01-13'})
+
+            let result = await this.$store.dispatch(actionTypes.getXtLog, { firstParam: -1, starttime: '2018-01-01', endtime: '2018-01-08'})
             console.log(result)
             console.log(result)
         }
