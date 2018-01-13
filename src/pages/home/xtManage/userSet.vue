@@ -9,42 +9,31 @@
                 <el-col :span="8">
                     <div class="usershow grid-content bg-purple">
                         <ul>
-                            <li >1234131231</li>
-                            <li class="active">1234131231</li>
-                            <li>1234131231</li>
-                            <li>1234131231</li>
-                            <li>1234131231</li>
-                            <li>1234131231</li>
-                            <li>1234131231</li>
-                            <li>1234131231</li>
-                            <li>1234131231</li>
-                            <li>1234131231</li>
-                            <li>1234131231</li>
-                            <li>1234131231</li>
+                            <li v-for="item in userList" @click="() => current = item.id" :class="{active: item.id === current}" :key="item.username">{{item.username}}</li>                            
                         </ul>
                     </div>
                 </el-col>
                 <el-col :span="15">
-                    <section class="grid-content bg-purple">
+                    <section class="grid-content bg-purple" v-if="currInfo">
                         <div>
                             <strong>用户名称 : </strong>
-                            <span>33333333</span>
+                            <span>{{currInfo.username}}</span>
                         </div>
                         <div>
                             <strong>权限等级 : </strong>
-                            <span>33333333</span>
+                            <span>{{currAuthLevel}}</span>
                         </div>
                         <div>
                             <strong>特殊操作 : </strong>
-                            <span>33333333</span>
+                            <span>{{specialop}}</span>
                         </div>
                         <div>
                             <strong>注册时间 : </strong>
-                            <span>33333333</span>
+                            <span>{{currInfo.datetime}}</span>
                         </div>
                         <div>
                             <strong>最后一次操作 : </strong>
-                            <span>33333333</span>
+                            <span>{{currInfo.lastOperate}}</span>
                         </div>
                     </section>
                 </el-col>
@@ -71,42 +60,53 @@
                         <div>
                             <span>特殊操作：</span>
                             <el-checkbox-group v-model="checkList">
-                                <el-checkbox label="删账单"></el-checkbox>
-                                <el-checkbox label="赠送游戏币"></el-checkbox>
-                                <el-checkbox label="扣除游戏币"></el-checkbox>
+                                <el-checkbox label="0">删账单</el-checkbox>
+                                <el-checkbox label="1">赠送游戏币</el-checkbox>
+                                <el-checkbox label="2">扣除游戏币</el-checkbox>
                                 <br>
-                                <el-checkbox label="游戏大厅管理" disabled></el-checkbox>
-                                <el-checkbox label="推广员管理" disabled></el-checkbox>
-                                <el-checkbox label="会员注册验证" disabled></el-checkbox>
+                                <el-checkbox label="3">游戏大厅管理</el-checkbox>
+                                <el-checkbox label="4">推广员管理</el-checkbox>
+                                <el-checkbox label="5">会员注册验证</el-checkbox>
                             </el-checkbox-group>
                         </div>
                     </section>
                     <span slot="footer" class="dialog-footer">
                         <el-button size="small" @click="dialogVisible = false">取 消</el-button>
-                        <el-button size="small" type="primary" @click="dialogVisible = false">确 定</el-button>
+                        <el-button size="small" type="primary" @click="doAddUser()">确 定</el-button>
                      </span>
             </el-dialog>
         </div>
     </div>
 </template>
 <script>
+    import {actionTypes as aTypes} from '~store/xtManager'
     export default {
         data () {
             return {
-                userName: 1431231,
+                userList: [],
+                current: 0,
+                userName: '',
                 setLevel: 3,
-                checkList: ['赠送游戏币', '扣除游戏币'],
+                checkList: ['1', '3'],
                 dialogVisible: false
             }
         },
-        watch: {},
+        watch: {
+            current (current) {
+                if(current) {
+                    
+
+                }
+
+            }
+        },
         methods: {
             handleClose (done) {
                 this.dialogVisible = false
             },
             delUser () {
                 // eslint-disable-next-line
-                if (false) {
+                if (!this.current) {
                     this.$message({
                         message: '请选择用户',
                         type: 'error',
@@ -117,12 +117,32 @@
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
                         type: 'warning'
-                    }).then(() => {
-                        this.$message({
-                            type: 'success',
-                            message: '删除成功!',
-                            duration: 1200
-                        })
+                    }).then(async () => {
+                        try {
+                            let result = await this.$store.dispatch(aTypes.deleteAdmin, [this.current])
+                            if(!result.success) {
+                                this.$message({
+                                    type: 'error',
+                                    message: result.message,
+                                    duration: 1200
+                                })
+                            } else {
+                                this.$message({
+                                    type: 'success',
+                                    message: '删除成功!',
+                                    duration: 1200
+                                })
+                                this.userList = await this.$store.dispatch(aTypes.adminList)
+                            }
+                            
+                        } catch (e) {
+                             this.$message({
+                                type: 'error',
+                                message: '删除失败!',
+                                duration: 1200
+                            })
+                        }
+                        
                     }).catch(() => {
                         this.$message({
                             type: 'info',
@@ -134,6 +154,24 @@
             },
             addUser () {
                 this.dialogVisible = true
+            },
+            async doAddUser () {
+                let cl = [false, false, false, false, false, false]
+                this.checkList.forEach(e => {
+                    cl[e] = true
+                })
+                let args = [this.userName, this.setLevel, ...cl]
+                let result = await this.$store.dispatch(aTypes.addAdmin, args)
+                if(!result.success) {
+                    this.$message({
+                        message: result.message,
+                        type: 'error',
+                        duration: 1200
+                    })
+                } else {
+                    this.userList = await this.$store.dispatch(aTypes.adminList)
+                }
+                this.dialogVisible = false
             },
             qxSet () {
                 this.$message({
@@ -150,9 +188,60 @@
                 })
             }
         },
-        computed: {},
-        mounted () {
+        computed: {
+            currInfo () {
+                if(this.userList.length) {
+                    let currInfo = null
+                    this.userList.some((info) => {
+                        if(info.id === this.current) {
+                            return currInfo = info
+                        }
+                        
+                    })
+                    return currInfo
+                }
+            },
+            specialop () {
+                let result = []
+                if(this.currInfo) {
 
+                    if(this.currInfo.authDeleteBill) {
+                        result.push('删账单')
+                    }
+                    if(this.currInfo.authGiveGold) {
+                        result.push('赠送游戏币')
+                    }
+                    if(this.currInfo.authHallAdmin) {
+                        result.push('游戏大厅管理')
+                    }
+                    if(this.currInfo.authMinusGold) {
+                        result.push('扣除游戏币')
+                    }
+                    if(this.currInfo.authPromoter) {
+                        result.push('推广员管理')
+                    }
+                    if(this.currInfo.authUserRegist) {
+                        result.push('会员注册验证')
+                    }
+                }
+                return result.join(',')
+            },
+            currAuthLevel () {
+                if(this.currInfo) {
+                    switch(this.currInfo.type) {
+                        case 1: 
+                        return '系统管理员'
+                        case 2:
+                        return '主管'
+                        case 3:
+                        return '服务员'
+                    }
+                }
+            }
+        },
+        async mounted () {
+            this.userList = await this.$store.dispatch(aTypes.adminList)
+            console.log(this.userList)
         }
     }
 </script>
