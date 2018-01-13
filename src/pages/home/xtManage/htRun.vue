@@ -63,9 +63,8 @@
                 <h3>大厅管理操作记录查询：</h3>
                 <div class="grid-content bg-purple">
                     <div class="dataTime grid-content bg-purple">
-
                         <el-date-picker
-                            v-model="value7"
+                            v-model="htRunDTTime"
                             type="daterange"
                             align="right"
                             size="small"
@@ -73,35 +72,36 @@
                             range-separator="至"
                             start-placeholder="开始日期"
                             end-placeholder="结束日期"
+                            @change="htDTTimeChange"
                             :picker-options="pickerOptions2">
                         </el-date-picker>
-                        <el-button style="margin-left: 8px" size="small" type="primary">查询</el-button>
+                        <el-button style="margin-left: 8px" size="small" type="primary" v-tap="{ methods:getDTMsg }">查询</el-button>
 
                     </div>
                 </div>
                 <section>
                     <el-table
-                        :data="tableData3"
+                        :data="htDTList"
                         max-height="400"
                         size="small"
                         border>
                         <el-table-column
-                            prop="date"
+                            prop="datetime"
                             label="时间"
                             width="110">
                         </el-table-column>
                         <el-table-column
-                            prop="name"
+                            prop="authority"
                             label="操作员权限"
                             width="110">
                         </el-table-column>
                         <el-table-column
-                            prop="address"
+                            prop="admin"
                             label="操作员账号"
                             width="110">
                         </el-table-column>
                         <el-table-column
-                            prop="address"
+                            prop="content"
                             label="操作记录">
                         </el-table-column>
                     </el-table>
@@ -119,18 +119,6 @@
                 </section>
             </el-col>
         </el-row>
-
-        <!--<el-row :gutter="20">-->
-            <!--<el-col :span="9">-->
-                <!--<div class="grid-content bg-purple">-->
-                <!--</div>-->
-            <!--</el-col>-->
-            <!--<el-col :span="9">-->
-                <!--<div class="grid-content bg-purple">-->
-                <!--</div>-->
-            <!--</el-col>-->
-        <!--</el-row>-->
-
 
     </div>
 </template>
@@ -180,9 +168,7 @@
                 htVipStartTime:null,
                 htVipEndTime:null,
 
-                totalCountDT: 20,
-                pageNumberDT: 1,
-                pageSizeDT: 16,
+                htRunDTTime:'',
                 pickerOptions2: {
                     shortcuts: [{
                         text: '最近一周',
@@ -210,25 +196,20 @@
                         }
                     }]
                 },
-                value7: '',
-                options2: [
-                    {
-                        value: '100万'
-                    },
-                    {
-                        value: '1000万',
-                        disabled: true
-                    },
-                    {
-                        value: '10万'
-                    },
-                    {
-                        value: '1万'
-                    },
-                    {
-                        value: '1000'
-                    }],
-                value: '10万',
+                htDTList: [{
+                    datetime: '2016-05-03',
+                    content: '对会员“000000”进行了“扣除游戏币”操作，扣除了5000游戏币',
+                    admin: 'admin',
+                    authority: '超级管理员'
+                }],
+
+                totalCountDT: 20,
+                pageNumberDT: 1,
+                pageSizeDT: 16,
+
+                htDTStartTime:null,
+                htDTEndTime:null,
+
             }
         },
         watch: {},
@@ -258,6 +239,27 @@
                 this.htVipStartTime = this.format(val[0])
                 this.htVipEndTime = this.format(val[1])
             },
+            async clickPageVIP (size) {
+                // 分页  请求数据 ，更新数据
+                let result = null
+                if (!this.htVipStartTime || !this.htVipEndTime ) {
+                    result = await this.$store.dispatch(actionTypes.getUserAdminLog, {  starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: size})
+                    console.log('全部分页')
+                    console.log(result)
+                } else {
+                    result = await this.$store.dispatch(actionTypes.getUserAdminLog, {  starttime: this.htVipStartTime, endtime: this.htVipEndTime, pageNumber: size})
+                    console.log('选择分页')
+                    console.log(result)
+                }
+                if (result && result.list) {
+                    this.htVipList = result.list
+                    // 处理页码
+                    this.totalCountVIP = result.totalCount,
+                        this.pageNumberVIP = result.pageNumber,
+                        this.pageSizeVIP = result.pageSize
+                }
+            },
+
             format (time, format = 'yyyy-MM-dd') {
                 let t = new Date(time)
                 let tf = function (i) {
@@ -280,46 +282,51 @@
                     }
                 })
             },
-            async clickPageVIP (size) {
-                // 分页  请求数据 ，更新数据
-                let result = null
-                if (!this.htVipStartTime || !this.htVipEndTime ) {
-                    result = await this.$store.dispatch(actionTypes.getUserAdminLog, {  starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: size})
-                    console.log('全部分页')
-                    console.log(result)
-                } else {
-                    result = await this.$store.dispatch(actionTypes.getUserAdminLog, {  starttime: this.htVipStartTime, endtime: this.htVipEndTime, pageNumber: size})
-                    console.log('选择分页')
-                    console.log(result)
+
+            async getDTMsg () {
+                if (!this.htDTStartTime || !this.htDTEndTime) {
+                    this.$message({
+                        message: '请选择查询时间',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
                 }
+                //                loading
+                let result = await this.$store.dispatch(actionTypes.getGameAdminLog, { starttime: this.htDTStartTime, endtime: this.htDTEndTime, pageNumber: 1})
+
                 if (result && result.list) {
-                    this.htVipList = result.list
+                    this.htDTList = result.list
                     // 处理页码
-                    this.totalCountVIP = result.totalCount,
-                    this.pageNumberVIP = result.pageNumber,
-                    this.pageSizeVIP = result.pageSize
+                    this.totalCountDT = result.totalCount,
+                    this.pageNumberDT = result.pageNumber,
+                    this.pageSizeDT = result.pageSize
                 }
+            },
+            htDTTimeChange (val) {
+                //                取到值
+                this.htDTStartTime = this.format(val[0])
+                this.htDTEndTime = this.format(val[1])
             },
             async clickPageDT (size) {
                 // 分页  请求数据 ，更新数据
-                console.log(size)
                 let result = null
-                if (!this.xtStartTime || !this.xtEndTime || !this.xtUserSel) {
-                    result = await this.$store.dispatch(actionTypes.getXtLog, { userId: -1, starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: size})
+                if (!this.htDTStartTime || !this.htDTEndTime ) {
+                    result = await this.$store.dispatch(actionTypes.getGameAdminLog, {  starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: size})
                     console.log('全部分页')
                     console.log(result)
                 } else {
-                    result = await this.$store.dispatch(actionTypes.getXtLog, { userId: this.xtUserSel, starttime: this.xtStartTime, endtime: this.xtEndTime, pageNumber: size})
+                    result = await this.$store.dispatch(actionTypes.getGameAdminLog, {  starttime: this.htDTStartTime, endtime: this.htDTEndTime, pageNumber: size})
                     console.log('选择分页')
                     console.log(result)
                 }
                 if (result && result.list) {
-                    let copyList = result.list
-                    this.xtLogList = copyList
+                    this.htDTList = result.list
                     // 处理页码
-                    this.totalCount = result.totalCount,
-                        this.pageNumber = result.pageNumber,
-                        this.pageSize = result.pageSize
+                    this.totalCountDT = result.totalCount,
+                    this.pageNumberDT = result.pageNumber,
+                    this.pageSizeDT = result.pageSize
+
                 }
             },
         },
@@ -333,6 +340,17 @@
                 this.totalCountVIP = getUserAdminLog.totalCount,
                 this.pageNumberVIP = getUserAdminLog.pageNumber,
                 this.pageSizeVIP = getUserAdminLog.pageSize
+
+            }
+
+            let getGameAdminLog = await this.$store.dispatch(actionTypes.getGameAdminLog,{ starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: 1})
+            console.log(getGameAdminLog)
+            if( getGameAdminLog && getGameAdminLog.list ){
+                this.htDTList = getGameAdminLog.list ;
+                // 处理页码
+                this.totalCountDT = getGameAdminLog.totalCount,
+                this.pageNumberDT = getGameAdminLog.pageNumber,
+                this.pageSizeDT = getGameAdminLog.pageSize
 
             }
         }
