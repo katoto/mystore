@@ -103,10 +103,40 @@ const actionsInfo = mapActions({
      async deleteAdmin ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'adminService/deleteAdmin',
-            args: ['15']
+            args: [15]
         })
         return argsData[0]
     },
+    
+     // 设置权限
+    //  给主管设置权限  "args":[14,2,true,true,true,true,true,true]
+    // 给管理员设置权限 "args":[16,1,true,true,true,true,false,true]
+     async updateAuth ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'adminService/updateAuth',
+            args: [14,2,true,true,true,true,true,true]
+        })
+        return argsData[0]
+    },
+    // 重置密码
+     async resetPassword ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'adminService/resetPassword',
+            args: [16]
+        })
+        return argsData[0]
+    },
+    // 修改销售设置
+    // args分别代表：所有会员充值比例、直属推广员比例、开启交接班（-1代表不勾选，0代表不分更、1...2...）、开启交互式输入（-1代表不勾选，1代表勾选）、开启远程申请有效时限（0表示不勾选，其他数字代表多少分钟）
+
+     async updateSales ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'systemConfigService/updateSales',
+            args: ["1","3",1,1,30]
+        })
+        return argsData[0]
+    },
+
 
 
     upLocalMsg ({dispatch, commit}, data) {

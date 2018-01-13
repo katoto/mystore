@@ -219,7 +219,7 @@
         },
         computed: {},
         async mounted () {
-            let result = await this.$store.dispatch(actionTypes.deleteAdmin)
+            let result = await this.$store.dispatch(actionTypes.updateSales)
             console.log(result)
         }
     }
