@@ -35,6 +35,7 @@ const mutations = {
         state.websocket.reconnect++
     },
     updateSocketData (state, data) {
+        console.log(JSON.stringify(data))
         state.websocket.data = data
     },
     showToast (state, msg) {
