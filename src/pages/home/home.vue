@@ -29,6 +29,19 @@ export default {
     watch: {
         socketData (socketData) {
             // 处理登出的情况
+            if(socketData.method === 'logoffNotice') {
+                this.$message({
+                                message: '当前已退出登录',
+                                type: 'success',
+                                duration: 1200
+                            })
+                            setTimeout(() => {
+                                this.$router.replace('/login')
+                            }, 3000);
+                            return;
+
+                
+            }
 
 
         }

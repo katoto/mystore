@@ -77,7 +77,7 @@ const actionsInfo = mapActions({
     },
 
     // 获取用户
-    async adminList ({dispatch, commit}, args = []) {
+    async adminList ({dispatch, commit}, args = [1]) {
         console.log( args );
         const argsData = await dispatch('invoke', {
             method: 'adminService/adminList',
@@ -101,7 +101,7 @@ const actionsInfo = mapActions({
     async deleteAdmin ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'adminService/deleteAdmin',
-            args: [15]
+            args: args
         })
         return argsData[0]
     },
