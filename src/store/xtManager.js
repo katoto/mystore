@@ -126,6 +126,16 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
+    // 修改销售设置
+    // args分别代表：所有会员充值比例、直属推广员比例、开启交接班（-1代表不勾选，0代表不分更、1...2...）、开启交互式输入（-1代表不勾选，1代表勾选）、开启远程申请有效时限（0表示不勾选，其他数字代表多少分钟）
+
+     async updateSales ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'systemConfigService/updateSales',
+            args: ["1","3",1,1,30]
+        })
+        return argsData[0]
+    },
 
 
 
