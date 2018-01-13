@@ -3,63 +3,76 @@
         <section id="xsSet">
             <div class="list fl pd">
                 <h2>所有会员充值比例设置：</h2>
-                <p >1游戏币 =</p><el-input v-model="xsAll" placeholder="请输入"></el-input> <p>元宝</p>
+                <p >1游戏币 =</p><el-input v-model="payScale" placeholder="请输入"></el-input> <p>元宝</p>
             </div>
             <div class="list fl pd">
                 <h2>直属推广员充值比例设置：</h2>
-                <p>1游戏币 =</p><el-input v-model="xsZs" placeholder="请输入"></el-input> <p>元宝</p>
+                <p>1游戏币 =</p><el-input v-model="promoterPayScale" placeholder="请输入"></el-input> <p>元宝</p>
             </div>
             <div class="list pd">
-                <el-checkbox v-model="isDjsq">开启远程充值兑奖申请</el-checkbox>
-                <template v-if="isDjsq">
+                <el-checkbox v-model="expiry">开启远程充值兑奖申请</el-checkbox>
+                <template v-if="expiry">
                     <p>申请有效时限设置</p>
-                    <el-select v-model="sjsz" placeholder="请选择">
+                    <el-select v-model="expiryVal" placeholder="请选择">
                         <el-option
-                            v-for="item in options"
+                            v-for="item in expiryOptions"
                             :key="item.value"
                             :label="item.label"
-                            :value="item.value"
-                            :disabled="item.disabled">
+                            :value="item.value">
                         </el-option>
                     </el-select>
                 </template>
             </div>
             <div class="list">
-                <el-checkbox v-model="isJjbgn">开启交接班功能</el-checkbox>
-                <div v-if="isJjbgn">
-                    <el-radio-group v-model="jjb">
-                        <el-radio :label="3">不分更</el-radio>
-                        <el-radio :label="6">分AB两更</el-radio>
-                        <el-radio :label="9">分ABC三更</el-radio>
+                <el-checkbox v-model="switchType">开启交接班功能</el-checkbox>
+                <div v-if="switchType">
+                    <el-radio-group v-model="switchTypeVal">
+                        <el-radio :label="0">不分更</el-radio>
+                        <el-radio :label="1">分AB两更</el-radio>
+                        <el-radio :label="2">分ABC三更</el-radio>
                     </el-radio-group>
                 </div>
             </div>
             <div class="list">
-                <el-checkbox v-model="isJhs">开启交互式密码输入</el-checkbox>
+                <el-checkbox v-model="interactPassword">开启交互式密码输入</el-checkbox>
             </div>
             <div class="list" style="display: none">
                 <el-checkbox v-model="isShop">开启商城、彩票城</el-checkbox>
             </div>
             <div class="btnBox" style="margin-top: 20px">
-                <el-button size="small" type="primary">更新</el-button>
-                <el-button size="small" style="margin-left: 28px">重置</el-button>
+                <el-button size="small" type="primary" v-tap="{ methods: upxtSetMsg  }">更新</el-button>
+                <el-button size="small" style="margin-left: 28px" v-tap="{ methods:setXTInit,params: loginInfoConfig ,showTips:true }">重置</el-button>
             </div>
         </section>
     </div>
 </template>
 
 <script>
+    import { actionTypes, mutationTypes } from '~store/xtManager'
     export default {
         data () {
             return {
+                switchType: false,
+                switchTypeVal:0,
+
+                expiry:null,
+                expiryVal:'10分钟',
+                expiryOptions: [
+                    {value: '10', label: '10分钟'},
+                    {value: '30', label: '30分钟'}
+                ],
+
+
                 xsSet: '',
-                xsAll: '',
-                xsZs: '',
+                payScale: '',
+                promoterPayScale: '',
                 isDjsq: true,
                 sjsz: '',
-                isJjbgn: false,
+
+
+
                 jjb: '',
-                isJhs: false,
+                interactPassword: false,
                 isShop: false,
                 options: [
                     {value: '10min', label: '10分钟'},
@@ -67,69 +80,53 @@
                 ]
             }
         },
-        watch: {},
+        watch: {
+            loginInfoConfig (loginInfoConfig) {
+                console.log(111)
+                console.log('=******===')
+                this.setXTInit({ params: loginInfoConfig })
+            }
+        },
         methods: {
             setXTInit ({ params, showTips }) {
-                let loginInfo = params
-                if (loginInfo && loginInfo.config) {
-                    if (loginInfo.config.authorize && loginInfo.config.authorize === 1) {
-                        this.SQWarning = 1
+                let loginInfoConfig = params
+                if (loginInfoConfig) {
+                    if( loginInfoConfig.switchType !== -1 ){
+                        this.switchTypeVal = loginInfoConfig.switchType ;
+                        this.switchType = true
+                        console.log(  loginInfoConfig.switchTypeVal )
+                        console.log(  '====switchTypeVal====' )
+                    }else{
+                        this.switchType = false
                     }
-                    if (loginInfo.config.chat && loginInfo.config.chat === 1) {
-                        this.OpenChat = 1
+                    if( loginInfoConfig.expiry !== 0 ){
+                        this.expiryVal = loginInfoConfig.expiry + '分钟' ;
+                        this.expiry = true
+                        console.log(  this.expiryVal )
+                        console.log(  '====expiryVal====' )
+                    }else{
+                        this.expiry = false
                     }
-                    if (loginInfo.config.registVerify && loginInfo.config.registVerify === 1) {
-                        this.openVIP = 1
+                    if( loginInfoConfig.interactPassword === -1 ){
+                        this.interactPassword = false;
+                    }else if( loginInfoConfig.interactPassword === 1 ){
+                        this.interactPassword = true;
                     }
-                    if (loginInfo.config.userCheck && loginInfo.config.userCheck === 1) {
-                        this.openUserChat = 1
-                    }
-
-                    if (loginInfo.config.moneyOverrun) {
-                        this.xtbreakVal = loginInfo.config.moneyOverrun
-                    }
-                    if (loginInfo.config.notActive) {
+                    if (loginInfoConfig.payScale) {
                         try {
-                            this.xtFreeVal = loginInfo.config.notActive
-                        } catch (e) {
-                            console.error('notActive error at 366')
-                        }
-                    }
-                    if (loginInfo.config.expiryCheckMoney) {
-                        this.checkDJ = loginInfo.config.expiryCheckMoney
-                    }
-                    if (loginInfo.config.payCheckMoney) {
-                        this.checkPay = loginInfo.config.payCheckMoney
-                    }
-                    if (loginInfo.config.promoterSumMoney) {
-                        try {
-                            this.xttgdjVal = loginInfo.config.promoterSumMoney
-                        } catch (e) {
-                            console.error('promoterSumMoney error at 387')
-                        }
-                    }
-                    if (loginInfo.config.sumExpiryMoney) {
-                        try {
-                            this.xtRdjVal = loginInfo.config.sumExpiryMoney
-                        } catch (e) {
-                            console.error('sumExpiryMoney error at 387')
-                        }
-                    }
-
-                    if (loginInfo.config.sumPayMoney) {
-                        try {
-                            this.xtRczVal = loginInfo.config.sumPayMoney
-                        } catch (e) {
-                            console.error('sumPayMoney error at 387')
-                        }
-                    }
-                    if (loginInfo.config.userSumMoney) {
-                        try {
-                            this.xthydjVal = loginInfo.config.userSumMoney
+                            this.payScale = loginInfoConfig.payScale
                         } catch (e) {
                             console.error('userSumMoney error at 387')
                         }
                     }
+                    if (loginInfoConfig.promoterPayScale) {
+                        try {
+                            this.promoterPayScale = loginInfoConfig.promoterPayScale
+                        } catch (e) {
+                            console.error('userSumMoney error at 387')
+                        }
+                    }
+
                 }
                 if (showTips) {
                     this.$message({
@@ -138,16 +135,61 @@
                         duration: 1200
                     })
                 }
+            },
+
+            async upxtSetMsg () {
+                let newInteractPassword = null ;
+                let newSwitchType = null ;
+                let newExpiry = null ;
+
+                if( this.switchType ){
+                    if( this.switchTypeVal !== undefined ){
+                        newSwitchType =  this.switchTypeVal;
+                    }
+                }else{
+                    newSwitchType = -1
+                }
+                if( this.expiry ){
+                    if( this.expiryVal !== undefined ){
+                        newExpiry = Number( this.expiryVal.replace('分钟',''));
+                    }
+                }else{
+                    newExpiry = 0 ;
+                }
+                if( this.interactPassword ){
+                    newInteractPassword = 1
+                }else{
+                    newInteractPassword = -1
+                }
+
+                let result = await this.$store.dispatch(actionTypes.updateSales, [this.payScale/100+'' , this.promoterPayScale/100+'', newSwitchType , newInteractPassword , newExpiry ] )
+                console.log(result)
+                // 需要再一次 更新用户信息 !!!!!
+                if (result && result.success === true) {
+                    this.$message({
+                        message: '更新成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+//                    newUpxtSetMsg[0].registVerify = !!this.openVIP
+//                    newUpxtSetMsg[0].authorize = !!this.SQWarning
+//                    newUpxtSetMsg[0].chat = !!this.OpenChat
+//                    newUpxtSetMsg[0].userCheck = !!this.openUserChat
+//                    this.$store.dispatch(actionTypes.upLocalMsg, newUpxtSetMsg[0])
+                }
             }
         },
         computed: {
-            loginInfo () {
-                return this.$store.state.user.loginInfo
+            loginInfoConfig () {
+                if (this.$store.state.user.loginInfo) {
+                    return this.$store.state.user.loginInfo.config
+                }
+                return false
             }
         },
         mounted () {
-            if (this.loginInfo) {
-                this.setXTInit({ params: this.loginInfo })
+            if (this.loginInfoConfig) {
+                this.setXTInit({ params: this.loginInfoConfig })
             } else {
                 // 重新取config 数据
                 this.$router.push('/login')

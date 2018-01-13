@@ -195,13 +195,9 @@
                     })
                     return false;
                 }
-                console.log(this.xtStartTime)
-                console.log(this.xtEndTime)
-                console.log( this.xtUserSel );
 //                loading
                 let result = await this.$store.dispatch(actionTypes.getXtLog, { userId: this.xtUserSel, starttime: this.xtStartTime, endtime: this.xtEndTime , pageNumber:1})
-                console.log('查询')
-                console.log(result)
+
                 if (result && result.list) {
                     let copyList = result.list
                     this.xtLogList = copyList
@@ -227,7 +223,6 @@
             }
 
             let result = await this.$store.dispatch(actionTypes.getXtLog, { userId: -1, starttime: this.format( new Date().getTime() - 3600 * 1000 * 24 * 10 ), endtime: this.format( new Date() ),pageNumber:1})
-            console.log(result)
             if (result && result.list) {
                 let copyList = result.list
                 this.xtLogList = copyList
