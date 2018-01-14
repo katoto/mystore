@@ -128,7 +128,7 @@
     export default {
         data () {
             return {
-                htRunVipTime:'',
+                htRunVipTime: '',
                 pickerOptions: {
                     shortcuts: [{
                         text: '最近一周',
@@ -165,10 +165,10 @@
                 totalCountVIP: 10,
                 pageNumberVIP: 1,
                 pageSizeVIP: 16,
-                htVipStartTime:null,
-                htVipEndTime:null,
+                htVipStartTime: null,
+                htVipEndTime: null,
 
-                htRunDTTime:'',
+                htRunDTTime: '',
                 pickerOptions2: {
                     shortcuts: [{
                         text: '最近一周',
@@ -207,8 +207,8 @@
                 pageNumberDT: 1,
                 pageSizeDT: 16,
 
-                htDTStartTime:null,
-                htDTEndTime:null,
+                htDTStartTime: null,
+                htDTEndTime: null
 
             }
         },
@@ -242,12 +242,12 @@
             async clickPageVIP (size) {
                 // 分页  请求数据 ，更新数据
                 let result = null
-                if (!this.htVipStartTime || !this.htVipEndTime ) {
-                    result = await this.$store.dispatch(actionTypes.getUserAdminLog, {  starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: size})
+                if (!this.htVipStartTime || !this.htVipEndTime) {
+                    result = await this.$store.dispatch(actionTypes.getUserAdminLog, { starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: size})
                     console.log('全部分页')
                     console.log(result)
                 } else {
-                    result = await this.$store.dispatch(actionTypes.getUserAdminLog, {  starttime: this.htVipStartTime, endtime: this.htVipEndTime, pageNumber: size})
+                    result = await this.$store.dispatch(actionTypes.getUserAdminLog, { starttime: this.htVipStartTime, endtime: this.htVipEndTime, pageNumber: size})
                     console.log('选择分页')
                     console.log(result)
                 }
@@ -255,8 +255,8 @@
                     this.htVipList = result.list
                     // 处理页码
                     this.totalCountVIP = result.totalCount,
-                        this.pageNumberVIP = result.pageNumber,
-                        this.pageSizeVIP = result.pageSize
+                    this.pageNumberVIP = result.pageNumber,
+                    this.pageSizeVIP = result.pageSize
                 }
             },
 
@@ -267,18 +267,18 @@
                 }
                 return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
                     switch (a) {
-                        case 'yyyy':
-                            return tf(t.getFullYear())
-                        case 'MM':
-                            return tf(t.getMonth() + 1)
-                        case 'mm':
-                            return tf(t.getMinutes())
-                        case 'dd':
-                            return tf(t.getDate())
-                        case 'HH':
-                            return tf(t.getHours())
-                        case 'ss':
-                            return tf(t.getSeconds())
+                    case 'yyyy':
+                        return tf(t.getFullYear())
+                    case 'MM':
+                        return tf(t.getMonth() + 1)
+                    case 'mm':
+                        return tf(t.getMinutes())
+                    case 'dd':
+                        return tf(t.getDate())
+                    case 'HH':
+                        return tf(t.getHours())
+                    case 'ss':
+                        return tf(t.getSeconds())
                     }
                 })
             },
@@ -311,12 +311,12 @@
             async clickPageDT (size) {
                 // 分页  请求数据 ，更新数据
                 let result = null
-                if (!this.htDTStartTime || !this.htDTEndTime ) {
-                    result = await this.$store.dispatch(actionTypes.getGameAdminLog, {  starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: size})
+                if (!this.htDTStartTime || !this.htDTEndTime) {
+                    result = await this.$store.dispatch(actionTypes.getGameAdminLog, { starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: size})
                     console.log('全部分页')
                     console.log(result)
                 } else {
-                    result = await this.$store.dispatch(actionTypes.getGameAdminLog, {  starttime: this.htDTStartTime, endtime: this.htDTEndTime, pageNumber: size})
+                    result = await this.$store.dispatch(actionTypes.getGameAdminLog, { starttime: this.htDTStartTime, endtime: this.htDTEndTime, pageNumber: size})
                     console.log('选择分页')
                     console.log(result)
                 }
@@ -326,32 +326,29 @@
                     this.totalCountDT = result.totalCount,
                     this.pageNumberDT = result.pageNumber,
                     this.pageSizeDT = result.pageSize
-
                 }
-            },
+            }
         },
         computed: {},
         async mounted () {
-            let getUserAdminLog = await this.$store.dispatch(actionTypes.getUserAdminLog,{ starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: 1})
+            let getUserAdminLog = await this.$store.dispatch(actionTypes.getUserAdminLog, { starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: 1})
             console.log(getUserAdminLog)
-            if( getUserAdminLog && getUserAdminLog.list ){
-                this.htVipList = getUserAdminLog.list ;
+            if (getUserAdminLog && getUserAdminLog.list) {
+                this.htVipList = getUserAdminLog.list
                 // 处理页码
                 this.totalCountVIP = getUserAdminLog.totalCount,
                 this.pageNumberVIP = getUserAdminLog.pageNumber,
                 this.pageSizeVIP = getUserAdminLog.pageSize
-
             }
 
-            let getGameAdminLog = await this.$store.dispatch(actionTypes.getGameAdminLog,{ starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: 1})
+            let getGameAdminLog = await this.$store.dispatch(actionTypes.getGameAdminLog, { starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: 1})
             console.log(getGameAdminLog)
-            if( getGameAdminLog && getGameAdminLog.list ){
-                this.htDTList = getGameAdminLog.list ;
+            if (getGameAdminLog && getGameAdminLog.list) {
+                this.htDTList = getGameAdminLog.list
                 // 处理页码
                 this.totalCountDT = getGameAdminLog.totalCount,
                 this.pageNumberDT = getGameAdminLog.pageNumber,
                 this.pageSizeDT = getGameAdminLog.pageSize
-
             }
         }
     }
