@@ -49,7 +49,7 @@ export default {
                     this.$router.push('/home/xtManage/xtSet')
                     break
                 case 'tgyManage':
-                    this.$router.push('/home/tgyManage/tgyChild')
+                    this.$router.push('/home/tgyManage/tgyChild/tgyChildCz')
                     break
                 case 'ybyz':
                     this.$router.push('/home/ybyz/vipOperate')
