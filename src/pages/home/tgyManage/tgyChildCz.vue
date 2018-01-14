@@ -1,10 +1,9 @@
 <template>
     <div>
         <div>
-            <span>请输入充值数目：</span>
-            <el-input size="small" v-model="payNum" placeholder="请输入充值数目"></el-input>
-            <span>共&nbsp;{{ parseInt(  payNum / 3 )  }}&nbsp;游戏币！</span>
-            <el-button size="small" v-tap="{ methods:setPay }">确认充值</el-button>
+            <span>请输入充值数目：</span><el-input size="small" v-model="payNum" placeholder="请输入充值数目"></el-input>
+            <span>&nbsp;共&nbsp;{{ parseInt(  payNum / 3 )  }}&nbsp;游戏币！</span>&nbsp;&nbsp;
+            <el-button size="small" type="danger" v-tap="{ methods:setPay }">确认充值</el-button>
         </div>
     </div>
 </template>
@@ -14,12 +13,12 @@
     export default {
         data () {
             return {
-                payNum:'',
+                payNum: ''
             }
         },
         watch: {},
         methods: {
-            async setPay(){
+            async setPay () {
                 if (!this.selTgyVal) {
                     this.$message({
                         message: '没有选择对应选项',
@@ -28,15 +27,16 @@
                     })
                     return false
                 }
-                let promoter = await this.$store.dispatch(actionTypes.enablePromoter, [Number(this.selTgyVal.id)])
-                console.log('禁用用户Msg')
+                let promoter = await this.$store.dispatch(actionTypes.promoterPay, [ Number(this.selTgyVal.id), Number(this.payNum), 0])
+                console.log('充值数目Msg')
                 console.log(promoter)
                 if (promoter && promoter.success) {
                     this.$message({
-                        message: '禁用推广员成功',
+                        message: '充值成功',
                         type: 'success',
                         duration: 1200
                     })
+                    this.payNum = 0
                 } else {
                     this.$message({
                         message: promoter.message,
@@ -56,5 +56,7 @@
     }
 </script>
 <style scoped>
-
+    .el-input{
+        width: 150px;
+    }
 </style>

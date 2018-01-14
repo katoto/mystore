@@ -31,6 +31,7 @@
                     :data="tgyMainList"
                     highlight-current-row
                     height="300"
+                    size="small"
                     stripe
                     border
                     @cell-click="tgyListClick"
@@ -38,12 +39,12 @@
                 <el-table-column
                         prop="username"
                         label="账号"
-                        width="180">
+                        width="110">
                 </el-table-column>
                 <el-table-column
                         prop="gold"
                         label="游戏币"
-                        width="180">
+                        width="110">
                 </el-table-column>
                 <el-table-column
                         prop="level"
@@ -434,7 +435,6 @@
 
                 // 去除 表格选中
                 this.$refs.singleTable.setCurrentRow('')
-
             },
             handleClick (tab, event) {
                 switch (this.activeName) {
@@ -503,11 +503,11 @@
 
         data () {
             return {
-                enableName:'',
-                enableVisible:false,
+                enableName: '',
+                enableVisible: false,
 
-                disableName:'',
-                disableVisible:false,
+                disableName: '',
+                disableVisible: false,
 
                 delName: '',
                 delVisible: false,

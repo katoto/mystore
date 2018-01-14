@@ -134,6 +134,14 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
 
+    async promoterPlayLogs ({dispatch, commit}, args = [2, '2018-01-01', '2018-01-13', {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
+        const argsData = await dispatch('invoke', {
+            method: 'promoterService/promoterPlayLogs',
+            args
+        })
+        return argsData[0]
+    },
+
     // 推广员登录ip记录
     async getPromoterLoginRec ({dispatch, commit}, args = [2, '2018-01-01', '2018-01-13', {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
         const argsData = await dispatch('invoke', {
