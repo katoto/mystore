@@ -550,7 +550,7 @@
         },
         data () {
             return {
-                downVisible: true,
+                downVisible: false,
                 downNameValue: '直属推广员',
                 downNameOptions: [
                     {id: 0, name: '直属推广员'},
