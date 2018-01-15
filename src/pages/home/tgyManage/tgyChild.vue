@@ -214,10 +214,10 @@
     import { actionTypes, mutationTypes } from '~store/tgyManager'
     export default {
         methods: {
-            beforeDownPromoter(){
-                this.downVisible = true ;
+            beforeDownPromoter () {
+                this.downVisible = true
             },
-            downPromoter(){
+            downPromoter () {
 
             },
 
@@ -460,10 +460,10 @@
                     duration: 1200
                 })
                 // 去除 表格选中
-                this.$refs.singleTable.setCurrentRow('');
-                this.$store.commit(mutationTypes.setSelTgyVal, null );
-                this.currStateStop = true ;
-                this.currStateActive = true ;
+                this.$refs.singleTable.setCurrentRow('')
+                this.$store.commit(mutationTypes.setSelTgyVal, null)
+                this.currStateStop = true
+                this.currStateActive = true
             },
             handleClick (tab, event) {
                 switch (this.activeName) {
@@ -494,14 +494,14 @@
                 if (getPromoter) {
                     if (getPromoter.pager && getPromoter.pager.list) {
                         this.tgyMainList = getPromoter.pager.list
-                        this.tgyMainList.forEach(( item )=>{
-                            if( item.state === 0 ){
+                        this.tgyMainList.forEach((item) => {
+                            if (item.state === 0) {
                                 item.state = '正常'
-                            }else{
+                            } else {
                                 item.state = '禁用'
                             }
-                            if( item.level !== undefined ){
-                                item.level = item.level + '级推广员';
+                            if (item.level !== undefined) {
+                                item.level = item.level + '级推广员'
                             }
                         })
                         // 处理页码
@@ -528,14 +528,14 @@
                     this.curTgyValue = Number(this.tgyvalue)
                     if (promoter.results && promoter.results) {
                         this.tgyMainList = promoter.results
-                        this.tgyMainList.forEach(( item )=>{
-                            if( item.state === 0 ){
+                        this.tgyMainList.forEach((item) => {
+                            if (item.state === 0) {
                                 item.state = '正常'
-                            }else{
+                            } else {
                                 item.state = '禁用'
                             }
-                            if( item.level !== undefined ){
-                                item.level = item.level + '级推广员';
+                            if (item.level !== undefined) {
+                                item.level = item.level + '级推广员'
                             }
                         })
                     }
@@ -557,8 +557,8 @@
                     {id: 1, name: '非直属推广员'}
                 ],
 
-                currStateStop:true,
-                currStateActive:true,
+                currStateStop: true,
+                currStateActive: true,
 
                 enableName: '',
                 enableVisible: false,
@@ -625,16 +625,16 @@
             console.log('========')
             if (getPromoter) {
                 if (getPromoter.pager && getPromoter.pager.list) {
-                    this.tgyMainList = getPromoter.pager.list;
-                    this.tgyMainList.forEach(( item )=>{
-                        if( item.state === 0 ){
+                    this.tgyMainList = getPromoter.pager.list
+                    this.tgyMainList.forEach((item) => {
+                        if (item.state === 0) {
                             item.state = '正常'
-                        }else{
+                        } else {
                             item.state = '禁用'
                         }
 
-                        if( item.level !== undefined ){
-                            item.level = item.level + '级推广员';
+                        if (item.level !== undefined) {
+                            item.level = item.level + '级推广员'
                         }
                     })
                     // 处理页码
@@ -655,18 +655,18 @@
                 return this.$store.state.tgyManager.selTgyVal
             }
         },
-        watch:{
-            selTgyVal( val ){
-                console.log( val )
-                this.$router.push('/home/tgyManage/tgyChild/tgyChildCz');
-                this.activeName = 'tgyChildCz';
-                if( val ){
-                    if( val.state === 1 && !!this.selTgyVal ){
-                        this.currStateStop = true ;
-                        this.currStateActive = false ;
-                    }else{
-                        this.currStateStop = false ;
-                        this.currStateActive = true ;
+        watch: {
+            selTgyVal (val) {
+                console.log(val)
+                this.$router.push('/home/tgyManage/tgyChild/tgyChildCz')
+                this.activeName = 'tgyChildCz'
+                if (val) {
+                    if (val.state === 1 && !!this.selTgyVal) {
+                        this.currStateStop = true
+                        this.currStateActive = false
+                    } else {
+                        this.currStateStop = false
+                        this.currStateActive = true
                     }
                 }
             }
