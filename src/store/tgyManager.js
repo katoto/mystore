@@ -7,12 +7,12 @@ import { mTypes } from '~store/user'
 
 const name = 'tgyManager'
 const state = {
-
+    selTgyVal: null
 }
 const actionsInfo = mapActions({
 
     // 推广员查询 第一个参数：0直属推广员  1非直属推广员
-    async getPromoterList ({dispatch, commit}, args = [0, {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 8, 'totalCount': 0}]) {
+    async getPromoterList ({dispatch, commit}, args = [1, {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 8, 'totalCount': 0}]) {
         const argsData = await dispatch('invoke', {
             method: 'promoterService/getPromoterList',
             args
@@ -38,7 +38,7 @@ const actionsInfo = mapActions({
     },
 
     // 禁用
-    async addPromoter ({dispatch, commit}, args = [1]) {
+    async disablePromoter ({dispatch, commit}, args = [1]) {
         const argsData = await dispatch('invoke', {
             method: 'promoterService/disablePromoter',
             args
@@ -134,6 +134,14 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
 
+    async promoterPlayLogs ({dispatch, commit}, args = [2, '2018-01-01', '2018-01-13', {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
+        const argsData = await dispatch('invoke', {
+            method: 'promoterService/promoterPlayLogs',
+            args
+        })
+        return argsData[0]
+    },
+
     // 推广员登录ip记录
     async getPromoterLoginRec ({dispatch, commit}, args = [2, '2018-01-01', '2018-01-13', {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
         const argsData = await dispatch('invoke', {
@@ -148,6 +156,9 @@ const actionsInfo = mapActions({
 const mutationsInfo = mapMutations({
     setLoginInfoCofig (state, info) {
 
+    },
+    setSelTgyVal (state, val) {
+        state.selTgyVal = val
     }
 }, name)
 

@@ -93,11 +93,9 @@
         },
         watch: {
             current (current) {
-                if(current) {
-                    
-
+                if (current) {
+    
                 }
-
             }
         },
         methods: {
@@ -120,7 +118,7 @@
                     }).then(async () => {
                         try {
                             let result = await this.$store.dispatch(aTypes.deleteAdmin, [this.current])
-                            if(!result.success) {
+                            if (!result.success) {
                                 this.$message({
                                     type: 'error',
                                     message: result.message,
@@ -134,15 +132,13 @@
                                 })
                                 this.userList = await this.$store.dispatch(aTypes.adminList)
                             }
-                            
                         } catch (e) {
-                             this.$message({
+                            this.$message({
                                 type: 'error',
                                 message: '删除失败!',
                                 duration: 1200
                             })
                         }
-                        
                     }).catch(() => {
                         this.$message({
                             type: 'info',
@@ -162,7 +158,7 @@
                 })
                 let args = [this.userName, this.setLevel, ...cl]
                 let result = await this.$store.dispatch(aTypes.addAdmin, args)
-                if(!result.success) {
+                if (!result.success) {
                     this.$message({
                         message: result.message,
                         type: 'error',
@@ -190,50 +186,48 @@
         },
         computed: {
             currInfo () {
-                if(this.userList.length) {
+                if (this.userList.length) {
                     let currInfo = null
                     this.userList.some((info) => {
-                        if(info.id === this.current) {
+                        if (info.id === this.current) {
                             return currInfo = info
                         }
-                        
                     })
                     return currInfo
                 }
             },
             specialop () {
                 let result = []
-                if(this.currInfo) {
-
-                    if(this.currInfo.authDeleteBill) {
+                if (this.currInfo) {
+                    if (this.currInfo.authDeleteBill) {
                         result.push('删账单')
                     }
-                    if(this.currInfo.authGiveGold) {
+                    if (this.currInfo.authGiveGold) {
                         result.push('赠送游戏币')
                     }
-                    if(this.currInfo.authHallAdmin) {
+                    if (this.currInfo.authHallAdmin) {
                         result.push('游戏大厅管理')
                     }
-                    if(this.currInfo.authMinusGold) {
+                    if (this.currInfo.authMinusGold) {
                         result.push('扣除游戏币')
                     }
-                    if(this.currInfo.authPromoter) {
+                    if (this.currInfo.authPromoter) {
                         result.push('推广员管理')
                     }
-                    if(this.currInfo.authUserRegist) {
+                    if (this.currInfo.authUserRegist) {
                         result.push('会员注册验证')
                     }
                 }
                 return result.join(',')
             },
             currAuthLevel () {
-                if(this.currInfo) {
-                    switch(this.currInfo.type) {
-                        case 1: 
+                if (this.currInfo) {
+                    switch (this.currInfo.type) {
+                    case 1:
                         return '系统管理员'
-                        case 2:
+                    case 2:
                         return '主管'
-                        case 3:
+                    case 3:
                         return '服务员'
                     }
                 }
