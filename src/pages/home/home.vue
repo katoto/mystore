@@ -23,27 +23,22 @@ export default {
     },
     computed: {
         socketData () {
-          return this.$store.state.websocket.data
+            return this.$store.state.websocket.data
         }
     },
     watch: {
         socketData (socketData) {
             // 处理登出的情况
-            if(socketData.method === 'logoffNotice') {
+            if (socketData.method === 'logoffNotice') {
                 this.$message({
-                                message: '当前已退出登录',
-                                type: 'success',
-                                duration: 1200
-                            })
-                            setTimeout(() => {
-                                this.$router.replace('/login')
-                            }, 3000);
-                            return;
-
-                
+                    message: '当前已退出登录',
+                    type: 'success',
+                    duration: 1200
+                })
+                setTimeout(() => {
+                    this.$router.replace('/login')
+                }, 3000)
             }
-
-
         }
     },
     methods: {
@@ -54,7 +49,7 @@ export default {
                     this.$router.push('/home/xtManage/xtSet')
                     break
                 case 'tgyManage':
-                    this.$router.push('/home/tgyManage/tgyChild')
+                    this.$router.push('/home/tgyManage/tgyChild/tgyChildCz')
                     break
                 case 'ybyz':
                     this.$router.push('/home/ybyz/vipOperate')
