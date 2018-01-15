@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div>
-            <span>请输入充值数目：</span><el-input size="small" v-model="payNum" placeholder="请输入充值数目"></el-input>
+        <div :class="{'disable':!selTgyVal }">
+            <span>请输入充值数目：</span><el-input :disabled=!selTgyVal size="small" v-model="payNum" placeholder="请输入充值数目"></el-input>
             <span>&nbsp;共&nbsp;{{ parseInt(  payNum / 3 )  }}&nbsp;游戏币！</span>&nbsp;&nbsp;
-            <el-button size="small" type="danger" v-tap="{ methods:setPay }">确认充值</el-button>
+            <el-button size="small" :disabled=!selTgyVal type="danger" v-tap="{ methods:setPay }">确认充值</el-button>
         </div>
     </div>
 </template>
@@ -58,5 +58,8 @@
 <style scoped>
     .el-input{
         width: 150px;
+    }
+    .disable span{
+        color: #ccc;
     }
 </style>

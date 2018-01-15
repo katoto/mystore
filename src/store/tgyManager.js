@@ -12,7 +12,7 @@ const state = {
 const actionsInfo = mapActions({
 
     // 推广员查询 第一个参数：0直属推广员  1非直属推广员
-    async getPromoterList ({dispatch, commit}, args = [1, {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 8, 'totalCount': 0}]) {
+    async getPromoterList ({dispatch, commit}, args = [0, {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 8, 'totalCount': 0}]) {
         const argsData = await dispatch('invoke', {
             method: 'promoterService/getPromoterList',
             args
