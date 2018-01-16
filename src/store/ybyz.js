@@ -4,17 +4,17 @@
 
 import { mapActions, mapMutations } from '~common/util'
 
-const name = 'ybyz';
+const name = 'ybyz'
 const state = {
     loginInfo: null,
     userList: null,
-    selVipVal:null ,
+    selVipVal: null
 }
 
 const mutationsInfo = mapMutations({
 //  new
-    setSelVipVal( state , info ){
-        state.selVipVal = info ;
+    setSelVipVal (state, info) {
+        state.selVipVal = info
     },
 
     setLoginInfo (state, info) {
@@ -30,7 +30,7 @@ const mutationsInfo = mapMutations({
     setUserList (state, list) {
         state.userList = list
     }
-}, name);
+}, name)
 
 const actionsInfo = mapActions({
     async login ({dispatch, commit}, {name, pass}) {
@@ -54,21 +54,21 @@ const actionsInfo = mapActions({
         commit(mTypes.setUserList, result[0])
     },
     // 获取会员列表
-//     客户端发送: method: memberService/getUserList; version: 1.2.14; time: 1.5153050774E12;
-//      args: [0,Pager [pageNumber=1, pageSize=8, totalCount=0, pageCount=0, orderBy=, order=,
-//     list=null],]
-    async getVipUserList ({dispatch, commit}, args = [ 0,{'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
+    //     客户端发送: method: memberService/getUserList; version: 1.2.14; time: 1.5153050774E12;
+    //      args: [0,Pager [pageNumber=1, pageSize=8, totalCount=0, pageCount=0, orderBy=, order=,
+    //     list=null],]
+    async getVipUserList ({dispatch, commit}, args = [ 0, {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
         const argsData = await dispatch('invoke', {
             method: 'memberService/getUserList',
             args
         })
         return argsData[0]
-    },
+    }
 
-}, name);
+}, name)
 
-const actions = actionsInfo.actions;
-const mutations = mutationsInfo.mutations;
-export const aTypes = actionsInfo.aTypes;
-export const mTypes = mutationsInfo.mTypes;
+const actions = actionsInfo.actions
+const mutations = mutationsInfo.mutations
+export const aTypes = actionsInfo.aTypes
+export const mTypes = mutationsInfo.mTypes
 export default { state, actions, mutations }

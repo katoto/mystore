@@ -192,6 +192,6 @@ export default () => new Vuex.Store({
     actions,
     mutations,
     modules: {
-        home, user, xtManager, tgyManager , ybyz
+        home, user, xtManager, tgyManager, ybyz
     }
 })

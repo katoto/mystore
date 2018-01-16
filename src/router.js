@@ -167,6 +167,10 @@ export default new VueRouter({
                             component: vipOperate
                         },
                         {
+                            path: 'giftExchange',
+                            component: giftExchange
+                        },
+                        {
                             path: 'rentSearch',
                             component: rentSearch
                         }
