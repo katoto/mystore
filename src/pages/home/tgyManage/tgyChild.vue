@@ -47,15 +47,20 @@
                 </el-table-column>
                 <el-table-column
                         prop="level"
-                        label="权限">
+                        label="权限"
+                        width="100"
+                >
                 </el-table-column>
                 <el-table-column
                         prop="childrenPromoterNum"
-                        label="直属推广数">
+                        label="直属推广数"
+                        width="90">
                 </el-table-column>
                 <el-table-column
                         prop="childrenUserNum"
-                        label="直属会员数">
+                        label="直属会员数"
+                        width="90"
+                >
                 </el-table-column>
                 <el-table-column
                         prop="parentName"
@@ -253,6 +258,10 @@
                         type: 'success',
                         duration: 1200
                     })
+                    setTimeout(() => {
+                        this.handleCurrentChange(this.currPageNumber)
+                        this.initSearch(false)
+                    }, 900)
                 } else {
                     this.$message({
                         message: promoter.message,
@@ -296,6 +305,10 @@
                         type: 'success',
                         duration: 1200
                     })
+                    setTimeout(() => {
+                        this.handleCurrentChange(this.currPageNumber)
+                        this.initSearch(false)
+                    }, 900)
                 } else {
                     this.$message({
                         message: promoter.message,
@@ -339,6 +352,10 @@
                         type: 'success',
                         duration: 1200
                     })
+                    setTimeout(() => {
+                        this.handleCurrentChange(this.currPageNumber)
+                        this.initSearch(false)
+                    }, 900)
                 } else {
                     this.$message({
                         message: promoter.message,
@@ -382,7 +399,9 @@
                     })
                     setTimeout(() => {
                         this.promoterVisible = false
-                    }, 1200)
+                        this.handleCurrentChange(this.currPageNumber)
+                        this.initSearch(false)
+                    }, 1100)
                 } else {
                     this.$message({
                         message: promoter.message,
@@ -424,6 +443,10 @@
                         type: 'success',
                         duration: 1200
                     })
+                    setTimeout(() => {
+                        this.handleCurrentChange(this.currPageNumber)
+                        this.initSearch(false)
+                    }, 900)
                 }
                 setTimeout(() => {
                     this.dialogVisible = false
@@ -447,18 +470,24 @@
                         type: 'success',
                         duration: 1200
                     })
+                    setTimeout(() => {
+                        this.handleCurrentChange(this.currPageNumber)
+                        this.initSearch(false)
+                    }, 900)
                 }
                 setTimeout(() => {
-                    this.remarkVisible = true
+                    this.remarkVisible = false
                 }, 1100)
             },
-            initSearch () {
+            initSearch (showTips = true) {
                 this.tgySearch = ''
-                this.$message({
-                    message: '重置成功',
-                    type: 'success',
-                    duration: 1200
-                })
+                if (showTips) {
+                    this.$message({
+                        message: '重置成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                }
                 // 去除 表格选中
                 this.$refs.singleTable.setCurrentRow('')
                 this.$store.commit(mutationTypes.setSelTgyVal, null)
@@ -491,6 +520,8 @@
     let getPromoter = await this.$store.dispatch(actionTypes.getPromoterList, [Number(this.curTgyValue), {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': Number(val), 'pageSize': 8, 'totalCount': 0}])
                 console.log(getPromoter)
                 console.log('==***********===')
+                this.currPageNumber = val
+
                 if (getPromoter) {
                     if (getPromoter.pager && getPromoter.pager.list) {
                         this.tgyMainList = getPromoter.pager.list
@@ -519,7 +550,6 @@
             setCurrent (row) {
                 this.$refs.singleTable.setCurrentRow(row)
             },
-
             async setPromoter () {
                 let promoter = await this.$store.dispatch(actionTypes.searchPromoter, [this.tgySearch.toString(), Number(this.tgyvalue) ])
                 console.log(promoter)
@@ -550,6 +580,9 @@
         },
         data () {
             return {
+
+                currPageNumber: 1,
+
                 downVisible: false,
                 downNameValue: '直属推广员',
                 downNameOptions: [
@@ -661,7 +694,7 @@
                 this.$router.push('/home/tgyManage/tgyChild/tgyChildCz')
                 this.activeName = 'tgyChildCz'
                 if (val) {
-                    if (val.state === 1 && !!this.selTgyVal) {
+                    if (val.state === '禁用' && !!this.selTgyVal) {
                         this.currStateStop = true
                         this.currStateActive = false
                     } else {
@@ -689,8 +722,8 @@
     .tgyChild{
         position: relative;
         border:1px solid #dcdfe6;
-        padding:20px;
-        margin-top:20px;
+        padding:10px 20px;
+        margin-top:10px;
     }
     .tgyChild::after{
         content: '';

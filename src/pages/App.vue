@@ -39,6 +39,8 @@ export default {
 }
 </script>
 <style>
+
+
 body,
 p,
 h1,
@@ -224,4 +226,10 @@ li {
 body {
   font-size: 14px;
 }
+
+/*@media screen and (max-width: 550px){*/
+    /*body {*/
+        /*background-color: #000 !important;*/
+    /*}*/
+/*}*/
 </style>

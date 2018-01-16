@@ -1,191 +1,229 @@
 <template>
-    <div>
-        <section style="padding-bottom: 20px;border-bottom: 1px solid #000;">
+    <div id="vipOperate">
+        <section style="padding-bottom: 10px;border-bottom: 1px solid #000;">
             <header class="clearfix">
-                <div class="xtPicker">
-                    <el-date-picker
-                        v-model="value7"
-                        type="daterange"
-                        align="right"
-                        size="small"
-                        unlink-panels
-                        range-separator="至"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期"
-                        :picker-options="pickerOptions2">
-                    </el-date-picker>
-                </div>
-                <span class="xtSpan">用户账号：</span>
-                <el-select class="checkID xtSel" size="small" v-model="value" placeholder="请选择">
+                <span class="xtSpan">查找：</span>
+                <el-select class="checkID xtSel" size="small" v-model="vipStyle" placeholder="请选择">
                     <el-option
-                        v-for="item in options2"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                        :disabled="item.disabled">
+                        v-for="item in vipStyleOptions"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id" >
                     </el-option>
                 </el-select>
-                <el-input size="small" class="xtInp" v-model="input" placeholder="请输入内容"></el-input>
-                <el-button style="margin-left: 18px" size="small" type="primary">查询</el-button>
+                <el-select class="checkID xtSel" size="small" v-model="vipUserName" placeholder="请选择">
+                    <el-option
+                        v-for="item in vipUserNameOptions"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id" >
+                    </el-option>
+                </el-select>
+                <el-input size="small" class="xtInp" v-model="vipSearch" placeholder="请输入内容"></el-input>
+                <el-button size="small" type="primary">查询</el-button>
+                <el-button size="small" type="warning" v-tap="{ methods:initSearch }">重置</el-button>
+                <el-button size="small" type="danger">特殊直属会员录入</el-button>
             </header>
             <section>
                 <el-table
-                    :data="tableData3"
-                    height="350"
+                    ref="singleTable"
+                    :data="vipUserList"
+                    highlight-current-row
+                    height="250"
                     size="small"
                     border
+                    @cell-click="vipListClick"
                     style="width: 100%">
                     <el-table-column
-                        prop="date"
+                        prop="username"
                         label="账号"
-                        width="80">
+                        width="70">
                     </el-table-column>
                     <el-table-column
-                        prop="name"
+                        prop="nickname"
                         label="昵称"
                         width="50">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
-                        label="等级">
+                        prop="level"
+                        label="等级"
+                        width="60">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
-                        label="账目状态">
+                        prop="level"
+                        label="账目状态??">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
-                        label="游戏币">
+                        prop="gameGold"
+                        label="游戏币gameGold?">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
-                        label="彩票数">
+                        prop="lottery"
+                        label="彩票数lottery?">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="promoterName"
                         label="所属推广员">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="payMoney"
                         label="申请充值数目(元宝)">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="expiryNum"
+                        label="申请兑奖数目(元宝)">
+                    </el-table-column>
+                    <el-table-column
+                        prop="status"
                         label="状态">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="phone"
                         label="联系方式">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="registDate"
                         label="注册时间">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="loginDate"
                         label="最近登录">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="subUserCount"
                         label="子账号">
                     </el-table-column>
                 </el-table>
                 <div class="block">
                     <el-pagination
-                        @current-change="clickPage"
+                        @current-change="handleCurrentChange"
                         background
+                        :current-page.sync="pageNumber"
+                        :page-size="pageSize"
                         size="small"
-                        layout="prev, pager, next"
-                        :total="50">
+                        layout="prev, pager, next,jumper"
+                        :total="totalCount" >
                     </el-pagination>
                 </div>
             </section>
         </section>
-        <el-tabs  id="vipOperate" v-model="activeName" type="card" @tab-click="handleClick">
+
+        <el-tabs disabled id="vipOperate" v-model="activeName" type="card" @tab-click="handleClick">
             <el-tab-pane label="会员充值" name="vipOperate"></el-tab-pane>
             <el-tab-pane label="礼品兑换" name="giftExchange" ></el-tab-pane>
-            <el-tab-pane label="平板租借" name="flatRent" ></el-tab-pane>
-            <el-tab-pane label="平板归还" name="rentReturn" ></el-tab-pane>
             <el-tab-pane label="充值查询" name="rechargeSearch" ></el-tab-pane>
             <el-tab-pane label="兑奖查询" name="DJSearch" ></el-tab-pane>
             <el-tab-pane label="赠送查询" name="giveSearch" ></el-tab-pane>
             <el-tab-pane label="扣除查询" name="delSearch" ></el-tab-pane>
-            <el-tab-pane label="租借记录" name="rentList" ></el-tab-pane>
             <el-tab-pane label="游玩记录" name="playList" ></el-tab-pane>
             <el-tab-pane label="会员登录IP记录" name="vipLoginList" ></el-tab-pane>
-            <el-tab-pane label="币票兑换记录" name="BPList" ></el-tab-pane>
-            <el-tab-pane label="绑定账号记录" name="bindingList" ></el-tab-pane>
-            <el-tab-pane label="物品赠收记录" name="giveGoodsList" ></el-tab-pane>
-            <el-tab-pane label="每周营收" name="weeklyList" disabled></el-tab-pane>
             <!-- 暂时不用 -->
+            <!--<el-tab-pane label="平板租借" name="flatRent" ></el-tab-pane>-->
+            <!--<el-tab-pane label="平板归还" name="rentReturn" ></el-tab-pane>-->
+            <!--<el-tab-pane label="租借记录" name="rentList" ></el-tab-pane>-->
+            <!--<el-tab-pane label="币票兑换记录" name="BPList" ></el-tab-pane>-->
+            <!--<el-tab-pane label="绑定账号记录" name="bindingList" ></el-tab-pane>-->
+            <!--<el-tab-pane label="物品赠收记录" name="giveGoodsList" ></el-tab-pane>-->
+            <!--<el-tab-pane label="每周营收" name="weeklyList" disabled></el-tab-pane>-->
         </el-tabs>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
+    import { aTypes, mTypes } from '~store/ybyz' ;
     export default {
         data () {
             return {
-                input: '',
+                vipStyle:'',
+                vipStyleOptions: [
+                    { id: 0, name: '直属推广员' },
+                    { id: 1, name: '非直属推广员' }
+                ],
+                vipUserName:'',
+                vipUserNameOptions: [
+                    { id: 0, name: '会员账号' },
+                    { id: 1, name: '身份证号' }
+                ],
+                vipSearch:'',
                 activeName: 'vipOperate',
-                tableData3: [{
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                },
-                {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
+                vipUserList: [{
+                    "username":"000000",
+                    "nickname":"q q q",
+                    "level":1,
+                    "gameGold":3954,
+                    "lottery":0,
+                    "promoterName":"admin",
+                    "payMoney":0,
+                    "expiryNum":0,
+                    "status":0,
+                    "phone":"-",
+                    "registDate":"2017-11-24 21:00:36",
+                    "loginDate":"2017-11-25",
+                    "subUserCount":0,
                 }],
-                value7: '',
-                pickerOptions2: {
-                    shortcuts: [{
-                        text: '最近一周',
-                        onClick (picker) {
-                            const end = new Date()
-                            const start = new Date()
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-                            picker.$emit('pick', [start, end])
-                        }
-                    }, {
-                        text: '最近一个月',
-                        onClick (picker) {
-                            const end = new Date()
-                            const start = new Date()
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-                            picker.$emit('pick', [start, end])
-                        }
-                    }, {
-                        text: '最近三个月',
-                        onClick (picker) {
-                            const end = new Date()
-                            const start = new Date()
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-                            picker.$emit('pick', [start, end])
-                        }
-                    }]
-                },
-                options2: [
-                    {
-                        value: '100万'
-                    },
-                    {
-                        value: '1000万',
-                        disabled: true
-                    },
-                    {
-                        value: '10万'
-                    },
-                    {
-                        value: '1万'
-                    }],
-                value: '10万'
+                totalCount:0,
+                pageNumber:0,
+                pageSize:0,
+
             }
         },
         methods: {
+            async handleCurrentChange (val) {
+                // 分页事件  第一位
+                let getVipUserList = await this.$store.dispatch(actionTypes.getVipUserList, [Number(this.curTgyValue), {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': Number(val), 'pageSize': 8, 'totalCount': 0}])
+                console.log(getVipUserList);
+                console.log('==***********===');
+//                this.currPageNumber = val;
+
+                if( getVipUserList ){
+                    if( getVipUserList.pager && getVipUserList.pager.list ){
+                        this.vipUserList = getVipUserList.pager.list;
+                        this.vipUserList.forEach(( item )=>{
+                            if( item.state === 0 ){
+                                item.state = '正常'
+                            }else{
+                                item.state = '禁用'
+                            }
+                            if (item.level !== undefined) {
+                                item.level = item.level + '级推广员'
+                            }
+                        })
+                        // 处理页码
+                        this.totalCount = getPromoter.pager.totalCount;
+                        this.pageNumber = getPromoter.pager.pageNumber;
+                        this.pageSize = getPromoter.pager.pageSize;
+
+                    }
+                }
+
+            },
+            vipListClick (val) {
+                // 列表点击
+                this.$store.commit(mTypes.setSelVipVal, val);
+                // 处理一些可显示
+            },
+            setCurrent (row) {
+                this.$refs.singleTable.setCurrentRow(row)
+            },
+            initSearch (showTips = true) {
+                // 重置 选中状态
+                this.tgySearch = ''
+                if (showTips) {
+                    this.$message({
+                        message: '重置成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                }
+                // 去除 表格选中
+                this.$refs.singleTable.setCurrentRow('')
+                this.$store.commit(mutationTypes.setSelTgyVal, null)
+                this.currStateStop = true
+                this.currStateActive = true
+            },
             handleClick (tab, event) {
+                /*  路由 跳转  */
                 if (this.activeName) {
                     switch (this.activeName) {
                     case 'vipOperate':
@@ -240,13 +278,46 @@
                 // 分页
                 console.log(size)
             }
+        },
+        async mounted(){
+            // 默认第一页。
+            let getVipUserList = await this.$store.dispatch( aTypes.getVipUserList );
+            console.log(getVipUserList)
+            console.log('========')
+//            this.curTgyValue = 0 ;  //  当前的各种状态
+            if( getVipUserList ){
+                if( getVipUserList.pager && getVipUserList.pager.list ){
+                    this.vipUserList = getVipUserList.pager.list;
+                    this.vipUserList.forEach(( item )=>{
+                        if( item.state === 0 ){
+                            item.state = '正常'
+                        }else{
+                            item.state = '禁用'
+                        }
+                        if (item.level !== undefined) {
+                            item.level = item.level + '级推广员'
+                        }
+                    })
+                    // 处理页码
+                    this.totalCount = getPromoter.pager.totalCount,
+                    this.pageNumber = getPromoter.pager.pageNumber,
+                    this.pageSize = getPromoter.pager.pageSize
+
+                }
+            }
+
+
         }
     }
 </script>
 <style scoped>
-    #vipOperate{
-        padding-top: 15px;
+    #vipOperate header{
+        padding-bottom: 10px;
     }
+    #vipOperate header .el-button{
+        margin-left: 10px;
+    }
+
     header .xtPicker{
         margin-bottom: 16px;
         max-width: 280px ;
