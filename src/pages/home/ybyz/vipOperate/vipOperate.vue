@@ -108,6 +108,21 @@
             </section>
         </section>
 
+        <!--  特殊直属会员  弹窗  -->
+        <el-dialog
+            title="特殊直属会员录入"
+            :visible.sync="addUserVisible"
+            width="35%">
+            <span>请输入录入账号：</span><el-input v-model="addUserVal1" ></el-input>
+            <span>再次输入录入账号：</span><el-input v-model="addUserVal2" ></el-input>
+            <span>联系方式：</span><el-input v-model="addUserVal3" ></el-input>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="addUserVisible = false">取 消</el-button>
+            <el-button type="primary" v-tap="{ methods:addUserFn }"  >确 定</el-button>
+          </span>
+        </el-dialog>
+
+
         <el-tabs disabled id="vipOperate" v-model="activeName" type="card" @tab-click="handleClick">
             <el-tab-pane label="会员充值" name="vipOperate"></el-tab-pane>
             <el-tab-pane label="礼品兑换" name="giftExchange" ></el-tab-pane>
@@ -166,9 +181,17 @@
                 pageNumber:0,
                 pageSize:0,
 
+                addUserVisible:true,
+                addUserVal1:1,
+                addUserVal2:1,
+                addUserVal3:1,
             }
         },
         methods: {
+            addUserFn(){
+
+            },
+
             async handleCurrentChange (val) {
                 // 分页事件  第一位
                 let getVipUserList = await this.$store.dispatch(actionTypes.getVipUserList, [Number(this.curTgyValue), {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': Number(val), 'pageSize': 8, 'totalCount': 0}])
