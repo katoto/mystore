@@ -132,18 +132,18 @@
                 }
                 return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
                     switch (a) {
-                        case 'yyyy':
-                            return tf(t.getFullYear())
-                        case 'MM':
-                            return tf(t.getMonth() + 1)
-                        case 'mm':
-                            return tf(t.getMinutes())
-                        case 'dd':
-                            return tf(t.getDate())
-                        case 'HH':
-                            return tf(t.getHours())
-                        case 'ss':
-                            return tf(t.getSeconds())
+                    case 'yyyy':
+                        return tf(t.getFullYear())
+                    case 'MM':
+                        return tf(t.getMonth() + 1)
+                    case 'mm':
+                        return tf(t.getMinutes())
+                    case 'dd':
+                        return tf(t.getDate())
+                    case 'HH':
+                        return tf(t.getHours())
+                    case 'ss':
+                        return tf(t.getSeconds())
                     }
                 })
             },
@@ -171,8 +171,8 @@
                     this.tgyCxList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
-                        this.pageNumber = result.pager.pageNumber,
-                        this.pageSize = result.pager.pageSize
+                    this.pageNumber = result.pager.pageNumber,
+                    this.pageSize = result.pager.pageSize
                 }
             },
             async getMsg () {
@@ -201,8 +201,8 @@
                     this.tgyCxList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
-                        this.pageNumber = result.pager.pageNumber,
-                        this.pageSize = result.pager.pageSize
+                    this.pageNumber = result.pager.pageNumber,
+                    this.pageSize = result.pager.pageSize
                 }
             }
         },
@@ -230,8 +230,8 @@
                 this.tgyCxList = copyList
                 // 处理页码
                 this.totalCount = result.pager.totalCount,
-                    this.pageNumber = result.pager.pageNumber,
-                    this.pageSize = result.pager.pageSize
+                this.pageNumber = result.pager.pageNumber,
+                this.pageSize = result.pager.pageSize
             }
             if (result && result.lastTotalMoney) {
                 this.lastTotalMoney = result.lastTotalMoney

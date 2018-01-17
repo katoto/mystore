@@ -33,28 +33,36 @@
                 </el-table-column>
                 <el-table-column
                     prop="username"
-                    label="会员账号"
+                    label="账号"
                     width="200">
                 </el-table-column>
                 <el-table-column
                     prop="expiryType"
-                    label="充值类型">
+                    label="总押（币）">
                 </el-table-column>
                 <el-table-column
                     prop="money"
-                    label="充值数目（元宝）">
+                    label="总得（币）">
                 </el-table-column>
                 <el-table-column
                     prop="gameGold"
-                    label="总价值（币）">
+                    label="总盈利（币）">
                 </el-table-column>
                 <el-table-column
                     prop="admin"
-                    label="操作员账号">
+                    label="游戏币">
                 </el-table-column>
                 <el-table-column
                     prop="remark"
-                    label="备注信息">
+                    label="游戏分值">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    label="彩票">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    label="总价值（币）">
                 </el-table-column>
             </el-table>
             <div class="block">
@@ -140,18 +148,18 @@
                 }
                 return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
                     switch (a) {
-                        case 'yyyy':
-                            return tf(t.getFullYear())
-                        case 'MM':
-                            return tf(t.getMonth() + 1)
-                        case 'mm':
-                            return tf(t.getMinutes())
-                        case 'dd':
-                            return tf(t.getDate())
-                        case 'HH':
-                            return tf(t.getHours())
-                        case 'ss':
-                            return tf(t.getSeconds())
+                    case 'yyyy':
+                        return tf(t.getFullYear())
+                    case 'MM':
+                        return tf(t.getMonth() + 1)
+                    case 'mm':
+                        return tf(t.getMinutes())
+                    case 'dd':
+                        return tf(t.getDate())
+                    case 'HH':
+                        return tf(t.getHours())
+                    case 'ss':
+                        return tf(t.getSeconds())
                     }
                 })
             },
@@ -179,8 +187,8 @@
                     this.tgyCxList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
-                        this.pageNumber = result.pager.pageNumber,
-                        this.pageSize = result.pager.pageSize
+                    this.pageNumber = result.pager.pageNumber,
+                    this.pageSize = result.pager.pageSize
                 }
             },
             async getMsg () {
@@ -209,8 +217,8 @@
                     this.tgyCxList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
-                        this.pageNumber = result.pager.pageNumber,
-                        this.pageSize = result.pager.pageSize
+                    this.pageNumber = result.pager.pageNumber,
+                    this.pageSize = result.pager.pageSize
                 }
             }
         },
@@ -238,8 +246,8 @@
                 this.tgyCxList = copyList
                 // 处理页码
                 this.totalCount = result.pager.totalCount,
-                    this.pageNumber = result.pager.pageNumber,
-                    this.pageSize = result.pager.pageSize
+                this.pageNumber = result.pager.pageNumber,
+                this.pageSize = result.pager.pageSize
             }
             if (result && result.lastTotalMoney) {
                 this.lastTotalMoney = result.lastTotalMoney
