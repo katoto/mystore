@@ -2,7 +2,7 @@
     <el-container>
         <el-main>
             <p class="loginTitle">后台管理系统登陆</p>
-            <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+            <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="70px" class="demo-ruleForm">
                 <el-form-item label="用户名" prop="name">
                     <el-input v-model.number="ruleForm2.name"></el-input>
                 </el-form-item>

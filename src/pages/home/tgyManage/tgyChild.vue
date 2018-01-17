@@ -16,13 +16,13 @@
                 <el-button size="small" v-tap="{ methods:initSearch }">重置</el-button>
             </div>
             <div class="fr overflow tgyChild-btnBox">
-                <el-button size="small"  @click="remarkVisible=true">备注修改</el-button>
-                <el-button size="small" v-tap="{ methods:beforeResetPWD }"  >密码重置</el-button>
-                <el-button size="small" disabled>下级调整</el-button>
-                <el-button size="small" v-tap="{ methods:beforeDelPromoter }" >删除</el-button>
-                <el-button size="small" v-tap="{ methods:beforeEnablePromoter }" >解禁</el-button>
-                <el-button size="small" v-tap="{ methods:beforeDisablePromoter }" >禁用</el-button>
                 <el-button size="small" v-tap="{ methods:beforeAddPromoter }" >新增</el-button>
+                <el-button size="small" :disabled=currStateStop v-tap="{ methods:beforeDisablePromoter }" >禁用</el-button>
+                <el-button size="small" :disabled=currStateActive v-tap="{ methods:beforeEnablePromoter }" >解禁</el-button>
+                <el-button size="small" :disabled=!selTgyVal v-tap="{ methods:beforeDelPromoter }" >删除</el-button>
+                <el-button size="small" :disabled=!selTgyVal v-tap="{ methods:beforeDownPromoter }" >下级调整</el-button>
+                <el-button size="small" :disabled=!selTgyVal v-tap="{ methods:beforeResetPWD }"  >密码重置</el-button>
+                <el-button size="small" :disabled=!selTgyVal @click="remarkVisible=true">备注修改</el-button>
             </div>
         </div>
         <div class="tgyMain">
@@ -30,16 +30,15 @@
                     ref="singleTable"
                     :data="tgyMainList"
                     highlight-current-row
-                    height="300"
+                    height="250"
                     size="small"
-                    stripe
                     border
                     @cell-click="tgyListClick"
                     style="width: 100%">
                 <el-table-column
                         prop="username"
                         label="账号"
-                        width="110">
+                        width="90">
                 </el-table-column>
                 <el-table-column
                         prop="gold"
@@ -48,15 +47,20 @@
                 </el-table-column>
                 <el-table-column
                         prop="level"
-                        label="权限">
+                        label="权限"
+                        width="100"
+                >
                 </el-table-column>
                 <el-table-column
                         prop="childrenPromoterNum"
-                        label="直属推广数">
+                        label="直属推广数"
+                        width="90">
                 </el-table-column>
                 <el-table-column
                         prop="childrenUserNum"
-                        label="直属会员数">
+                        label="直属会员数"
+                        width="90"
+                >
                 </el-table-column>
                 <el-table-column
                         prop="parentName"
@@ -100,16 +104,15 @@
         <hr>
         <div class="tgyChild2" >
             <el-tabs v-model="activeName" type="card" @tab-click="handleClick" class="tgyChild-nav">
-                <el-tab-pane label="推广员充值" name="tgyChildCz"></el-tab-pane>
+                <el-tab-pane label="推广员充值" :disabled=!selTgyVal name="tgyChildCz"></el-tab-pane>
                 <el-tab-pane label="推广员兑换" disabled name="tgyChildDh"></el-tab-pane>
-                <el-tab-pane label="充值查询" name="tgyChildCzcx" ></el-tab-pane>
+                <el-tab-pane label="充值查询" :disabled=!selTgyVal name="tgyChildCzcx" ></el-tab-pane>
                 <el-tab-pane label="兑奖查询" disabled name="tgyChildDjcx" ></el-tab-pane>
-                <el-tab-pane label="游玩记录" name="tgyChildYwjl" ></el-tab-pane>
-                <el-tab-pane label="推广员登录IP记录" name="tgyChildIpjl" ></el-tab-pane>
+                <el-tab-pane label="游玩记录" :disabled=!selTgyVal name="tgyChildYwjl" ></el-tab-pane>
+                <el-tab-pane label="推广员登录IP记录" :disabled=!selTgyVal name="tgyChildIpjl" ></el-tab-pane>
             </el-tabs>
             <router-view></router-view>
         </div>
-
 
         <!--  重置密码弹窗 -->
         <el-dialog
@@ -122,7 +125,6 @@
             <el-button type="primary" v-tap="{ methods:resetPromoterPwd }"  >确 定</el-button>
           </span>
         </el-dialog>
-
 
         <!--  备注修改弹窗 -->
         <el-dialog
@@ -187,6 +189,29 @@
           </span>
         </el-dialog>
 
+        <!-- 下级调整  弹窗  center  两个按钮居中-->
+        <el-dialog
+            title="下级调整"
+            :visible.sync="downVisible"
+            width="35%">
+            <p style="text-align: center;margin-bottom: 20px">将直属推广员、直属会员调整至</p>
+            <div id="downStyle">
+                <el-select size="small" v-model="downNameValue" placeholder="请选择">
+                    <el-option
+                        v-for="item in downNameOptions"
+                        :key="item.tgyid"
+                        :label="item.name"
+                        :value="item.tgyid">
+                    </el-option>
+                </el-select>
+            </div>
+
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="downVisible = false">取 消</el-button>
+            <el-button type="primary" v-tap="{ methods: downPromoter }"  >确 定</el-button>
+          </span>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -194,6 +219,13 @@
     import { actionTypes, mutationTypes } from '~store/tgyManager'
     export default {
         methods: {
+            beforeDownPromoter () {
+                this.downVisible = true
+            },
+            downPromoter () {
+
+            },
+
             beforeEnablePromoter () {
                 if (!this.selTgyVal) {
                     this.$message({
@@ -226,6 +258,10 @@
                         type: 'success',
                         duration: 1200
                     })
+                    setTimeout(() => {
+                        this.handleCurrentChange(this.currPageNumber)
+                        this.initSearch(false)
+                    }, 900)
                 } else {
                     this.$message({
                         message: promoter.message,
@@ -269,6 +305,10 @@
                         type: 'success',
                         duration: 1200
                     })
+                    setTimeout(() => {
+                        this.handleCurrentChange(this.currPageNumber)
+                        this.initSearch(false)
+                    }, 900)
                 } else {
                     this.$message({
                         message: promoter.message,
@@ -312,6 +352,10 @@
                         type: 'success',
                         duration: 1200
                     })
+                    setTimeout(() => {
+                        this.handleCurrentChange(this.currPageNumber)
+                        this.initSearch(false)
+                    }, 900)
                 } else {
                     this.$message({
                         message: promoter.message,
@@ -355,7 +399,9 @@
                     })
                     setTimeout(() => {
                         this.promoterVisible = false
-                    }, 1200)
+                        this.handleCurrentChange(this.currPageNumber)
+                        this.initSearch(false)
+                    }, 1100)
                 } else {
                     this.$message({
                         message: promoter.message,
@@ -397,6 +443,10 @@
                         type: 'success',
                         duration: 1200
                     })
+                    setTimeout(() => {
+                        this.handleCurrentChange(this.currPageNumber)
+                        this.initSearch(false)
+                    }, 900)
                 }
                 setTimeout(() => {
                     this.dialogVisible = false
@@ -420,21 +470,29 @@
                         type: 'success',
                         duration: 1200
                     })
+                    setTimeout(() => {
+                        this.handleCurrentChange(this.currPageNumber)
+                        this.initSearch(false)
+                    }, 900)
                 }
                 setTimeout(() => {
-                    this.remarkVisible = true
+                    this.remarkVisible = false
                 }, 1100)
             },
-            initSearch () {
+            initSearch (showTips = true) {
                 this.tgySearch = ''
-                this.$message({
-                    message: '重置成功',
-                    type: 'success',
-                    duration: 1200
-                })
-
+                if (showTips) {
+                    this.$message({
+                        message: '重置成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                }
                 // 去除 表格选中
                 this.$refs.singleTable.setCurrentRow('')
+                this.$store.commit(mutationTypes.setSelTgyVal, null)
+                this.currStateStop = true
+                this.currStateActive = true
             },
             handleClick (tab, event) {
                 switch (this.activeName) {
@@ -462,9 +520,21 @@
     let getPromoter = await this.$store.dispatch(actionTypes.getPromoterList, [Number(this.curTgyValue), {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': Number(val), 'pageSize': 8, 'totalCount': 0}])
                 console.log(getPromoter)
                 console.log('==***********===')
+                this.currPageNumber = val
+
                 if (getPromoter) {
                     if (getPromoter.pager && getPromoter.pager.list) {
                         this.tgyMainList = getPromoter.pager.list
+                        this.tgyMainList.forEach((item) => {
+                            if (item.state === 0) {
+                                item.state = '正常'
+                            } else {
+                                item.state = '禁用'
+                            }
+                            if (item.level !== undefined) {
+                                item.level = item.level + '级推广员'
+                            }
+                        })
                         // 处理页码
                         this.totalCount = getPromoter.pager.totalCount,
                         this.pageNumber = getPromoter.pager.pageNumber,
@@ -474,14 +544,12 @@
             },
             tgyListClick (val) {
                 // 列表点击
-                console.log(val)
                 this.$store.commit(mutationTypes.setSelTgyVal, val)
             // 处理一些可显示
             },
             setCurrent (row) {
                 this.$refs.singleTable.setCurrentRow(row)
             },
-
             async setPromoter () {
                 let promoter = await this.$store.dispatch(actionTypes.searchPromoter, [this.tgySearch.toString(), Number(this.tgyvalue) ])
                 console.log(promoter)
@@ -490,6 +558,16 @@
                     this.curTgyValue = Number(this.tgyvalue)
                     if (promoter.results && promoter.results) {
                         this.tgyMainList = promoter.results
+                        this.tgyMainList.forEach((item) => {
+                            if (item.state === 0) {
+                                item.state = '正常'
+                            } else {
+                                item.state = '禁用'
+                            }
+                            if (item.level !== undefined) {
+                                item.level = item.level + '级推广员'
+                            }
+                        })
                     }
                     if (promoter.gold) {
                         this.globalGold = promoter.gold
@@ -500,9 +578,21 @@
                 }
             }
         },
-
         data () {
             return {
+
+                currPageNumber: 1,
+
+                downVisible: false,
+                downNameValue: '直属推广员',
+                downNameOptions: [
+                    {id: 0, name: '直属推广员'},
+                    {id: 1, name: '非直属推广员'}
+                ],
+
+                currStateStop: true,
+                currStateActive: true,
+
                 enableName: '',
                 enableVisible: false,
 
@@ -531,17 +621,17 @@
                 tgySearch: '',
 
                 tgyMainList: [{
-                    username: '2016-05-03',
-                    gold: '王小虎',
-                    level: '上海',
-                    childrenPromoterNum: '普陀区',
+                    username: '',
+                    gold: '',
+                    level: '',
+                    childrenPromoterNum: '',
                     childrenUserNum: '3',
                     parentName: 200333,
-                    expiryNum: ' 1518 弄',
-                    payMoney: ' 1518 弄',
-                    state: 0,
-                    createTime: ' 1518 弄',
-                    remark: '  弄'
+                    expiryNum: '',
+                    payMoney: '',
+                    state: '正常',
+                    createTime: '',
+                    remark: ''
                 }],
 
                 totalCount: 1,
@@ -569,6 +659,17 @@
             if (getPromoter) {
                 if (getPromoter.pager && getPromoter.pager.list) {
                     this.tgyMainList = getPromoter.pager.list
+                    this.tgyMainList.forEach((item) => {
+                        if (item.state === 0) {
+                            item.state = '正常'
+                        } else {
+                            item.state = '禁用'
+                        }
+
+                        if (item.level !== undefined) {
+                            item.level = item.level + '级推广员'
+                        }
+                    })
                     // 处理页码
                     this.totalCount = getPromoter.pager.totalCount,
                     this.pageNumber = getPromoter.pager.pageNumber,
@@ -582,16 +683,33 @@
                 }
             }
         },
-
         computed: {
             selTgyVal () {
                 return this.$store.state.tgyManager.selTgyVal
             }
+        },
+        watch: {
+            selTgyVal (val) {
+                console.log(val)
+                this.$router.push('/home/tgyManage/tgyChild/tgyChildCz')
+                this.activeName = 'tgyChildCz'
+                if (val) {
+                    if (val.state === '禁用' && !!this.selTgyVal) {
+                        this.currStateStop = true
+                        this.currStateActive = false
+                    } else {
+                        this.currStateStop = false
+                        this.currStateActive = true
+                    }
+                }
+            }
         }
-
     }
 </script>
 <style scoped>
+    #downStyle{
+        text-align: center;
+    }
     .fl{
         float: left;
     }
@@ -604,8 +722,8 @@
     .tgyChild{
         position: relative;
         border:1px solid #dcdfe6;
-        padding:20px;
-        margin-top:20px;
+        padding:10px 20px;
+        margin-top:10px;
     }
     .tgyChild::after{
         content: '';
