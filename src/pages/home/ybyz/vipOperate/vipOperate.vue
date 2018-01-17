@@ -27,23 +27,25 @@ export default {
                     })
                     return false
                 }
-            //                let promoter = await this.$store.dispatch(actionTypes.promoterPay, [ Number(this.selTgyVal.id), Number(this.payNum), 0])
-            //                console.log('充值数目Msg')
-            //                console.log(promoter)
-            //                if (promoter && promoter.success) {
-            //                    this.$message({
-            //                        message: '充值成功',
-            //                        type: 'success',
-            //                        duration: 1200
-            //                    })
-            //                    this.payNum = 0
-            //                } else {
-            //                    this.$message({
-            //                        message: promoter.message,
-            //                        type: 'error',
-            //                        duration: 1200
-            //                    })
-            //                }
+
+                let memberPay = await this.$store.dispatch(aTypes.memberPay, [ Number(this.selTgyVal.id), Number(this.payNum), 0])
+                console.log('一般运作 充值数目Msg')
+                console.log(memberPay)
+
+                if (memberPay && memberPay.success) {
+                    this.$message({
+                        message: '充值成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    this.payNum = 0
+                } else {
+                    this.$message({
+                        message: memberPay.message,
+                        type: 'error',
+                        duration: 1200
+                    })
+                }
             }
 
         },

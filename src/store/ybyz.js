@@ -4,19 +4,18 @@
 
 import { mapActions, mapMutations } from '~common/util'
 
-const name = 'ybyz';
+const name = 'ybyz'
 const state = {
     loginInfo: null,
     userList: null,
     selVipVal: null
-};
+}
 
 const mutationsInfo = mapMutations({
 //  new
     setSelVipVal (state, info) {
         state.selVipVal = info
     },
-
     setLoginInfo (state, info) {
         state.loginInfo = info
     },
@@ -30,7 +29,7 @@ const mutationsInfo = mapMutations({
     setUserList (state, list) {
         state.userList = list
     }
-}, name);
+}, name)
 
 const actionsInfo = mapActions({
     async login ({dispatch, commit}, {name, pass}) {
@@ -61,7 +60,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/getUserList',
             args
-        });
+        })
         return argsData[0]
     },
 
@@ -70,9 +69,10 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/searchUser',
             args
-        });
+        })
         return argsData[0]
     },
+    // 会员充值
     // 客户端发送: method: memberService/pay; version: 1.2.14;
     // time: 1.51530669327E12;
     // args: [3,5000,0,]  //args里内容3为用户id
@@ -82,7 +82,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/pay',
             args
-        });
+        })
         return argsData[0]
     },
     // 充值查询
@@ -90,15 +90,15 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'payLogService/getUserPayLog',
             args
-        });
+        })
         return argsData[0]
     },
     // 赠送查询
-    async getUserPayLog ({dispatch, commit}, args = [ 3, '2018-01-01', '2018-01-13', {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
+    async getUserAward ({dispatch, commit}, args = [ 3, '2018-01-01', '2018-01-13', {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
         const argsData = await dispatch('invoke', {
-            method: 'payLogService/getUserPayLog',
+            method: 'payLogService/getUserAward',
             args
-        });
+        })
         return argsData[0]
     },
     // 扣除查询
@@ -106,7 +106,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'payLogService/getUserMinus',
             args
-        });
+        })
         return argsData[0]
     },
     // 游玩记录
@@ -114,7 +114,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/getUserPlayLog',
             args
-        });
+        })
         return argsData[0]
     },
     // 会员登录记录
@@ -122,14 +122,14 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'loginRecordService/getUserLoginRec',
             args
-        });
+        })
         return argsData[0]
-    },
+    }
 
-}, name);
+}, name)
 
-const actions = actionsInfo.actions;
-const mutations = mutationsInfo.mutations;
-export const aTypes = actionsInfo.aTypes;
-export const mTypes = mutationsInfo.mTypes;
+const actions = actionsInfo.actions
+const mutations = mutationsInfo.mutations
+export const aTypes = actionsInfo.aTypes
+export const mTypes = mutationsInfo.mTypes
 export default { state, actions, mutations }
