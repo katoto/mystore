@@ -9,6 +9,7 @@ import home from './home'
 import user from './user'
 import xtManager from './xtManager'
 import tgyManager from './tgyManager'
+import ybyz from './ybyz'
 import {wait} from '../common/util'
 
 Vue.use(Vuex)
@@ -191,6 +192,6 @@ export default () => new Vuex.Store({
     actions,
     mutations,
     modules: {
-        home, user, xtManager, tgyManager
+        home, user, xtManager, tgyManager, ybyz
     }
 })
