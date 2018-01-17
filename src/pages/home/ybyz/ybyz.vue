@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-tabs  id="xtManage" v-model="activeName" type="card" @tab-click="handleClick">
+        <el-tabs v-model="activeNameTop" type="card" @tab-click="handleClick">
             <el-tab-pane label="会员操作" name="vipOperate"></el-tab-pane>
             <el-tab-pane label="平板租借记录查询" name="rentSearch" disabled></el-tab-pane>
             <!--  暂时不用  -->

@@ -167,12 +167,36 @@ export default new VueRouter({
                             component: vipOperate
                         },
                         {
+                            path: 'rentSearch',
+                            component: rentSearch
+                        },
+                        {
                             path: 'giftExchange',
                             component: giftExchange
                         },
                         {
-                            path: 'rentSearch',
-                            component: rentSearch
+                            path: 'rechargeSearch',
+                            component: rechargeSearch
+                        },
+                        {
+                            path: 'DJSearch',
+                            component: DJSearch
+                        },
+                        {
+                            path: 'giveSearch',
+                            component: giveSearch
+                        },
+                        {
+                            path: 'delSearch',
+                            component: delSearch
+                        },
+                        {
+                            path: 'playList',
+                            component: playList
+                        },
+                        {
+                            path: 'vipLoginList',
+                            component: vipLoginList
                         }
                     ]
                 },
