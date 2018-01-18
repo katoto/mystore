@@ -39,5 +39,4 @@
     .red{
         color: red;
     }
-
 </style>

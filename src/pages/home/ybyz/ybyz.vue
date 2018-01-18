@@ -168,8 +168,7 @@ export default {
                 ],
                 vipUserName: '',
                 vipUserNameOptions: [
-                    { id: 0, name: '会员账号' },
-                    { id: 1, name: '身份证号' }
+                    { id: 0, name: '会员账号' }
                 ],
                 vipSearch: '',
                 activeName: 'vipOperate',
@@ -189,7 +188,7 @@ export default {
                     'subUserCount': 0
                 }],
                 totalCount: 0,
-                pageNumber: 0,
+                pageNumber: 1,
                 pageSize: 0,
 
                 addUserVisible: false,
@@ -226,8 +225,10 @@ export default {
                 console.log(getVipUserList)
             },
             async handleCurrentChange (val) {
+                console.log( val )
+                console.log( 111 )
                 // 分页事件  第一位
-                let getVipUserList = await this.$store.dispatch(actionTypes.getVipUserList, [Number(this.curTgyValue), {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': Number(val), 'pageSize': 8, 'totalCount': 0}])
+                let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList, [Number(this.curTgyValue), {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': Number(val), 'pageSize': 8, 'totalCount': 0}])
                 console.log(getVipUserList)
                 console.log('==***********===')
                 //                this.currPageNumber = val;
@@ -347,8 +348,9 @@ export default {
         async mounted () {
             // 默认第一页。
             let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList)
+            console.log('=== 会员列表 =====')
             console.log(getVipUserList)
-            console.log('========')
+            console.log('=== 会员列表 =====')
             //            this.curTgyValue = 0 ;  //  当前的各种状态
             if (getVipUserList) {
                 if (getVipUserList.pager && getVipUserList.pager.list) {
@@ -364,9 +366,9 @@ export default {
                         }
                     })
                     // 处理页码
-                    this.totalCount = getPromoter.pager.totalCount,
-                    this.pageNumber = getPromoter.pager.pageNumber,
-                    this.pageSize = getPromoter.pager.pageSize
+                    this.totalCount = getVipUserList.pager.totalCount,
+                    this.pageNumber = getVipUserList.pager.pageNumber,
+                    this.pageSize = getVipUserList.pager.pageSize
                 }
             }
         }

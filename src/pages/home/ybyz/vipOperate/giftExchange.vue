@@ -27,7 +27,8 @@
                     })
                     return false
                 }
-            //                let promoter = await this.$store.dispatch(actionTypes.promoterPay, [ Number(this.selTgyVal.id), Number(this.payNum), 0])
+            //         礼品兑换接口
+            //                let promoter = await this.$store.dispatch(aTypes.promoterPay, [ Number(this.selTgyVal.id), Number(this.payNum), 0])
             //                console.log('充值数目Msg')
             //                console.log(promoter)
             //                if (promoter && promoter.success) {

@@ -1,9 +1,9 @@
 <template>
-    <div id="tgyCx">
+    <div id="DJS">
         <header class="clearfix">
             <div class="xtPicker">
                 <el-date-picker
-                    v-model="tgyCxTime"
+                    v-model="DJSTime"
                     type="daterange"
                     align="right"
                     size="small"
@@ -17,11 +17,11 @@
                 </el-date-picker>
             </div>
             <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
-            <span style="float: right;line-height: 32px;right: 20px;font-weight: 600">（按情况改波改波）历史赠送：1000币 后台赠送：0币 活动赠送：0 币 整点红包赠送：0 币分享赠送：0币 好友赠送：0 币{{ lastTotalMoney }}</span>
+            <span style="float: right;line-height: 32px;right: 20px;font-weight: 600">（按情况改波改波）历史兑奖 {{ lastTotalMoney }} 元宝</span>
         </header>
         <section>
             <el-table
-                :data="tgyCxList"
+                :data="DJSList"
                 max-height="300"
                 size="small"
                 border
@@ -38,15 +38,23 @@
                 </el-table-column>
                 <el-table-column
                     prop="expiryType"
-                    label="赠送类型">
+                    label="充值类型">
                 </el-table-column>
                 <el-table-column
                     prop="money"
-                    label="赠送数目（元宝）">
+                    label="充值数目（元宝）">
+                </el-table-column>
+                <el-table-column
+                    prop="gameGold"
+                    label="总价值（币）">
                 </el-table-column>
                 <el-table-column
                     prop="admin"
                     label="操作员账号">
+                </el-table-column>
+                <el-table-column
+                    prop="remark"
+                    label="备注信息">
                 </el-table-column>
             </el-table>
             <div class="block">
@@ -65,7 +73,8 @@
 </template>
 
 <script>
-    import { actionTypes, mutationTypes } from '~store/tgyManager'
+    import { aTypes, mTypes } from '~store/ybyz'
+
     export default {
         data () {
             return {
@@ -74,7 +83,7 @@
                 totalCount: 20,
                 pageNumber: 1,
                 pageSize: 16,
-                tgyCxList: [
+                DJSList: [
                     {
                         admin: 'admin',
                         datetime: '2018-01-08 15:33:59',
@@ -112,7 +121,7 @@
                         }
                     }]
                 },
-                tgyCxTime: '',
+                DJSTime: '',
                 xtStartTime: null,
                 xtEndTime: null,
 
@@ -152,13 +161,13 @@
                 console.log(size)
                 let result = null
                 if (!this.xtStartTime || !this.xtEndTime) {
-                    result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+                    result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                     console.log('全部分页')
                     console.log(result)
                 } else {
-                    result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
+                    result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                     console.log('选择时间分页')
@@ -168,7 +177,7 @@
                 console.log('充值记录查询')
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
-                    this.tgyCxList = copyList
+                    this.DJSList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
                     this.pageNumber = result.pager.pageNumber,
@@ -192,13 +201,13 @@
                     })
                     return false
                 }
-                let result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
+                let result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
                     {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
                 ])
                 console.log('充值记录查询按钮')
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
-                    this.tgyCxList = copyList
+                    this.DJSList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
                     this.pageNumber = result.pager.pageNumber,
@@ -220,14 +229,14 @@
                 })
                 return false
             }
-            let result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+            let result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                 {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
             ])
             console.log(result)
             console.log('充值记录查询')
             if (result && result.pager.list) {
                 let copyList = result.pager.list
-                this.tgyCxList = copyList
+                this.DJSList = copyList
                 // 处理页码
                 this.totalCount = result.pager.totalCount,
                 this.pageNumber = result.pager.pageNumber,

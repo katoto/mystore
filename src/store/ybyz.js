@@ -16,7 +16,6 @@ const mutationsInfo = mapMutations({
     setSelVipVal (state, info) {
         state.selVipVal = info
     },
-
     setLoginInfo (state, info) {
         state.loginInfo = info
     },
@@ -57,9 +56,71 @@ const actionsInfo = mapActions({
     //     客户端发送: method: memberService/getUserList; version: 1.2.14; time: 1.5153050774E12;
     //      args: [0,Pager [pageNumber=1, pageSize=8, totalCount=0, pageCount=0, orderBy=, order=,
     //     list=null],]
-    async getVipUserList ({dispatch, commit}, args = [ 0, {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
+    async getVipUserList ({dispatch, commit}, args = [ 0, {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 8, 'totalCount': 0}]) {
         const argsData = await dispatch('invoke', {
             method: 'memberService/getUserList',
+            args
+        })
+        return argsData[0]
+    },
+
+    // 按账号搜索会员  搜索条件 wang
+    async searchUser ({dispatch, commit}, args = [ 'wang', 0, 0 ]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/searchUser',
+            args
+        })
+        return argsData[0]
+    },
+    // 会员充值
+    // 客户端发送: method: memberService/pay; version: 1.2.14;
+    // time: 1.51530669327E12;
+    // args: [3,5000,0,]  //args里内容3为用户id
+    // 客户端收到： {"args":[{"message":"","plusGold":5000,"type":0,
+    //     "success":true}]
+    async memberPay ({dispatch, commit}, args = [ 0, 1000, 0 ]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/pay',
+            args
+        })
+        return argsData[0]
+    },
+    // 充值查询
+    async getUserPayLog ({dispatch, commit}, args = [ 3, '2018-01-01', '2018-01-13', {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
+        const argsData = await dispatch('invoke', {
+            method: 'payLogService/getUserPayLog',
+            args
+        })
+        return argsData[0]
+    },
+    // 赠送查询
+    async getUserAward ({dispatch, commit}, args = [ 3, '2018-01-01', '2018-01-13', {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
+        const argsData = await dispatch('invoke', {
+            method: 'payLogService/getUserAward',
+            args
+        })
+        return argsData[0]
+    },
+    // 扣除查询
+    async getUserMinus ({dispatch, commit}, args = [ 3, '2018-01-01', '2018-01-13', {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
+        const argsData = await dispatch('invoke', {
+            method: 'payLogService/getUserMinus',
+            args
+        })
+        return argsData[0]
+    },
+    // 游玩记录
+    async getUserPlayLog ({dispatch, commit}, args = [ 3, '2018-01-01', '2018-01-13', {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/getUserPlayLog',
+            args
+        })
+        return argsData[0]
+    },
+    // 会员登录记录
+    async getUserLoginRec ({dispatch, commit}, args = [ 3, '2018-01-01', '2018-01-13', {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
+        const argsData = await dispatch('invoke', {
+            method: 'loginRecordService/getUserLoginRec',
             args
         })
         return argsData[0]
