@@ -17,11 +17,11 @@
                 </el-date-picker>
             </div>
             <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
-            <span style="float: right;line-height: 32px;right: 20px;font-weight: 600">（按情况改波改波）历史赠送：1000币 后台赠送：0币 活动赠送：0 币 整点红包赠送：0 币分享赠送：0币 好友赠送：0 币{{ lastTotalMoney }}</span>
+            <span style="float: right;line-height: 32px;right: 20px;font-weight: 600">历史赠送：{{ lastTotalGold }}币 后台赠送：{{ systemTotalGold }}币 活动赠送：{{ activityTotalGold }}币 整点红包赠送：{{ redPacketTotalGold }} 币 分享赠送：{{ shareTotalGold }}币 好友赠送：{{ giftTotalGold }} 币</span>
         </header>
         <section>
             <el-table
-                :data="tgyCxList"
+                :data="giveSeaList"
                 max-height="300"
                 size="small"
                 border
@@ -37,11 +37,7 @@
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="expiryType"
-                    label="赠送类型">
-                </el-table-column>
-                <el-table-column
-                    prop="money"
+                    prop="gold"
                     label="赠送数目（元宝）">
                 </el-table-column>
                 <el-table-column
@@ -65,7 +61,7 @@
 </template>
 
 <script>
-    import { actionTypes, mutationTypes } from '~store/tgyManager'
+    import { aTypes, mTypes } from '~store/ybyz'
     export default {
         data () {
             return {
@@ -74,14 +70,11 @@
                 totalCount: 20,
                 pageNumber: 1,
                 pageSize: 16,
-                tgyCxList: [
+                giveSeaList: [
                     {
                         admin: 'admin',
                         datetime: '2018-01-08 15:33:59',
-                        expiryType: '主动发起',
-                        gameGold: 0,
-                        money: 0,
-                        remark: null,
+                        gold: 0,
                         username: '99999'
                     }],
                 xtInpVal: '',
@@ -116,7 +109,14 @@
                 xtStartTime: null,
                 xtEndTime: null,
 
-                adminList: []
+                adminList: [],
+
+                shareTotalGold:0,
+                lastTotalGold:0,
+                systemTotalGold:0,
+                giftTotalGold:0,
+                redPacketTotalGold:0,
+                activityTotalGold:0
             }
         },
         watch: {},
@@ -152,23 +152,23 @@
                 console.log(size)
                 let result = null
                 if (!this.xtStartTime || !this.xtEndTime) {
-                    result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+                    result = await this.$store.dispatch(aTypes.getUserAward, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                     console.log('全部分页')
                     console.log(result)
                 } else {
-                    result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
+                    result = await this.$store.dispatch(aTypes.getUserAward, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                     console.log('选择时间分页')
                     console.log(result)
                 }
                 console.log(result)
-                console.log('充值记录查询')
+                console.log('赠送查询查询')
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
-                    this.tgyCxList = copyList
+                    this.giveSeaList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
                     this.pageNumber = result.pager.pageNumber,
@@ -184,7 +184,7 @@
                     })
                     return false
                 }
-                if (!this.selTgyVal) {
+                if (!this.selVipVal) {
                     this.$message({
                         message: '没有选择对应选项',
                         type: 'error',
@@ -192,27 +192,28 @@
                     })
                     return false
                 }
-                let result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
+                let result = await this.$store.dispatch(aTypes.getUserAward, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                     {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
                 ])
-                console.log('充值记录查询按钮')
+                console.log('赠送查询查询按钮')
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
-                    this.tgyCxList = copyList
+                    this.giveSeaList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
                     this.pageNumber = result.pager.pageNumber,
                     this.pageSize = result.pager.pageSize
                 }
+
             }
         },
         computed: {
-            selTgyVal () {
-                return this.$store.state.tgyManager.selTgyVal
+            selVipVal () {
+                return this.$store.state.ybyz.selVipVal
             }
         },
         async mounted () {
-            if (!this.selTgyVal) {
+            if (!this.selVipVal) {
                 this.$message({
                     message: '没有选择对应选项',
                     type: 'error',
@@ -220,22 +221,39 @@
                 })
                 return false
             }
-            let result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+            let result = await this.$store.dispatch(aTypes.getUserAward, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                 {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
             ])
             console.log(result)
-            console.log('充值记录查询')
+            console.log('赠送查询查询')
             if (result && result.pager.list) {
                 let copyList = result.pager.list
-                this.tgyCxList = copyList
+                this.giveSeaList = copyList
                 // 处理页码
                 this.totalCount = result.pager.totalCount,
                 this.pageNumber = result.pager.pageNumber,
                 this.pageSize = result.pager.pageSize
             }
-            if (result && result.lastTotalMoney) {
-                this.lastTotalMoney = result.lastTotalMoney
+
+            if (result && result.shareTotalGold) {
+                this.shareTotalGold = result.shareTotalGold
             }
+            if (result && result.lastTotalGold) {
+                this.lastTotalGold = result.lastTotalGold
+            }
+            if (result && result.systemTotalGold) {
+                this.systemTotalGold = result.systemTotalGold
+            }
+            if (result && result.giftTotalGold) {
+                this.giftTotalGold = result.giftTotalGold
+            }
+            if (result && result.redPacketTotalGold) {
+                this.redPacketTotalGold = result.redPacketTotalGold
+            }
+            if (result && result.activityTotalGold) {
+                this.activityTotalGold = result.activityTotalGold
+            }
+
         }
     }
 </script>

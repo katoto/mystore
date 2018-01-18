@@ -96,7 +96,7 @@ const actionsInfo = mapActions({
     // 赠送查询
     async getUserAward ({dispatch, commit}, args = [ 3, '2018-01-01', '2018-01-13', {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0}]) {
         const argsData = await dispatch('invoke', {
-            method: 'payLogService/getUserAward',
+            method: 'userAwardService/getUserAward',
             args
         })
         return argsData[0]
