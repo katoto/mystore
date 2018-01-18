@@ -1,7 +1,7 @@
 <template>
     <div id="vipOperate">
         <div :class="{'disable':!selVipVal }">
-            <span>请输入兑奖数目：</span><el-input :disabled=!selVipVal size="small" v-model="payNum" placeholder="请输入充值数目"></el-input>
+            <span>请输入兑奖数目：</span><el-input :disabled=!selVipVal size="small" v-model="payNum" placeholder="请输入兑奖数目"></el-input>
             <span>游戏币，&nbsp;折合礼品价值&nbsp;{{  payNum  }}&nbsp;元宝</span>&nbsp;&nbsp;
             <el-button size="small" :disabled=!selVipVal type="danger" v-tap="{ methods:setPay }">确认兑奖</el-button>
         </div>

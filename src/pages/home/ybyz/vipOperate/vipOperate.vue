@@ -28,7 +28,7 @@ export default {
                     return false
                 }
 
-                let memberPay = await this.$store.dispatch(aTypes.memberPay, [ Number(this.selTgyVal.id), Number(this.payNum), 0])
+                let memberPay = await this.$store.dispatch(aTypes.memberPay, [ Number(this.selVipVal.id), Number(this.payNum), 0])
                 console.log('一般运作 充值数目Msg')
                 console.log(memberPay)
 

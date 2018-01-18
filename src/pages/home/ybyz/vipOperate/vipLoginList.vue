@@ -1,9 +1,9 @@
 <template>
-    <div id="tgyCx">
+    <div id="vipLogin">
         <header class="clearfix">
             <div class="xtPicker">
                 <el-date-picker
-                    v-model="tgyCxTime"
+                    v-model="vipLoginTime"
                     type="daterange"
                     align="right"
                     size="small"
@@ -20,7 +20,7 @@
         </header>
         <section>
             <el-table
-                :data="tgyCxList"
+                :data="vipLoginList"
                 max-height="300"
                 size="small"
                 border
@@ -57,22 +57,21 @@
 </template>
 
 <script>
-    import { actionTypes, mutationTypes } from '~store/tgyManager'
+    import { aTypes, mTypes } from '~store/ybyz'
     export default {
         data () {
             return {
-                lastTotalMoney: 0,
 
                 totalCount: 20,
                 pageNumber: 1,
                 pageSize: 16,
-                tgyCxList: [
+                vipLoginList: [
                     {
-                        'username': '88888',
-                        'loginIp': '14.24.208.204',
-                        'userId': 2,
-                        'loginDate': '2018-01-08 20:36:31',
-                        'userType': 1
+                        username: '88888',
+                        loginIp: '14.24.208.204',
+                        userId: 2,
+                        loginDate: '2018-01-08 20:36:31',
+                        userType: 1
                     }],
                 xtInpVal: '',
                 pickerOptions: {
@@ -102,14 +101,13 @@
                         }
                     }]
                 },
-                tgyCxTime: '',
+                vipLoginTime: '',
                 xtStartTime: null,
                 xtEndTime: null,
 
                 adminList: []
             }
         },
-        watch: {},
         methods: {
             logTimeChange (val) {
                 this.xtStartTime = this.format(val[0])
@@ -142,23 +140,23 @@
                 console.log(size)
                 let result = null
                 if (!this.xtStartTime || !this.xtEndTime) {
-                    result = await this.$store.dispatch(actionTypes.getPromoterLoginRec, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+                    result = await this.$store.dispatch(aTypes.getUserLoginRec, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                     console.log('全部分页')
                     console.log(result)
                 } else {
-                    result = await this.$store.dispatch(actionTypes.getPromoterLoginRec, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
+                    result = await this.$store.dispatch(aTypes.getUserLoginRec, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                     console.log('选择时间分页')
                     console.log(result)
                 }
                 console.log(result)
-                console.log('充值记录查询')
+                console.log('IP记录查询')
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
-                    this.tgyCxList = copyList
+                    this.vipLoginList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
                     this.pageNumber = result.pager.pageNumber,
@@ -174,7 +172,7 @@
                     })
                     return false
                 }
-                if (!this.selTgyVal) {
+                if (!this.selVipVal) {
                     this.$message({
                         message: '没有选择对应选项',
                         type: 'error',
@@ -182,27 +180,34 @@
                     })
                     return false
                 }
-                let result = await this.$store.dispatch(actionTypes.getPromoterLoginRec, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
+                let result = await this.$store.dispatch(aTypes.getUserLoginRec, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                     {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
                 ])
-                console.log('充值记录查询按钮')
+                console.log('IP记录查询按钮')
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
-                    this.tgyCxList = copyList
+                    this.vipLoginList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
                     this.pageNumber = result.pager.pageNumber,
                     this.pageSize = result.pager.pageSize
+
+                    this.$message({
+                        message: '已更新',
+                        type: 'success',
+                        duration: 1200
+                    })
+
                 }
             }
         },
         computed: {
-            selTgyVal () {
-                return this.$store.state.tgyManager.selTgyVal
+            selVipVal () {
+                return this.$store.state.ybyz.selVipVal
             }
         },
         async mounted () {
-            if (!this.selTgyVal) {
+            if (!this.selVipVal) {
                 this.$message({
                     message: '没有选择对应选项',
                     type: 'error',
@@ -210,22 +215,20 @@
                 })
                 return false
             }
-            let result = await this.$store.dispatch(actionTypes.getPromoterLoginRec, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+            let result = await this.$store.dispatch(aTypes.getUserLoginRec, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                 {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
             ])
             console.log(result)
-            console.log('充值记录查询')
+            console.log('IP记录查询')
             if (result && result.pager.list) {
                 let copyList = result.pager.list
-                this.tgyCxList = copyList
+                this.vipLoginList = copyList
                 // 处理页码
                 this.totalCount = result.pager.totalCount,
                 this.pageNumber = result.pager.pageNumber,
                 this.pageSize = result.pager.pageSize
             }
-            if (result && result.lastTotalMoney) {
-                this.lastTotalMoney = result.lastTotalMoney
-            }
+
         }
     }
 </script>

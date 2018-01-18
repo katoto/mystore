@@ -130,9 +130,9 @@
 
                 <el-tabs disabled id="vipOperate" v-model="activeName" type="card" @tab-click="handleClick">
                     <el-tab-pane :disabled=!selVipVal label="会员充值" name="vipOperate"></el-tab-pane>
-                    <el-tab-pane :disabled=!selVipVal label="礼品兑换" name="giftExchange" ></el-tab-pane>
+                    <el-tab-pane :disabled=!selVipVal label="礼品兑换" disabled name="giftExchange" ></el-tab-pane>
                     <el-tab-pane :disabled=!selVipVal label="充值查询" name="rechargeSearch" ></el-tab-pane>
-                    <el-tab-pane :disabled=!selVipVal label="兑奖查询" name="DJSearch" ></el-tab-pane>
+                    <el-tab-pane :disabled=!selVipVal label="兑奖查询" disabled name="DJSearch" ></el-tab-pane>
                     <el-tab-pane :disabled=!selVipVal label="赠送查询" name="giveSearch" ></el-tab-pane>
                     <el-tab-pane :disabled=!selVipVal label="扣除查询" name="delSearch" ></el-tab-pane>
                     <el-tab-pane :disabled=!selVipVal label="游玩记录" name="playList" ></el-tab-pane>
@@ -192,9 +192,9 @@ export default {
                 pageSize: 0,
 
                 addUserVisible: false,
-                addUserVal1: 1,
-                addUserVal2: 1,
-                addUserVal3: 1
+                addUserVal1: '',
+                addUserVal2: '',
+                addUserVal3: ''
             }
         },
         methods: {
@@ -226,7 +226,6 @@ export default {
             },
             async handleCurrentChange (val) {
                 console.log( val )
-                console.log( 111 )
                 // 分页事件  第一位
                 let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList, [Number(this.curTgyValue), {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': Number(val), 'pageSize': 8, 'totalCount': 0}])
                 console.log(getVipUserList)
@@ -342,7 +341,8 @@ export default {
         watch: {
             selVipVal (val) {
                 console.log(val)
-                console.log('vipOperate ..')
+                this.$router.push('/home/ybyz/vipOperate');
+                this.activeName = 'vipOperate';
             }
         },
         async mounted () {

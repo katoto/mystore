@@ -161,13 +161,13 @@
                 console.log(size)
                 let result = null
                 if (!this.xtStartTime || !this.xtEndTime) {
-                    result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+                    result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                     console.log('全部分页')
                     console.log(result)
                 } else {
-                    result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
+                    result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                     console.log('选择时间分页')
@@ -193,7 +193,7 @@
                     })
                     return false
                 }
-                if (!this.selTgyVal) {
+                if (!this.selVipVal) {
                     this.$message({
                         message: '没有选择对应选项',
                         type: 'error',
@@ -201,7 +201,7 @@
                     })
                     return false
                 }
-                let result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
+                let result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                     {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
                 ])
                 console.log('充值记录查询按钮')
@@ -216,12 +216,12 @@
             }
         },
         computed: {
-            selTgyVal () {
-                return this.$store.state.tgyManager.selTgyVal
+            selVipVal () {
+                return this.$store.state.ybyz.selVipVal
             }
         },
         async mounted () {
-            if (!this.selTgyVal) {
+            if (!this.selVipVal) {
                 this.$message({
                     message: '没有选择对应选项',
                     type: 'error',
@@ -229,7 +229,7 @@
                 })
                 return false
             }
-            let result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+            let result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                 {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
             ])
             console.log(result)

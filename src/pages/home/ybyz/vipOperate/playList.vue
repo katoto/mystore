@@ -1,9 +1,9 @@
 <template>
-    <div id="tgyCx">
+    <div id="play">
         <header class="clearfix">
             <div class="xtPicker">
                 <el-date-picker
-                    v-model="tgyCxTime"
+                    v-model="playTime"
                     type="daterange"
                     align="right"
                     size="small"
@@ -17,11 +17,11 @@
                 </el-date-picker>
             </div>
             <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
-            <span style="float: right;line-height: 32px;right: 20px;font-weight: 600">（按情况改波改波）历史兑奖 {{ lastTotalMoney }} 元宝</span>
+            <span style="float: right;line-height: 32px;right: 20px;font-weight: 600">历史总计：{{ lastTotalPlay }}币 历史总得：{{ lastTotalGet }}币 历史总盈：{{ lastTotalGain }}币</span>
         </header>
         <section>
             <el-table
-                :data="tgyCxList"
+                :data="playList"
                 max-height="300"
                 size="small"
                 border
@@ -37,23 +37,23 @@
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="expiryType"
+                    prop="yaGold"
                     label="总押（币）">
                 </el-table-column>
                 <el-table-column
-                    prop="money"
+                    prop="deGold"
                     label="总得（币）">
                 </el-table-column>
                 <el-table-column
-                    prop="gameGold"
+                    prop="userGain"
                     label="总盈利（币）">
                 </el-table-column>
                 <el-table-column
-                    prop="admin"
+                    prop="userGold"
                     label="游戏币">
                 </el-table-column>
                 <el-table-column
-                    prop="remark"
+                    prop="userScore"
                     label="游戏分值">
                 </el-table-column>
                 <el-table-column
@@ -61,7 +61,7 @@
                     label="彩票">
                 </el-table-column>
                 <el-table-column
-                    prop="remark"
+                    prop="userTotalValue"
                     label="总价值（币）">
                 </el-table-column>
             </el-table>
@@ -81,7 +81,7 @@
 </template>
 
 <script>
-    import { actionTypes, mutationTypes } from '~store/tgyManager'
+    import { aTypes, mTypes } from '~store/ybyz'
     export default {
         data () {
             return {
@@ -90,15 +90,16 @@
                 totalCount: 20,
                 pageNumber: 1,
                 pageSize: 16,
-                tgyCxList: [
+                playList: [
                     {
-                        admin: 'admin',
-                        datetime: '2018-01-08 15:33:59',
-                        expiryType: '主动发起',
-                        gameGold: 0,
-                        money: 0,
-                        remark: null,
-                        username: '99999'
+                        username:"1650781184",
+                        datetime:"2018-01-02 13:10-13:20",
+                        deGold:0,
+                        yaGold:0,
+                        userGold:2306,
+                        userScore:0,
+                        userGain:0,
+                        userTotalValue:2306,
                     }],
                 xtInpVal: '',
                 pickerOptions: {
@@ -128,11 +129,15 @@
                         }
                     }]
                 },
-                tgyCxTime: '',
+                playTime: '',
                 xtStartTime: null,
                 xtEndTime: null,
 
-                adminList: []
+                adminList: [],
+
+                lastTotalGain: 0,
+                lastTotalGet: 0,
+                lastTotalPlay: 0,
             }
         },
         watch: {},
@@ -168,27 +173,28 @@
                 console.log(size)
                 let result = null
                 if (!this.xtStartTime || !this.xtEndTime) {
-                    result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+                    result = await this.$store.dispatch(aTypes.getUserPlayLog, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                     console.log('全部分页')
                     console.log(result)
                 } else {
-                    result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
+                    result = await this.$store.dispatch(aTypes.getUserPlayLog, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                     console.log('选择时间分页')
                     console.log(result)
                 }
                 console.log(result)
-                console.log('充值记录查询')
+                console.log('游玩记录查询')
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
-                    this.tgyCxList = copyList
+                    this.playList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
                     this.pageNumber = result.pager.pageNumber,
                     this.pageSize = result.pager.pageSize
+
                 }
             },
             async getMsg () {
@@ -200,7 +206,7 @@
                     })
                     return false
                 }
-                if (!this.selTgyVal) {
+                if (!this.selVipVal) {
                     this.$message({
                         message: '没有选择对应选项',
                         type: 'error',
@@ -208,27 +214,34 @@
                     })
                     return false
                 }
-                let result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
+                let result = await this.$store.dispatch(aTypes.getUserPlayLog, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                     {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
                 ])
-                console.log('充值记录查询按钮')
+                console.log('游玩记录查询按钮')
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
-                    this.tgyCxList = copyList
+                    this.playList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
                     this.pageNumber = result.pager.pageNumber,
                     this.pageSize = result.pager.pageSize
+
+                    this.$message({
+                        message: '已更新',
+                        type: 'success',
+                        duration: 1200
+                    })
+
                 }
             }
         },
         computed: {
-            selTgyVal () {
-                return this.$store.state.tgyManager.selTgyVal
+            selVipVal () {
+                return this.$store.state.ybyz.selVipVal
             }
         },
         async mounted () {
-            if (!this.selTgyVal) {
+            if (!this.selVipVal) {
                 this.$message({
                     message: '没有选择对应选项',
                     type: 'error',
@@ -236,21 +249,27 @@
                 })
                 return false
             }
-            let result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+            let result = await this.$store.dispatch(aTypes.getUserPlayLog, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                 {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
             ])
             console.log(result)
-            console.log('充值记录查询')
+            console.log('游玩记录查询')
             if (result && result.pager.list) {
                 let copyList = result.pager.list
-                this.tgyCxList = copyList
+                this.playList = copyList
                 // 处理页码
                 this.totalCount = result.pager.totalCount,
                 this.pageNumber = result.pager.pageNumber,
                 this.pageSize = result.pager.pageSize
             }
-            if (result && result.lastTotalMoney) {
-                this.lastTotalMoney = result.lastTotalMoney
+            if (result && result.lastTotalGain) {
+                this.lastTotalGain = result.lastTotalGain
+            }
+            if (result && result.lastTotalGet) {
+                this.lastTotalGet = result.lastTotalGet
+            }
+            if (result && result.lastTotalPlay) {
+                this.lastTotalPlay = result.lastTotalPlay
             }
         }
     }
