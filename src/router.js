@@ -8,7 +8,6 @@ import VueRouter from 'vue-router'
 // home  first tab
 import Home from '~pages/home/home.vue'
 
-// const Test = () => import('./pages/Test.vue' /* webpackChunkName: "test" */)
 const Login = () => import('~pages/Login' /* webpackChunkName: "chunks/Login" */)
 
 const xtManage = () => import('~pages/home/xtManage/xtManage.vue' /* webpackChunkName: "chunks/home/xtManage/xtManage.vue" */)
