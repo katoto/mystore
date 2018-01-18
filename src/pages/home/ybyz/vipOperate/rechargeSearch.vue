@@ -1,9 +1,9 @@
 <template>
-    <div id="tgyCx">
+    <div id="reSearch">
         <header class="clearfix">
             <div class="xtPicker">
                 <el-date-picker
-                    v-model="tgyCxTime"
+                    v-model="reSearchTime"
                     type="daterange"
                     align="right"
                     size="small"
@@ -21,7 +21,7 @@
         </header>
         <section>
             <el-table
-                :data="tgyCxList"
+                :data="reSearchList"
                 max-height="300"
                 size="small"
                 border
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-    import { actionTypes, mutationTypes } from '~store/tgyManager'
+    import { aTypes, mTypes } from '~store/ybyz'
     export default {
         data () {
             return {
@@ -82,7 +82,7 @@
                 totalCount: 20,
                 pageNumber: 1,
                 pageSize: 16,
-                tgyCxList: [
+                reSearchList: [
                     {
                         admin: 'admin',
                         datetime: '2018-01-08 15:33:59',
@@ -120,7 +120,7 @@
                         }
                     }]
                 },
-                tgyCxTime: '',
+                reSearchTime: '',
                 xtStartTime: null,
                 xtEndTime: null,
 
@@ -160,13 +160,13 @@
                 console.log(size)
                 let result = null
                 if (!this.xtStartTime || !this.xtEndTime) {
-                    result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+                    result = await this.$store.dispatch(aTypes.getUserPayLog, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                     console.log('全部分页')
                     console.log(result)
                 } else {
-                    result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
+                    result = await this.$store.dispatch(aTypes.getUserPayLog, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                     console.log('选择时间分页')
@@ -176,7 +176,7 @@
                 console.log('充值记录查询')
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
-                    this.tgyCxList = copyList
+                    this.reSearchList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
                     this.pageNumber = result.pager.pageNumber,
@@ -200,13 +200,13 @@
                     })
                     return false
                 }
-                let result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
+                let result = await this.$store.dispatch(aTypes.getUserPayLog, [ Number(this.selTgyVal.id), this.xtStartTime, this.xtEndTime,
                     {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
                 ])
                 console.log('充值记录查询按钮')
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
-                    this.tgyCxList = copyList
+                    this.reSearchList = copyList
                     // 处理页码
                     this.totalCount = result.pager.totalCount,
                     this.pageNumber = result.pager.pageNumber,
@@ -228,14 +228,14 @@
                 })
                 return false
             }
-            let result = await this.$store.dispatch(actionTypes.promoterPayLogs, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+            let result = await this.$store.dispatch(aTypes.getUserPayLog, [ Number(this.selTgyVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                 {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
             ])
             console.log(result)
             console.log('充值记录查询')
             if (result && result.pager.list) {
                 let copyList = result.pager.list
-                this.tgyCxList = copyList
+                this.reSearchList = copyList
                 // 处理页码
                 this.totalCount = result.pager.totalCount,
                 this.pageNumber = result.pager.pageNumber,
