@@ -92,14 +92,14 @@
                 pageSize: 16,
                 playList: [
                     {
-                        username:"1650781184",
-                        datetime:"2018-01-02 13:10-13:20",
-                        deGold:0,
-                        yaGold:0,
-                        userGold:2306,
-                        userScore:0,
-                        userGain:0,
-                        userTotalValue:2306,
+                        username: '1650781184',
+                        datetime: '2018-01-02 13:10-13:20',
+                        deGold: 0,
+                        yaGold: 0,
+                        userGold: 2306,
+                        userScore: 0,
+                        userGain: 0,
+                        userTotalValue: 2306
                     }],
                 xtInpVal: '',
                 pickerOptions: {
@@ -137,7 +137,7 @@
 
                 lastTotalGain: 0,
                 lastTotalGet: 0,
-                lastTotalPlay: 0,
+                lastTotalPlay: 0
             }
         },
         watch: {},
@@ -194,7 +194,6 @@
                     this.totalCount = result.pager.totalCount,
                     this.pageNumber = result.pager.pageNumber,
                     this.pageSize = result.pager.pageSize
-
                 }
             },
             async getMsg () {
@@ -231,7 +230,6 @@
                         type: 'success',
                         duration: 1200
                     })
-
                 }
             }
         },
