@@ -215,7 +215,6 @@
                         type: 'success',
                         duration: 1200
                     })
-
                 }
             }
         },

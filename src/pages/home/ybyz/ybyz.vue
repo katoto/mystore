@@ -188,7 +188,7 @@ export default {
                     registDate: '2017-11-24 21:00:36',
                     loginDate: '2017-11-25',
                     subUserCount: 0,
-                    warningStatus:0
+                    warningStatus: 0
                 }],
                 totalCount: 0,
                 pageNumber: 1,
@@ -201,13 +201,13 @@ export default {
             }
         },
         methods: {
-            async ybyzSearchFn( ){
-                let searchUser = await this.$store.dispatch(aTypes.searchUser,[ this.vipSearch.toString() , Number( this.vipStyle ), Number( this.vipUserName ) ]);
-                console.log(searchUser);
-                console.log('==一般运作查询按钮回来的数据==');
+            async ybyzSearchFn () {
+                let searchUser = await this.$store.dispatch(aTypes.searchUser, [ this.vipSearch.toString(), Number(this.vipStyle), Number(this.vipUserName) ])
+                console.log(searchUser)
+                console.log('==一般运作查询按钮回来的数据==')
 
                 if (searchUser) {
-                    if (searchUser.results ) {
+                    if (searchUser.results) {
                         this.vipUserList = searchUser.results
                         this.vipUserList.forEach((item) => {
                             if (item.status === 0) {
@@ -218,7 +218,7 @@ export default {
                             if (item.warningStatus === 0) {
                                 item.warningStatus = '正常'
                             } else {
-                                item.warningStatus = '异常：存'+item.warningStatus+'币的不明数额' ;
+                                item.warningStatus = '异常：存' + item.warningStatus + '币的不明数额'
                             }
                             if (item.level !== undefined) {
                                 item.level = item.level + '级推广员'
@@ -231,16 +231,15 @@ export default {
                         duration: 1200
                     })
                 }
-
             },
             handleClickTop (tab, event) {
                 if (this.activeNameTop) {
                     switch (this.activeNameTop) {
                     case 'vipOperate':
-                        this.$router.push('/home/ybyz/vipOperate');
-                        break;
+                        this.$router.push('/home/ybyz/vipOperate')
+                        break
                     case 'rentSearch':
-                        this.$router.push('/home/ybyz/rentSearch');
+                        this.$router.push('/home/ybyz/rentSearch')
                         break
                     }
                 }
@@ -254,8 +253,8 @@ export default {
             //                this.addUserVal1
             //                this.addUserVal2
             //                this.addUserVal3
-//                let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList)
-//                console.log(getVipUserList)
+            //                let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList)
+            //                console.log(getVipUserList)
             },
             async handleCurrentChange (val) {
                 // 分页事件  第一位
@@ -274,7 +273,7 @@ export default {
                             if (item.warningStatus === 0) {
                                 item.warningStatus = '正常'
                             } else {
-                                item.warningStatus = '异常：存'+item.warningStatus+'币的不明数额' ;
+                                item.warningStatus = '异常：存' + item.warningStatus + '币的不明数额'
                             }
                             if (item.level !== undefined) {
                                 item.level = item.level + '级推广员'
@@ -289,15 +288,15 @@ export default {
             },
             vipListClick (val) {
                 // 列表点击
-                this.$store.commit(mTypes.setSelVipVal, val);
-            // 处理一些可显示
+                this.$store.commit(mTypes.setSelVipVal, val)
+                // 处理一些可显示
             },
             setCurrent (row) {
                 this.$refs.singleTable.setCurrentRow(row)
             },
             initSearch (showTips = true) {
                 // 重置 选中状态
-                this.tgySearch = '';
+                this.tgySearch = ''
                 if (showTips) {
                     this.$message({
                         message: '重置成功',
@@ -306,48 +305,48 @@ export default {
                     })
                 }
                 // 去除 表格选中
-                this.$refs.singleTable.setCurrentRow('');
-                this.$store.commit(mTypes.setSelVipVal, null);
-                this.vipSearch = '';
-                this.vipStyle = '';
-                this.vipUserName = '';
+                this.$refs.singleTable.setCurrentRow('')
+                this.$store.commit(mTypes.setSelVipVal, null)
+                this.vipSearch = ''
+                this.vipStyle = ''
+                this.vipUserName = ''
             },
             handleClick (tab, event) {
                 /*  路由 跳转  */
                 if (this.activeName) {
                     switch (this.activeName) {
                     case 'vipOperate':
-                        this.$router.push('/home/ybyz/vipOperate');
+                        this.$router.push('/home/ybyz/vipOperate')
                         break
                     case 'giftExchange':
-                        this.$router.push('/home/ybyz/giftExchange');
+                        this.$router.push('/home/ybyz/giftExchange')
                         break
                     case 'flatRent':
-                        this.$router.push('/home/ybyz/flatRent');
+                        this.$router.push('/home/ybyz/flatRent')
                         break
                     case 'rentReturn':
-                        this.$router.push('/home/ybyz/rentReturn');
+                        this.$router.push('/home/ybyz/rentReturn')
                         break
                     case 'rechargeSearch':
-                        this.$router.push('/home/ybyz/rechargeSearch');
+                        this.$router.push('/home/ybyz/rechargeSearch')
                         break
                     case 'DJSearch':
-                        this.$router.push('/home/ybyz/DJSearch');
+                        this.$router.push('/home/ybyz/DJSearch')
                         break
                     case 'giveSearch':
-                        this.$router.push('/home/ybyz/giveSearch');
+                        this.$router.push('/home/ybyz/giveSearch')
                         break
                     case 'delSearch':
-                        this.$router.push('/home/ybyz/delSearch');
+                        this.$router.push('/home/ybyz/delSearch')
                         break
                     case 'rentList':
-                        this.$router.push('/home/ybyz/rentList');
+                        this.$router.push('/home/ybyz/rentList')
                         break
                     case 'playList':
-                        this.$router.push('/home/ybyz/playList');
+                        this.$router.push('/home/ybyz/playList')
                         break
                     case 'vipLoginList':
-                        this.$router.push('/home/ybyz/vipLoginList');
+                        this.$router.push('/home/ybyz/vipLoginList')
                         break
                     case 'BPList':
                         this.$router.push('/home/ybyz/BPList')
@@ -377,8 +376,8 @@ export default {
         watch: {
             selVipVal (val) {
                 console.log(val)
-                this.$router.push('/home/ybyz/vipOperate');
-                this.activeName = 'vipOperate';
+                this.$router.push('/home/ybyz/vipOperate')
+                this.activeName = 'vipOperate'
             }
         },
         async mounted () {
@@ -400,7 +399,7 @@ export default {
                         if (item.warningStatus === 0) {
                             item.warningStatus = '正常'
                         } else {
-                            item.warningStatus = '异常：存'+item.warningStatus+'币的不明数额' ;
+                            item.warningStatus = '异常：存' + item.warningStatus + '币的不明数额'
                         }
                         if (item.level !== undefined) {
                             item.level = item.level + '级推广员'
