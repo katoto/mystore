@@ -170,8 +170,6 @@
 
         </section>
 
-
-
     </div>
 </template>
 

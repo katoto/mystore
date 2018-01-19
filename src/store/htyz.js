@@ -1,15 +1,14 @@
 /**
  * Created by xiezg on 2018/1/16.
  */
-
 import { mapActions, mapMutations } from '~common/util'
 
-const name = 'htyz';
+const name = 'htyz'
 const state = {
     fadfadf: null,
     userList: null,
     selVipVal: null
-};
+}
 
 const mutationsInfo = mapMutations({
 //  new
@@ -29,18 +28,18 @@ const mutationsInfo = mapMutations({
     setUserList (state, list) {
         state.userList = list
     }
-}, name);
+}, name)
 
 const actionsInfo = mapActions({
     async login ({dispatch, commit}, {name, pass}) {
         try {
-            const args = await dispatch('invoke', {method: 'adminService/adminLogin', args: [name, pass, false, true, 0]});
-            const result = args[0];
+            const args = await dispatch('invoke', {method: 'adminService/adminLogin', args: [name, pass, false, true, 0]})
+            const result = args[0]
             if (result.success) {
-                commit(mTypes.setLoginInfo, result);
+                commit(mTypes.setLoginInfo, result)
                 console.log(JSON.stringify(result))
             } else {
-                console.log(result.message);
+                console.log(result.message)
                 throw new Error(result.message)
             }
         } catch (e) {
@@ -55,7 +54,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/getUserList',
             args
-        });
+        })
         return argsData[0]
     },
 
@@ -64,7 +63,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'deskService/getDeskList',
             args
-        });
+        })
         return argsData[0]
     },
     // 获取摇钱树桌子
@@ -72,7 +71,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'deskService/getFishDeskList',
             args
-        });
+        })
         return argsData[0]
     },
     // 获取单挑桌子
@@ -80,7 +79,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'deskService/getCardDeskList',
             args
-        });
+        })
         return argsData[0]
     },
     // 获取万炮捕鱼
@@ -88,7 +87,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'deskService/getBulletFishDeskList',
             args
-        });
+        })
         return argsData[0]
     },
     // 获取美人鱼
@@ -96,7 +95,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'deskService/getMermaidDeskList',
             args
-        });
+        })
         return argsData[0]
     },
     // 获取缺一门
@@ -104,7 +103,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'deskService/getLackDeskList',
             args
-        });
+        })
         return argsData[0]
     },
     // 获取欢乐牛牛
@@ -112,7 +111,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'deskService/getJoyDeskList',
             args
-        });
+        })
         return argsData[0]
     },
     // 获取水浒传
@@ -120,7 +119,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'waterDeskService/getWaterDeskList',
             args
-        });
+        })
         return argsData[0]
     },
     // 获取千炮捕鱼
@@ -128,36 +127,113 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'deskService/getThousandFishDeskList',
             args
-        });
+        })
         return argsData[0]
     },
 
     // 2 更新大厅状态  运营转态 立刻进入 3点开始
     //  刷新 ，就是获取一次桌子。
-    async updateGameStatus ({dispatch, commit}, args = [{"content":"","cooperateEndDate":"———","cooperateMode":0,"cooperateStartDate":"———","statusIndex":0,"time":0}]) {
+    async updateGameStatus ({dispatch, commit}, args = [{'content': '', 'cooperateEndDate': '———', 'cooperateMode': 0, 'cooperateStartDate': '———', 'statusIndex': 0, 'time': 0}]) {
         const argsData = await dispatch('invoke', {
             method: 'systemConfigService/updateGameStatus',
             args
-        });
+        })
         return argsData[0]
     },
 
     // 3 .新增桌：幸运六狮addDesk 然后依次addFishDesk、addCardDesk、addBulletFishDesk、addMermaidDesk、addLackDesk、addJoyDesk、addWaterDesk、addThousandFishDesk
-    async deskServiceAllAdd ({dispatch, commit}, methodName='deskService/addDesk' , args = [{"content":"","cooperateEndDate":"———","cooperateMode":0,"cooperateStartDate":"———","statusIndex":0,"time":0}]) {
+    async deskServiceAllAdd ({dispatch, commit}, methodName = 'deskService/addDesk', args = [{'content': '', 'cooperateEndDate': '———', 'cooperateMode': 0, 'cooperateStartDate': '———', 'statusIndex': 0, 'time': 0}]) {
         const argsData = await dispatch('invoke', {
-            method: methodName ,
+            method: methodName,
             args
-        });
+        })
         return argsData[0]
     },
 
-    // 4 .参数设置：幸运六狮updateDesk 然后依次。。。。。同上
+    // 4 .参数设置 更新参数 ：幸运六狮updateDesk 然后依次。。。。。同上
+    async deskServiceAllUpdate ({dispatch, commit}, methodName = 'deskService/updateDesk', args = [
+        {'animalDiff': 1,
+            'autoKick': 10,
+            'beilvModel': 1,
+            'beilvType': 0,
+            'betTime': 30,
+            'exchange': 50,
+            'id': 3,
+            'maxBet': 500,
+            'max_h': 1000,
+            'max_zx': 1000,
+            'minBet': 50,
+            'minGold': 1,
+            'min_zxh': 50,
+            'name': '修改了桌名',
+            'onceExchangeValue': 100,
+            'onlineNumber': 0,
+            'orderBy': 1,
+            'roomId': 2,
+            'siteType': 1,
+            'state': 1,
+            'sumDeFen': 0,
+            'sumYaFen': 0,
+            'sumZhxDeFen': 0,
+            'sumZhxYaFen': 0,
+            'waterType': 0,
+            'waterValue': 0,
+            'zxhDiff': 1 }]) {
+        const argsData = await dispatch('invoke', {
+            method: methodName,
+            args
+        })
+        return argsData[0]
+    },
+    // 桌排序
+    // 7代表游戏id，"115,1;代表左边排在第一位的是桌号115，120,1;116,2;119,
+    // 3 代表右边120第一位，116第二位 119第三位"
+    async sortDesk ({dispatch, commit}, args = [7, '115,1;120,1;116,2;119,3']) {
+        const argsData = await dispatch('invoke', {
+            method: 'manageService/sortDesk',
+            args
+        })
+        return argsData[0]
+    },
+    //  删除桌
+    async deleteWaterDesk ({dispatch, commit}, args = [116]) {
+        const argsData = await dispatch('invoke', {
+            method: 'waterDeskService/deleteWaterDesk',
+            args
+        })
+        return argsData[0]
+    },
 
+    //     登陆公告管理
+    //  获取现有公告
+    async getNotice ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'noticeService/getNotice',
+            args
+        })
+        return argsData[0]
+    },
+    //  设置公告
+    async updateNotice ({dispatch, commit}, args = ['新标题', '新正文']) {
+        const argsData = await dispatch('invoke', {
+            method: 'noticeService/updateNotice',
+            args
+        })
+        return argsData[0]
+    },
+    //     游戏公告管理
+    //    获取现有公告
+    async getNoticeList ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'noticeService/getNoticeList',
+            args
+        })
+        return argsData[0]
+    }
+}, name)
 
-}, name);
-
-const actions = actionsInfo.actions;
-const mutations = mutationsInfo.mutations;
-export const aTypes = actionsInfo.aTypes;
-export const mTypes = mutationsInfo.mTypes;
+const actions = actionsInfo.actions
+const mutations = mutationsInfo.mutations
+export const aTypes = actionsInfo.aTypes
+export const mTypes = mutationsInfo.mTypes
 export default { state, actions, mutations }
