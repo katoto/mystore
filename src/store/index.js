@@ -10,9 +10,10 @@ import user from './user'
 import xtManager from './xtManager'
 import tgyManager from './tgyManager'
 import ybyz from './ybyz'
+import htyz from './htyz'
 import {wait} from '../common/util'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const state = {
     version: '1.2.14',
@@ -192,6 +193,6 @@ export default () => new Vuex.Store({
     actions,
     mutations,
     modules: {
-        home, user, xtManager, tgyManager, ybyz
+        home, user, xtManager, tgyManager, ybyz ,htyz
     }
 })

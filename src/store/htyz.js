@@ -1,0 +1,154 @@
+/**
+ * Created by xiezg on 2018/1/16.
+ */
+
+import { mapActions, mapMutations } from '~common/util'
+
+const name = 'htyz';
+const state = {
+    fadfadf: null,
+    userList: null,
+    selVipVal: null
+};
+
+const mutationsInfo = mapMutations({
+//  new
+    setSelVipVal (state, info) {
+        state.selVipVal = info
+    },
+    setLoginInfo (state, info) {
+        state.loginInfo = info
+    },
+    setLoginInfoConfig (state, config) {
+        if (state.loginInfo) {
+            state.loginInfo.config = config
+        } else {
+            console.error('commit Infoconfig error')
+        }
+    },
+    setUserList (state, list) {
+        state.userList = list
+    }
+}, name);
+
+const actionsInfo = mapActions({
+    async login ({dispatch, commit}, {name, pass}) {
+        try {
+            const args = await dispatch('invoke', {method: 'adminService/adminLogin', args: [name, pass, false, true, 0]});
+            const result = args[0];
+            if (result.success) {
+                commit(mTypes.setLoginInfo, result);
+                console.log(JSON.stringify(result))
+            } else {
+                console.log(result.message);
+                throw new Error(result.message)
+            }
+        } catch (e) {
+            throw e
+        }
+    },
+    // 获取会员列表
+    //     客户端发送: method: memberService/getUserList; version: 1.2.14; time: 1.5153050774E12;
+    //      args: [0,Pager [pageNumber=1, pageSize=8, totalCount=0, pageCount=0, orderBy=, order=,
+    //     list=null],]
+    async getVipUserList ({dispatch, commit}, args = [ 0, {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 8, 'totalCount': 0}]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/getUserList',
+            args
+        });
+        return argsData[0]
+    },
+
+    //  获取幸运六师桌子列表
+    async getDeskList ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'deskService/getDeskList',
+            args
+        });
+        return argsData[0]
+    },
+    // 获取摇钱树桌子
+    async getFishDeskList ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'deskService/getFishDeskList',
+            args
+        });
+        return argsData[0]
+    },
+    // 获取单挑桌子
+    async getCardDeskList ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'deskService/getCardDeskList',
+            args
+        });
+        return argsData[0]
+    },
+    // 获取万炮捕鱼
+    async getBulletFishDeskList ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'deskService/getBulletFishDeskList',
+            args
+        });
+        return argsData[0]
+    },
+    // 获取美人鱼
+    async getMermaidDeskList ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'deskService/getMermaidDeskList',
+            args
+        });
+        return argsData[0]
+    },
+    // 获取缺一门
+    async getLackDeskList ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'deskService/getLackDeskList',
+            args
+        });
+        return argsData[0]
+    },
+    // 获取欢乐牛牛
+    async getJoyDeskList ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'deskService/getJoyDeskList',
+            args
+        });
+        return argsData[0]
+    },
+    // 获取水浒传
+    async getWaterDeskList ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'waterDeskService/getWaterDeskList',
+            args
+        });
+        return argsData[0]
+    },
+    // 获取千炮捕鱼
+    async getThousandFishDeskList ({dispatch, commit}, args = []) {
+        const argsData = await dispatch('invoke', {
+            method: 'deskService/getThousandFishDeskList',
+            args
+        });
+        return argsData[0]
+    },
+
+    // 2 更新大厅状态  运营转态 立刻进入 3点开始
+    //  刷新 ，就是获取一次桌子。
+    async updateGameStatus ({dispatch, commit}, args = [{"content":"","cooperateEndDate":"———","cooperateMode":0,"cooperateStartDate":"———","statusIndex":0,"time":0}]) {
+        const argsData = await dispatch('invoke', {
+            method: 'systemConfigService/updateGameStatus',
+            args
+        })
+        return argsData[0]
+    },
+
+    // 3 .新增桌：幸运六狮addDesk 然后依次addFishDesk、addCardDesk、addBulletFishDesk、addMermaidDesk、addLackDesk、addJoyDesk、addWaterDesk、addThousandFishDesk
+
+
+}, name);
+
+const actions = actionsInfo.actions;
+const mutations = mutationsInfo.mutations;
+export const aTypes = actionsInfo.aTypes;
+export const mTypes = mutationsInfo.mTypes;
+export default { state, actions, mutations }
