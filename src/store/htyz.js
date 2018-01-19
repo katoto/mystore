@@ -138,11 +138,20 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'systemConfigService/updateGameStatus',
             args
-        })
+        });
         return argsData[0]
     },
 
     // 3 .新增桌：幸运六狮addDesk 然后依次addFishDesk、addCardDesk、addBulletFishDesk、addMermaidDesk、addLackDesk、addJoyDesk、addWaterDesk、addThousandFishDesk
+    async deskServiceAllAdd ({dispatch, commit}, methodName='deskService/addDesk' , args = [{"content":"","cooperateEndDate":"———","cooperateMode":0,"cooperateStartDate":"———","statusIndex":0,"time":0}]) {
+        const argsData = await dispatch('invoke', {
+            method: methodName ,
+            args
+        });
+        return argsData[0]
+    },
+
+    // 4 .参数设置：幸运六狮updateDesk 然后依次。。。。。同上
 
 
 }, name);
