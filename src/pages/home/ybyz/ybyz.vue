@@ -27,9 +27,9 @@
                             </el-option>
                         </el-select>
                         <el-input size="small" class="xtInp" v-model="vipSearch" placeholder="请输入内容"></el-input>
-                        <el-button size="small" type="primary">查询</el-button>
+                        <el-button size="small" type="primary" v-tap="{ methods:ybyzSearchFn }">查询</el-button>
                         <el-button size="small" type="warning" v-tap="{ methods:initSearch }">重置</el-button>
-                        <el-button size="small" v-tap="{ methods:beforeAddUserFn }" type="danger">特殊直属会员录入</el-button>
+                        <el-button size="small" v-tap="{ methods:beforeAddUserFn }" type="danger" disabled >特殊直属会员录入</el-button>
                     </header>
                     <section>
                         <el-table
@@ -44,7 +44,7 @@
                             <el-table-column
                                 prop="username"
                                 label="账号"
-                                width="70">
+                                width="80">
                             </el-table-column>
                             <el-table-column
                                 prop="nickname"
@@ -57,16 +57,16 @@
                                 width="60">
                             </el-table-column>
                             <el-table-column
-                                prop="level"
-                                label="账目状态??">
+                                prop="warningStatus"
+                                label="账目状态">
                             </el-table-column>
                             <el-table-column
                                 prop="gameGold"
-                                label="游戏币gameGold?">
+                                label="游戏币">
                             </el-table-column>
                             <el-table-column
                                 prop="lottery"
-                                label="彩票数lottery?">
+                                label="彩票数">
                             </el-table-column>
                             <el-table-column
                                 prop="promoterName"
@@ -82,7 +82,8 @@
                             </el-table-column>
                             <el-table-column
                                 prop="status"
-                                label="状态">
+                                label="状态"
+                                width="50">
                             </el-table-column>
                             <el-table-column
                                 prop="phone"
@@ -98,7 +99,8 @@
                             </el-table-column>
                             <el-table-column
                                 prop="subUserCount"
-                                label="子账号">
+                                label="子账号"
+                                width="60">
                             </el-table-column>
                         </el-table>
                         <div class="block">
@@ -173,19 +175,20 @@ export default {
                 vipSearch: '',
                 activeName: 'vipOperate',
                 vipUserList: [{
-                    'username': '000000',
-                    'nickname': 'q q q',
-                    'level': 1,
-                    'gameGold': 3954,
-                    'lottery': 0,
-                    'promoterName': 'admin',
-                    'payMoney': 0,
-                    'expiryNum': 0,
-                    'status': 0,
-                    'phone': '-',
-                    'registDate': '2017-11-24 21:00:36',
-                    'loginDate': '2017-11-25',
-                    'subUserCount': 0
+                    username: '0',
+                    nickname: 'q',
+                    level: 1,
+                    gameGold: 3954,
+                    lottery: 0,
+                    promoterName: 'admin',
+                    payMoney: 0,
+                    expiryNum: 0,
+                    status: 0,
+                    phone: '-',
+                    registDate: '2017-11-24 21:00:36',
+                    loginDate: '2017-11-25',
+                    subUserCount: 0,
+                    warningStatus:0
                 }],
                 totalCount: 0,
                 pageNumber: 1,
@@ -198,14 +201,46 @@ export default {
             }
         },
         methods: {
+            async ybyzSearchFn( ){
+                let searchUser = await this.$store.dispatch(aTypes.searchUser,[ this.vipSearch.toString() , Number( this.vipStyle ), Number( this.vipUserName ) ]);
+                console.log(searchUser);
+                console.log('==一般运作查询按钮回来的数据==');
+
+                if (searchUser) {
+                    if (searchUser.results ) {
+                        this.vipUserList = searchUser.results
+                        this.vipUserList.forEach((item) => {
+                            if (item.status === 0) {
+                                item.status = '正常'
+                            } else {
+                                item.status = '禁用'
+                            }
+                            if (item.warningStatus === 0) {
+                                item.warningStatus = '正常'
+                            } else {
+                                item.warningStatus = '异常：存'+item.warningStatus+'币的不明数额' ;
+                            }
+                            if (item.level !== undefined) {
+                                item.level = item.level + '级推广员'
+                            }
+                        })
+                    }
+                    this.$message({
+                        message: '查询成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                }
+
+            },
             handleClickTop (tab, event) {
                 if (this.activeNameTop) {
                     switch (this.activeNameTop) {
                     case 'vipOperate':
-                        this.$router.push('/home/ybyz/vipOperate')
-                        break
+                        this.$router.push('/home/ybyz/vipOperate');
+                        break;
                     case 'rentSearch':
-                        this.$router.push('/home/ybyz/rentSearch')
+                        this.$router.push('/home/ybyz/rentSearch');
                         break
                     }
                 }
@@ -216,30 +251,30 @@ export default {
             },
             async addUserFn () {
                 // 特殊直属会员录入
-
             //                this.addUserVal1
             //                this.addUserVal2
             //                this.addUserVal3
-
-                let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList)
-                console.log(getVipUserList)
+//                let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList)
+//                console.log(getVipUserList)
             },
             async handleCurrentChange (val) {
-                console.log( val )
                 // 分页事件  第一位
                 let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList, [Number(this.curTgyValue), {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': Number(val), 'pageSize': 8, 'totalCount': 0}])
                 console.log(getVipUserList)
                 console.log('==***********===')
-                //                this.currPageNumber = val;
-
                 if (getVipUserList) {
                     if (getVipUserList.pager && getVipUserList.pager.list) {
                         this.vipUserList = getVipUserList.pager.list
                         this.vipUserList.forEach((item) => {
-                            if (item.state === 0) {
-                                item.state = '正常'
+                            if (item.status === 0) {
+                                item.status = '正常'
                             } else {
-                                item.state = '禁用'
+                                item.status = '禁用'
+                            }
+                            if (item.warningStatus === 0) {
+                                item.warningStatus = '正常'
+                            } else {
+                                item.warningStatus = '异常：存'+item.warningStatus+'币的不明数额' ;
                             }
                             if (item.level !== undefined) {
                                 item.level = item.level + '级推广员'
@@ -254,7 +289,7 @@ export default {
             },
             vipListClick (val) {
                 // 列表点击
-                this.$store.commit(mTypes.setSelVipVal, val)
+                this.$store.commit(mTypes.setSelVipVal, val);
             // 处理一些可显示
             },
             setCurrent (row) {
@@ -262,7 +297,7 @@ export default {
             },
             initSearch (showTips = true) {
                 // 重置 选中状态
-                this.tgySearch = ''
+                this.tgySearch = '';
                 if (showTips) {
                     this.$message({
                         message: '重置成功',
@@ -271,47 +306,48 @@ export default {
                     })
                 }
                 // 去除 表格选中
-                this.$refs.singleTable.setCurrentRow('')
-                this.$store.commit(mTypes.setSelVipVal, null)
-                this.currStateStop = true
-                this.currStateActive = true
+                this.$refs.singleTable.setCurrentRow('');
+                this.$store.commit(mTypes.setSelVipVal, null);
+                this.vipSearch = '';
+                this.vipStyle = '';
+                this.vipUserName = '';
             },
             handleClick (tab, event) {
                 /*  路由 跳转  */
                 if (this.activeName) {
                     switch (this.activeName) {
                     case 'vipOperate':
-                        this.$router.push('/home/ybyz/vipOperate')
+                        this.$router.push('/home/ybyz/vipOperate');
                         break
                     case 'giftExchange':
-                        this.$router.push('/home/ybyz/giftExchange')
+                        this.$router.push('/home/ybyz/giftExchange');
                         break
                     case 'flatRent':
-                        this.$router.push('/home/ybyz/flatRent')
+                        this.$router.push('/home/ybyz/flatRent');
                         break
                     case 'rentReturn':
-                        this.$router.push('/home/ybyz/rentReturn')
+                        this.$router.push('/home/ybyz/rentReturn');
                         break
                     case 'rechargeSearch':
-                        this.$router.push('/home/ybyz/rechargeSearch')
+                        this.$router.push('/home/ybyz/rechargeSearch');
                         break
                     case 'DJSearch':
-                        this.$router.push('/home/ybyz/DJSearch')
+                        this.$router.push('/home/ybyz/DJSearch');
                         break
                     case 'giveSearch':
-                        this.$router.push('/home/ybyz/giveSearch')
+                        this.$router.push('/home/ybyz/giveSearch');
                         break
                     case 'delSearch':
-                        this.$router.push('/home/ybyz/delSearch')
+                        this.$router.push('/home/ybyz/delSearch');
                         break
                     case 'rentList':
-                        this.$router.push('/home/ybyz/rentList')
+                        this.$router.push('/home/ybyz/rentList');
                         break
                     case 'playList':
-                        this.$router.push('/home/ybyz/playList')
+                        this.$router.push('/home/ybyz/playList');
                         break
                     case 'vipLoginList':
-                        this.$router.push('/home/ybyz/vipLoginList')
+                        this.$router.push('/home/ybyz/vipLoginList');
                         break
                     case 'BPList':
                         this.$router.push('/home/ybyz/BPList')
@@ -356,10 +392,15 @@ export default {
                 if (getVipUserList.pager && getVipUserList.pager.list) {
                     this.vipUserList = getVipUserList.pager.list
                     this.vipUserList.forEach((item) => {
-                        if (item.state === 0) {
-                            item.state = '正常'
+                        if (item.status === 0) {
+                            item.status = '正常'
                         } else {
-                            item.state = '禁用'
+                            item.status = '禁用'
+                        }
+                        if (item.warningStatus === 0) {
+                            item.warningStatus = '正常'
+                        } else {
+                            item.warningStatus = '异常：存'+item.warningStatus+'币的不明数额' ;
                         }
                         if (item.level !== undefined) {
                             item.level = item.level + '级推广员'
