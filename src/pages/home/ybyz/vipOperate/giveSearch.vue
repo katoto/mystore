@@ -111,12 +111,12 @@
 
                 adminList: [],
 
-                shareTotalGold:0,
-                lastTotalGold:0,
-                systemTotalGold:0,
-                giftTotalGold:0,
-                redPacketTotalGold:0,
-                activityTotalGold:0
+                shareTotalGold: 0,
+                lastTotalGold: 0,
+                systemTotalGold: 0,
+                giftTotalGold: 0,
+                redPacketTotalGold: 0,
+                activityTotalGold: 0
             }
         },
         watch: {},
@@ -204,7 +204,6 @@
                     this.pageNumber = result.pager.pageNumber,
                     this.pageSize = result.pager.pageSize
                 }
-
             }
         },
         computed: {
@@ -253,7 +252,6 @@
             if (result && result.activityTotalGold) {
                 this.activityTotalGold = result.activityTotalGold
             }
-
         }
     }
 </script>

@@ -197,7 +197,6 @@
                         type: 'success',
                         duration: 1200
                     })
-
                 }
             }
         },
@@ -228,7 +227,6 @@
                 this.pageNumber = result.pager.pageNumber,
                 this.pageSize = result.pager.pageSize
             }
-
         }
     }
 </script>
