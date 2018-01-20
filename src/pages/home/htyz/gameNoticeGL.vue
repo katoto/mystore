@@ -84,7 +84,7 @@
                     type: 1,
                     userId: '000000'
                 }],
-                newFormID:0
+                newFormID: 0
             }
         },
         methods: {
@@ -104,11 +104,11 @@
             },
             async sendNotice () {
                 console.log(this.form)
-                if( this.form ){
-                    if( Number(this.form.resource) === 2  ){
-                      this.newFormID = 8
+                if (this.form) {
+                    if (Number(this.form.resource) === 2) {
+                        this.newFormID = 8
                     }
-                    if( this.form.desc === '' ){
+                    if (this.form.desc === '') {
                         this.$message({
                             message: '请输入正文',
                             type: 'error',
@@ -116,12 +116,18 @@
                         })
                         return false
                     }
-                    let result = await this.$store.dispatch(aTypes.addNotice, [{admin:"admin",content: this.form.desc.toString() ,datetime:"",
-                        id:this.newFormID ,rangeStr:"", rangeType:Number(this.form.resource) ,title:"",
-                        type:0,userId: this.form.vipName.toString() }] )
+                    let result = await this.$store.dispatch(aTypes.addNotice, [{admin: 'admin',
+                        content: this.form.desc.toString(),
+                        datetime: '',
+                        id: this.newFormID,
+                        rangeStr: '',
+                        rangeType: Number(this.form.resource),
+                        title: '',
+                        type: 0,
+                        userId: this.form.vipName.toString() }])
                     console.log(result)
-                    console.log('游戏公告add');
-                    if( result && result.success === true ){
+                    console.log('游戏公告add')
+                    if (result && result.success === true) {
                         let noticeList = await this.$store.dispatch(aTypes.getNoticeList)
                         console.log(noticeList)
                         if (noticeList) {
@@ -135,15 +141,13 @@
                         this.form.desc = ''
                         this.form.resource = ''
                         this.form.vipName = ''
-
-                    }else{
+                    } else {
                         this.$message({
                             message: result.message,
                             type: 'error',
                             duration: 1200
                         })
                     }
-
                 }
             },
             noticeClick (val) {
@@ -156,10 +160,10 @@
             },
             async upDataNotice () {
                 let result = await this.$store.dispatch(aTypes.getNoticeList)
-                console.log('===更新游戏公告====');
+                console.log('===更新游戏公告====')
                 console.log(result)
                 if (result) {
-                    this.gamaNoticeList = result;
+                    this.gamaNoticeList = result
                     this.$message({
                         message: '更新游戏公告成功',
                         type: 'success',

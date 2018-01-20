@@ -241,9 +241,15 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
     //  发送公告 rangeType 0 所有 1 2 3
-    async addNotice ({dispatch, commit}, args = [{"admin":"admin","content":"测试添加公告","datetime":"",
-        "id":0,"rangeStr":"","rangeType":0 ,"title":"",
-        "type":0,"userId":""}] ) {
+    async addNotice ({dispatch, commit}, args = [{'admin': 'admin',
+        'content': '测试添加公告',
+        'datetime': '',
+        'id': 0,
+        'rangeStr': '',
+        'rangeType': 0,
+        'title': '',
+        'type': 0,
+        'userId': ''}]) {
         const argsData = await dispatch('invoke', {
             method: 'noticeService/addNotice',
             args
@@ -252,8 +258,13 @@ const actionsInfo = mapActions({
     },
 
     // 发送邮件 0 1 2
-    async sendMail ({dispatch, commit}, args = [{"admin":"admin","content":"测试测试内容",
-        "datetime":"","id":0,"ids":"","rangeType":2,"title":"给欢乐发的标题"}] ) {
+    async sendMail ({dispatch, commit}, args = [{'admin': 'admin',
+        'content': '测试测试内容',
+        'datetime': '',
+        'id': 0,
+        'ids': '',
+        'rangeType': 2,
+        'title': '给欢乐发的标题'}]) {
         const argsData = await dispatch('invoke', {
             method: 'userMailService/sendMail',
             args
@@ -261,8 +272,13 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
     // 邮件 列表
-    async getMailList ({dispatch, commit}, args = [{"list":[],"order":"","orderBy":"","pageCount":0,"pageNumber":1,
-        "pageSize":16,"totalCount":0}] ) {
+    async getMailList ({dispatch, commit}, args = [{'list': [],
+        'order': '',
+        'orderBy': '',
+        'pageCount': 0,
+        'pageNumber': 1,
+        'pageSize': 8,
+        'totalCount': 0}]) {
         const argsData = await dispatch('invoke', {
             method: 'userMailService/getMailList',
             args
@@ -270,13 +286,13 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
     //  删除列表 3
-    async deleteMail ({dispatch, commit}, args = [3] ) {
+    async deleteMail ({dispatch, commit}, args = [3]) {
         const argsData = await dispatch('invoke', {
             method: 'userMailService/deleteMail',
             args
         })
         return argsData[0]
-    },
+    }
 
 }, name)
 
