@@ -1,19 +1,17 @@
 <template>
-    <div>
-        <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="标题">
-                <el-input size="small" placeholder="请输入标题" v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="正文">
-                <!--  rows=8  -->
-                <el-input size="small"  placeholder="请输入正文" type="textarea" v-model="form.desc"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button size="small" type="primary" v-tap="{ methods:onSubmit }">更新</el-button>
-                <el-button size="small" style="margin-left: 28px" v-tap="{ methods:onInitFn }" >重置</el-button>
-            </el-form-item>
-        </el-form>
-    </div>
+    <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="标题">
+            <el-input size="small" placeholder="请输入标题" v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item label="正文">
+            <!--  rows=8  -->
+            <el-input size="small"  placeholder="请输入正文" type="textarea" v-model="form.desc"></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button size="small" type="primary" v-tap="{ methods:onSubmit }">更新</el-button>
+            <el-button size="small" style="margin-left: 28px" v-tap="{ methods:onInitFn }" >重置</el-button>
+        </el-form-item>
+    </el-form>
 </template>
 
 <script>
