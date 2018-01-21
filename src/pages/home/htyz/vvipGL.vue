@@ -4,8 +4,8 @@
             <el-form ref="form" :model="form" label-width="80px">
                 <div style="height: 36px">
                     <el-button size="small" :disabled="!currvvipList" type="primary">详情</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary">封号</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary">解禁</el-button>
+                    <el-button size="small" :disabled=showStopBtn type="primary">封号</el-button>
+                    <el-button size="small" :disabled=showNoStopBtn type="primary">解禁</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary">删号</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary">扣除游戏币</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary">游戏币赠送</el-button>
@@ -323,10 +323,28 @@
                 AllGold: 0,
                 AllNumber: 0,
 
-                currvvipList: null
+                currvvipList: null,
+                showStopBtn: true,
+                showNoStopBtn: true
             }
         },
-        watch: {},
+        watch: {
+            currvvipList (val) {
+                if (val) {
+                    if (val.shutupStatus === '冻结') {
+                        this.showNoStopBtn = false
+                        this.showStopBtn = true
+                    } else {
+                        // 正常的情况。
+                        this.showNoStopBtn = true
+                        this.showStopBtn = false
+                    }
+                } else {
+                    this.showStopBtn = true
+                    this.showNoStopBtn = true
+                }
+            }
+        },
         methods: {
             initSearch (showTips = true) {
                 if (showTips) {
@@ -341,10 +359,10 @@
                 this.currvvipList = null
             },
             emailListClick (val) {
-                // 列表点击
-                console.log(val)
                 // 处理一些可显示
-                this.currvvipList = val
+                if (val) {
+                    this.currvvipList = val
+                }
             },
             setCurrent (row) {
                 this.$refs.singleTable.setCurrentRow(row)
@@ -365,11 +383,16 @@
                     if (result.pager && result.pager.list) {
                         this.vvipList = result.pager.list
                         this.vvipList.forEach((item) => {
-                            if (item.shutupStatus === 0) {
-                                item.shutupStatus = '正常'
+                            if (item.displayStatus === 0) {
+                                if (item.shutupStatus === 0) {
+                                    item.shutupStatus = '正常'
+                                } else {
+                                    item.shutupStatus = '禁言'
+                                }
                             } else {
-                                item.shutupStatus = '禁言'
+                                item.shutupStatus = '冻结'
                             }
+
                             if (item.status === 0) {
                                 item.status = '正常'
                             } else {
@@ -399,10 +422,14 @@
                 if (result.pager && result.pager.list) {
                     this.vvipList = result.pager.list
                     this.vvipList.forEach((item) => {
-                        if (item.shutupStatus === 0) {
-                            item.shutupStatus = '正常'
+                        if (item.displayStatus === 0) {
+                            if (item.shutupStatus === 0) {
+                                item.shutupStatus = '正常'
+                            } else {
+                                item.shutupStatus = '禁言'
+                            }
                         } else {
-                            item.shutupStatus = '禁言'
+                            item.shutupStatus = '冻结'
                         }
                         if (item.status === 0) {
                             item.status = '正常'
