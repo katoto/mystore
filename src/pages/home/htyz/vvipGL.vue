@@ -9,11 +9,11 @@
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: deleteUser }">删号</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeMinusGameGold }" >扣除游戏币</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeAwardGameGold }">游戏币赠送</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: changeUserLevel }">修改等级</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: minusGameGold }" disabled>身份信息查询与修改</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: resetPass }">重置密码</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: dealException }" >删除异常</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: modifySafeBoxPwd }">口令修改</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeChangeUserLevel }">修改等级</el-button>
+                    <!--<el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: minusGameGold }" disabled>身份信息查询与修改</el-button>-->
+                    <!--<el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: resetPass }">重置密码</el-button>-->
+                    <!--<el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: dealException }" >删除异常</el-button>-->
+                    <!--<el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: modifySafeBoxPwd }">口令修改</el-button>-->
                 </div>
                 <el-form-item label="禁言：">
                     <el-radio-group :disabled="!currvvipList" v-model="form.resource">
@@ -217,8 +217,8 @@
             title="扣除游戏币"
             :visible.sync="minusGameGoldVisible"
             width="35%">
-            <p style="margin-bottom: 10px">
-                <span>当前游戏币：1231432</span>
+            <p style="margin-bottom: 10px" v-if="currvvipList">
+                <span>当前游戏币：{{ currvvipList.currvvipList }}</span>
             </p>
             <span>扣除游戏币：</span><el-input v-model="minusGameGoldNumber" ></el-input>
             <span slot="footer" class="dialog-footer">
@@ -232,8 +232,8 @@
             title="扣除游戏币"
             :visible.sync="awardGameGoldVisible"
             width="35%">
-            <p style="margin-bottom: 10px">
-                <span>当前游戏币：1231432</span>
+            <p style="margin-bottom: 10px" v-if="currvvipList">
+                <span>当前游戏币：{{ currvvipList.currvvipList }}</span>
             </p>
             <span>赠送游戏币：</span><el-input v-model="awardGameGoldNumber" ></el-input>
             <span slot="footer" class="dialog-footer">
@@ -244,16 +244,26 @@
 
         <!--  修改等级  -->
         <el-dialog
-            title="扣除游戏币"
-            :visible.sync="awardGameGoldVisible"
+            title="修改等级"
+            :visible.sync="levelVisible"
             width="35%">
-            <p style="margin-bottom: 10px">
-                <span>当前游戏币：1231432</span>
+            <p style="margin-bottom: 10px" v-if="currvvipList">
+                <span>当前等级：{{ currvvipList.level }}</span>
             </p>
-            <span>赠送游戏币：</span><el-input v-model="awardGameGoldNumber" ></el-input>
+            <div>
+                <span>修改为：</span>
+                <el-select class="xtSel" size="small" v-model="levelVal" placeholder="请选择等级">
+                    <el-option
+                        v-for="item in levelOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+            </div>
             <span slot="footer" class="dialog-footer">
-            <el-button @click="awardGameGoldVisible = false">取 消</el-button>
-            <el-button type="primary" v-tap="{ methods:awardGameGold }"  >确 定</el-button>
+            <el-button @click="levelVisible = false">取 消</el-button>
+            <el-button type="primary" v-tap="{ methods: changeUserLevel }"  >确 定</el-button>
           </span>
         </el-dialog>
 
@@ -266,14 +276,82 @@
     export default {
         data () {
             return {
+                levelVal: 1,
+                levelVisible: false,
+                levelOptions: [{
+                    label: 'L1,新手',
+                    value: 1
+                },
+                {
+                    label: 'L2,学徒',
+                    value: 2
+                },
+                {
+                    label: 'L3,新秀',
+                    value: 3
+                },
+                {
+                    label: 'L4,新贵',
+                    value: 4
+                },
+                {
+                    label: 'L5,高手',
+                    value: 5
+                },
+                {
+                    label: 'L6,达人',
+                    value: 6
+                },
+                {
+                    label: 'L7,精英',
+                    value: 7
+                },
+                {
+                    label: 'L8,专家',
+                    value: 8
+                },
+                {
+                    label: 'L9,大师',
+                    value: 9
+                },
+                {
+                    label: 'L10,宗师',
+                    value: 10
+                },
+                {
+                    label: 'L11,盟主',
+                    value: 11
+                },
+                {
+                    label: 'L12,传奇',
+                    value: 12
+                },
+                {
+                    label: 'L13,赌王',
+                    value: 13
+                },
+                {
+                    label: 'L14,赌圣',
+                    value: 14
+                },
+                {
+                    label: 'L15,赌神',
+                    value: 15
+                },
+                {
+                    label: 'L16,至尊',
+                    value: 16
+                }
+                ],
+
                 input: '',
                 centerDialogVisible: false,
 
-                minusGameGoldVisible:false,
-                minusGameGoldNumber:'',
+                minusGameGoldVisible: false,
+                minusGameGoldNumber: '',
 
-                awardGameGoldVisible:false,
-                awardGameGoldNumber:'',
+                awardGameGoldVisible: false,
+                awardGameGoldNumber: '',
 
                 form: {
                     name: '',
@@ -400,111 +478,141 @@
             }
         },
         methods: {
-            async deleteUser(){
-                let result = await this.$store.dispatch(aTypes.deleteUser,[ Number( this.currvvipList.id )])
+            async deleteUser () {
+                let result = await this.$store.dispatch(aTypes.deleteUser, [ Number(this.currvvipList.id)])
                 console.log(result)
                 console.log('删号')
-                if( result && result.success === true ){
+                if (result && result.success === true) {
                     this.$message({
                         message: '删号成功',
                         type: 'success',
                         duration: 1200
-                    });
-                    this.clickPage( 1 );
-                    this.initSearch( false );
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
                 }
             },
 
-            beforeAwardGameGold(){
+            beforeChangeUserLevel () {
                 // 出现弹窗
-                this.awardGameGoldVisible = true ;
+                this.levelVisible = true
             },
-            async awardGameGold(){
-                if( !this.awardGameGoldNumber ){
+            async changeUserLevel () {
+                if (!this.levelVal) {
+                    this.$message({
+                        message: '请选择要修改的等级',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+                let result = await this.$store.dispatch(aTypes.changeUserLevel, [ Number(this.currvvipList.id), Number(this.levelVal)])
+                console.log(result)
+                console.log('修改等级')
+                if (result && result.success === true) {
+                    this.$message({
+                        message: '修改等级',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
+                    setTimeout(() => {
+                        this.levelVisible = false
+                    })
+                }
+            },
+
+            beforeAwardGameGold () {
+                // 出现弹窗
+                this.awardGameGoldVisible = true
+            },
+            async awardGameGold () {
+                if (!this.awardGameGoldNumber) {
                     this.$message({
                         message: '请输入赠送金币',
                         type: 'error',
                         duration: 1200
-                    });
-                    return false;
+                    })
+                    return false
                 }
-                let result = await this.$store.dispatch(aTypes.awardGameGold,[ Number( this.currvvipList.id ),Number( this.awardGameGoldNumber )])
+                let result = await this.$store.dispatch(aTypes.awardGameGold, [ Number(this.currvvipList.id), Number(this.awardGameGoldNumber)])
                 console.log(result)
                 console.log('赠送金币')
-                if( result && result.success === true ){
+                if (result && result.success === true) {
                     this.$message({
                         message: '赠送金币',
                         type: 'success',
                         duration: 1200
-                    });
-                    this.clickPage( 1 );
-                    this.initSearch( false );
-                    setTimeout(()=>{
-                        this.awardGameGoldVisible = false ;
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
+                    setTimeout(() => {
+                        this.awardGameGoldVisible = false
                     })
                 }
             },
 
-            beforeMinusGameGold(){
+            beforeMinusGameGold () {
                 // 出现弹窗
-                this.minusGameGoldVisible = true ;
+                this.minusGameGoldVisible = true
             },
-            async minusGameGold(){
-                if( !this.minusGameGoldNumber ){
+            async minusGameGold () {
+                if (!this.minusGameGoldNumber) {
                     this.$message({
                         message: '请输入扣除金币',
                         type: 'error',
                         duration: 1200
-                    });
-                    return false;
+                    })
+                    return false
                 }
-                let result = await this.$store.dispatch(aTypes.minusGameGold,[ Number( this.currvvipList.id ),Number( this.minusGameGoldNumber )])
+                let result = await this.$store.dispatch(aTypes.minusGameGold, [ Number(this.currvvipList.id), Number(this.minusGameGoldNumber)])
                 console.log(result)
                 console.log('扣除金币')
-                if( result && result.success === true ){
+                if (result && result.success === true) {
                     this.$message({
                         message: '扣除金币',
                         type: 'success',
                         duration: 1200
-                    });
-                    this.clickPage( 1 );
-                    this.initSearch( false );
-                    setTimeout(()=>{
-                        this.minusGameGoldVisible = false ;
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
+                    setTimeout(() => {
+                        this.minusGameGoldVisible = false
                     })
                 }
             },
 
-            moreMess(){
-              // 显示详细信息
-                this.centerDialogVisible = true;
+            moreMess () {
+                // 显示详细信息
+                this.centerDialogVisible = true
             },
-            async lockUser(){
-                let result = await this.$store.dispatch(aTypes.lockUser,[ Number( this.currvvipList.id )])
+            async lockUser () {
+                let result = await this.$store.dispatch(aTypes.lockUser, [ Number(this.currvvipList.id)])
                 console.log(result)
                 console.log('封号')
-                if( result && result.success === true ){
+                if (result && result.success === true) {
                     this.$message({
                         message: '封号成功',
                         type: 'success',
                         duration: 1200
-                    });
-                    this.clickPage( 1 );
-                    this.initSearch( false );
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
                 }
             },
-            async unlockUser(){
-                let result = await this.$store.dispatch(aTypes.unlockUser, [ Number( this.currvvipList.id ) ] )
+            async unlockUser () {
+                let result = await this.$store.dispatch(aTypes.unlockUser, [ Number(this.currvvipList.id) ])
                 console.log(result)
                 console.log('解禁')
-                if( result && result.success === true ){
+                if (result && result.success === true) {
                     this.$message({
                         message: '解禁成功',
                         type: 'success',
                         duration: 1200
-                    });
-                    this.clickPage( 1 );
-                    this.initSearch( false );
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
                 }
             },
             initSearch (showTips = true) {

@@ -334,7 +334,7 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
     //  扣除游戏币
-    async minusGameGold ({dispatch, commit}, args = [56,100]) {
+    async minusGameGold ({dispatch, commit}, args = [56, 100]) {
         const argsData = await dispatch('invoke', {
             method: 'memberService/minusGameGold',
             args
@@ -342,7 +342,7 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
     //  赠送游戏币
-    async awardGameGold ({dispatch, commit}, args = [56,100]) {
+    async awardGameGold ({dispatch, commit}, args = [56, 100]) {
         const argsData = await dispatch('invoke', {
             method: 'memberService/awardGameGold',
             args
@@ -350,7 +350,7 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
     //  修改等级
-    async changeUserLevel ({dispatch, commit}, args = [56,1]) {
+    async changeUserLevel ({dispatch, commit}, args = [56, 1]) {
         const argsData = await dispatch('invoke', {
             method: 'memberService/changeUserLevel',
             args
@@ -381,14 +381,14 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 口令修改 参数 id  与 新密码
-    async modifySafeBoxPwd ({dispatch, commit}, args = [3,'123456']) {
+    // 口令修改 参数 id  与 新密码 ( 暂放 )
+    async modifySafeBoxPwd ({dispatch, commit}, args = [3, '123456']) {
         const argsData = await dispatch('invoke', {
             method: 'memberService/modifySafeBoxPwd',
             args
         })
         return argsData[0]
-    },
+    }
 
 }, name)
 
