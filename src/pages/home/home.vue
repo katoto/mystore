@@ -6,7 +6,7 @@
                 <el-tab-pane label="系统管理" name="xtManage"></el-tab-pane>
                 <el-tab-pane label="推广员管理" name="tgyManage"></el-tab-pane>
                 <el-tab-pane label="一般运作" name="ybyz"></el-tab-pane>
-                <el-tab-pane label="后台运行" name="htyz"></el-tab-pane>
+                <el-tab-pane label="后台运作" name="htyz"></el-tab-pane>
                 <el-tab-pane label="总结报告" name="allReport"></el-tab-pane>
             </el-tabs>
             <router-view></router-view>

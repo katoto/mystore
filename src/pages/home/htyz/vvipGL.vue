@@ -3,21 +3,21 @@
         <header class="clearfix">
             <el-form ref="form" :model="form" label-width="80px">
                 <div style="height: 36px">
-                    <el-button size="small" type="primary">详情</el-button>
-                    <el-button size="small" type="primary">封号</el-button>
-                    <el-button size="small" type="primary">解禁</el-button>
-                    <el-button size="small" type="primary">删号</el-button>
-                    <el-button size="small" type="primary">扣除游戏币</el-button>
-                    <el-button size="small" type="primary">游戏币赠送</el-button>
-                    <el-button size="small" type="primary">游戏币赠送</el-button>
-                    <el-button size="small" type="primary">修改等级</el-button>
-                    <el-button size="small" type="primary">身份信息查询与修改</el-button>
-                    <el-button size="small" type="primary">重置密码</el-button>
-                    <el-button size="small" type="primary" disabled>删除异常</el-button>
-                    <el-button size="small" type="primary">口令修改</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary">详情</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary">封号</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary">解禁</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary">删号</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary">扣除游戏币</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary">游戏币赠送</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary">游戏币赠送</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary">修改等级</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary">身份信息查询与修改</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary">重置密码</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary" disabled>删除异常</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary">口令修改</el-button>
                 </div>
                 <el-form-item label="禁言：">
-                    <el-radio-group v-model="form.resource">
+                    <el-radio-group :disabled="!currvvipList" v-model="form.resource">
                         <el-radio label="正常"></el-radio>
                         <el-radio label="20分钟禁言"></el-radio>
                         <el-radio label="6小时禁言"></el-radio>
@@ -45,72 +45,77 @@
                 </el-select>
                 <el-input size="small" class="xtInp" v-model="input" placeholder="请输入内容"></el-input>
                 <el-button style="margin-left: 18px" size="small" type="primary">查找</el-button>
-                <el-button style="margin-left: 18px" size="small" type="primary">重置</el-button>
+                <el-button style="margin-left: 18px" size="small" type="warning" v-tap="{methods: initSearch}">重置</el-button>
             </el-form>
         </header>
 
         <section style="margin-bottom: 50px">
             <section class="bottomSel">
                 <el-table
-                    :data="tableData3"
-                    height="350"
+                    ref="singleTable"
+                    :data="vvipList"
+                    highlight-current-row
+                    height="300"
                     size="small"
                     border
+                    @cell-click="emailListClick"
                     style="width: 100%">
                     <el-table-column
-                        prop="date"
+                        prop="username"
                         label="账号"
                         width="100">
                     </el-table-column>
                     <el-table-column
-                        prop="name"
+                        prop="nickname"
                         label="昵称"
-                        width="50">
+                        width="80">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="status"
                         label="账目状态">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="gameGold"
                         label="游戏币">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="lottery"
                         label="彩票数">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="promoterName"
                         label="所属推广员">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="level"
                         label="等级">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="shutupStatus"
                         label="状态">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="loginDate"
                         label="最近登录">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="subUserCount"
                         label="子账号">
                     </el-table-column>
                 </el-table>
-                <p>会员携带（币）： </p>
-                <p>彩票数： </p>
                 <div class="block">
                     <el-pagination
                         @current-change="clickPage"
                         background
                         size="small"
-                        layout="prev, pager, next"
-                        :total="50">
+                        :page-size="pageSize"
+                        :current-page.sync="pageNumber"
+                        layout="prev, pager, next,jumper"
+                        :total="totalCount">
                     </el-pagination>
                 </div>
+                <p>会员携带（币）：{{ AllGold }} </p>
+                <p>彩票数：{{ AllNumber }} </p>
             </section>
         </section>
         <el-dialog
@@ -210,11 +215,12 @@
 </template>
 
 <script>
+    import { aTypes, mTypes } from '~store/htyz'
     export default {
         data () {
             return {
                 input: '',
-                centerDialogVisible: true,
+                centerDialogVisible: false,
                 form: {
                     name: '',
                     desc: ''
@@ -265,49 +271,157 @@
                         value: '1000'
                     }],
                 value: '10万',
-                tableData3: [{
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-08',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-06',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-07',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }]
+                vvipList: [{
+                    answer: '-1',
+                    bindingName: '',
+                    borrow: 0,
+                    boxGameGold: 0,
+                    boxLottery: 0,
+                    card: '-1',
+                    currentGameScore: 0,
+                    displayStatus: 3,
+                    expeGold: 0,
+                    expeScore: 0,
+                    expiryNum: 0,
+                    gameGold: 6167,
+                    gameScore: 0,
+                    id: 3,
+                    lastDeskId: 2,
+                    lastGame: 4,
+                    level: 1,
+                    levelScore: 174.55626,
+                    loginDate: '2017-11-25 14:52:50',
+                    lottery: 0,
+                    name: '',
+                    nickname: 'q q q',
+                    overflow: 0,
+                    password: 'c51cd8e64b0aeb778364765013df9ebe',
+                    payMoney: 0,
+                    phone: '-',
+                    photoId: 1,
+                    promoterId: 0,
+                    promoterName: '99999',
+                    question: '',
+                    registDate: '2017-11-24 21:00:36',
+                    safeBox: 0,
+                    security: 0,
+                    sex: '男',
+                    shareClearingTime: '',
+                    shutupStatus: 1,
+                    specialMark: 1,
+                    status: 0,
+                    subUserCount: 0,
+                    type: 0,
+                    username: '000000',
+                    warningStatus: 0
+                }],
+
+                totalCount: 0,
+                pageNumber: 1,
+                pageSize: 12,
+
+                AllGold: 0,
+                AllNumber: 0,
+
+                currvvipList: null
             }
         },
         watch: {},
         methods: {
-            onSubmit () {
-                console.log('submit!')
+            initSearch (showTips = true) {
+                if (showTips) {
+                    this.$message({
+                        message: '重置成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                }
+                // 去除 表格选中
+                this.$refs.singleTable.setCurrentRow('')
+                this.currvvipList = null
             },
-            clickPage (size) {
-                // 分页
-                console.log(size)
+            emailListClick (val) {
+                // 列表点击
+                console.log(val)
+                // 处理一些可显示
+                this.currvvipList = val
+            },
+            setCurrent (row) {
+                this.$refs.singleTable.setCurrentRow(row)
+            },
+            async clickPage (size) {
+                // 分页  请求数据 ，更新数据
+                let result = null
+                result = await this.$store.dispatch(aTypes.getUserManage, [0, {'list': [],
+                    'order': '',
+                    'orderBy': '',
+                    'pageCount': 0,
+                    'pageNumber': size,
+                    'pageSize': 12,
+                    'totalCount': 0 } ])
+                console.log(result)
+                console.log('vvipGL 下一页')
+                if (result) {
+                    if (result.pager && result.pager.list) {
+                        this.vvipList = result.pager.list
+                        this.vvipList.forEach((item) => {
+                            if (item.shutupStatus === 0) {
+                                item.shutupStatus = '正常'
+                            } else {
+                                item.shutupStatus = '禁言'
+                            }
+                            if (item.status === 0) {
+                                item.status = '正常'
+                            } else {
+                                item.status = '异常'
+                            }
+                        })
+                    }
+                    if (result.gold) {
+                        this.AllGold = result.gold
+                    }
+                    if (result.number) {
+                        this.AllNumber = result.number
+                    }
+                    // 处理页码
+                    this.totalCount = result.pager.totalCount
+                    this.pageNumber = result.pager.pageNumber
+                    this.pageSize = result.pager.pageSize
+                }
             }
         },
         computed: {},
-        mounted () {
+        async mounted () {
+            let result = await this.$store.dispatch(aTypes.getUserManage)
+            console.log(result)
+            console.log('会员高级管理列表')
+            if (result) {
+                if (result.pager && result.pager.list) {
+                    this.vvipList = result.pager.list
+                    this.vvipList.forEach((item) => {
+                        if (item.shutupStatus === 0) {
+                            item.shutupStatus = '正常'
+                        } else {
+                            item.shutupStatus = '禁言'
+                        }
+                        if (item.status === 0) {
+                            item.status = '正常'
+                        } else {
+                            item.status = '异常'
+                        }
+                    })
+                }
+                if (result.gold) {
+                    this.AllGold = result.gold
+                }
+                if (result.number) {
+                    this.AllNumber = result.number
+                }
+                // 处理页码
+                this.totalCount = result.pager.totalCount
+                this.pageNumber = result.pager.pageNumber
+                this.pageSize = result.pager.pageSize
+            }
         }
     }
 </script>
