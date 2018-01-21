@@ -292,6 +292,21 @@ const actionsInfo = mapActions({
             args
         })
         return argsData[0]
+    },
+
+    // 高级会员列表  直属会员0  1 2 3
+    async getUserManage ({dispatch, commit}, args = [ 0, {'list': [],
+        'order': '',
+        'orderBy': '',
+        'pageCount': 0,
+        'pageNumber': 1,
+        'pageSize': 12,
+        'totalCount': 0}]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/getUserManage',
+            args
+        })
+        return argsData[0]
     }
 
 }, name)
