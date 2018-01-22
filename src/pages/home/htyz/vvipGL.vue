@@ -395,12 +395,6 @@
                     },
                     {
                         value: '10万'
-                    },
-                    {
-                        value: '1万'
-                    },
-                    {
-                        value: '1000'
                     }],
                 value: '10万',
                 vvipList: [{
@@ -462,19 +456,19 @@
         },
         watch: {
             currvvipList (val) {
-                if (val) {
-                    if (val.shutupStatus === '冻结') {
-                        this.showNoStopBtn = false
-                        this.showStopBtn = true
-                    } else {
-                        // 正常的情况。
-                        this.showNoStopBtn = true
-                        this.showStopBtn = false
-                    }
-                } else {
-                    this.showStopBtn = true
-                    this.showNoStopBtn = true
-                }
+//                if (val) {
+//                    if (val.shutupStatus === '冻结') {
+//                        this.showNoStopBtn = false
+//                        this.showStopBtn = true
+//                    } else {
+//                        // 正常的情况。
+//                        this.showNoStopBtn = true
+//                        this.showStopBtn = false
+//                    }
+//                } else {
+//                    this.showStopBtn = true
+//                    this.showNoStopBtn = true
+//                }
             }
         },
         methods: {
@@ -698,20 +692,27 @@
                 if (result.pager && result.pager.list) {
                     this.vvipList = result.pager.list
                     this.vvipList.forEach((item) => {
-                        if (item.displayStatus === 0) {
-                            if (item.shutupStatus === 0) {
-                                item.shutupStatus = '正常'
-                            } else {
-                                item.shutupStatus = '禁言'
-                            }
-                        } else {
-                            item.shutupStatus = '冻结'
-                        }
-                        if (item.status === 0) {
-                            item.status = '正常'
-                        } else {
-                            item.status = '异常'
-                        }
+                        if( item.shutupStatus === 0 ){
+
+                        }else{
+
+                    }
+
+
+//                        if (item.displayStatus === 0) {
+//                            if (item.shutupStatus === 0) {
+//                                item.shutupStatus = '正常'
+//                            } else {
+//                                item.shutupStatus = '禁言'
+//                            }
+//                        } else {
+//                            item.shutupStatus = '冻结'
+//                        }
+//                        if (item.status === 0) {
+//                            item.status = '正常'
+//                        } else {
+//                            item.status = '异常'
+//                        }
                     })
                 }
                 if (result.gold) {

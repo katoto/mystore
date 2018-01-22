@@ -228,7 +228,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'noticeService/updateNotice',
             args
-        })
+        });
         return argsData[0]
     },
     //     游戏公告管理
@@ -237,7 +237,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'noticeService/getNoticeList',
             args
-        })
+        });
         return argsData[0]
     },
     //  发送公告 rangeType 0 所有 1 2 3
@@ -253,7 +253,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'noticeService/addNotice',
             args
-        })
+        });
         return argsData[0]
     },
 
@@ -268,7 +268,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'userMailService/sendMail',
             args
-        })
+        });
         return argsData[0]
     },
     // 邮件 列表
@@ -282,7 +282,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'userMailService/getMailList',
             args
-        })
+        });
         return argsData[0]
     },
     //  删除列表 3
@@ -290,7 +290,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'userMailService/deleteMail',
             args
-        })
+        });
         return argsData[0]
     },
 
@@ -305,7 +305,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/getUserManage',
             args
-        })
+        });
         return argsData[0]
     },
 
@@ -314,7 +314,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/lockUser',
             args
-        })
+        });
         return argsData[0]
     },
     //  解封
@@ -322,7 +322,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/unlockUser',
             args
-        })
+        });
         return argsData[0]
     },
     //  删号
@@ -330,7 +330,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/deleteUser',
             args
-        })
+        });
         return argsData[0]
     },
     //  扣除游戏币
@@ -338,7 +338,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/minusGameGold',
             args
-        })
+        });
         return argsData[0]
     },
     //  赠送游戏币
@@ -346,7 +346,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/awardGameGold',
             args
-        })
+        });
         return argsData[0]
     },
     //  修改等级
@@ -354,7 +354,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/changeUserLevel',
             args
-        })
+        });
         return argsData[0]
     },
     // 身份证修改 暂时不需要
@@ -363,14 +363,14 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/getShutupType',
             args
-        })
+        });
         return argsData[0]
     },
     async resetUserPassword ({dispatch, commit}, args = [56]) {
         const argsData = await dispatch('invoke', {
             method: 'memberService/resetUserPassword',
             args
-        })
+        });
         return argsData[0]
     },
     // 解除异常
@@ -378,7 +378,7 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/dealException',
             args
-        })
+        });
         return argsData[0]
     },
     // 口令修改 参数 id  与 新密码 ( 暂放 )
@@ -386,14 +386,23 @@ const actionsInfo = mapActions({
         const argsData = await dispatch('invoke', {
             method: 'memberService/modifySafeBoxPwd',
             args
-        })
+        });
         return argsData[0]
-    }
+    },
+    // 禁言
+    // 第一个参数 用户id、第二个参数代表禁言时长：0正常 1是20分钟...2/3...
+    async shutupUser ({dispatch, commit}, args = [3, '123456']) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/shutupUser',
+            args
+        });
+        return argsData[0]
+    },
 
-}, name)
+}, name);
 
-const actions = actionsInfo.actions
-const mutations = mutationsInfo.mutations
-export const aTypes = actionsInfo.aTypes
-export const mTypes = mutationsInfo.mTypes
+const actions = actionsInfo.actions;
+const mutations = mutationsInfo.mutations;
+export const aTypes = actionsInfo.aTypes;
+export const mTypes = mutationsInfo.mTypes;
 export default { state, actions, mutations }
