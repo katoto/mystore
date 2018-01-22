@@ -3,13 +3,42 @@
         <section>
             <div style="padding-bottom: 10px;border-bottom: 1px solid #000">
                 <h4 style="margin-bottom: 10px">新建公告：</h4>
-                <el-radio-group v-model="form.resource">
-                    <el-radio label="运营状态"></el-radio>
-                    <el-radio label="维护状态"></el-radio>
-                </el-radio-group>
-                <el-button style="margin-left: 45px" size="small" type="primary">更新大厅状态</el-button>
+                <div style="margin: 20px">
+                    <el-radio-group v-model="form.hlabel">
+                        <el-radio label="0">运营状态</el-radio>
+                        <el-radio label="-1">维护状态</el-radio>
+                    </el-radio-group>
+                </div>
+                <div v-if="form.hlabel === '-1'" style="margin: 20px">
+                    <el-radio-group v-model="form.flabel">
+                        <el-radio label="1">立刻进入</el-radio>
+                        <el-radio label="2">预定时间进入</el-radio>
+                    </el-radio-group>
+                </div>
+
+                <div style="margin: 20px" v-if="form.hlabel === '-1' && form.flabel === '2'">
+                    <div style="margin: 20px">
+                        <el-select class="" size="small"  v-model="form.time" placeholder="请选择时间">
+                            <el-option
+                                v-for="item in form.timeOptions"
+                                :key="item"
+                                :label="item"
+                                :value="item"
+                            >
+                            </el-option>
+                        </el-select>&nbsp;点
+                    </div>
+                    <div style="margin: 20px">
+                        维护公告内容: <el-input size="small" v-model="form.content" style="width: 50%"></el-input>
+                    </div>
+
+
+                </div>
+
+
+                <el-button style="margin-left: 45px" size="small" type="primary" @click="updateDTStatus()">更新大厅状态</el-button>
             </div>
-            <el-select class="gameHomeSel" size="small" v-model="value" placeholder="请选择查询类型">
+            <el-select class="" size="small" v-model="value" placeholder="请选择查询类型">
                 <el-option
                     v-for="item in options2"
                     :key="item.value"
@@ -174,12 +203,16 @@
 </template>
 
 <script>
+    import { aTypes, mTypes } from '~store/htyz'
     export default {
         data () {
             return {
                 form: {
-                    name: '',
-                    desc: ''
+                    hlabel: '1',
+                    flabel: '1',
+                    time: 1,
+                    timeOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+                    content: '',
                 },
                 pickerOptions2: {
                     shortcuts: [{
@@ -262,6 +295,22 @@
         methods: {
             onSubmit () {
                 console.log('submit!')
+            },
+            updateDTStatus () {
+                if(this.form.hlabel === '0') {
+                    this.$store.dispatch(aTypes.updateDTStatus, {})
+                } else if(this.form.hlabel === '-1' && this.form.flabel === '1') {
+                    this.$store.dispatch(aTypes.updateDTStatus, {statusIndex: 1})
+                } else if(this.form.hlabel === '-1' && this.form.flabel === '2') {
+                    if(this.form.content === '') {
+                        return this.$message({
+                            message: '公告内容不能为空',
+                            type: 'warning',
+                            duration: 1200
+                        })
+                    }
+                    this.$store.dispatch(aTypes.updateDTStatus, {statusIndex: 1, content: this.form.content, time: this.form.time})
+                }
             },
             clickPage (size) {
                 // 分页
