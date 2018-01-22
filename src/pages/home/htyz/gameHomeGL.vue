@@ -212,7 +212,7 @@
                     flabel: '1',
                     time: 1,
                     timeOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-                    content: '',
+                    content: ''
                 },
                 pickerOptions2: {
                     shortcuts: [{
@@ -297,12 +297,12 @@
                 console.log('submit!')
             },
             updateDTStatus () {
-                if(this.form.hlabel === '0') {
+                if (this.form.hlabel === '0') {
                     this.$store.dispatch(aTypes.updateDTStatus, {})
-                } else if(this.form.hlabel === '-1' && this.form.flabel === '1') {
+                } else if (this.form.hlabel === '-1' && this.form.flabel === '1') {
                     this.$store.dispatch(aTypes.updateDTStatus, {statusIndex: 1})
-                } else if(this.form.hlabel === '-1' && this.form.flabel === '2') {
-                    if(this.form.content === '') {
+                } else if (this.form.hlabel === '-1' && this.form.flabel === '2') {
+                    if (this.form.content === '') {
                         return this.$message({
                             message: '公告内容不能为空',
                             type: 'warning',
