@@ -3,18 +3,17 @@
         <header class="clearfix">
             <el-form ref="form" :model="form" label-width="80px">
                 <div style="height: 36px">
-                    <el-button size="small" :disabled="!currvvipList" type="primary">详情</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary">封号</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary">解禁</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary">删号</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary">扣除游戏币</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary">游戏币赠送</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary">游戏币赠送</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary">修改等级</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary">身份信息查询与修改</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary">重置密码</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary" disabled>删除异常</el-button>
-                    <el-button size="small" :disabled="!currvvipList" type="primary">口令修改</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: moreMess }">详情</el-button>
+                    <el-button size="small" :disabled=showStopBtn type="primary" v-tap="{methods: lockUser }">封号</el-button>
+                    <el-button size="small" :disabled=showNoStopBtn type="primary" v-tap="{methods: unlockUser }">解禁</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: deleteUser }">删号</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeMinusGameGold }" >扣除游戏币</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeAwardGameGold }">游戏币赠送</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeChangeUserLevel }">修改等级</el-button>
+                    <!--<el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: minusGameGold }" disabled>身份信息查询与修改</el-button>-->
+                    <!--<el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: resetPass }">重置密码</el-button>-->
+                    <!--<el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: dealException }" >删除异常</el-button>-->
+                    <!--<el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: modifySafeBoxPwd }">口令修改</el-button>-->
                 </div>
                 <el-form-item label="禁言：">
                     <el-radio-group :disabled="!currvvipList" v-model="form.resource">
@@ -118,7 +117,8 @@
                 <p>彩票数：{{ AllNumber }} </p>
             </section>
         </section>
-        <el-dialog
+
+        <el-dialog v-if="currvvipList"
             title="会员详情"
             :visible.sync="centerDialogVisible"
             width="75%"
@@ -126,67 +126,67 @@
             <el-row>
                 <el-col :span="12">
                     <div class="grid-content">
-                        <span>账号：4234234234</span>
+                        <span>账号：{{ currvvipList.username }}</span>
                     </div>
                 </el-col>
                 <el-col :span="12">
                     <div class="grid-content">
-                        <span>冻结状态：4234234234</span>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="12">
-                    <div class="grid-content">
-                        <span>昵称：4234234234</span>
-                    </div>
-                </el-col>
-                <el-col :span="12">
-                    <div class="grid-content">
-                        <span>爆机状态：4234234234</span>
+                        <span>冻结状态???：{{ currvvipList.shutupStatus }}</span>
                     </div>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="12">
                     <div class="grid-content">
-                        <span>性别：4234234234</span>
+                        <span>昵称：{{ currvvipList.nickname }}</span>
                     </div>
                 </el-col>
                 <el-col :span="12">
                     <div class="grid-content">
-                        <span>游戏币数目(不含保险柜内游戏币)：4234234234</span>
-                    </div>
-                </el-col>
-            </el-row>
-            <el-row>
-                <el-col :span="12">
-                    <div class="grid-content">
-                        <span>推广员：4234234234</span>
-                    </div>
-                </el-col>
-                <el-col :span="12">
-                    <div class="grid-content">
-                        <span>体验币数目：4234234234</span>
+                        <span>爆机状态???：{{ currvvipList.nickname }}</span>
                     </div>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="12">
                     <div class="grid-content">
-                        <span>身份证号：4234234234</span>
+                        <span>性别：{{ currvvipList.sex }}</span>
                     </div>
                 </el-col>
                 <el-col :span="12">
                     <div class="grid-content">
-                        <span>是否租借平板：4234234234</span>
+                        <span>游戏币数目(不含保险柜内游戏币)：{{ currvvipList.gameGold }}</span>
                     </div>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="12">
                     <div class="grid-content">
-                        <span>会员等级：4234234234</span>
+                        <span>推广员：{{ currvvipList.promoterName }}</span>
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="grid-content">
+                        <span>体验币数目??：{{ currvvipList.boxGameGold }}</span>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="12">
+                    <div class="grid-content">
+                        <span>身份证号??：{{ currvvipList.card }}</span>
+                    </div>
+                </el-col>
+                <el-col :span="12">
+                    <div class="grid-content">
+                        <span>是否租借平板??：boxLottery </span>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="12">
+                    <div class="grid-content">
+                        <span>会员等级：{{ currvvipList.level }}</span>
                     </div>
                 </el-col>
                 <el-col :span="12">
@@ -198,12 +198,12 @@
             <el-row>
                 <el-col :span="12">
                     <div class="grid-content">
-                        <span>注册时间：4234234234</span>
+                        <span>注册时间：{{ currvvipList.registDate }}</span>
                     </div>
                 </el-col>
                 <el-col :span="12">
                     <div class="grid-content">
-                        <span>最近登录时间：4234234234</span>
+                        <span>最近登录时间：{{ currvvipList.loginDate }}</span>
                     </div>
                 </el-col>
             </el-row>
@@ -211,6 +211,63 @@
             <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
           </span>
         </el-dialog>
+
+        <!--  扣除 minusGameGold 金币弹窗 -->
+        <el-dialog
+            title="扣除游戏币"
+            :visible.sync="minusGameGoldVisible"
+            width="35%">
+            <p style="margin-bottom: 10px" v-if="currvvipList">
+                <span>当前游戏币：{{ currvvipList.currvvipList }}</span>
+            </p>
+            <span>扣除游戏币：</span><el-input v-model="minusGameGoldNumber" ></el-input>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="minusGameGoldVisible = false">取 消</el-button>
+            <el-button type="primary" v-tap="{ methods:minusGameGold }"  >确 定</el-button>
+          </span>
+        </el-dialog>
+
+        <!--  赠送  awardGameGold 金币弹窗 -->
+        <el-dialog
+            title="扣除游戏币"
+            :visible.sync="awardGameGoldVisible"
+            width="35%">
+            <p style="margin-bottom: 10px" v-if="currvvipList">
+                <span>当前游戏币：{{ currvvipList.currvvipList }}</span>
+            </p>
+            <span>赠送游戏币：</span><el-input v-model="awardGameGoldNumber" ></el-input>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="awardGameGoldVisible = false">取 消</el-button>
+            <el-button type="primary" v-tap="{ methods:awardGameGold }"  >确 定</el-button>
+          </span>
+        </el-dialog>
+
+        <!--  修改等级  -->
+        <el-dialog
+            title="修改等级"
+            :visible.sync="levelVisible"
+            width="35%">
+            <p style="margin-bottom: 10px" v-if="currvvipList">
+                <span>当前等级：{{ currvvipList.level }}</span>
+            </p>
+            <div>
+                <span>修改为：</span>
+                <el-select class="xtSel" size="small" v-model="levelVal" placeholder="请选择等级">
+                    <el-option
+                        v-for="item in levelOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+            </div>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="levelVisible = false">取 消</el-button>
+            <el-button type="primary" v-tap="{ methods: changeUserLevel }"  >确 定</el-button>
+          </span>
+        </el-dialog>
+
+
     </div>
 </template>
 
@@ -219,8 +276,83 @@
     export default {
         data () {
             return {
+                levelVal: 1,
+                levelVisible: false,
+                levelOptions: [{
+                    label: 'L1,新手',
+                    value: 1
+                },
+                {
+                    label: 'L2,学徒',
+                    value: 2
+                },
+                {
+                    label: 'L3,新秀',
+                    value: 3
+                },
+                {
+                    label: 'L4,新贵',
+                    value: 4
+                },
+                {
+                    label: 'L5,高手',
+                    value: 5
+                },
+                {
+                    label: 'L6,达人',
+                    value: 6
+                },
+                {
+                    label: 'L7,精英',
+                    value: 7
+                },
+                {
+                    label: 'L8,专家',
+                    value: 8
+                },
+                {
+                    label: 'L9,大师',
+                    value: 9
+                },
+                {
+                    label: 'L10,宗师',
+                    value: 10
+                },
+                {
+                    label: 'L11,盟主',
+                    value: 11
+                },
+                {
+                    label: 'L12,传奇',
+                    value: 12
+                },
+                {
+                    label: 'L13,赌王',
+                    value: 13
+                },
+                {
+                    label: 'L14,赌圣',
+                    value: 14
+                },
+                {
+                    label: 'L15,赌神',
+                    value: 15
+                },
+                {
+                    label: 'L16,至尊',
+                    value: 16
+                }
+                ],
+
                 input: '',
                 centerDialogVisible: false,
+
+                minusGameGoldVisible: false,
+                minusGameGoldNumber: '',
+
+                awardGameGoldVisible: false,
+                awardGameGoldNumber: '',
+
                 form: {
                     name: '',
                     desc: ''
@@ -323,11 +455,166 @@
                 AllGold: 0,
                 AllNumber: 0,
 
-                currvvipList: null
+                currvvipList: null,
+                showStopBtn: true,
+                showNoStopBtn: true
             }
         },
-        watch: {},
+        watch: {
+            currvvipList (val) {
+                if (val) {
+                    if (val.shutupStatus === '冻结') {
+                        this.showNoStopBtn = false
+                        this.showStopBtn = true
+                    } else {
+                        // 正常的情况。
+                        this.showNoStopBtn = true
+                        this.showStopBtn = false
+                    }
+                } else {
+                    this.showStopBtn = true
+                    this.showNoStopBtn = true
+                }
+            }
+        },
         methods: {
+            async deleteUser () {
+                let result = await this.$store.dispatch(aTypes.deleteUser, [ Number(this.currvvipList.id)])
+                console.log(result)
+                console.log('删号')
+                if (result && result.success === true) {
+                    this.$message({
+                        message: '删号成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
+                }
+            },
+
+            beforeChangeUserLevel () {
+                // 出现弹窗
+                this.levelVisible = true
+            },
+            async changeUserLevel () {
+                if (!this.levelVal) {
+                    this.$message({
+                        message: '请选择要修改的等级',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+                let result = await this.$store.dispatch(aTypes.changeUserLevel, [ Number(this.currvvipList.id), Number(this.levelVal)])
+                console.log(result)
+                console.log('修改等级')
+                if (result && result.success === true) {
+                    this.$message({
+                        message: '修改等级',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
+                    setTimeout(() => {
+                        this.levelVisible = false
+                    })
+                }
+            },
+
+            beforeAwardGameGold () {
+                // 出现弹窗
+                this.awardGameGoldVisible = true
+            },
+            async awardGameGold () {
+                if (!this.awardGameGoldNumber) {
+                    this.$message({
+                        message: '请输入赠送金币',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+                let result = await this.$store.dispatch(aTypes.awardGameGold, [ Number(this.currvvipList.id), Number(this.awardGameGoldNumber)])
+                console.log(result)
+                console.log('赠送金币')
+                if (result && result.success === true) {
+                    this.$message({
+                        message: '赠送金币',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
+                    setTimeout(() => {
+                        this.awardGameGoldVisible = false
+                    })
+                }
+            },
+
+            beforeMinusGameGold () {
+                // 出现弹窗
+                this.minusGameGoldVisible = true
+            },
+            async minusGameGold () {
+                if (!this.minusGameGoldNumber) {
+                    this.$message({
+                        message: '请输入扣除金币',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+                let result = await this.$store.dispatch(aTypes.minusGameGold, [ Number(this.currvvipList.id), Number(this.minusGameGoldNumber)])
+                console.log(result)
+                console.log('扣除金币')
+                if (result && result.success === true) {
+                    this.$message({
+                        message: '扣除金币',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
+                    setTimeout(() => {
+                        this.minusGameGoldVisible = false
+                    })
+                }
+            },
+
+            moreMess () {
+                // 显示详细信息
+                this.centerDialogVisible = true
+            },
+            async lockUser () {
+                let result = await this.$store.dispatch(aTypes.lockUser, [ Number(this.currvvipList.id)])
+                console.log(result)
+                console.log('封号')
+                if (result && result.success === true) {
+                    this.$message({
+                        message: '封号成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
+                }
+            },
+            async unlockUser () {
+                let result = await this.$store.dispatch(aTypes.unlockUser, [ Number(this.currvvipList.id) ])
+                console.log(result)
+                console.log('解禁')
+                if (result && result.success === true) {
+                    this.$message({
+                        message: '解禁成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
+                }
+            },
             initSearch (showTips = true) {
                 if (showTips) {
                     this.$message({
@@ -341,10 +628,10 @@
                 this.currvvipList = null
             },
             emailListClick (val) {
-                // 列表点击
-                console.log(val)
                 // 处理一些可显示
-                this.currvvipList = val
+                if (val) {
+                    this.currvvipList = val
+                }
             },
             setCurrent (row) {
                 this.$refs.singleTable.setCurrentRow(row)
@@ -365,11 +652,16 @@
                     if (result.pager && result.pager.list) {
                         this.vvipList = result.pager.list
                         this.vvipList.forEach((item) => {
-                            if (item.shutupStatus === 0) {
-                                item.shutupStatus = '正常'
+                            if (item.displayStatus === 0) {
+                                if (item.shutupStatus === 0) {
+                                    item.shutupStatus = '正常'
+                                } else {
+                                    item.shutupStatus = '禁言'
+                                }
                             } else {
-                                item.shutupStatus = '禁言'
+                                item.shutupStatus = '冻结'
                             }
+
                             if (item.status === 0) {
                                 item.status = '正常'
                             } else {
@@ -395,14 +687,25 @@
             let result = await this.$store.dispatch(aTypes.getUserManage)
             console.log(result)
             console.log('会员高级管理列表')
+
+            this.$message({
+                message: 'status状态不对，要调整',
+                type: 'success',
+                duration: 1200
+            })
+
             if (result) {
                 if (result.pager && result.pager.list) {
                     this.vvipList = result.pager.list
                     this.vvipList.forEach((item) => {
-                        if (item.shutupStatus === 0) {
-                            item.shutupStatus = '正常'
+                        if (item.displayStatus === 0) {
+                            if (item.shutupStatus === 0) {
+                                item.shutupStatus = '正常'
+                            } else {
+                                item.shutupStatus = '禁言'
+                            }
                         } else {
-                            item.shutupStatus = '禁言'
+                            item.shutupStatus = '冻结'
                         }
                         if (item.status === 0) {
                             item.status = '正常'
