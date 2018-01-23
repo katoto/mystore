@@ -10,40 +10,40 @@
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeMinusGameGold }" >扣除游戏币</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeAwardGameGold }">游戏币赠送</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeChangeUserLevel }">修改等级</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: resetPass }">重置密码</el-button>
+                    <el-button size="small" :disabled="dealException" type="primary" v-tap="{methods: dealException }" >删除异常</el-button>
+
                     <!--<el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: minusGameGold }" disabled>身份信息查询与修改</el-button>-->
-                    <!--<el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: resetPass }">重置密码</el-button>-->
-                    <!--<el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: dealException }" >删除异常</el-button>-->
                     <!--<el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: modifySafeBoxPwd }">口令修改</el-button>-->
                 </div>
                 <el-form-item label="禁言：">
-                    <el-radio-group :disabled="!currvvipList" v-model="form.resource">
-                        <el-radio label="正常"></el-radio>
-                        <el-radio label="20分钟禁言"></el-radio>
-                        <el-radio label="6小时禁言"></el-radio>
-                        <el-radio label="一天禁言"></el-radio>
+                    <el-radio-group :disabled="!currvvipList" v-model="shutupStatusVal">
+                        <el-radio label="0">正常</el-radio>
+                        <el-radio label="1">20分钟禁言</el-radio>
+                        <el-radio label="2">6小时禁言</el-radio>
+                        <el-radio label="3">一天禁言</el-radio>
                     </el-radio-group>
                 </el-form-item>
+
                 <span class="xtSpan">用户账号：</span>
-                <el-select class="checkID xtSel" size="small" v-model="value" placeholder="请选择">
+                <el-select class="checkID xtSel" size="small" v-model="searchUserVal" placeholder="请选择">
                     <el-option
-                        v-for="item in options2"
+                        v-for="item in searchUserValOption"
                         :key="item.value"
                         :label="item.label"
-                        :value="item.value"
-                        :disabled="item.disabled">
+                        :value="item.value">
                     </el-option>
                 </el-select>
-                <el-select class="checkID xtSel" size="small" v-model="value" placeholder="请选择">
+                <el-select class="checkID xtSel" size="small" v-model="searchUserStyle" placeholder="请选择">
                     <el-option
-                        v-for="item in options2"
+                        v-for="item in searchUserStyleOption"
                         :key="item.value"
                         :label="item.label"
-                        :value="item.value"
-                        :disabled="item.disabled">
+                        :value="item.value">
                     </el-option>
                 </el-select>
-                <el-input size="small" class="xtInp" v-model="input" placeholder="请输入内容"></el-input>
-                <el-button style="margin-left: 18px" size="small" type="primary">查找</el-button>
+                <el-input size="small" class="xtInp" v-model="searchUserInpVal" placeholder="请输入内容"></el-input>
+                <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{methods: searchUser }">查找</el-button>
                 <el-button style="margin-left: 18px" size="small" type="warning" v-tap="{methods: initSearch}">重置</el-button>
             </el-form>
         </header>
@@ -70,8 +70,10 @@
                         width="80">
                     </el-table-column>
                     <el-table-column
-                        prop="status"
-                        label="账目状态">
+                        prop="warningStatus"
+                        label="账目状态"
+                        width="150"
+                    >
                     </el-table-column>
                     <el-table-column
                         prop="gameGold"
@@ -90,7 +92,7 @@
                         label="等级">
                     </el-table-column>
                     <el-table-column
-                        prop="shutupStatus"
+                        prop="status"
                         label="状态">
                     </el-table-column>
                     <el-table-column
@@ -276,6 +278,38 @@
     export default {
         data () {
             return {
+                searchUserInpVal: '',
+                searchUserVal: '0',
+                searchUserValOption: [
+                    {
+                        value: '0',
+                        label: '直属会员'
+                    },
+                    {
+                        value: '1',
+                        label: '非直属会员'
+                    },
+                    {
+                        value: '2',
+                        label: '游客'
+                    },
+                    {
+                        value: '3',
+                        label: '所有会员'
+                    }],
+                searchUserStyle: '0',
+                searchUserStyleOption: [
+                    {
+                        value: '0',
+                        label: '会员账号'
+                    },
+                    {
+                        value: '1',
+                        label: '身份证号'
+                    }],
+
+                shutupStatusVal: '',
+
                 levelVal: 1,
                 levelVisible: false,
                 levelOptions: [{
@@ -385,24 +419,7 @@
                     }]
                 },
                 value7: '',
-                options2: [
-                    {
-                        value: '100万'
-                    },
-                    {
-                        value: '1000万',
-                        disabled: true
-                    },
-                    {
-                        value: '10万'
-                    },
-                    {
-                        value: '1万'
-                    },
-                    {
-                        value: '1000'
-                    }],
-                value: '10万',
+
                 vvipList: [{
                     answer: '-1',
                     bindingName: '',
@@ -457,27 +474,118 @@
 
                 currvvipList: null,
                 showStopBtn: true,
-                showNoStopBtn: true
+                showNoStopBtn: true,
+
+                dealException: true
+
             }
         },
         watch: {
-            currvvipList (val) {
-                if (val) {
-                    if (val.shutupStatus === '冻结') {
-                        this.showNoStopBtn = false
-                        this.showStopBtn = true
-                    } else {
-                        // 正常的情况。
-                        this.showNoStopBtn = true
-                        this.showStopBtn = false
+            async shutupStatusVal (val) {
+                if (this.currvvipList) {
+                    if (this.currvvipList.shutupStatusVal !== val) {
+                        let result = await this.$store.dispatch(aTypes.shutupUser, [Number(this.currvvipList.id), Number(val)])
+                        console.log(result)
+                        console.log('shutupStatusVal')
+                        if (result && result.success === true) {
+                            // 提示有点问题。
+                        //                            this.$message({
+                        //                                message: '禁言成功',
+                        //                                type: 'success',
+                        //                                duration: 1200
+                        //                            })
+                            this.clickPage(1)
+                        }
                     }
-                } else {
+                }
+            },
+            currvvipList (val) {
+                // 显示禁言状态
+                this.shutupStatusVal = val.shutupStatus.toString()
+                if (val.shutupStatus.toString() === '0') {
+                    this.dealException = true
+                }
+                if (val.status === '冻结') {
+                    this.showNoStopBtn = false
                     this.showStopBtn = true
+                } else {
+                    // 正常的情况。
                     this.showNoStopBtn = true
+                    this.showStopBtn = false
                 }
             }
         },
         methods: {
+            async dealException () {
+                let result = await this.$store.dispatch(aTypes.dealException, [ Number(this.currvvipList.id)])
+                console.log(result)
+                console.log('解除异常')
+                if (result && result.success === true) {
+                    this.$message({
+                        message: '解除异常成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
+                }
+            },
+            async resetPass () {
+                let result = await this.$store.dispatch(aTypes.resetUserPassword, [ Number(this.currvvipList.id)])
+                console.log(result)
+                console.log('密码重置')
+                if (result && result.success === true) {
+                    this.$message({
+                        message: '密码重置成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                //                    this.clickPage(1);
+                //                    this.initSearch(false)
+                }
+            },
+            async searchUser () {
+            //                if( !this.searchUserInpVal ){
+            //                    this.$message({
+            //                        message: '请输入查询内容',
+            //                        type: 'error',
+            //                        duration: 1200
+            //                    })
+            //                    return false;
+            //                }
+
+                let result = await this.$store.dispatch(aTypes.searchUser, [ this.searchUserInpVal, 0, Number(this.searchUserVal) ])
+                console.log(result)
+                console.log('查询内容')
+                if (result) {
+                    this.$message({
+                        message: '查询成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    if (result.results) {
+                        this.vvipList = result.results
+                        this.vvipList.forEach((item) => {
+                            if (item.warningStatus === 0) {
+                                item.warningStatus = '正常'
+                            } else {
+                                item.warningStatus = '异常:存在' + item.warningStatus + '不明数额'
+                            }
+                            if (item.status === 0) {
+                                console.log(item.shutupStatus.toString())
+                                console.log('=============')
+                                if (item.shutupStatus.toString() === '0') {
+                                    item.status = '正常'
+                                } else {
+                                    item.status = '禁言'
+                                }
+                            } else {
+                                item.status = '冻结'
+                            }
+                        })
+                    }
+                }
+            },
             async deleteUser () {
                 let result = await this.$store.dispatch(aTypes.deleteUser, [ Number(this.currvvipList.id)])
                 console.log(result)
@@ -626,6 +734,12 @@
                 // 去除 表格选中
                 this.$refs.singleTable.setCurrentRow('')
                 this.currvvipList = null
+
+                this.searchUserInpVal = ''
+                this.clickPage(1)
+                this.showNoStopBtn = true
+                this.showStopBtn = true
+                this.dealException = true
             },
             emailListClick (val) {
                 // 处理一些可显示
@@ -652,20 +766,19 @@
                     if (result.pager && result.pager.list) {
                         this.vvipList = result.pager.list
                         this.vvipList.forEach((item) => {
-                            if (item.displayStatus === 0) {
-                                if (item.shutupStatus === 0) {
-                                    item.shutupStatus = '正常'
+                            if (item.warningStatus === 0) {
+                                item.warningStatus = '正常'
+                            } else {
+                                item.warningStatus = '异常:存在' + item.warningStatus + '不明数额'
+                            }
+                            if (item.status === 0) {
+                                if (item.shutupStatus.toString() === '0') {
+                                    item.status = '正常'
                                 } else {
-                                    item.shutupStatus = '禁言'
+                                    item.status = '禁言'
                                 }
                             } else {
-                                item.shutupStatus = '冻结'
-                            }
-
-                            if (item.status === 0) {
-                                item.status = '正常'
-                            } else {
-                                item.status = '异常'
+                                item.status = '冻结'
                             }
                         })
                     }
@@ -687,30 +800,23 @@
             let result = await this.$store.dispatch(aTypes.getUserManage)
             console.log(result)
             console.log('会员高级管理列表')
-
-            this.$message({
-                message: 'status状态不对，要调整',
-                type: 'success',
-                duration: 1200
-            })
-
             if (result) {
                 if (result.pager && result.pager.list) {
                     this.vvipList = result.pager.list
                     this.vvipList.forEach((item) => {
-                        if (item.displayStatus === 0) {
-                            if (item.shutupStatus === 0) {
-                                item.shutupStatus = '正常'
-                            } else {
-                                item.shutupStatus = '禁言'
-                            }
+                        if (item.warningStatus === 0) {
+                            item.warningStatus = '正常'
                         } else {
-                            item.shutupStatus = '冻结'
+                            item.warningStatus = '异常:存在' + item.warningStatus + '不明数额'
                         }
                         if (item.status === 0) {
-                            item.status = '正常'
+                            if (item.shutupStatus.toString() === '0') {
+                                item.status = '正常'
+                            } else {
+                                item.status = '禁言'
+                            }
                         } else {
-                            item.status = '异常'
+                            item.status = '冻结'
                         }
                     })
                 }
@@ -756,7 +862,7 @@
         margin-left: 10px;
     }
     header .xtInp{
-        max-width: 120px ;
+        max-width: 150px ;
         float: left;
         margin-left: 10px;
     }
@@ -765,7 +871,7 @@
     }
 
     .checkID{
-        max-width: 120px;
+        max-width: 150px;
     }
     .el-date-editor--daterange.el-input, .el-date-editor--daterange.el-input__inner, .el-date-editor--timerange.el-input, .el-date-editor--timerange.el-input__inner{
         width: 95%;
