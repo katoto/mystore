@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 750px" class="l-flex-row">
+    <div style="height: 770px" class="l-flex-row">
         <div class="l-flex-1 l-flex-column">
             <div class=" l-relative" style="height: 300px">
                 <div class="l-full" style="padding: 10px">
@@ -68,7 +68,7 @@
                     <section style="margin-bottom: 10px">
                         <el-table
                             :data="tableData3"
-                            height="300"
+                            height="320"
                             size="small"
                             border
                             style="width: 100%">
@@ -115,7 +115,7 @@
                         <section style="margin: 10px 0">
                             <el-table
                                 :data="tableData3"
-                                height="300"
+                                height="260"
                                 size="small"
                                 border
                                 style="width: 100%">
@@ -174,7 +174,7 @@
                         <section style="margin: 10px 0">
                             <el-table
                                 :data="tableData3"
-                                height="300"
+                                height="250"
                                 size="small"
                                 border
                                 style="width: 100%">
