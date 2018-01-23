@@ -133,7 +133,7 @@
                 </el-col>
                 <el-col :span="12">
                     <div class="grid-content">
-                        <span>冻结状态???：{{ currvvipList.shutupStatus }}</span>
+                        <span>冻结状态：{{ currvvipList.status }}</span>
                     </div>
                 </el-col>
             </el-row>
@@ -193,7 +193,7 @@
                 </el-col>
                 <el-col :span="12">
                     <div class="grid-content">
-                        <span>禁言状态：4234234234</span>
+                        <span>禁言状态：{{ isShutUpName }}</span>
                     </div>
                 </el-col>
             </el-row>
@@ -418,7 +418,6 @@
                         }
                     }]
                 },
-                value7: '',
 
                 vvipList: [{
                     answer: '-1',
@@ -476,12 +475,14 @@
                 showStopBtn: true,
                 showNoStopBtn: true,
 
-                dealException: true
+                dealException: true,
+
+                isShutUpName:'正常',
 
             }
         },
         watch: {
-            async shutupStatusVal (val) {
+            async shutupStatusVal ( val ) {
                 if (this.currvvipList) {
                     if (this.currvvipList.shutupStatusVal !== val) {
                         let result = await this.$store.dispatch(aTypes.shutupUser, [Number(this.currvvipList.id), Number(val)])
@@ -489,11 +490,25 @@
                         console.log('shutupStatusVal')
                         if (result && result.success === true) {
                             // 提示有点问题。
-                        //                            this.$message({
-                        //                                message: '禁言成功',
-                        //                                type: 'success',
-                        //                                duration: 1200
-                        //                            })
+                            switch ( val ){
+                                case '0':
+                                    this.isShutUpName = '正常';
+                                    ;break;
+                                case '1':
+                                    this.isShutUpName = '20分钟禁言';
+                                    ;break;
+                                case '2':
+                                    this.isShutUpName = '6小时禁言';
+                                    ;break;
+                                case '3':
+                                    this.isShutUpName = '一天禁言';
+                                    ;break;
+                            }
+//                                this.$message({
+//                                    message: '禁言成功',
+//                                    type: 'success',
+//                                    duration: 1200
+//                                })
                             this.clickPage(1)
                         }
                     }
@@ -502,6 +517,22 @@
             currvvipList (val) {
                 // 显示禁言状态
                 this.shutupStatusVal = val.shutupStatus.toString()
+
+                switch ( val.shutupStatus.toString() ){
+                    case '0':
+                      this.isShutUpName = '正常';
+                      ;break;
+                    case '1':
+                        this.isShutUpName = '20分钟禁言';
+                      ;break;
+                    case '2':
+                        this.isShutUpName = '6小时禁言';
+                      ;break;
+                    case '3':
+                        this.isShutUpName = '一天禁言';
+                        ;break;
+                }
+
                 if (val.shutupStatus.toString() === '0') {
                     this.dealException = true
                 }
