@@ -10,9 +10,10 @@
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeMinusGameGold }" >扣除游戏币</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeAwardGameGold }">游戏币赠送</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeChangeUserLevel }">修改等级</el-button>
+                    <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: resetPass }">重置密码</el-button>
+                    <el-button size="small" :disabled="dealException" type="primary" v-tap="{methods: dealException }" >删除异常</el-button>
+
                     <!--<el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: minusGameGold }" disabled>身份信息查询与修改</el-button>-->
-                    <!--<el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: resetPass }">重置密码</el-button>-->
-                    <!--<el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: dealException }" >删除异常</el-button>-->
                     <!--<el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: modifySafeBoxPwd }">口令修改</el-button>-->
                 </div>
                 <el-form-item label="禁言：">
@@ -277,38 +278,37 @@
     export default {
         data () {
             return {
-                searchUserInpVal:'',
-                searchUserVal:'0',
+                searchUserInpVal: '',
+                searchUserVal: '0',
                 searchUserValOption: [
                     {
                         value: '0',
-                        label:'直属会员'
+                        label: '直属会员'
                     },
                     {
                         value: '1',
-                        label:'非直属会员'
+                        label: '非直属会员'
                     },
                     {
                         value: '2',
-                        label:'游客'
+                        label: '游客'
                     },
                     {
                         value: '3',
-                        label:'所有会员'
+                        label: '所有会员'
                     }],
-                searchUserStyle:'0',
+                searchUserStyle: '0',
                 searchUserStyleOption: [
                     {
                         value: '0',
-                        label:'会员账号'
+                        label: '会员账号'
                     },
                     {
                         value: '1',
-                        label:'身份证号'
+                        label: '身份证号'
                     }],
 
-
-                shutupStatusVal:'',
+                shutupStatusVal: '',
 
                 levelVal: 1,
                 levelVisible: false,
@@ -474,31 +474,37 @@
 
                 currvvipList: null,
                 showStopBtn: true,
-                showNoStopBtn: true
+                showNoStopBtn: true,
+
+                dealException: true
+
             }
         },
         watch: {
-            async shutupStatusVal( val ){
-                if( this.currvvipList ){
-                    if( this.currvvipList.shutupStatusVal !== val ){
-                        let result = await this.$store.dispatch(aTypes.shutupUser, [Number(this.currvvipList.id),Number( val )]  )
+            async shutupStatusVal (val) {
+                if (this.currvvipList) {
+                    if (this.currvvipList.shutupStatusVal !== val) {
+                        let result = await this.$store.dispatch(aTypes.shutupUser, [Number(this.currvvipList.id), Number(val)])
                         console.log(result)
                         console.log('shutupStatusVal')
                         if (result && result.success === true) {
-                          // 提示有点问题。
-//                            this.$message({
-//                                message: '禁言成功',
-//                                type: 'success',
-//                                duration: 1200
-//                            })
+                            // 提示有点问题。
+                        //                            this.$message({
+                        //                                message: '禁言成功',
+                        //                                type: 'success',
+                        //                                duration: 1200
+                        //                            })
                             this.clickPage(1)
                         }
                     }
                 }
             },
             currvvipList (val) {
-              // 显示禁言状态
-                this.shutupStatusVal = val.shutupStatus.toString();
+                // 显示禁言状态
+                this.shutupStatusVal = val.shutupStatus.toString()
+                if (val.shutupStatus.toString() === '0') {
+                    this.dealException = true
+                }
                 if (val.status === '冻结') {
                     this.showNoStopBtn = false
                     this.showStopBtn = true
@@ -510,40 +516,67 @@
             }
         },
         methods: {
-            async searchUser(){
-
-//                if( !this.searchUserInpVal ){
-//                    this.$message({
-//                        message: '请输入查询内容',
-//                        type: 'error',
-//                        duration: 1200
-//                    })
-//                    return false;
-//                }
-
-                let result = await this.$store.dispatch(aTypes.searchUser, [ this.searchUserInpVal , 0 ,Number( this.searchUserVal ) ])
+            async dealException () {
+                let result = await this.$store.dispatch(aTypes.dealException, [ Number(this.currvvipList.id)])
                 console.log(result)
-                console.log('查询内容');
+                console.log('解除异常')
+                if (result && result.success === true) {
+                    this.$message({
+                        message: '解除异常成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    this.clickPage(1)
+                    this.initSearch(false)
+                }
+            },
+            async resetPass () {
+                let result = await this.$store.dispatch(aTypes.resetUserPassword, [ Number(this.currvvipList.id)])
+                console.log(result)
+                console.log('密码重置')
+                if (result && result.success === true) {
+                    this.$message({
+                        message: '密码重置成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                //                    this.clickPage(1);
+                //                    this.initSearch(false)
+                }
+            },
+            async searchUser () {
+            //                if( !this.searchUserInpVal ){
+            //                    this.$message({
+            //                        message: '请输入查询内容',
+            //                        type: 'error',
+            //                        duration: 1200
+            //                    })
+            //                    return false;
+            //                }
+
+                let result = await this.$store.dispatch(aTypes.searchUser, [ this.searchUserInpVal, 0, Number(this.searchUserVal) ])
+                console.log(result)
+                console.log('查询内容')
                 if (result) {
                     this.$message({
                         message: '查询成功',
                         type: 'success',
                         duration: 1200
                     })
-                    if (result.results ) {
+                    if (result.results) {
                         this.vvipList = result.results
                         this.vvipList.forEach((item) => {
                             if (item.warningStatus === 0) {
                                 item.warningStatus = '正常'
                             } else {
-                                item.warningStatus = '异常:存在'+item.warningStatus+'不明数额'
+                                item.warningStatus = '异常:存在' + item.warningStatus + '不明数额'
                             }
                             if (item.status === 0) {
-                                console.log( item.shutupStatus.toString() )
-                                console.log( '=============')
-                                if( item.shutupStatus.toString() === '0' ){
+                                console.log(item.shutupStatus.toString())
+                                console.log('=============')
+                                if (item.shutupStatus.toString() === '0') {
                                     item.status = '正常'
-                                }else{
+                                } else {
                                     item.status = '禁言'
                                 }
                             } else {
@@ -600,7 +633,7 @@
 
             beforeAwardGameGold () {
                 // 出现弹窗
-                this.awardGameGoldVisible = true;
+                this.awardGameGoldVisible = true
             },
             async awardGameGold () {
                 if (!this.awardGameGoldNumber) {
@@ -700,12 +733,13 @@
                 }
                 // 去除 表格选中
                 this.$refs.singleTable.setCurrentRow('')
-                this.currvvipList = null;
+                this.currvvipList = null
 
-                this.searchUserInpVal = '';
+                this.searchUserInpVal = ''
                 this.clickPage(1)
-                this.showNoStopBtn = true;
+                this.showNoStopBtn = true
                 this.showStopBtn = true
+                this.dealException = true
             },
             emailListClick (val) {
                 // 处理一些可显示
@@ -735,12 +769,12 @@
                             if (item.warningStatus === 0) {
                                 item.warningStatus = '正常'
                             } else {
-                                item.warningStatus = '异常:存在'+item.warningStatus+'不明数额'
+                                item.warningStatus = '异常:存在' + item.warningStatus + '不明数额'
                             }
                             if (item.status === 0) {
-                                if( item.shutupStatus.toString() === '0' ){
+                                if (item.shutupStatus.toString() === '0') {
                                     item.status = '正常'
-                                }else{
+                                } else {
                                     item.status = '禁言'
                                 }
                             } else {
@@ -755,30 +789,30 @@
                         this.AllNumber = result.number
                     }
                     // 处理页码
-                    this.totalCount = result.pager.totalCount;
-                    this.pageNumber = result.pager.pageNumber;
+                    this.totalCount = result.pager.totalCount
+                    this.pageNumber = result.pager.pageNumber
                     this.pageSize = result.pager.pageSize
                 }
             }
         },
         computed: {},
         async mounted () {
-            let result = await this.$store.dispatch(aTypes.getUserManage);
-            console.log(result);
-            console.log('会员高级管理列表');
+            let result = await this.$store.dispatch(aTypes.getUserManage)
+            console.log(result)
+            console.log('会员高级管理列表')
             if (result) {
                 if (result.pager && result.pager.list) {
-                    this.vvipList = result.pager.list;
+                    this.vvipList = result.pager.list
                     this.vvipList.forEach((item) => {
                         if (item.warningStatus === 0) {
                             item.warningStatus = '正常'
                         } else {
-                            item.warningStatus = '异常:存在'+item.warningStatus+'不明数额'
+                            item.warningStatus = '异常:存在' + item.warningStatus + '不明数额'
                         }
                         if (item.status === 0) {
-                            if( item.shutupStatus.toString() === '0' ){
+                            if (item.shutupStatus.toString() === '0') {
                                 item.status = '正常'
-                            }else{
+                            } else {
                                 item.status = '禁言'
                             }
                         } else {
@@ -793,9 +827,9 @@
                     this.AllNumber = result.number
                 }
                 // 处理页码
-                this.totalCount = result.pager.totalCount;
-                this.pageNumber = result.pager.pageNumber;
-                this.pageSize = result.pager.pageSize;
+                this.totalCount = result.pager.totalCount
+                this.pageNumber = result.pager.pageNumber
+                this.pageSize = result.pager.pageSize
             }
         }
     }
