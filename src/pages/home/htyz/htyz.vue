@@ -6,7 +6,7 @@
             <el-tab-pane label="游戏公告管理" name="gameNoticeGL"></el-tab-pane>
             <el-tab-pane label="邮件系统" name="emailXT"></el-tab-pane>
             <el-tab-pane label="会员高级管理" name="vvipGL"></el-tab-pane>
-            <el-tab-pane label="营业管理" name="businessGL"></el-tab-pane>
+            <el-tab-pane label="营业管理" name="businessGL" disabled></el-tab-pane>
 
             <!--<el-tab-pane label="活动管理" name="actGL"></el-tab-pane>-->
             <!--<el-tab-pane label="数据备份" name="dataBackup"></el-tab-pane>-->
