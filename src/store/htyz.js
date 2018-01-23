@@ -68,6 +68,16 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
 
+    // 新建公告， 更新大厅状态
+    async updateDTStatus ({dispatch, commit}, {content = '', statusIndex = 0, time = 0}) {
+        let args = [{'content': '', 'cooperateEndDate': '——————', 'cooperateMode': 0, 'cooperateStartDate': '——————', 'statusIndex': 0, 'time': 0}]
+        const argsData = await dispatch('invoke', {
+            method: 'systemConfigService/updateGameStatus',
+            args
+        })
+        return argsData[0]
+    },
+
     //  获取幸运六师桌子列表
     async getDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
