@@ -499,7 +499,7 @@
             currvvipList (val) {
               // 显示禁言状态
                 this.shutupStatusVal = val.shutupStatus.toString();
-                if (val.status === '异常') {
+                if (val.status === '冻结') {
                     this.showNoStopBtn = false
                     this.showStopBtn = true
                 } else {
@@ -511,14 +511,16 @@
         },
         methods: {
             async searchUser(){
-                if( !this.searchUserInpVal ){
-                    this.$message({
-                        message: '请输入查询内容',
-                        type: 'error',
-                        duration: 1200
-                    })
-                    return false;
-                }
+
+//                if( !this.searchUserInpVal ){
+//                    this.$message({
+//                        message: '请输入查询内容',
+//                        type: 'error',
+//                        duration: 1200
+//                    })
+//                    return false;
+//                }
+
                 let result = await this.$store.dispatch(aTypes.searchUser, [ this.searchUserInpVal , 0 ,Number( this.searchUserVal ) ])
                 console.log(result)
                 console.log('查询内容');
@@ -537,9 +539,15 @@
                                 item.warningStatus = '异常:存在'+item.warningStatus+'不明数额'
                             }
                             if (item.status === 0) {
-                                item.status = '正常'
+                                console.log( item.shutupStatus.toString() )
+                                console.log( '=============')
+                                if( item.shutupStatus.toString() === '0' ){
+                                    item.status = '正常'
+                                }else{
+                                    item.status = '禁言'
+                                }
                             } else {
-                                item.status = '异常'
+                                item.status = '冻结'
                             }
                         })
                     }
@@ -730,9 +738,13 @@
                                 item.warningStatus = '异常:存在'+item.warningStatus+'不明数额'
                             }
                             if (item.status === 0) {
-                                item.status = '正常'
+                                if( item.shutupStatus.toString() === '0' ){
+                                    item.status = '正常'
+                                }else{
+                                    item.status = '禁言'
+                                }
                             } else {
-                                item.status = '异常'
+                                item.status = '冻结'
                             }
                         })
                     }
@@ -743,20 +755,20 @@
                         this.AllNumber = result.number
                     }
                     // 处理页码
-                    this.totalCount = result.pager.totalCount
-                    this.pageNumber = result.pager.pageNumber
+                    this.totalCount = result.pager.totalCount;
+                    this.pageNumber = result.pager.pageNumber;
                     this.pageSize = result.pager.pageSize
                 }
             }
         },
         computed: {},
         async mounted () {
-            let result = await this.$store.dispatch(aTypes.getUserManage)
-            console.log(result)
-            console.log('会员高级管理列表')
+            let result = await this.$store.dispatch(aTypes.getUserManage);
+            console.log(result);
+            console.log('会员高级管理列表');
             if (result) {
                 if (result.pager && result.pager.list) {
-                    this.vvipList = result.pager.list
+                    this.vvipList = result.pager.list;
                     this.vvipList.forEach((item) => {
                         if (item.warningStatus === 0) {
                             item.warningStatus = '正常'
@@ -764,9 +776,13 @@
                             item.warningStatus = '异常:存在'+item.warningStatus+'不明数额'
                         }
                         if (item.status === 0) {
-                            item.status = '正常'
+                            if( item.shutupStatus.toString() === '0' ){
+                                item.status = '正常'
+                            }else{
+                                item.status = '禁言'
+                            }
                         } else {
-                            item.status = '异常'
+                            item.status = '冻结'
                         }
                     })
                 }
@@ -777,9 +793,9 @@
                     this.AllNumber = result.number
                 }
                 // 处理页码
-                this.totalCount = result.pager.totalCount
-                this.pageNumber = result.pager.pageNumber
-                this.pageSize = result.pager.pageSize
+                this.totalCount = result.pager.totalCount;
+                this.pageNumber = result.pager.pageNumber;
+                this.pageSize = result.pager.pageSize;
             }
         }
     }
