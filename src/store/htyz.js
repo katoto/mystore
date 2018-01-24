@@ -68,7 +68,6 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
 
-
     async getDeskList ({dispatch, commit}, method) {
         const argsData = await dispatch('invoke', {
             method,

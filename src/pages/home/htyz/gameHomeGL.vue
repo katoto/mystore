@@ -284,7 +284,7 @@
                         getDesk: 'waterDeskService/getWaterDeskList',
                         addDesk: 'deskService/addDesk'
                     },
-                     {
+                    {
                         label: '千炮捕鱼',
                         getDesk: 'deskService/getThousandFishDeskList',
                         addDesk: 'deskService/addDesk'
