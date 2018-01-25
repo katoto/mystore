@@ -43,14 +43,15 @@
                             更新大厅状态
                         </el-button>
                     </div>
-                    <el-select class="" size="small" v-model="value" placeholder="请选择查询类型">
+                    <el-select class="" size="small" v-model="desk" placeholder="请选择查询类型">
                         <el-option
-                            v-for="item in options2"
-                            :key="item.value"
+                            v-for="item in desks"
+                            :key="item.getDesk"
                             :label="item.label"
-                            :value="item.value"
-                            :disabled="item.disabled">
+                            :value="item.getDesk">
                         </el-option>
+
+
                     </el-select>
                 </div>
             </div>
@@ -59,7 +60,7 @@
 
                     <p style="border-top: 1px solid #eee;padding: 7px 0">【新手练习厅】已开启1桌，还可以开启0桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启1桌，还可以开启0桌 </p>
                     <header style="padding: 8px 0;border-top: 1px solid #ddd">
-                        <el-button size="small" type="primary">刷新</el-button>
+                        <el-button size="small" type="primary" @click="updateDesk">刷新</el-button>
                         <el-button style="margin-left: 18px" size="small" disabled type="primary">新增桌</el-button>
                         <el-button style="margin-left: 18px" size="small">参数设置</el-button>
                         <el-button style="margin-left: 18px" size="small" type="danger">删除桌</el-button>
@@ -67,13 +68,13 @@
                     </header>
                     <section style="margin-bottom: 10px">
                         <el-table
-                            :data="tableData3"
-                            height="320"
+                            :data="deskList"
+                            height="300"
                             size="small"
                             border
                             style="width: 100%">
                             <el-table-column
-                                prop="date"
+                                prop="id"
                                 label="桌ID"
                                 width="220">
                             </el-table-column>
@@ -83,15 +84,15 @@
                                 width="200">
                             </el-table-column>
                             <el-table-column
-                                prop="address"
+                                prop="roomId"
                                 label="所属房间">
                             </el-table-column>
                             <el-table-column
-                                prop="address"
+                                prop="onlineNumber"
                                 label="在线人数">
                             </el-table-column>
                             <el-table-column
-                                prop="address"
+                                prop="state"
                                 label="桌状态">
                             </el-table-column>
                         </el-table>
@@ -240,6 +241,56 @@
                     timeOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
                     content: ''
                 },
+                desk: 'deskService/getDeskList',
+                deskList: null,
+                desks: [
+                    {
+                        label: '幸运六师',
+                        getDesk: 'deskService/getDeskList',
+                        addDesk: 'deskService/addDesk'
+                    },
+                    {
+                        label: '摇钱树',
+                        getDesk: 'deskService/getFishDeskList',
+                        addDesk: 'deskService/addDesk'
+                    },
+                    {
+                        label: '单挑',
+                        getDesk: 'deskService/getCardDeskList',
+                        addDesk: 'deskService/addDesk'
+                    },
+                    {
+                        label: '万炮捕鱼',
+                        getDesk: 'deskService/getBulletFishDeskList',
+                        addDesk: 'deskService/addDesk'
+                    },
+                    {
+                        label: '美人鱼',
+                        getDesk: 'deskService/getMermaidDeskList',
+                        addDesk: 'deskService/addDesk'
+                    },
+                    {
+                        label: '缺一门',
+                        getDesk: 'deskService/getLackDeskList',
+                        addDesk: 'deskService/addDesk'
+                    },
+                    {
+                        label: '欢乐牛牛',
+                        getDesk: 'deskService/getJoyDeskList',
+                        addDesk: 'deskService/addDesk'
+                    },
+                    {
+                        label: '水浒传',
+                        getDesk: 'waterDeskService/getWaterDeskList',
+                        addDesk: 'deskService/addDesk'
+                    },
+                    {
+                        label: '千炮捕鱼',
+                        getDesk: 'deskService/getThousandFishDeskList',
+                        addDesk: 'deskService/addDesk'
+                    }
+
+                ],
                 pickerOptions2: {
                     shortcuts: [{
                         text: '最近一周',
@@ -317,10 +368,17 @@
                 }]
             }
         },
-        watch: {},
+        watch: {
+            async desk (desk) {
+                this.updateDesk()
+            }
+        },
         methods: {
             onSubmit () {
                 console.log('submit!')
+            },
+            async updateDesk () {
+                this.deskList = await this.$store.dispatch(aTypes.getDeskList, this.desk)
             },
             updateDTStatus () {
                 if (this.form.hlabel === '0') {
@@ -349,6 +407,7 @@
         },
         computed: {},
         mounted () {
+            this.updateDesk()
         }
     }
 </script>
