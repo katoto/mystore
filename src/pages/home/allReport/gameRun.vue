@@ -97,12 +97,12 @@
                     {
                         label: '直属推广员',
                         value: 0,
-                        disabled:true
+                        disabled: true
                     },
                     {
                         label: '直属会员',
                         value: 1,
-                        disabled:true
+                        disabled: true
                     },
                     {
                         label: '总计',
@@ -150,18 +150,18 @@
                 gameStyleVal: -1,
 
                 gameList: [{
-                    mainSumYaGold:0,
-                    diceResult:0,
-                    mainSumDeGold:0,
-                    allGain:0,
-                    allGet:0,
-                    allPlay:0,
-                    mainResult:0,
-                    date:"2017-12-01",
-                    sumRobotYa:0,
-                    diceSumDeGold:0,
-                    sumRobotDe:0,
-                    diceSumYaGold:0
+                    mainSumYaGold: 0,
+                    diceResult: 0,
+                    mainSumDeGold: 0,
+                    allGain: 0,
+                    allGet: 0,
+                    allPlay: 0,
+                    mainResult: 0,
+                    date: '2017-12-01',
+                    sumRobotYa: 0,
+                    diceSumDeGold: 0,
+                    sumRobotDe: 0,
+                    diceSumYaGold: 0
                 }]
             }
         },
@@ -200,7 +200,7 @@
                     })
                     return false
                 }
-                let gameRunList = await this.$store.dispatch(aTypes.getRunStatistics, [this.selTime, Number( this.gameStyleVal ) , -1 ])
+                let gameRunList = await this.$store.dispatch(aTypes.getRunStatistics, [this.selTime, Number(this.gameStyleVal), -1 ])
                 console.log(gameRunList)
                 console.log('=========gameRunList========')
                 if (gameRunList && gameRunList.length >= 0) {
@@ -223,18 +223,18 @@
                 }
                 return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
                     switch (a) {
-                        case 'yyyy':
-                            return tf(t.getFullYear())
-                        case 'MM':
-                            return tf(t.getMonth() + 1)
-                        case 'mm':
-                            return tf(t.getMinutes())
-                        case 'dd':
-                            return tf(t.getDate())
-                        case 'HH':
-                            return tf(t.getHours())
-                        case 'ss':
-                            return tf(t.getSeconds())
+                    case 'yyyy':
+                        return tf(t.getFullYear())
+                    case 'MM':
+                        return tf(t.getMonth() + 1)
+                    case 'mm':
+                        return tf(t.getMinutes())
+                    case 'dd':
+                        return tf(t.getDate())
+                    case 'HH':
+                        return tf(t.getHours())
+                    case 'ss':
+                        return tf(t.getSeconds())
                     }
                 })
             }
@@ -243,7 +243,7 @@
         async mounted () {
             // 获取 monthAccount 列表
             this.selTime = this.format(new Date())
-            let gameRunList = await this.$store.dispatch(aTypes.getRunStatistics, [this.format(new Date()), -1 , -1])
+            let gameRunList = await this.$store.dispatch(aTypes.getRunStatistics, [this.format(new Date()), -1, -1])
             console.log(gameRunList)
             console.log('=========gameRunList========')
             if (gameRunList && gameRunList.length >= 0) {
