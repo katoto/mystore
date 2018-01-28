@@ -147,19 +147,17 @@
                         return time.getTime() > Date.now()
                     }
                 },
-
-                options2: [
-                    {
-                        value: '直属会员'
-                    },
-                    {
-                        value: '直属推广员'
-                    },
-                    {
-                        value: '所有'
-                    }],
-                value: '所有',
-
+                //                options2: [
+                //                    {
+                //                        value: '直属会员'
+                //                    },
+                //                    {
+                //                        value: '直属推广员'
+                //                    },
+                //                    {
+                //                        value: '所有'
+                //                    }],
+                //                value: '所有',
                 businessList: [{
                     'startTime': '2018-01-07 18:52:49',
                     'id': 4,
