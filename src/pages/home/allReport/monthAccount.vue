@@ -13,7 +13,7 @@
                 </el-date-picker>
             </div>
             <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
-            <el-button style="margin-left: 18px" size="small" type="danger" v-tap="{ methods:delMsg }">删除</el-button>
+            <el-button style="margin-left: 18px" size="small" type="danger" v-tap="{ methods:beforeDelMsg }">删除</el-button>
             <el-button style="margin-left: 18px" size="small" type="success" disabled>导出</el-button>
         </header>
         <section id="dailyAccP">
@@ -63,6 +63,20 @@
                 </el-table-column>
             </el-table>
         </section>
+
+
+        <!-- 删除确认弹窗 -->
+        <el-dialog
+            title="月份账目删除"
+            :visible.sync="dialogVisible"
+            width="35%">
+            <span>确定删除该月份账目( {{ selTime }}月 )账单？</span>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" v-tap="{ methods: delMsg }"  >确 定</el-button>
+          </span>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -71,6 +85,8 @@
     export default {
         data () {
             return {
+                dialogVisible: false,
+
                 selTime: '',
                 pickerSet: {
                     disabledDate (time) {
@@ -90,9 +106,31 @@
                 }]
             }
         },
-        watch: {},
         methods: {
-            async getMsg () {
+            beforeDelMsg () {
+                this.dialogVisible = true
+            },
+            async delMsg () {
+                let monthAccountList = await this.$store.dispatch(aTypes.deleteMonthAccount, [this.selTime])
+                console.log(monthAccountList)
+                console.log('========= delMsg ========')
+                if (monthAccountList && monthAccountList.success === true) {
+                    this.$message({
+                        message: '月份账单已删除',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    setTimeout(() => {
+                        this.dialogVisible = false
+                    }, 1200)
+
+                    /* 是否更新列表 ？ */
+                    this.getMsg(false)
+                } else {
+                    console.error('monthAccountList error at dailyRecharge')
+                }
+            },
+            async getMsg (showTips = true) {
                 if (!this.selTime) {
                     this.$message({
                         message: '请选择查询月份',
@@ -106,11 +144,13 @@
                 console.log('=========monthAccountList========')
                 if (monthAccountList && monthAccountList.length >= 0) {
                     this.monthList = monthAccountList
-                    this.$message({
-                        message: '列表已更新',
-                        type: 'success',
-                        duration: 1200
-                    })
+                    if (showTips) {
+                        this.$message({
+                            message: '列表已更新',
+                            type: 'success',
+                            duration: 1200
+                        })
+                    }
                 } else {
                     console.error('monthAccountList error at dailyRecharge')
                 }
@@ -137,7 +177,6 @@
                     }
                 })
             }
-
         },
         computed: {},
         async mounted () {
