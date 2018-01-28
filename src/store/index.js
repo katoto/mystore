@@ -11,6 +11,7 @@ import xtManager from './xtManager'
 import tgyManager from './tgyManager'
 import ybyz from './ybyz'
 import htyz from './htyz'
+import allReport from './allReport'
 import {wait} from '../common/util'
 
 Vue.use(Vuex)
@@ -193,6 +194,6 @@ export default () => new Vuex.Store({
     actions,
     mutations,
     modules: {
-        home, user, xtManager, tgyManager, ybyz, htyz
+        home, user, xtManager, tgyManager, ybyz, htyz, allReport
     }
 })

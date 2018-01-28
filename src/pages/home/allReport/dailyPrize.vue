@@ -7,25 +7,25 @@
                     align="right"
                     size="small"
                     type="date"
+                    value-format="yyyy-MM-dd"
                     placeholder="选择查询日期"
                     :picker-options="pickerSet">
                 </el-date-picker>
             </div>
             <span class="dailyCX">查询类型：</span>
-            <el-select class="checkID userSel" size="small" v-model="value" placeholder="请选择查询类型">
+            <el-select class="checkID userSel" size="small" v-model="checkPrizeVal" placeholder="请选择查询类型">
                 <el-option
-                    v-for="item in options2"
+                    v-for="item in dailyPrizeOption"
                     :key="item.value"
                     :label="item.label"
-                    :value="item.value"
-                    :disabled="item.disabled">
+                    :value="item.value">
                 </el-option>
             </el-select>
-            <el-button style="margin-left: 18px" size="small" type="primary">查询</el-button>
+            <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
         </header>
         <section>
             <el-table
-                :data="tableData3"
+                :data="dailyList"
                 height="350"
                 size="small"
                 border
@@ -36,44 +36,36 @@
                     width="220">
                 </el-table-column>
                 <el-table-column
-                    prop="name"
+                    prop="authority"
                     label="权限"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="operator"
                     label="操作员账号">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="user"
                     label="会员账号">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="gameGold"
                     label="游戏币">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="changeValue"
                     label="兑换价值（元宝）">
                 </el-table-column>
             </el-table>
             <p style="padding: 15px 0">
-                总计：兑换 0 游戏币 共0.00 元宝
+                ( 无字段 ) 总计：兑换 0 游戏币 共0.00 元宝
             </p>
-            <!--<div class="block">-->
-            <!--<el-pagination-->
-            <!--@current-change="clickPage"-->
-            <!--background-->
-            <!--size="small"-->
-            <!--layout="prev, pager, next"-->
-            <!--:total="50">-->
-            <!--</el-pagination>-->
-            <!--</div>-->
         </section>
     </div>
 </template>
 
 <script>
+    import {aTypes, mTypes} from '~store/allReport'
     export default {
         data () {
             return {
@@ -103,57 +95,92 @@
                         }
                     }]
                 },
-                options2: [
+                dailyPrizeOption: [
                     {
-                        value: '直属会员'
+                        label: '直属推广员',
+                        value: 0
                     },
                     {
-                        value: '直属推广员'
+                        label: '直属会员',
+                        value: 1
                     },
                     {
-                        value: '所有'
+                        label: '所有',
+                        value: 2
                     }],
-                value: '直属会员',
-                tableData3: [{
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-08',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-06',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-07',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
+                checkPrizeVal: 2,
+
+                dailyList: [{
+                    authority: '超级管理员',
+                    changeValue: 3000,
+                    date: '2018-01-27 21:43:49',
+                    user: 'aaaaaa',
+                    gameGold: 3000,
+                    operator: 'admin'
                 }]
             }
         },
-        watch: {},
         methods: {
-            //            clickPage (size) {
-            //                // 分页
-            //                console.log(size)
-            //            }
+            async getMsg () {
+                if (!this.selTime) {
+                    this.$message({
+                        message: '请选择查询日期',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+                //   loading
+                let dailyPrizeList = await this.$store.dispatch(aTypes.getExchangeReport, [this.selTime, Number(this.checkPrizeVal)])
+                console.log(dailyPrizeList)
+                console.log('=========dailyPrizeList========')
+                if (dailyPrizeList && dailyPrizeList.length >= 0) {
+                    this.dailyList = dailyPrizeList
+                    this.$message({
+                        message: '列表已更新',
+                        type: 'success',
+                        duration: 1200
+                    })
+                } else {
+                    console.error('dailyPrizeList error at dailyRecharge')
+                }
+            },
+            format (time, format = 'yyyy-MM-dd') {
+                let t = new Date(time)
+                let tf = function (i) {
+                    return (i < 10 ? '0' : '') + i
+                }
+                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+                    switch (a) {
+                    case 'yyyy':
+                        return tf(t.getFullYear())
+                    case 'MM':
+                        return tf(t.getMonth() + 1)
+                    case 'mm':
+                        return tf(t.getMinutes())
+                    case 'dd':
+                        return tf(t.getDate())
+                    case 'HH':
+                        return tf(t.getHours())
+                    case 'ss':
+                        return tf(t.getSeconds())
+                    }
+                })
+            }
+
         },
         computed: {},
-        mounted () {
+        async mounted () {
+            // 获取管理员列表  第一个参数代表查询的用户
+            this.selTime = this.format(new Date())
+            let dailyPrizeList = await this.$store.dispatch(aTypes.getExchangeReport, [this.format(new Date()), 2])
+            console.log(dailyPrizeList)
+            console.log('=========dailyPrizeList========')
+            if (dailyPrizeList && dailyPrizeList.length >= 0) {
+                this.dailyList = dailyPrizeList
+            } else {
+                console.error('dailyPrizeList error at dailyRecharge')
+            }
         }
     }
 </script>
