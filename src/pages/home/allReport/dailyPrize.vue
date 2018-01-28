@@ -171,7 +171,7 @@
         },
         computed: {},
         async mounted () {
-            // 获取管理员列表  第一个参数代表查询的用户
+            // 获取列表
             this.selTime = this.format(new Date())
             let dailyPrizeList = await this.$store.dispatch(aTypes.getExchangeReport, [this.format(new Date()), 2])
             console.log(dailyPrizeList)
