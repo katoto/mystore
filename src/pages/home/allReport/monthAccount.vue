@@ -20,7 +20,7 @@
             <el-table
                 id="out-table"
                 :data="monthList"
-                height="350"
+                height="450"
                 size="small"
                 border
                 style="width: 100%">
@@ -65,7 +65,6 @@
             </el-table>
         </section>
 
-
         <!-- 删除确认弹窗 -->
         <el-dialog
             title="月份账目删除"
@@ -85,9 +84,9 @@
     import {aTypes, mTypes} from '~store/allReport'
 
     import FileSaver from 'file-saver'
-    import XLSX from 'xlsx' ;
+    import XLSX from 'xlsx'
 
-    export default {
+export default {
         data () {
             return {
                 dialogVisible: false,
@@ -112,15 +111,15 @@
             }
         },
         methods: {
-            exportExcel(){
+            exportExcel () {
                 /* generate workbook object from table */
-                var wb = XLSX.utils.table_to_book(document.querySelector('#out-table'));
+                var wb = XLSX.utils.table_to_book(document.querySelector('#out-table'))
                 /* get binary string as output */
-                var wbout = XLSX.write(wb, { bookType: 'xlsx',bookSST:true, type: 'array' });
+                var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
                 try {
-                    FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), "sheetjs.xlsx");
-                } catch(e) { if(typeof console != 'undefined') console.log(e, wbout); }
-                return wbout;
+                    FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'sheetjs.xlsx')
+                } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+                return wbout
             },
             beforeDelMsg () {
                 this.dialogVisible = true

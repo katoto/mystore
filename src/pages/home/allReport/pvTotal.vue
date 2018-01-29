@@ -30,7 +30,7 @@
         <section>
             <el-table
                 :data="pvList"
-                height="350"
+                height="450"
                 size="small"
                 border
                 style="width: 100%">

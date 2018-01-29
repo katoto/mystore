@@ -30,7 +30,7 @@
         <section>
             <el-table
                 :data="payList"
-                height="400"
+                height="450"
                 size="small"
                 border
                 style="width: 100%">

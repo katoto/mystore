@@ -26,7 +26,7 @@
         <section id="dailyAccP">
             <el-table
                 :data="dailyList"
-                height="300"
+                height="350"
                 size="small"
                 border
                 style="width: 100%">
@@ -63,13 +63,13 @@
             </el-table>
             <div>
                 <span>总计：</span>
-                <p>充值 0.00 元宝 共 0 游戏币</p>
-                <p>兑换 0 游戏币 共 0.00 元宝</p>
-                <p>赠送 0 游戏币 价值 0.00 元宝</p>
-                <p>扣除 0 游戏币 价值 0.00 元宝</p>
-                <p>删除 0 游戏币 价值 0.00 元宝</p>
-                <p>平板租借 共收取租金 0.00 元宝</p>
-                <p>平板归还 共退还租金 0.00 元宝</p>
+                <p>充值 {{ tableAcc_cz_1 }} 游戏币 共 {{ tableAcc_cz_2 }} 元宝</p>
+                <p>兑换 {{ tableAcc_dh_1 }} 游戏币 共 {{ tableAcc_dh_2 }} 元宝</p>
+                <p>赠送 {{ tableAcc_zs_1 }} 游戏币 价值 {{ tableAcc_zs_2 }} 元宝</p>
+                <p>扣除 {{ tableAcc_kc_1 }} 游戏币 价值 {{ tableAcc_kc_2 }} 元宝</p>
+                <p>删除 {{ tableAcc_sc_1 }} 游戏币 价值 {{ tableAcc_sc_2 }} 元宝</p>
+                <p>平板租借 共收取租金 {{ tableAcc_pbzj }} 元宝</p>
+                <p>平板归还 共退还租金 {{ tableAcc_pbgh }} 元宝</p>
             </div>
         </section>
     </div>
@@ -80,6 +80,21 @@
     export default {
         data () {
             return {
+                tableAcc_cz_1: 0,
+                tableAcc_cz_2: 0,
+                tableAcc_dh_1: 0,
+                tableAcc_dh_2: 0,
+                tableAcc_zs_1: 0,
+                tableAcc_zs_2: 0,
+
+                tableAcc_kc_1: 0,
+                tableAcc_kc_2: 0,
+                tableAcc_sc_1: 0,
+                tableAcc_sc_2: 0,
+
+                tableAcc_pbzj: 0,
+                tableAcc_pbgh: 0,
+
                 selTime: '',
                 pickerSet: {
                     disabledDate (time) {
@@ -133,7 +148,6 @@
                 }]
             }
         },
-        watch: {},
         methods: {
             async getMsg () {
                 if (!this.selTime) {
@@ -150,6 +164,52 @@
                 console.log('=========dailyAccountList========')
                 if (dailyAccountList && dailyAccountList.length >= 0) {
                     this.dailyList = dailyAccountList
+
+                    this.dailyList.forEach((item) => {
+                        if (item.type) {
+                            if (item.type === '充值') {
+                                if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                    this.tableAcc_cz_1 = Number(this.tableAcc_cz_1) + Number(item.gameGold)
+                                    this.tableAcc_cz_2 = Number(this.tableAcc_cz_2) + Number(item.changeValue)
+                                }
+                            }
+                            if (item.type === '兑换') {
+                                if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                    this.tableAcc_dh_1 = Number(this.tableAcc_dh_1) + Number(item.gameGold)
+                                    this.tableAcc_dh_2 = Number(this.tableAcc_dh_2) + Number(item.changeValue)
+                                }
+                            }
+                            if (item.type === '赠送') {
+                                if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                    this.tableAcc_zs_1 = Number(this.tableAcc_zs_1) + Number(item.gameGold)
+                                    this.tableAcc_zs_2 = Number(this.tableAcc_zs_2) + Number(item.changeValue)
+                                }
+                            }
+                            if (item.type === '扣除') {
+                                if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                    this.tableAcc_kc_1 = Number(this.tableAcc_kc_1) + Number(item.gameGold)
+                                    this.tableAcc_kc_2 = Number(this.tableAcc_kc_2) + Number(item.changeValue)
+                                }
+                            }
+                            if (item.type === '删除') {
+                                if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                    this.tableAcc_sc_1 = Number(this.tableAcc_sc_1) + Number(item.gameGold)
+                                    this.tableAcc_sc_2 = Number(this.tableAcc_sc_2) + Number(item.changeValue)
+                                }
+                            }
+                            if (item.type === '平板租借') {
+                                if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                    this.tableAcc_pbzj = Number(this.tableAcc_pbzj) + Number(item.changeValue)
+                                }
+                            }
+                            if (item.type === '平板归还') {
+                                if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                    this.tableAcc_pbgh = Number(this.tableAcc_pbgh) + Number(item.changeValue)
+                                }
+                            }
+                        }
+                    })
+
                     this.$message({
                         message: '列表已更新',
                         type: 'success',
@@ -192,6 +252,51 @@
             console.log('=========dailyAccountList========')
             if (dailyAccountList && dailyAccountList.length >= 0) {
                 this.dailyList = dailyAccountList
+
+                this.dailyList.forEach((item) => {
+                    if (item.type) {
+                        if (item.type === '充值') {
+                            if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                this.tableAcc_cz_1 = Number(this.tableAcc_cz_1) + Number(item.gameGold)
+                                this.tableAcc_cz_2 = Number(this.tableAcc_cz_2) + Number(item.changeValue)
+                            }
+                        }
+                        if (item.type === '兑换') {
+                            if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                this.tableAcc_dh_1 = Number(this.tableAcc_dh_1) + Number(item.gameGold)
+                                this.tableAcc_dh_2 = Number(this.tableAcc_dh_2) + Number(item.changeValue)
+                            }
+                        }
+                        if (item.type === '赠送') {
+                            if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                this.tableAcc_zs_1 = Number(this.tableAcc_zs_1) + Number(item.gameGold)
+                                this.tableAcc_zs_2 = Number(this.tableAcc_zs_2) + Number(item.changeValue)
+                            }
+                        }
+                        if (item.type === '扣除') {
+                            if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                this.tableAcc_kc_1 = Number(this.tableAcc_kc_1) + Number(item.gameGold)
+                                this.tableAcc_kc_2 = Number(this.tableAcc_kc_2) + Number(item.changeValue)
+                            }
+                        }
+                        if (item.type === '删除') {
+                            if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                this.tableAcc_sc_1 = Number(this.tableAcc_sc_1) + Number(item.gameGold)
+                                this.tableAcc_sc_2 = Number(this.tableAcc_sc_2) + Number(item.changeValue)
+                            }
+                        }
+                        if (item.type === '平板租借') {
+                            if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                this.tableAcc_pbzj = Number(this.tableAcc_pbzj) + Number(item.changeValue)
+                            }
+                        }
+                        if (item.type === '平板归还') {
+                            if (item.gameGold !== undefined && item.changeValue !== undefined) {
+                                this.tableAcc_pbgh = Number(this.tableAcc_pbgh) + Number(item.changeValue)
+                            }
+                        }
+                    }
+                })
             } else {
                 console.error('dailyAccountList error at dailyRecharge')
             }
