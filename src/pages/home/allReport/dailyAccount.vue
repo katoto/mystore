@@ -7,26 +7,26 @@
                     align="right"
                     size="small"
                     type="date"
+                    value-format="yyyy-MM-dd"
                     placeholder="选择查询日期"
                     :picker-options="pickerSet">
                 </el-date-picker>
             </div>
             <span class="dailyCX">查询类型：</span>
-            <el-select class="checkID userSel" size="small" v-model="value" placeholder="请选择查询类型">
+            <el-select class="checkID userSel" size="small" v-model="checkAccountVal" placeholder="请选择查询类型">
                 <el-option
-                    v-for="item in options2"
+                    v-for="item in dailyAccountOption"
                     :key="item.value"
                     :label="item.label"
-                    :value="item.value"
-                    :disabled="item.disabled">
+                    :value="item.value">
                 </el-option>
             </el-select>
-            <el-button style="margin-left: 18px" size="small" type="primary">查询</el-button>
+            <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
         </header>
         <section id="dailyAccP">
             <el-table
-                :data="tableData3"
-                height="350"
+                :data="dailyList"
+                height="300"
                 size="small"
                 border
                 style="width: 100%">
@@ -36,28 +36,28 @@
                     width="220">
                 </el-table-column>
                 <el-table-column
-                    prop="name"
+                    prop="authority"
                     label="权限"
                     width="200">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="operator"
                     label="操作员账号">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="type"
                     label="操作类型">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="user"
                     label="会员账号">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="gameGold"
                     label="游戏币">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="changeValue"
                     label="数目（元宝）">
                 </el-table-column>
             </el-table>
@@ -71,21 +71,12 @@
                 <p>平板租借 共收取租金 0.00 元宝</p>
                 <p>平板归还 共退还租金 0.00 元宝</p>
             </div>
-
-            <!--<div class="block">-->
-            <!--<el-pagination-->
-            <!--@current-change="clickPage"-->
-            <!--background-->
-            <!--size="small"-->
-            <!--layout="prev, pager, next"-->
-            <!--:total="50">-->
-            <!--</el-pagination>-->
-            <!--</div>-->
         </section>
     </div>
 </template>
 
 <script>
+    import {aTypes, mTypes} from '~store/allReport'
     export default {
         data () {
             return {
@@ -115,57 +106,95 @@
                         }
                     }]
                 },
-                options2: [
+
+                dailyAccountOption: [
                     {
-                        value: '直属会员'
+                        label: '直属推广员',
+                        value: 0
                     },
                     {
-                        value: '直属推广员'
+                        label: '直属会员',
+                        value: 1
                     },
                     {
-                        value: '所有'
+                        label: '所有',
+                        value: 2
                     }],
-                value: '所有',
-                tableData3: [{
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-08',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-06',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-07',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
+                checkAccountVal: 2,
+
+                dailyList: [{
+                    authority: '超级管理员',
+                    changeValue: 3000,
+                    type: '兑奖',
+                    date: '2018-01-27 21:43:49',
+                    user: 'aaaaaa',
+                    gameGold: 3000,
+                    operator: 'admin'
                 }]
             }
         },
         watch: {},
         methods: {
-            //            clickPage (size) {
-            //                // 分页
-            //                console.log(size)
-            //            }
+            async getMsg () {
+                if (!this.selTime) {
+                    this.$message({
+                        message: '请选择查询日期',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+                //   loading
+                let dailyAccountList = await this.$store.dispatch(aTypes.getDayAccount, [this.selTime, Number(this.checkAccountVal)])
+                console.log(dailyAccountList)
+                console.log('=========dailyAccountList========')
+                if (dailyAccountList && dailyAccountList.length >= 0) {
+                    this.dailyList = dailyAccountList
+                    this.$message({
+                        message: '列表已更新',
+                        type: 'success',
+                        duration: 1200
+                    })
+                } else {
+                    console.error('dailyAccountList error at dailyRecharge')
+                }
+            },
+            format (time, format = 'yyyy-MM-dd') {
+                let t = new Date(time)
+                let tf = function (i) {
+                    return (i < 10 ? '0' : '') + i
+                }
+                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+                    switch (a) {
+                    case 'yyyy':
+                        return tf(t.getFullYear())
+                    case 'MM':
+                        return tf(t.getMonth() + 1)
+                    case 'mm':
+                        return tf(t.getMinutes())
+                    case 'dd':
+                        return tf(t.getDate())
+                    case 'HH':
+                        return tf(t.getHours())
+                    case 'ss':
+                        return tf(t.getSeconds())
+                    }
+                })
+            }
+
         },
         computed: {},
-        mounted () {
+        async mounted () {
+            // 获取列表
+            this.selTime = this.format(new Date())
+            let dailyAccountList = await this.$store.dispatch(aTypes.getDayAccount, [this.format(new Date()), 2])
+            console.log(dailyAccountList)
+            console.log('=========dailyAccountList========')
+            if (dailyAccountList && dailyAccountList.length >= 0) {
+                this.dailyList = dailyAccountList
+            } else {
+                console.error('dailyAccountList error at dailyRecharge')
+            }
         }
     }
 </script>
