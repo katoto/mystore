@@ -7,16 +7,18 @@
                     align="right"
                     size="small"
                     type="month"
+                    value-format="yyyy-MM"
+                    :picker-options="pickerSet"
                     placeholder="选择查询月份">
                 </el-date-picker>
             </div>
-            <el-button style="margin-left: 18px" size="small" type="primary">查询</el-button>
-            <el-button style="margin-left: 18px" size="small" type="danger">删除</el-button>
-            <el-button style="margin-left: 18px" size="small" type="success">导出</el-button>
+            <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
+            <el-button style="margin-left: 18px" size="small" type="danger" v-tap="{ methods:beforeDelMsg }">删除</el-button>
+            <el-button style="margin-left: 18px" size="small" type="success" disabled>导出</el-button>
         </header>
         <section id="dailyAccP">
             <el-table
-                :data="tableData3"
+                :data="monthList"
                 height="350"
                 size="small"
                 border
@@ -27,99 +29,167 @@
                     width="150">
                 </el-table-column>
                 <el-table-column
-                    prop="name"
+                    prop="charge"
                     label="充值（元宝）"
                     width="150">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="change"
                     label="兑奖（元宝）">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="deposit"
                     label="平板租借（元宝）">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="returnDeposit"
                     label="平板归还（元宝）">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="minus"
                     label="扣除（币）">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="give"
                     label="赠送（币）">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="allCoin"
                     label="玩家携带总量（币）">
                 </el-table-column>
                 <el-table-column
-                    prop="address"
+                    prop="result"
                     label="营收（元宝）">
                 </el-table-column>
             </el-table>
         </section>
+
+
+        <!-- 删除确认弹窗 -->
+        <el-dialog
+            title="月份账目删除"
+            :visible.sync="dialogVisible"
+            width="35%">
+            <span>确定删除该月份账目( {{ selTime }}月 )账单？</span>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" v-tap="{ methods: delMsg }"  >确 定</el-button>
+          </span>
+        </el-dialog>
+
     </div>
 </template>
 
 <script>
+    import {aTypes, mTypes} from '~store/allReport'
     export default {
         data () {
             return {
+                dialogVisible: false,
+
                 selTime: '',
-                options2: [
-                    {
-                        value: '直属会员'
-                    },
-                    {
-                        value: '直属推广员'
-                    },
-                    {
-                        value: '所有'
-                    }],
-                value: '所有',
-                tableData3: [{
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-08',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-06',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-07',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
+                pickerSet: {
+                    disabledDate (time) {
+                        return time.getTime() > Date.now()
+                    }
+                },
+                monthList: [{
+                    result: 0,
+                    minus: 0,
+                    charge: 0,
+                    allCoin: 75804,
+                    give: 0,
+                    returnDeposit: 0,
+                    deposit: 0,
+                    change: 0,
+                    date: '2018-01-01'
                 }]
             }
         },
-        watch: {},
         methods: {
-            //            clickPage (size) {
-            //                // 分页
-            //                console.log(size)
-            //            }
+            beforeDelMsg () {
+                this.dialogVisible = true
+            },
+            async delMsg () {
+                let monthAccountList = await this.$store.dispatch(aTypes.deleteMonthAccount, [this.selTime])
+                console.log(monthAccountList)
+                console.log('========= delMsg ========')
+                if (monthAccountList && monthAccountList.success === true) {
+                    this.$message({
+                        message: '月份账单已删除',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    setTimeout(() => {
+                        this.dialogVisible = false
+                    }, 1200)
+
+                    /* 是否更新列表 ？ */
+                    this.getMsg(false)
+                } else {
+                    console.error('monthAccountList error at dailyRecharge')
+                }
+            },
+            async getMsg (showTips = true) {
+                if (!this.selTime) {
+                    this.$message({
+                        message: '请选择查询月份',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+                let monthAccountList = await this.$store.dispatch(aTypes.getMonthAccount, [this.selTime, 0 ])
+                console.log(monthAccountList)
+                console.log('=========monthAccountList========')
+                if (monthAccountList && monthAccountList.length >= 0) {
+                    this.monthList = monthAccountList
+                    if (showTips) {
+                        this.$message({
+                            message: '列表已更新',
+                            type: 'success',
+                            duration: 1200
+                        })
+                    }
+                } else {
+                    console.error('monthAccountList error at dailyRecharge')
+                }
+            },
+            format (time, format = 'yyyy-MM') {
+                let t = new Date(time)
+                let tf = function (i) {
+                    return (i < 10 ? '0' : '') + i
+                }
+                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+                    switch (a) {
+                    case 'yyyy':
+                        return tf(t.getFullYear())
+                    case 'MM':
+                        return tf(t.getMonth() + 1)
+                    case 'mm':
+                        return tf(t.getMinutes())
+                    case 'dd':
+                        return tf(t.getDate())
+                    case 'HH':
+                        return tf(t.getHours())
+                    case 'ss':
+                        return tf(t.getSeconds())
+                    }
+                })
+            }
         },
         computed: {},
-        mounted () {
+        async mounted () {
+            // 获取 monthAccount 列表
+            this.selTime = this.format(new Date())
+            let monthAccountList = await this.$store.dispatch(aTypes.getMonthAccount, [this.format(new Date()), 0])
+            console.log(monthAccountList)
+            console.log('=========monthAccountList========')
+            if (monthAccountList && monthAccountList.length >= 0) {
+                this.monthList = monthAccountList
+            } else {
+                console.error('monthAccountList error at dailyRecharge')
+            }
         }
     }
 </script>

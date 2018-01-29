@@ -12,45 +12,48 @@
                         align="right"
                         size="small"
                         type="month"
+                        value-format="yyyy-MM"
+                        :picker-options="pickerSet"
                         placeholder="选择查询月份">
                     </el-date-picker>
                 </div>
-                <el-button style="margin-left: 18px" size="small" type="primary">查询</el-button>
+                <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
             </header>
             <section>
                 <el-table
-                    :data="tableData3"
+                    :data="businessList"
                     height="350"
                     size="small"
                     border
                     style="width: 100%">
                     <el-table-column
-                        prop="date"
+                        prop="index"
                         label="营业日"
                         width="150">
                     </el-table-column>
                     <el-table-column
-                        prop="name"
+                        prop="startTime"
                         label="开启日期"
                         width="150">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="endTime"
                         label="结束日期">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="type"
                         label="更次类型">
                     </el-table-column>
                     <el-table-column
-                        prop="address"
+                        prop="income"
                         label="营收(元宝)">
                     </el-table-column>
                 </el-table>
             </section>
             <p style="padding: 15px 0">当月营收总计：0 元宝</p>
         </section>
-        <section class="secBox">
+
+<!--        <section class="secBox">
             <div class="clearfix" >
                 <p style="float:left;margin:10px 0 10px 0;font-weight: 700">每更记录</p>&nbsp;&nbsp;&nbsp;
                 <el-button type="success" plain>A 更</el-button>
@@ -125,62 +128,107 @@
 
                 </el-table>
             </section>
-        </section>
+        </section>-->
+
+
+
     </div>
 </template>
 
 <script>
+    import {aTypes, mTypes} from '~store/allReport'
     export default {
         data () {
             return {
+
                 selTime: '',
-                options2: [
-                    {
-                        value: '直属会员'
-                    },
-                    {
-                        value: '直属推广员'
-                    },
-                    {
-                        value: '所有'
-                    }],
-                value: '所有',
-                tableData3: [{
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-08',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-06',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-07',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
+                pickerSet: {
+                    disabledDate (time) {
+                        return time.getTime() > Date.now()
+                    }
+                },
+                //                options2: [
+                //                    {
+                //                        value: '直属会员'
+                //                    },
+                //                    {
+                //                        value: '直属推广员'
+                //                    },
+                //                    {
+                //                        value: '所有'
+                //                    }],
+                //                value: '所有',
+                businessList: [{
+                    'startTime': '2018-01-07 18:52:49',
+                    'id': 4,
+                    'index': 1,
+                    'income': 0,
+                    'endTime': '2018-01-10 13:11:04',
+                    'type': '分AB两更'
                 }]
             }
         },
-        watch: {},
         methods: {
+            async getMsg (showTips = true) {
+                if (!this.selTime) {
+                    this.$message({
+                        message: '请选择查询月份',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+                let businessAccountList = await this.$store.dispatch(aTypes.getMonthBusine, [this.selTime ])
+                console.log(businessAccountList)
+                console.log('=========businessAccountList========')
+                if (businessAccountList && businessAccountList.length >= 0) {
+                    this.businessList = businessAccountList
+                    if (showTips) {
+                        this.$message({
+                            message: '列表已更新',
+                            type: 'success',
+                            duration: 1200
+                        })
+                    }
+                } else {
+                    console.error('businessAccountList error at dailyRecharge')
+                }
+            },
+            format (time, format = 'yyyy-MM') {
+                let t = new Date(time)
+                let tf = function (i) {
+                    return (i < 10 ? '0' : '') + i
+                }
+                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+                    switch (a) {
+                    case 'yyyy':
+                        return tf(t.getFullYear())
+                    case 'MM':
+                        return tf(t.getMonth() + 1)
+                    case 'mm':
+                        return tf(t.getMinutes())
+                    case 'dd':
+                        return tf(t.getDate())
+                    case 'HH':
+                        return tf(t.getHours())
+                    case 'ss':
+                        return tf(t.getSeconds())
+                    }
+                })
+            }
         },
         computed: {},
-        mounted () {
+        async mounted () {
+            // 获取 monthAccount 列表
+            this.selTime = this.format(new Date())
+            let businessAccountList = await this.$store.dispatch(aTypes.getMonthBusine, [this.format(new Date())])
+            console.log(businessAccountList)
+            console.log('=========businessAccountList========')
+            if (businessAccountList && businessAccountList.length >= 0) {
+                this.businessList = businessAccountList
+            } else {
+                console.error('businessAccountList error at dailyRecharge')
+            }
         }
     }
 </script>
