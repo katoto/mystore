@@ -189,7 +189,7 @@
         margin-left: 10px;
     }
     header .xtSel{
-        max-width: 100px ;
+        max-width: 120px ;
         float: left;
         margin-left: 10px;
     }

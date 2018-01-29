@@ -189,7 +189,7 @@
         margin-left: 10px;
     }
     header .xtSel{
-        max-width: 100px ;
+        max-width: 120px ;
         float: left;
         margin-left: 10px;
     }
@@ -198,7 +198,7 @@
     }
 
     .checkID{
-        width: 60%;
+        width: 80%;
     }
     .el-date-editor--daterange.el-input, .el-date-editor--daterange.el-input__inner, .el-date-editor--timerange.el-input, .el-date-editor--timerange.el-input__inner{
         width: 95%;
