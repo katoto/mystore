@@ -126,7 +126,7 @@
                 console.log(businessAccountList)
                 console.log('=========businessAccountList========')
                 if (businessAccountList && businessAccountList.length >= 0) {
-                    this.regisList = businessAccountList
+                    this.regisList = businessAccountList.reverse()
                     if (showTips) {
                         this.$message({
                             message: '列表已更新',
@@ -167,7 +167,7 @@
             let businessAccountList = await this.$store.dispatch(aTypes.getNewRegist, [ this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()), 0 ])
             console.log('=========businessAccountList========')
             if (businessAccountList && businessAccountList.length >= 0) {
-                this.regisList = businessAccountList
+                this.regisList = businessAccountList.reverse()
             } else {
                 console.error('businessAccountList error at dailyRecharge')
             }

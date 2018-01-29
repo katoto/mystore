@@ -146,7 +146,7 @@
                 console.log(payTotalList)
                 console.log('=========payTotalList========')
                 if (payTotalList && payTotalList.length >= 0) {
-                    this.payList = payTotalList
+                    this.payList = payTotalList.reverse()
                     if (showTips) {
                         this.$message({
                             message: '列表已更新',
@@ -187,7 +187,7 @@
             let payTotalList = await this.$store.dispatch(aTypes.getCharge, [ this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()), 2 ])
             console.log('=========payTotalList========')
             if (payTotalList && payTotalList.length >= 0) {
-                this.payList = payTotalList
+                this.payList = payTotalList.reverse()
             } else {
                 console.error('payTotalList error at dailyRecharge')
             }
