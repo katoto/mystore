@@ -26,7 +26,7 @@
         <section>
             <el-table
                 :data="dailyList"
-                height="350"
+                height="380"
                 size="small"
                 border
                 style="width: 100%">
@@ -58,17 +58,19 @@
                 </el-table-column>
             </el-table>
             <p style="padding: 15px 0">
-                ( 无字段 ) 总计：兑换 0 游戏币 共0.00 元宝
+                总计：兑换 {{ tableAccountGameGold }} 游戏币 共 {{ tableAccountCoin }} 元宝
             </p>
         </section>
     </div>
 </template>
-
 <script>
     import {aTypes, mTypes} from '~store/allReport'
     export default {
         data () {
             return {
+                tableAccountGameGold: 0,
+                tableAccountCoin: 0,
+
                 selTime: '',
                 pickerSet: {
                     disabledDate (time) {
@@ -136,6 +138,14 @@
                 console.log('=========dailyPrizeList========')
                 if (dailyPrizeList && dailyPrizeList.length >= 0) {
                     this.dailyList = dailyPrizeList
+                    this.dailyList.forEach((item) => {
+                        if (item.gameGold !== undefined && item.gameGold !== null) {
+                            this.tableAccountGameGold = Number(this.tableAccountGameGold) + Number(item.gameGold)
+                        }
+                        if (item.changeValue !== undefined && item.changeValue !== null) {
+                            this.tableAccountCoin = Number(this.tableAccountCoin) + Number(item.changeValue)
+                        }
+                    })
                     this.$message({
                         message: '列表已更新',
                         type: 'success',
@@ -167,7 +177,6 @@
                     }
                 })
             }
-
         },
         computed: {},
         async mounted () {
@@ -178,6 +187,14 @@
             console.log('=========dailyPrizeList========')
             if (dailyPrizeList && dailyPrizeList.length >= 0) {
                 this.dailyList = dailyPrizeList
+                this.dailyList.forEach((item) => {
+                    if (item.gameGold !== undefined && item.gameGold !== null) {
+                        this.tableAccountGameGold = Number(this.tableAccountGameGold) + Number(item.gameGold)
+                    }
+                    if (item.changeValue !== undefined && item.changeValue !== null) {
+                        this.tableAccountCoin = Number(this.tableAccountCoin) + Number(item.changeValue)
+                    }
+                })
             } else {
                 console.error('dailyPrizeList error at dailyRecharge')
             }

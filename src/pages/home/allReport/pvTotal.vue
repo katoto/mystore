@@ -30,7 +30,7 @@
         <section>
             <el-table
                 :data="pvList"
-                height="350"
+                height="450"
                 size="small"
                 border
                 style="width: 100%">
@@ -41,7 +41,7 @@
                 </el-table-column>
                 <el-table-column
                     prop="activeCount"
-                    label="新注册">
+                    label="日活跃">
                 </el-table-column>
             </el-table>
         </section>
@@ -126,7 +126,7 @@
                 console.log(businessAccountList)
                 console.log('=========businessAccountList========')
                 if (businessAccountList && businessAccountList.length >= 0) {
-                    this.pvList = businessAccountList
+                    this.pvList = businessAccountList.reverse()
                     if (showTips) {
                         this.$message({
                             message: '列表已更新',
@@ -145,18 +145,18 @@
                 }
                 return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
                     switch (a) {
-                        case 'yyyy':
-                            return tf(t.getFullYear())
-                        case 'MM':
-                            return tf(t.getMonth() + 1)
-                        case 'mm':
-                            return tf(t.getMinutes())
-                        case 'dd':
-                            return tf(t.getDate())
-                        case 'HH':
-                            return tf(t.getHours())
-                        case 'ss':
-                            return tf(t.getSeconds())
+                    case 'yyyy':
+                        return tf(t.getFullYear())
+                    case 'MM':
+                        return tf(t.getMonth() + 1)
+                    case 'mm':
+                        return tf(t.getMinutes())
+                    case 'dd':
+                        return tf(t.getDate())
+                    case 'HH':
+                        return tf(t.getHours())
+                    case 'ss':
+                        return tf(t.getSeconds())
                     }
                 })
             }
@@ -167,7 +167,7 @@
             let businessAccountList = await this.$store.dispatch(aTypes.getDailyActive, [ this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()), 0 ])
             console.log('=========businessAccountList========')
             if (businessAccountList && businessAccountList.length >= 0) {
-                this.pvList = businessAccountList
+                this.pvList = businessAccountList.reverse()
             } else {
                 console.error('businessAccountList error at dailyRecharge')
             }
@@ -189,7 +189,7 @@
         margin-left: 10px;
     }
     header .xtSel{
-        max-width: 100px ;
+        max-width: 120px ;
         float: left;
         margin-left: 10px;
     }
