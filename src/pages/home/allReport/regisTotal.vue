@@ -30,7 +30,7 @@
         <section>
             <el-table
                 :data="regisList"
-                height="350"
+                height="450"
                 size="small"
                 border
                 style="width: 100%">
@@ -126,7 +126,7 @@
                 console.log(businessAccountList)
                 console.log('=========businessAccountList========')
                 if (businessAccountList && businessAccountList.length >= 0) {
-                    this.regisList = businessAccountList
+                    this.regisList = businessAccountList.reverse()
                     if (showTips) {
                         this.$message({
                             message: '列表已更新',
@@ -167,7 +167,7 @@
             let businessAccountList = await this.$store.dispatch(aTypes.getNewRegist, [ this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()), 0 ])
             console.log('=========businessAccountList========')
             if (businessAccountList && businessAccountList.length >= 0) {
-                this.regisList = businessAccountList
+                this.regisList = businessAccountList.reverse()
             } else {
                 console.error('businessAccountList error at dailyRecharge')
             }
@@ -189,7 +189,7 @@
         margin-left: 10px;
     }
     header .xtSel{
-        max-width: 100px ;
+        max-width: 120px ;
         float: left;
         margin-left: 10px;
     }
@@ -198,7 +198,7 @@
     }
 
     .checkID{
-        width: 60%;
+        width: 80%;
     }
     .el-date-editor--daterange.el-input, .el-date-editor--daterange.el-input__inner, .el-date-editor--timerange.el-input, .el-date-editor--timerange.el-input__inner{
         width: 95%;

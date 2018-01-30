@@ -27,7 +27,7 @@
         <section>
             <el-table
                 :data="dailyList"
-                height="300"
+                height="380"
                 size="small"
                 border
                 style="width: 100%">
@@ -58,7 +58,7 @@
                     label="游戏币数量">
                 </el-table-column>
             </el-table>
-            <p style="padding: 15px 0">总计：0 元宝( 无字段 )</p>
+            <p style="padding: 15px 0">总计：{{ tableAccount }} 元宝</p>
         </section>
     </div>
 </template>
@@ -68,6 +68,7 @@
     export default {
         data () {
             return {
+                tableAccount: 0,
                 checkDailyOptions: [
                     {
                         label: '直属推广员',
@@ -135,6 +136,11 @@
                 console.log('=========dailyRechargeList========')
                 if (dailyRechargeList && dailyRechargeList.length >= 0) {
                     this.dailyList = dailyRechargeList
+                    this.dailyList.forEach((item) => {
+                        if (item.charge !== undefined && item.charge !== null) {
+                            this.tableAccount = Number(this.tableAccount) + Number(item.charge)
+                        }
+                    })
                     this.$message({
                         message: '列表已更新',
                         type: 'success',
@@ -176,6 +182,11 @@
             console.log('=========dailyRechargeList========')
             if (dailyRechargeList && dailyRechargeList.length >= 0) {
                 this.dailyList = dailyRechargeList
+                this.dailyList.forEach((item) => {
+                    if (item.charge !== undefined && item.charge !== null) {
+                        this.tableAccount = Number(this.tableAccount) + Number(item.charge)
+                    }
+                })
             } else {
                 console.error('dailyRechargeList error at dailyRecharge')
             }

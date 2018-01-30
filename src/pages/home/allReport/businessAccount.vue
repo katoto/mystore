@@ -50,7 +50,7 @@
                     </el-table-column>
                 </el-table>
             </section>
-            <p style="padding: 15px 0">当月营收总计：0 元宝</p>
+            <p style="padding: 15px 0">当月营收总计：{{ tableAccCoin }} 元宝</p>
         </section>
 
 <!--        <section class="secBox">
@@ -130,8 +130,6 @@
             </section>
         </section>-->
 
-
-
     </div>
 </template>
 
@@ -140,6 +138,7 @@
     export default {
         data () {
             return {
+                tableAccCoin:0,
 
                 selTime: '',
                 pickerSet: {
@@ -147,17 +146,6 @@
                         return time.getTime() > Date.now()
                     }
                 },
-                //                options2: [
-                //                    {
-                //                        value: '直属会员'
-                //                    },
-                //                    {
-                //                        value: '直属推广员'
-                //                    },
-                //                    {
-                //                        value: '所有'
-                //                    }],
-                //                value: '所有',
                 businessList: [{
                     'startTime': '2018-01-07 18:52:49',
                     'id': 4,
@@ -183,6 +171,13 @@
                 console.log('=========businessAccountList========')
                 if (businessAccountList && businessAccountList.length >= 0) {
                     this.businessList = businessAccountList
+
+                    this.businessList.forEach(( item )=>{
+                        if( item.income !== undefined ){
+                            this.tableAccCoin = Number( this.tableAccCoin ) + Number( item.income )
+                        }
+                    })
+
                     if (showTips) {
                         this.$message({
                             message: '列表已更新',
@@ -226,6 +221,13 @@
             console.log('=========businessAccountList========')
             if (businessAccountList && businessAccountList.length >= 0) {
                 this.businessList = businessAccountList
+
+                this.businessList.forEach(( item )=>{
+                    if( item.income !== undefined ){
+                        this.tableAccCoin = Number( this.tableAccCoin ) + Number( item.income )
+                    }
+                })
+
             } else {
                 console.error('businessAccountList error at dailyRecharge')
             }

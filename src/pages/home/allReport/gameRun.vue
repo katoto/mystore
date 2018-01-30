@@ -34,12 +34,12 @@
             </el-select>
             <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
             <el-button style="margin-left: 18px" size="small" type="danger" disabled>删除</el-button>
-            <el-button style="margin-left: 18px" size="small" type="success" disabled>导出</el-button>
+            <el-button style="margin-left: 18px" size="small" type="success" v-tap="{ methods:exportExcel }">导出</el-button>
         </header>
-        <section id="dailyAccP">
-            <el-table
+        <section>
+            <el-table id="out-table"
                 :data="gameList"
-                height="350"
+                height="450"
                 size="small"
                 border
                 style="width: 100%">
@@ -76,13 +76,14 @@
           </span>
         </el-dialog>
 
-
     </div>
 </template>
 
 <script>
     import {aTypes, mTypes} from '~store/allReport'
-    export default {
+    import FileSaver from 'file-saver'
+    import XLSX from 'xlsx'
+export default {
         data () {
             return {
                 dialogVisible: false,
@@ -165,8 +166,17 @@
                 }]
             }
         },
-        watch: {},
         methods: {
+            exportExcel () {
+                /* generate workbook object from table */
+                var wb = XLSX.utils.table_to_book(document.querySelector('#out-table'))
+                /* get binary string as output */
+                var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
+                try {
+                    FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'sheetjs.xlsx')
+                } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+                return wbout
+            },
             beforeDelMsg () {
                 this.dialogVisible = true
             },
