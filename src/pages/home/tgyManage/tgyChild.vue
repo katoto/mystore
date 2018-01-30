@@ -194,7 +194,7 @@
             title="下级调整"
             :visible.sync="downVisible"
             width="35%">
-            <p style="text-align: center;margin-bottom: 20px">将直属推广员、直属会员调整至</p>
+            <p style="text-align: center;margin-bottom: 20px">将直属推广员、直属会员 ({{ downPromoterName }}) 调整至</p>
             <div id="downStyle">
                 <el-select size="small" v-model="downNameValue" placeholder="请选择">
                     <el-option
@@ -220,6 +220,17 @@
     export default {
         methods: {
             async beforeDownPromoter () {
+                if (!this.selTgyVal) {
+                    this.$message({
+                        message: '没有选择对应选项',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+                if (this.selTgyVal.username) {
+                    this.downPromoterName = this.selTgyVal.username
+                }
                 let promoter = await this.$store.dispatch(actionTypes.parentPromoterList, [Number(this.selTgyVal.id)])
                 console.log('===下级调整之前==')
                 console.log(promoter)
@@ -609,6 +620,7 @@
         data () {
             return {
 
+                downPromoterName: '',
                 currPageNumber: 1,
 
                 downVisible: false,
