@@ -12,14 +12,14 @@
                     </el-option>
                 </el-select>
                 <el-input size="small" v-model="tgySearch" placeholder="请输入内容"></el-input>
-                <el-button size="small" v-tap="{ methods:setPromoter }">查找</el-button>
-                <el-button size="small" v-tap="{ methods:initSearch }">重置</el-button>
+                <el-button size="small" v-tap="{ methods:setPromoter }" type="primary">查找</el-button>
+                <el-button size="small" v-tap="{ methods:initSearch }" type="danger">重置</el-button>
             </div>
             <div class="fr overflow tgyChild-btnBox">
                 <el-button size="small" v-tap="{ methods:beforeAddPromoter }" >新增</el-button>
                 <el-button size="small" :disabled=currStateStop v-tap="{ methods:beforeDisablePromoter }" >禁用</el-button>
                 <el-button size="small" :disabled=currStateActive v-tap="{ methods:beforeEnablePromoter }" >解禁</el-button>
-                <el-button size="small" :disabled=!selTgyVal v-tap="{ methods:beforeDelPromoter }" >删除</el-button>
+                <el-button size="small" :disabled=!selTgyVal v-tap="{ methods:beforeDelPromoter }" type="danger">删除</el-button>
                 <el-button size="small" :disabled=!selTgyVal v-tap="{ methods:beforeDownPromoter }" >下级调整</el-button>
                 <el-button size="small" :disabled=!selTgyVal v-tap="{ methods:beforeResetPWD }"  >密码重置</el-button>
                 <el-button size="small" :disabled=!selTgyVal @click="remarkVisible=true">备注修改</el-button>
@@ -199,9 +199,9 @@
                 <el-select size="small" v-model="downNameValue" placeholder="请选择">
                     <el-option
                         v-for="item in downNameOptions"
-                        :key="item.tgyid"
-                        :label="item.name"
-                        :value="item.tgyid">
+                        :key="item.id"
+                        :label="item.username"
+                        :value="item.id">
                     </el-option>
                 </el-select>
             </div>
@@ -219,11 +219,39 @@
     import { actionTypes, mutationTypes } from '~store/tgyManager'
     export default {
         methods: {
-            beforeDownPromoter () {
+            async beforeDownPromoter () {
+                let promoter = await this.$store.dispatch(actionTypes.parentPromoterList, [Number(this.selTgyVal.id)])
+                console.log('===下级调整之前==')
+                console.log(promoter)
+                if (promoter && promoter.length >= 0) {
+                    this.downNameOptions = promoter
+                }
                 this.downVisible = true
             },
-            downPromoter () {
+            async downPromoter () {
+                if (this.downNameValue === '') {
+                    this.$message({
+                        message: '请选择下级',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+                console.log('===下级调整===')
+                let promoter = await this.$store.dispatch(actionTypes.updateChildrenParent, [Number(this.selTgyVal.id), Number(this.downNameValue)])
+                console.log(promoter)
+                if (promoter && promoter.success === true) {
+                    this.$message({
+                        message: '调整成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+                    setTimeout(() => {
+                        this.downVisible = false
+                    }, 1200)
 
+                    // 更新列表
+                }
             },
 
             beforeEnablePromoter () {
@@ -584,11 +612,27 @@
                 currPageNumber: 1,
 
                 downVisible: false,
-                downNameValue: '直属推广员',
+                downNameValue: '',
                 downNameOptions: [
-                    {id: 0, name: '直属推广员'},
-                    {id: 1, name: '非直属推广员'}
-                ],
+                    {
+                        childrenPayScale: 0,
+                        childrenPromoterNum: 0,
+                        childrenUserNum: 0,
+                        childrenUserOver: 100000,
+                        createTime: '',
+                        expiryNum: 0,
+                        gold: 0,
+                        id: 0,
+                        level: 0,
+                        parentId: 0,
+                        parentName: '',
+                        password: '',
+                        payMoney: 0,
+                        registCode: '',
+                        remark: '',
+                        state: 0,
+                        username: '总公司：admin'
+                    }],
 
                 currStateStop: true,
                 currStateActive: true,

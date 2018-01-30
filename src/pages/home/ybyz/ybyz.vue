@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="position: relative">
         <el-tabs v-model="activeNameTop" type="card" @tab-click="handleClick">
             <el-tab-pane label="会员操作" name="vipOperate"></el-tab-pane>
             <el-tab-pane label="平板租借记录查询" name="rentSearch" disabled></el-tab-pane>
@@ -44,12 +44,12 @@
                             <el-table-column
                                 prop="username"
                                 label="账号"
-                                width="80">
+                                width="90">
                             </el-table-column>
                             <el-table-column
                                 prop="nickname"
                                 label="昵称"
-                                width="50">
+                                width="80">
                             </el-table-column>
                             <el-table-column
                                 prop="level"
@@ -152,6 +152,8 @@
             </div>
             <router-view></router-view>
         </template>
+        <p class="tipsStyle red">当前可处理的订单数：充值申请0个，兑奖申请0个</p>
+
     </div>
 </template>
 
@@ -415,6 +417,14 @@ export default {
     }
 </script>
 <style scoped>
+    .tipsStyle{
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    .red{
+        color: red;
+    }
     #vipOperate header{
         padding-bottom: 10px;
     }
