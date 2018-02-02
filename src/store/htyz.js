@@ -68,6 +68,18 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
 
+
+    // 新建公告， 更新大厅状态
+    async updateDTStatus ({dispatch, commit}, {content = '', statusIndex = 0, time = 0}) {
+        let args = [{"content":"","cooperateEndDate":"——————","cooperateMode":0,"cooperateStartDate":"——————","statusIndex":0,"time":0}]
+        const argsData = await dispatch('invoke', {
+            method: 'systemConfigService/updateGameStatus',
+            args
+        })
+        return argsData[0]
+    },
+
+
     async getDeskList ({dispatch, commit}, method) {
         const argsData = await dispatch('invoke', {
             method,
@@ -91,7 +103,7 @@ const actionsInfo = mapActions({
     //     })
     //     return argsData[0]
     // },
-    // 获取摇钱树桌子
+    // 获取摇钱树桌子 @deprecated
     async getFishDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'deskService/getFishDeskList',
@@ -107,7 +119,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 获取万炮捕鱼
+    // 获取万炮捕鱼 @deprecated
     async getBulletFishDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'deskService/getBulletFishDeskList',
@@ -115,7 +127,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 获取美人鱼
+    // 获取美人鱼 @deprecated
     async getMermaidDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'deskService/getMermaidDeskList',
@@ -123,7 +135,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 获取缺一门
+    // 获取缺一门 @deprecated
     async getLackDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'deskService/getLackDeskList',
@@ -131,7 +143,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 获取欢乐牛牛
+    // 获取欢乐牛牛 @deprecated
     async getJoyDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'deskService/getJoyDeskList',
@@ -139,7 +151,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 获取水浒传
+    // 获取水浒传 @deprecated
     async getWaterDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'waterDeskService/getWaterDeskList',
@@ -147,7 +159,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 获取千炮捕鱼
+    // 获取千炮捕鱼 @deprecated
     async getThousandFishDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'deskService/getThousandFishDeskList',
