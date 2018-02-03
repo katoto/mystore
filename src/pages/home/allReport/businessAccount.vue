@@ -138,7 +138,7 @@
     export default {
         data () {
             return {
-                tableAccCoin:0,
+                tableAccCoin: 0,
 
                 selTime: '',
                 pickerSet: {
@@ -172,9 +172,9 @@
                 if (businessAccountList && businessAccountList.length >= 0) {
                     this.businessList = businessAccountList
 
-                    this.businessList.forEach(( item )=>{
-                        if( item.income !== undefined ){
-                            this.tableAccCoin = Number( this.tableAccCoin ) + Number( item.income )
+                    this.businessList.forEach((item) => {
+                        if (item.income !== undefined) {
+                            this.tableAccCoin = Number(this.tableAccCoin) + Number(item.income)
                         }
                     })
 
@@ -222,12 +222,11 @@
             if (businessAccountList && businessAccountList.length >= 0) {
                 this.businessList = businessAccountList
 
-                this.businessList.forEach(( item )=>{
-                    if( item.income !== undefined ){
-                        this.tableAccCoin = Number( this.tableAccCoin ) + Number( item.income )
+                this.businessList.forEach((item) => {
+                    if (item.income !== undefined) {
+                        this.tableAccCoin = Number(this.tableAccCoin) + Number(item.income)
                     }
                 })
-
             } else {
                 console.error('businessAccountList error at dailyRecharge')
             }

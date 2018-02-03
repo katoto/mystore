@@ -18,56 +18,58 @@
         <hr>
         <section>
             <el-checkbox v-model="SQWarning">授权警告</el-checkbox></br>
-            <el-row :gutter="20">
-                <el-col :span="9"><div class="grid-content bg-purple">
-                    <p>日累计充值数目(元宝):</p>
-                    <el-select class="xtSetSel" v-model="xtRczVal" placeholder="请选择">
-                        <el-option
-                            v-for="item in xtRcz"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select>
-                </div></el-col>
-                <el-col :span="9"><div class="grid-content bg-purple">
-                    <p>日累计兑奖数目(元宝):</p>
-                    <el-select class="xtSetSel" v-model="xtRdjVal" placeholder="请选择">
-                        <el-option
-                            v-for="item in xtRdj"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select>
-                </div></el-col>
-            </el-row>
-            <el-row :gutter="20">
-                <el-col :span="9"><div class="grid-content bg-purple">
-                    <p>单个会员日兑奖数目(元宝):</p>
-                    <el-select class="xtSetSel" v-model="xthydjVal" placeholder="请选择">
-                        <el-option
-                            v-for="item in xthydj"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
-                        </el-option>
-                    </el-select>
-                </div></el-col>
-                <el-col :span="9">
-                    <div class="grid-content bg-purple">
-                        <p>单个推广员日兑奖数目(元宝)</p>
-                        <el-select class="xtSetSel" v-model="xttgdjVal" placeholder="请选择">
+            <template v-if="SQWarning">
+                <el-row :gutter="20">
+                    <el-col :span="9"><div class="grid-content bg-purple">
+                        <p>日累计充值数目(元宝):</p>
+                        <el-select class="xtSetSel" v-model="xtRczVal" placeholder="请选择">
                             <el-option
-                                v-for="item in xttgdj"
+                                v-for="item in xtRcz"
                                 :key="item.value"
                                 :label="item.label"
                                 :value="item.value">
                             </el-option>
                         </el-select>
-                    </div>
-                </el-col>
-            </el-row>
+                    </div></el-col>
+                    <el-col :span="9"><div class="grid-content bg-purple">
+                        <p>日累计兑奖数目(元宝):</p>
+                        <el-select class="xtSetSel" v-model="xtRdjVal" placeholder="请选择">
+                            <el-option
+                                v-for="item in xtRdj"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div></el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="9"><div class="grid-content bg-purple">
+                        <p>单个会员日兑奖数目(元宝):</p>
+                        <el-select class="xtSetSel" v-model="xthydjVal" placeholder="请选择">
+                            <el-option
+                                v-for="item in xthydj"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div></el-col>
+                    <el-col :span="9">
+                        <div class="grid-content bg-purple">
+                            <p>单个推广员日兑奖数目(元宝)</p>
+                            <el-select class="xtSetSel" v-model="xttgdjVal" placeholder="请选择">
+                                <el-option
+                                    v-for="item in xttgdj"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>
+                    </el-col>
+                </el-row>
+            </template>
         </section>
         <hr>
         <el-checkbox v-model="OpenChat">聊天开启</el-checkbox>
@@ -491,7 +493,9 @@
                     })
                 }
                 let result = await this.$store.dispatch(actionTypes.upxtSetMsg, newUpxtSetMsg)
+                console.log('=====upxtSetMsg======')
                 console.log(result)
+
                 // 需要再一次 更新用户信息 !!!!!
                 if (result && result.success === true) {
                     this.$message({
