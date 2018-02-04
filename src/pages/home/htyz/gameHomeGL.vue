@@ -1,6 +1,6 @@
 <template>
     <div style="height: 770px" class="l-flex-row">
-        <new-xyls v-if="newDesk.xyls" @close="newDesk.xyls = false"></new-xyls>
+        <new-xyls v-if="newDesk.xyls" @close="newDesk.xyls = false" @submit="onSubmit"></new-xyls>
 
 
         <div class="l-flex-1 l-flex-column">
@@ -385,7 +385,8 @@
             }
         },
         methods: {
-            onSubmit () {
+            onSubmit (args) {
+                console.log(args)
                 console.log('submit!')
             },
             async updateDesk () {
