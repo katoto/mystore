@@ -241,6 +241,31 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
 
+
+    // new
+    // 获取盈利信息
+    //   客户端收到： {"args":[{"sumDeFen":0,"sumYaFen":200}],
+    //   "method":"getDeskData"}
+    async getDeskData ({dispatch, commit}, args = [3] ) {
+        const argsData = await dispatch('invoke', {
+            method: 'deskService/getDeskData',
+            args
+        })
+        return argsData[0]
+    },
+
+    // 开奖信息，第三个表格
+    async getDeskResult ({dispatch, commit}, args = [3,"2018-02-04","2018-02-04",
+        {"list":[],"order":"","orderBy":"","pageCount":0,
+            "pageNumber":1,"pageSize":8,"totalCount":0}] ) {
+        const argsData = await dispatch('invoke', {
+            method: 'deskService/getDeskResult',
+            args
+        })
+        return argsData[0]
+    },
+
+
     //     登陆公告管理  下一个tab
     //  获取现有公告
     async getNotice ({dispatch, commit}, args = []) {
