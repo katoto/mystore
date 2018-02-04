@@ -1,11 +1,11 @@
 <template>
     <div style="height: 770px" class="l-flex-row">
         <div class="l-flex-1 l-flex-column">
-            <div class=" l-relative" style="height: 300px">
+            <div class=" l-relative" style="height: 150px">
                 <div class="l-full" style="padding: 10px">
                     <div style="padding-bottom: 10px;border-bottom: 1px solid #ddd">
                         <h4 style="margin-bottom: 10px">新建公告：</h4>
-                        <div style="margin: 10px">
+                        <div stygile="margin: 10px">
                             <el-radio-group v-model="form.hlabel">
                                 <el-radio label="0">运营状态</el-radio>
                                 <el-radio label="-1">维护状态</el-radio>
@@ -516,7 +516,7 @@
                 deskList: null,
                 desks: [
                     {
-                        label: '幸运六师',
+                        label: '幸运六狮',
                         getDesk: 'deskService/getDeskList',
                         addDesk: 'deskService/addDesk'
                     },
