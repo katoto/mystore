@@ -59,7 +59,7 @@
             <tr>
                 <td align="center">自动提出挂机玩家：</td>
                 <td>
-                    <el-select class="" size="small" v-model="autoKick" :disabled="roomId===1">
+                    <el-select class="" size="small" v-model="autoKick">
                         <el-option
                             label="否"
                             :value="0"/>
@@ -231,10 +231,10 @@
                     <el-select class="" size="small" v-model="state" :disabled="roomId===1">
                         <el-option
                             label="开放"
-                            :value="0"/>
+                            :value="1"/>
                         <el-option
                             label="锁定"
-                            :value="1"/>
+                            :value="2"/>
                     </el-select>
                 </td>
             </tr>
@@ -248,6 +248,7 @@
 </template>
 <script>
     export default {
+        props: ['init'],
         data () {
             return {
                 'animalDiff': 1,
@@ -278,6 +279,13 @@
                 'waterValue': 0,
                 'zxhDiff': 1
             }
+        },
+        beforeMount () {
+            if(this.init)  {
+                console.log(this.init)
+                Object.assign(this, this.init)
+            }
+
         },
         methods: {
             onClose () {

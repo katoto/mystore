@@ -1,6 +1,6 @@
 <template>
     <div style="height: 770px" class="l-flex-row">
-        <new-xyls v-if="newDesk.xyls" @close="newDesk.xyls = false" @submit="onSubmit"></new-xyls>
+        <new-xyls v-if="newDesk.xyls" @close="newDesk.xyls = false" @submit="onSubmit" :init="currentDesk"></new-xyls>
 
 
         <div class="l-flex-1 l-flex-column">
@@ -65,8 +65,8 @@
                     <p style="border-top: 1px solid #eee;padding: 7px 0">【新手练习厅】已开启1桌，还可以开启0桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启1桌，还可以开启0桌 </p>
                     <header style="padding: 8px 0;border-top: 1px solid #ddd">
                         <el-button size="small" type="primary" @click="updateDesk">刷新</el-button>
-                        <el-button style="margin-left: 18px" size="small" @click="newDesk.xyls = true" type="primary">新增桌</el-button>
-                        <el-button style="margin-left: 18px" size="small">参数设置</el-button>
+                        <el-button style="margin-left: 18px" size="small" @click="openNewDesk" type="primary">新增桌</el-button>
+                        <el-button style="margin-left: 18px" size="small" @click="openModifyDesk">参数设置</el-button>
                         <el-button style="margin-left: 18px" size="small" type="danger">删除桌</el-button>
                         <el-button style="margin-left: 18px" size="small" type="primary">桌排序</el-button>
                     </header>
@@ -74,8 +74,10 @@
                         <el-table
                             :data="deskList"
                             height="300"
+                            highlight-current-row
                             size="small"
                             border
+                            @cell-click="deskSelect"
                             style="width: 100%">
                             <el-table-column
                                 prop="id"
@@ -88,7 +90,7 @@
                                 width="200">
                             </el-table-column>
                             <el-table-column
-                                prop="roomId"
+                                prop="roomName"
                                 label="所属房间">
                             </el-table-column>
                             <el-table-column
@@ -96,7 +98,7 @@
                                 label="在线人数">
                             </el-table-column>
                             <el-table-column
-                                prop="state"
+                                prop="stateName"
                                 label="桌状态">
                             </el-table-column>
                         </el-table>
@@ -244,8 +246,8 @@
                     timeOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
                     content: ''
                 },
-                desk: 'deskService/getDeskList',
                 deskIdx: 0,
+                currentDesk: null,
                 deskList: null,
                 desks: [
                     {
@@ -434,6 +436,31 @@
             }
         },
         methods: {
+            async deskSelect (desk) {
+                this.currentDesk = desk
+                // 传入桌子id  获取第二列表的头部信息
+                let getDeskData = await this.$store.dispatch(aTypes.getDeskData, desk.id)
+                if (getDeskData && getDeskData.sumDeFen !== undefined) {
+                    this.sumYaFen_2 = getDeskData.sumYaFen
+                    this.sumDeFen_2 = getDeskData.sumDeFen
+                    this.allGain_2 = Number(getDeskData.sumYaFen) - Number(getDeskData.sumDeFen)
+                }
+            },
+            openModifyDesk () {
+                if(!this.currentDesk) {
+                    return this.$message({
+                        message: '请选择要修改的桌子',
+                        type: 'error',
+                        duration: 1200
+                    })
+                }
+                this.newDesk.xyls = true
+            },
+            openNewDesk () {
+                this.currentDesk = null
+                this.newDesk.xyls = true
+
+            },
 
             async onSubmit (args) {
                 let ret = await this.$store.dispatch(aTypes.addDesk, {method: this.desks[this.deskIdx].addDesk, args})
@@ -448,7 +475,14 @@
                 console.log('submit!')
             },
             async updateDesk () {
+
+
                 this.deskList = await this.$store.dispatch(aTypes.getDeskList, this.desks[this.deskIdx].getDesk)
+                this.deskList.forEach((desk)=> {
+                    desk.roomName = desk.roomId===2?'欢乐竞技厅':'新手练习厅'
+                    desk.stateName = desk.state === 1?'开放':'锁定'
+                })
+                console.log(this.deskList.length)
             },
             updateDTStatus () {
                 if (this.form.hlabel === '0') {
@@ -554,15 +588,8 @@
         },
         computed: {},
         async mounted () {
-            this.updateDesk()
+            await this.updateDesk()
 
-            // 传入桌子id  获取第二列表的头部信息
-            let getDeskData = await this.$store.dispatch(aTypes.getDeskData, [3])
-            if (getDeskData && getDeskData.sumDeFen !== undefined) {
-                this.sumYaFen_2 = getDeskData.sumYaFen
-                this.sumDeFen_2 = getDeskData.sumDeFen
-                this.allGain_2 = Number(getDeskData.sumYaFen) - Number(getDeskData.sumDeFen)
-            }
         }
     }
 </script>
