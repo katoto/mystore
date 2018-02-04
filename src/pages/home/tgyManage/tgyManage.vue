@@ -17,7 +17,11 @@
         },
         watch: {},
         methods: {},
-        computed: {},
+        computed: {
+            loginInfo () {
+                return this.$store.state.user.loginInfo
+            }
+        },
         mounted () {
         }
     }
