@@ -46,12 +46,12 @@
                             更新大厅状态
                         </el-button>
                     </div>
-                    <el-select class="" size="small" v-model="desk" placeholder="请选择查询类型">
+                    <el-select class="" size="small" v-model="deskIdx" placeholder="请选择查询类型">
                         <el-option
-                            v-for="item in desks"
+                            v-for="(item, idx) in desks"
                             :key="item.getDesk"
                             :label="item.label"
-                            :value="item.getDesk">
+                            :value="idx">
                         </el-option>
 
 
@@ -250,6 +250,7 @@
                     content: ''
                 },
                 desk: 'deskService/getDeskList',
+                deskIdx: 0,
                 deskList: null,
                 desks: [
                     {
@@ -380,17 +381,25 @@
           newXyls
         },
         watch: {
-            async desk (desk) {
+            async deskIdx () {
                 this.updateDesk()
             }
         },
         methods: {
-            onSubmit (args) {
-                console.log(args)
+            async onSubmit (args) {
+                let ret = await this.$store.dispatch(aTypes.addDesk, {method: this.desks[this.deskIdx].addDesk, args})
+                if(!ret.success) {
+                    this.$message({
+                        message: ret.message,
+                        type: 'error',
+                        duration: 1200
+                    })
+                }
+                console.log(ret)
                 console.log('submit!')
             },
             async updateDesk () {
-                this.deskList = await this.$store.dispatch(aTypes.getDeskList, this.desk)
+                this.deskList = await this.$store.dispatch(aTypes.getDeskList, this.desks[this.deskIdx].getDesk)
             },
             updateDTStatus () {
                 if (this.form.hlabel === '0') {
