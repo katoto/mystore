@@ -62,8 +62,8 @@
                 :before-close="handleClose">
                 <table>
                     <tr>
-                        <td width="20%" align="center">所属房间：</td>
-                        <td width="30%">
+                        <td width="22%" align="center">所属房间：</td>
+                        <td width="28%">
                             <el-select class="" size="small" v-model="newDesk.time">
                                 <el-option
                                     label="欢乐竞技厅"
@@ -73,8 +73,8 @@
                                     value="1"/>
                             </el-select>
                         </td>
-                        <td width="20%" align="center">动物几率：</td>
-                        <td width="30%">
+                        <td width="22%" align="center">动物几率：</td>
+                        <td width="28%">
                             <el-select class="" size="small" v-model="newDesk.time1">
                                 <el-option
                                     label="难"
