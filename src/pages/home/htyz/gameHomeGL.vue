@@ -314,30 +314,55 @@
                     }],
                 value: '幸运六狮',
 
+                userMsgList: [
+                    {'answer': '-1',
+                        'bindingName': '',
+                        'borrow': 0,
+                        'boxGameGold': 0,
+                        'boxLottery': 0,
+                        'card': '-1',
+                        'currentGameScore': 19800,
+                        'displayStatus': 0,
+                        'expeGold': 0,
+                        'expeScore': 0,
+                        'expiryNum': 0,
+                        'gameGold': 4600,
+                        'gameScore': 0,
+                        'id': 63,
+                        'lastDeskId': 3,
+                        'lastGame': 0,
+                        'level': 1,
+                        'levelScore': 0,
+                        'loginDate': '2018-02-04 09:26:08',
+                        'lottery': 0,
+                        'name': '',
+                        'nickname': 'ZUK Z2121',
+                        'overflow': 0,
+                        'password': 'e10adc3949ba59abbe56e057f20f883e',
+                        'payMoney': 0,
+                        'phone': '-',
+                        'photoId': 3,
+                        'promoterId': 0,
+                        'promoterName': 'admin',
+                        'question': '-1',
+                        'registDate': '2018-01-27 21:35:37',
+                        'safeBox': 0,
+                        'security': 0,
+                        'sex': '男',
+                        'shareClearingTime': '',
+                        'shutupStatus': 0,
+                        'specialMark': 0,
+                        'status': 0,
+                        'subUserCount': 0,
+                        'type': 1,
+                        'username': '00250000',
+                        'warningStatus': 0}
 
-                userMsgList:[
-                  {"answer":"-1","bindingName":"","borrow":0,"boxGameGold":0
-                    ,"boxLottery":0,"card":"-1"
-                    ,"currentGameScore":19800,"displayStatus":0,
-                    "expeGold":0,"expeScore":0,"expiryNum":0,
-                    "gameGold":4600,"gameScore":0,"id":63,"lastDeskId":3,
-                    "lastGame":0,"level":1,"levelScore":0
-                    ,"loginDate":"2018-02-04 09:26:08","lottery":0,"name":"",
-                    "nickname":"ZUK Z2121","overflow":0
-                    ,"password":"e10adc3949ba59abbe56e057f20f883e",
-                    "payMoney":0,"phone":"-","photoId":3
-                    ,"promoterId":0,"promoterName":"admin","question":"-1",
-                    "registDate":"2018-01-27 21:35:37"
-                    ,"safeBox":0,"security":0,"sex":"男","shareClearingTime":"",
-                    "shutupStatus":0,"specialMark":0
-                    ,"status":0,"subUserCount":0,"type":1,"username":"00250000",
-                    "warningStatus":0}
+                ],
 
-                    ],
-
-                sumYaFen_2:0,
-                sumDeFen_2:0,
-                allGain_2:0,
+                sumYaFen_2: 0,
+                sumDeFen_2: 0,
+                allGain_2: 0,
 
                 pickerOptions: {
                     shortcuts: [{
@@ -375,33 +400,33 @@
                 xtEndTime: null,
 
                 winMsgList: [{
-                    animal:10,
-                    awardGold:5455,
-                    betPeople:1,
-                    color:0,
-                    datetime:"2018-02-04 09:28:57",
-                    deskId:3,
-                    globalType:0,
-                    id:278987,
-                    lightningBeilv:0,
-                    luckAnimal:0,
-                    luckNum:0,
-                    luckType:0,
-                    moreInfo:"",
-                    result:200,
-                    resultStr:"闲 普通绿兔子",
-                    roomId:2,
-                    songDengCount:0,
-                    sumDeFen:0,
-                    sumYaFen:200,
-                    type:0,
-                    zxh:2
+                    animal: 10,
+                    awardGold: 5455,
+                    betPeople: 1,
+                    color: 0,
+                    datetime: '2018-02-04 09:28:57',
+                    deskId: 3,
+                    globalType: 0,
+                    id: 278987,
+                    lightningBeilv: 0,
+                    luckAnimal: 0,
+                    luckNum: 0,
+                    luckType: 0,
+                    moreInfo: '',
+                    result: 200,
+                    resultStr: '闲 普通绿兔子',
+                    roomId: 2,
+                    songDengCount: 0,
+                    sumDeFen: 0,
+                    sumYaFen: 200,
+                    type: 0,
+                    zxh: 2
                 }]
 
             }
         },
         components: {
-          newXyls
+            newXyls
         },
         watch: {
             async deskIdx () {
@@ -412,7 +437,7 @@
 
             async onSubmit (args) {
                 let ret = await this.$store.dispatch(aTypes.addDesk, {method: this.desks[this.deskIdx].addDesk, args})
-                if(!ret.success) {
+                if (!ret.success) {
                     this.$message({
                         message: ret.message,
                         type: 'error',
@@ -447,7 +472,7 @@
             },
 
             // new
-            async getWinMsgList(){
+            async getWinMsgList () {
                 if (!this.xtStartTime || !this.xtEndTime) {
                     this.$message({
                         message: '请选择查询时间',
@@ -458,15 +483,15 @@
                 }
                 //    修改
                 let result = await this.$store.dispatch(aTypes.getDeskResult, [ 3,
-                    this.xtStartTime , this.xtEndTime ,
-                    { "list":[],"order":"","orderBy":"","pageCount":0, "pageNumber":1 ,"pageSize":8,"totalCount":this.totalCount }])
+                    this.xtStartTime, this.xtEndTime,
+                    { 'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 8, 'totalCount': this.totalCount }])
 
                 if (result && result.list) {
                     let copyList = result.list
                     this.winMsgList = copyList
                     // 处理页码
-                    this.totalCount = result.totalCount;
-                    this.pageNumber = result.pageNumber;
+                    this.totalCount = result.totalCount
+                    this.pageNumber = result.pageNumber
                     this.pageSize = result.pageSize
                 }
             },
@@ -484,61 +509,60 @@
                 }
                 return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
                     switch (a) {
-                        case 'yyyy':
-                            return tf(t.getFullYear())
-                        case 'MM':
-                            return tf(t.getMonth() + 1)
-                        case 'mm':
-                            return tf(t.getMinutes())
-                        case 'dd':
-                            return tf(t.getDate())
-                        case 'HH':
-                            return tf(t.getHours())
-                        case 'ss':
-                            return tf(t.getSeconds())
+                    case 'yyyy':
+                        return tf(t.getFullYear())
+                    case 'MM':
+                        return tf(t.getMonth() + 1)
+                    case 'mm':
+                        return tf(t.getMinutes())
+                    case 'dd':
+                        return tf(t.getDate())
+                    case 'HH':
+                        return tf(t.getHours())
+                    case 'ss':
+                        return tf(t.getSeconds())
                     }
                 })
             },
             async clickPage (size) {
-              console.log(1234313)
+                console.log(1234313)
                 // 分页  对应第三个表格的分页
-                let result = null;
+                let result = null
 
                 // 修改 getDeskResult 、 修改id  对应的 方法
-                if (!this.xtStartTime || !this.xtEndTime ) {
+                if (!this.xtStartTime || !this.xtEndTime) {
                     result = await this.$store.dispatch(aTypes.getDeskResult, [ 3,
                         this.format(new Date().getTime() - 3600 * 1000 * 24 * 2), this.format(new Date()),
-                        { "list":[],"order":"","orderBy":"","pageCount":0, "pageNumber":size ,"pageSize":8,"totalCount":this.totalCount  }])
+                        { 'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 8, 'totalCount': this.totalCount }])
                 } else {
                     result = await this.$store.dispatch(aTypes.getDeskResult, [ 3,
-                        this.xtStartTime , this.xtEndTime ,
-                        { "list":[],"order":"","orderBy":"","pageCount":0, "pageNumber":size ,"pageSize":8,"totalCount":this.totalCount  }])
+                        this.xtStartTime, this.xtEndTime,
+                        { 'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 8, 'totalCount': this.totalCount }])
                 }
                 console.log('第三个表格 分页')
-                console.log(result);
+                console.log(result)
                 // 不知是否对应上。
                 if (result && result.list) {
                     let copyList = result.list
                     this.winMsgList = copyList
                     // 处理页码
-                    this.totalCount = result.totalCount;
-                    this.pageNumber = result.pageNumber;
-                    this.pageSize = result.pageSize;
+                    this.totalCount = result.totalCount
+                    this.pageNumber = result.pageNumber
+                    this.pageSize = result.pageSize
                 }
-            },
+            }
         },
         computed: {},
         async mounted () {
             this.updateDesk()
 
             // 传入桌子id  获取第二列表的头部信息
-            let getDeskData = await this.$store.dispatch(aTypes.getDeskData, [3] )
-            if( getDeskData && getDeskData.sumDeFen !== undefined ){
-                this.sumYaFen_2 = getDeskData.sumYaFen ;
-                this.sumDeFen_2 = getDeskData.sumDeFen ;
-                this.allGain_2 = Number( getDeskData.sumYaFen ) - Number( getDeskData.sumDeFen ) ;
+            let getDeskData = await this.$store.dispatch(aTypes.getDeskData, [3])
+            if (getDeskData && getDeskData.sumDeFen !== undefined) {
+                this.sumYaFen_2 = getDeskData.sumYaFen
+                this.sumDeFen_2 = getDeskData.sumDeFen
+                this.allGain_2 = Number(getDeskData.sumYaFen) - Number(getDeskData.sumDeFen)
             }
-
         }
     }
 </script>

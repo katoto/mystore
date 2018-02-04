@@ -250,40 +250,40 @@
     export default {
         data () {
             return {
-                "animalDiff":1,
-                "autoKick":10,
-                "beilvModel":1,
-                "beilvType":0,
-                "betTime":30,
-                "exchange":50,
-                "id":0,
-                "maxBet":500,
-                "max_h":1000,
-                "max_zx":1000,
-                "minBet":50,
-                "minGold":1,
-                "min_zxh":50,
-                "name":"",
-                "onceExchangeValue":100,
-                "onlineNumber":0,
-                "orderBy":0,
-                "roomId":2,
-                "siteType":1,
-                "state":1,
-                "sumDeFen":0,
-                "sumYaFen":0,
-                "sumZhxDeFen":0,
-                "sumZhxYaFen":0,
-                "waterType":0,
-                "waterValue":0,
-                "zxhDiff":1
+                'animalDiff': 1,
+                'autoKick': 10,
+                'beilvModel': 1,
+                'beilvType': 0,
+                'betTime': 30,
+                'exchange': 50,
+                'id': 0,
+                'maxBet': 500,
+                'max_h': 1000,
+                'max_zx': 1000,
+                'minBet': 50,
+                'minGold': 1,
+                'min_zxh': 50,
+                'name': '',
+                'onceExchangeValue': 100,
+                'onlineNumber': 0,
+                'orderBy': 0,
+                'roomId': 2,
+                'siteType': 1,
+                'state': 1,
+                'sumDeFen': 0,
+                'sumYaFen': 0,
+                'sumZhxDeFen': 0,
+                'sumZhxYaFen': 0,
+                'waterType': 0,
+                'waterValue': 0,
+                'zxhDiff': 1
             }
         },
         methods: {
             onClose () {
                 this.$emit('close')
             },
-            onSubmit() {
+            onSubmit () {
                 let param = JSON.parse(JSON.stringify(this.$data))
                 this.$emit('submit', param)
             }
