@@ -1,5 +1,8 @@
 <template>
     <div style="height: 770px" class="l-flex-row">
+        <new-xyls v-if="newDesk.xyls" @close="newDesk.xyls = false" @submit="onSubmit"></new-xyls>
+
+
         <div class="l-flex-1 l-flex-column">
             <div class=" l-relative" style="height: 150px">
                 <div class="l-full" style="padding: 10px">
@@ -43,263 +46,18 @@
                             更新大厅状态
                         </el-button>
                     </div>
-                    <el-select class="" size="small" v-model="desk" placeholder="请选择查询类型">
+                    <el-select class="" size="small" v-model="deskIdx" placeholder="请选择查询类型">
                         <el-option
-                            v-for="item in desks"
+                            v-for="(item, idx) in desks"
                             :key="item.getDesk"
                             :label="item.label"
-                            :value="item.getDesk">
+                            :value="idx">
                         </el-option>
 
 
                     </el-select>
                 </div>
             </div>
-            <el-dialog
-                title="新增桌"
-                width="500"
-                :visible="newDesk.visible"
-                :before-close="handleClose">
-                <table>
-                    <tr>
-                        <td width="20%" align="center">所属房间：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time">
-                                <el-option
-                                    label="欢乐竞技厅"
-                                    value="0"/>
-                                <el-option
-                                    label="新手练习厅"
-                                    value="1"/>
-                            </el-select>
-                        </td>
-                        <td width="20%" align="center">动物几率：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time1">
-                                <el-option
-                                    label="难"
-                                    value="0"/>
-                                <el-option
-                                    label="中"
-                                    value="1"/>
-                                <el-option
-                                    label="易"
-                                    value="2"/>
-                                <el-option v-for="item in [90, 91,92, 93,94,95, 96,97,98,99]"
-                                    :label="item"
-                                    :value="item"/>
-                            </el-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="20%" align="center">桌名：</td>
-                        <td width="30%"><el-input v-model="userName" placeholder="请输入内容"></el-input></td>
-                        <td width="20%" align="center">庄闲和几率：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time1">
-                                <el-option
-                                    label="难"
-                                    value="0"/>
-                                <el-option
-                                    label="中"
-                                    value="1"/>
-                                <el-option
-                                    label="易"
-                                    value="2"/>
-                                <el-option v-for="item in [90, 91,92, 93,94,95, 96,97,98,99]"
-                                           :label="item"
-                                           :value="item"/>
-                            </el-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="20%" align="center">自动提出挂机玩家：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time3">
-                                <el-option
-                                    label="否"
-                                    value="0"/>
-                                <el-option
-                                    label="1m"
-                                    value="1"/>
-                                <el-option
-                                    label="3m"
-                                    value="3"/>
-                                <el-option
-                                    label="10m"
-                                    value="10"/>
-                            </el-select>
-
-
-                        </td>
-                        <td width="20%" align="center">抽/放水类型：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time4">
-                                <el-option
-                                    label="抽水"
-                                    value="0"/>
-                                <el-option
-                                    label="放水"
-                                    value="1"/>
-                            </el-select>
-                            <el-slider v-model="newDesk.time18" max="999" show-input></el-slider>
-                        </td>
-                    </tr>
-
-
-                    <tr>
-                        <td width="20%" align="center">最小携带（游戏币）：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time6">
-                                <el-option v-for="item in [1, 50,100, 200,300,400, 500,1000,5000]"
-                                           :label="item"
-                                           :value="item"/>
-                            </el-select>
-
-                        </td>
-                        <td width="20%" align="center">场地类型：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time7">
-                                <el-option
-                                           label="大型场地"
-                                           value="0"/>
-                                <el-option
-                                    label="中型场地"
-                                    value="1"/>
-                                <el-option
-                                    label="小型场地"
-                                    value="2"/>
-                            </el-select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="20%" align="center">动物最大押注（游戏分值）：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time8">
-                                <el-option v-for="item in [50,100, 150, 200,250,300,400, 500,600, 700, 800, 900,1000,1500]"
-                                           :label="item"
-                                           :value="item"/>
-                            </el-select>
-
-                        </td>
-                        <td width="20%" align="center">一币分值（游戏分值）：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time7">
-                                <el-option v-for="item in [1,2, 5, 10,50,1000]"
-                                           :label="item"
-                                           :value="item"/>
-                            </el-select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="20%" align="center">动物最小押注（游戏分值）：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time8">
-                                <el-option v-for="item in [1,5, 10, 50, 100, 200,500]"
-                                           :label="item"
-                                           :value="item"/>
-                            </el-select>
-
-                        </td>
-                        <td width="20%" align="center">押注时间：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time9">
-                                <el-option v-for="item in [10,15, 20, 25,30,35]"
-                                           :label="item"
-                                           :value="item"/>
-                            </el-select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="20%" align="center">庄闲最大押注（游戏分值）：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time10">
-                                <el-option v-for="item in [1,5, 10, 50, 100, 200,500]"
-                                           :label="item"
-                                           :value="item"/>
-                            </el-select>
-
-                        </td>
-                        <td width="20%" align="center">赔率表类型：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time11">
-                                <el-option
-                                           label="46倍组合"
-                                           value="46"/>
-                                <el-option
-                                    label="68倍组合"
-                                    value="68"/>
-                                <el-option
-                                    label="78倍组合"
-                                    value="78"/>
-                            </el-select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="20%" align="center">和最大押注（游戏分值）：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time12">
-                                <el-option v-for="item in [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,1500, 2000, 2500]"
-                                           :label="item"
-                                           :value="item"/>
-                            </el-select>
-
-                        </td>
-                        <td width="20%" align="center">赔率表模式：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time13">
-                                <el-option
-                                    label="固定"
-                                    value="0"/>
-                                <el-option
-                                    label="打乱"
-                                    value="1"/>
-                            </el-select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="20%" align="center">庄闲和最小押注（游戏分值）：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time14">
-                                <el-option v-for="item in [0, 1, 5, 10, 20, 50, 100, 200, 500, 1000]"
-                                           :label="item"
-                                           :value="item"/>
-                            </el-select>
-
-                        </td>
-                        <td width="20%" align="center">上分设置（游戏币）：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time15">
-                                <el-option v-for="item in [10, 50, 100, 500, 1000]"
-                                       :label="item"
-                                       :value="item"/>
-                            </el-select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="20%" align="center">桌状态：</td>
-                        <td width="30%">
-                            <el-select class="" size="small" v-model="newDesk.time16">
-                                <el-option
-                                    label="开放"
-                                    value="0"/>
-                                <el-option
-                                    label="锁定"
-                                    value="1"/>
-                            </el-select>
-                        </td>
-                    </tr>
-                </table>
-                <span slot="footer" class="dialog-footer">
-                        <el-button size="small" @click="newDesk.visible = false">取 消</el-button>
-                        <el-button size="small" type="primary" @click="doAddUser()">确 定</el-button>
-                     </span>
-            </el-dialog>
 
             <div class="l-flex-1 l-relative">
                 <div class="l-full" style="padding: 10px">
@@ -307,7 +65,7 @@
                     <p style="border-top: 1px solid #eee;padding: 7px 0">【新手练习厅】已开启1桌，还可以开启0桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启1桌，还可以开启0桌 </p>
                     <header style="padding: 8px 0;border-top: 1px solid #ddd">
                         <el-button size="small" type="primary" @click="updateDesk">刷新</el-button>
-                        <el-button style="margin-left: 18px" size="small" @click="newDesk.visible = true" type="primary">新增桌</el-button>
+                        <el-button style="margin-left: 18px" size="small" @click="newDesk.xyls = true" type="primary">新增桌</el-button>
                         <el-button style="margin-left: 18px" size="small">参数设置</el-button>
                         <el-button style="margin-left: 18px" size="small" type="danger">删除桌</el-button>
                         <el-button style="margin-left: 18px" size="small" type="primary">桌排序</el-button>
@@ -472,38 +230,12 @@
 
 <script>
     import {aTypes, mTypes} from '~store/htyz'
+    import newXyls from '~components/htyz/new_xyls.vue'
     export default {
         data () {
             return {
                 newDesk: {
-                    visible: false,
-                    "animalDiff":1,
-                    "autoKick":10,
-                    "beilvModel":1,
-                    "beilvType":0,
-                    "betTime":30,
-                    "exchange":50,
-                    "id":0,
-                    "maxBet":500,
-                    "max_h":1000,
-                    "max_zx":1000,
-                    "minBet":50,
-                    "minGold":1,
-                    "min_zxh":50,
-                    "name":"新增桌名",
-                    "onceExchangeValue":100,
-                    "onlineNumber":0,
-                    "orderBy":0,
-                    "roomId":2,
-                    "siteType":1,
-                    "state":1,
-                    "sumDeFen":0,
-                    "sumYaFen":0,
-                    "sumZhxDeFen":0,
-                    "sumZhxYaFen":0,
-                    "waterType":0,
-                    "waterValue":0,
-                    "zxhDiff":1
+                    xyls: false
                 },
                 form: {
                     hlabel: '0',
@@ -513,6 +245,7 @@
                     content: ''
                 },
                 desk: 'deskService/getDeskList',
+                deskIdx: 0,
                 deskList: null,
                 desks: [
                     {
@@ -667,18 +400,30 @@
 
             }
         },
+        components: {
+          newXyls
+        },
         watch: {
-            async desk (desk) {
+            async deskIdx () {
                 this.updateDesk()
             }
         },
         methods: {
 
-            onSubmit () {
+            async onSubmit (args) {
+                let ret = await this.$store.dispatch(aTypes.addDesk, {method: this.desks[this.deskIdx].addDesk, args})
+                if(!ret.success) {
+                    this.$message({
+                        message: ret.message,
+                        type: 'error',
+                        duration: 1200
+                    })
+                }
+                console.log(ret)
                 console.log('submit!')
             },
             async updateDesk () {
-                this.deskList = await this.$store.dispatch(aTypes.getDeskList, this.desk)
+                this.deskList = await this.$store.dispatch(aTypes.getDeskList, this.desks[this.deskIdx].getDesk)
             },
             updateDTStatus () {
                 if (this.form.hlabel === '0') {
