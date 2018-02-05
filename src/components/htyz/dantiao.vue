@@ -1,6 +1,6 @@
 <template>
     <el-dialog
-        title="新增桌"
+        :title="modify?'参数设置':'新增桌'"
         width="500"
         visible
         :before-close="onClose">
@@ -17,43 +17,35 @@
                             :value="1"/>
                     </el-select>
                 </td>
-                <td width="25%" align="center">动物几率：</td>
+                <td width="25%" align="center">当轮锁定下限（游戏分值）：</td>
                 <td width="25%">
-                    <el-select class="" size="small" v-model="animalDiff" :disabled="roomId===1">
+                    <el-select class="" size="small" v-model="wheelLocal_ext" :disabled="roomId===1">
                         <el-option
-                            label="难"
-                            :value="0"/>
-                        <el-option
-                            label="中"
+                            label="无"
                             :value="1"/>
                         <el-option
-                            label="易"
+                            label="有"
                             :value="2"/>
-                        <el-option v-for="item in [90, 91,92, 93,94,95, 96,97,98,99]"
-                                   :label="item"
-                                   :value="item"/>
                     </el-select>
+                    <el-slider v-if="wheelLocal_ext===2" v-model="wheelLocal" :min="1000" :max="500000" :disabled="roomId===1"></el-slider>
                 </td>
             </tr>
             <tr>
-                <td  align="center">桌名：</td>
-                <td><el-input v-model="name" placeholder="请输入内容"></el-input></td>
-                <td align="center">庄闲和几率：</td>
+                <td align="center">桌名：</td>
                 <td>
-                    <el-select class="" size="small" v-model="zxhDiff" :disabled="roomId===1">
+                    <el-input v-model="name" placeholder="请输入内容"></el-input>
+                </td>
+                <td align="center">当日锁定下限（游戏分值）：</td>
+                <td>
+                    <el-select class="" size="small" v-model="dayLocal_ext" :disabled="roomId===1">
                         <el-option
-                            label="难"
-                            value="0"/>
+                            label="无"
+                            :value="1"/>
                         <el-option
-                            label="中"
-                            value="1"/>
-                        <el-option
-                            label="易"
-                            value="2"/>
-                        <el-option v-for="item in [90, 91,92, 93,94,95, 96,97,98,99]"
-                                   :label="item"
-                                   :value="item"/>
+                            label="有"
+                            :value="2"/>
                     </el-select>
+                    <el-slider v-if="dayLocal_ext===2" v-model="dayLocal" :max="999000" :min="1000" :disabled="roomId===1"></el-slider>
                 </td>
             </tr>
             <tr>
@@ -76,17 +68,13 @@
 
 
                 </td>
-                <td align="center">抽/放水类型：</td>
+                <td align="center">上分设置（游戏币）：</td>
                 <td>
-                    <el-select class="" size="small" v-model="waterType" :disabled="roomId===1">
-                        <el-option
-                            label="抽水"
-                            :value="0"/>
-                        <el-option
-                            label="放水"
-                            :value="1"/>
+                    <el-select class="" size="small" v-model="onceExchangeValue" :disabled="roomId===1">
+                        <el-option v-for="item in [10, 50, 100, 500, 1000]"
+                                   :label="item"
+                                   :value="item"/>
                     </el-select>
-                    <el-slider v-model="waterValue" :max="999" show-input :disabled="roomId===1"></el-slider>
                 </td>
             </tr>
 
@@ -101,131 +89,6 @@
                     </el-select>
 
                 </td>
-                <td align="center">场地类型：</td>
-                <td>
-                    <el-select class="" size="small" v-model="siteType" :disabled="roomId===1">
-                        <el-option
-                            label="大型场地"
-                            :value="0"/>
-                        <el-option
-                            label="中型场地"
-                            :value="1"/>
-                        <el-option
-                            label="小型场地"
-                            :value="2"/>
-                    </el-select>
-                </td>
-            </tr>
-
-            <tr>
-                <td align="center">动物最大押注（游戏分值）：</td>
-                <td>
-                    <el-select class="" size="small" v-model="maxBet" :disabled="roomId===1">
-                        <el-option v-for="item in [50,100, 150, 200,250,300,400, 500,600, 700, 800, 900,1000,1500]"
-                                   :label="item"
-                                   :value="item"/>
-                    </el-select>
-
-                </td>
-                <td align="center">一币分值（游戏分值）：</td>
-                <td>
-                    <el-select class="" size="small" v-model="exchange" :disabled="roomId===1">
-                        <el-option v-for="item in [1,2, 5, 10,50,1000]"
-                                   :label="item"
-                                   :value="item"/>
-                    </el-select>
-                </td>
-            </tr>
-
-            <tr>
-                <td align="center">动物最小押注（游戏分值）：</td>
-                <td>
-                    <el-select class="" size="small" v-model="minBet" :disabled="roomId===1">
-                        <el-option v-for="item in [1,5, 10, 50, 100, 200,500]"
-                                   :label="item"
-                                   :value="item"/>
-                    </el-select>
-
-                </td>
-                <td align="center">押注时间：</td>
-                <td>
-                    <el-select class="" size="small" v-model="betTime" :disabled="roomId===1">
-                        <el-option v-for="item in [10,15, 20, 25,30,35]"
-                                   :label="item"
-                                   :value="item"/>
-                    </el-select>
-                </td>
-            </tr>
-
-            <tr>
-                <td align="center">庄闲最大押注（游戏分值）：</td>
-                <td>
-                    <el-select class="" size="small" v-model="max_zx" :disabled="roomId===1">
-                        <el-option v-for="item in [1,5, 10, 50, 100, 200,500]"
-                                   :label="item"
-                                   :value="item"/>
-                    </el-select>
-
-                </td>
-                <td align="center">赔率表类型：</td>
-                <td>
-                    <el-select class="" size="small" v-model="beilvType" :disabled="roomId===1">
-                        <el-option
-                            label="46倍组合"
-                            :value="0"/>
-                        <el-option
-                            label="68倍组合"
-                            :value="1"/>
-                        <el-option
-                            label="78倍组合"
-                            :value="2"/>
-                    </el-select>
-                </td>
-            </tr>
-
-            <tr>
-                <td align="center">和最大押注（游戏分值）：</td>
-                <td>
-                    <el-select class="" size="small" v-model="max_h" :disabled="roomId===1">
-                        <el-option v-for="item in [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,1500, 2000, 2500]"
-                                   :label="item"
-                                   :value="item"/>
-                    </el-select>
-
-                </td>
-                <td align="center">赔率表模式：</td>
-                <td>
-                    <el-select class="" size="small" v-model="beilvModel" :disabled="roomId===1">
-                        <el-option
-                            label="固定"
-                            :value="0"/>
-                        <el-option
-                            label="打乱"
-                            :value="1"/>
-                    </el-select>
-                </td>
-            </tr>
-
-            <tr>
-                <td align="center">庄闲和最小押注（游戏分值）：</td>
-                <td>
-                    <el-select class="" size="small" v-model="min_zxh" :disabled="roomId===1">
-                        <el-option v-for="item in [0, 1, 5, 10, 20, 50, 100, 200, 500, 1000]"
-                                   :label="item"
-                                   :value="item"/>
-                    </el-select>
-
-                </td>
-                <td align="center">上分设置（游戏币）：</td>
-                <td>
-                    <el-select class="" size="small" v-model="onceExchangeValue" :disabled="roomId===1">
-                        <el-option v-for="item in [10, 50, 100, 500, 1000]"
-                                   :label="item"
-                                   :value="item"/>
-                    </el-select>
-                </td>
-            </tr>
-            <tr>
                 <td align="center">桌状态：</td>
                 <td>
                     <el-select class="" size="small" v-model="state" :disabled="roomId===1">
@@ -238,6 +101,49 @@
                     </el-select>
                 </td>
             </tr>
+
+
+            <tr>
+                <td align="center">游戏限红（游戏分值）：</td>
+                <td>
+                    <el-slider v-model="gameXianHong" :min="1000" :max="20000" :disabled="roomId===1"></el-slider>
+
+                </td>
+                <td align="center">基本压分（游戏分值）：</td>
+                <td>
+                    <el-select class="" size="small" v-model="baseYaFen" :disabled="roomId===1">
+                        <el-option v-for="item in [5, 10,50,100]"
+                                   :label="item"
+                                   :value="item"/>
+                    </el-select>
+                </td>
+            </tr>
+
+
+
+
+
+            <tr>
+                <td align="center">一币分值（游戏分值）：</td>
+                <td>
+                    <el-select class="" size="small" v-model="exchange" :disabled="roomId===1">
+                        <el-option v-for="item in [1,2, 5, 10,50,1000]"
+                                   :label="item"
+                                   :value="item"/>
+                    </el-select>
+
+                </td>
+                <td align="center">最小压分（游戏分值）：</td>
+                <td>
+                    <el-select class="" size="small" v-model="minYaFen" :disabled="roomId===1">
+                        <el-option v-for="item in [5,50,100,500]"
+                                   :label="item"
+                                   :value="item"/>
+                    </el-select>
+                </td>
+            </tr>
+
+
         </table>
         <span slot="footer" class="dialog-footer">
                         <el-button size="small" @click="onClose">取 消</el-button>
@@ -251,38 +157,49 @@
         props: ['init', 'modify'],
         data () {
             return {
-                'animalDiff': 1,
-                'autoKick': 10,
-                'beilvModel': 1,
-                'beilvType': 0,
-                'betTime': 30,
-                'exchange': 50,
-                'id': 0,
-                'maxBet': 500,
-                'max_h': 1000,
-                'max_zx': 1000,
-                'minBet': 50,
-                'minGold': 1,
-                'min_zxh': 50,
-                'name': '',
-                'onceExchangeValue': 100,
-                'onlineNumber': 0,
-                'orderBy': 0,
-                'roomId': 2,
-                'siteType': 1,
-                'state': 1,
-                'sumDeFen': 0,
-                'sumYaFen': 0,
-                'sumZhxDeFen': 0,
-                'sumZhxYaFen': 0,
-                'waterType': 0,
-                'waterValue': 0,
-                'zxhDiff': 1
+                wheelLocal_ext: 1,
+                dayLocal_ext: 1,
+                "autoKick": 3,
+                "baseYaFen": 5,
+                "dataTime": "2018-01-03",
+                "dayLocal": -1,
+                "dayYinLi": 0,
+                "exchange": 10,
+                "gameXianHong": 20000,
+                "id": 2,
+                "minGold": 1,
+                "minYaFen": 5,
+                "name": "单挑",
+                "onceExchangeValue": 100,
+                "onlineNumber": 0,
+                "orderBy": 1,
+                "roomId": 2,
+                "state": 0,
+                "sumDeFen": 3894,
+                "sumYaFen": 5235,
+                "wheelLocal": -1,
+            }
+        },
+        watch: {
+            wheelLocal_ext (ext) {
+                if(ext === 1) {
+                    this.wheelLocal = -1
+                } else {
+                    this.wheelLocal = 500000
+                }
+            },
+            dayLocal_ext (ext) {
+                if(ext === 1) {
+                    this.dayLocal = -1
+                } else {
+                    this.dayLocal = 999000
+                }
             }
         },
         beforeMount () {
             if (this.modify && this.init) {
-                console.log(this.init)
+
+                console.log(JSON.stringify(this.init))
                 Object.assign(this, this.init)
             }
         },

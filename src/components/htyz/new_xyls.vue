@@ -1,6 +1,6 @@
 <template>
     <el-dialog
-        title="新增桌"
+        :title="modify?'参数设置':'新增桌'"
         width="500"
         visible
         :before-close="onClose">
