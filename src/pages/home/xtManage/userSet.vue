@@ -9,7 +9,7 @@
                 <el-col :span="8">
                     <div class="usershow grid-content bg-purple">
                         <ul>
-                            <li v-for="item in userList" @click="() => current = item.id" :class="{active: item.id === current}" :key="item.username">{{item.username}}</li>                            
+                            <li v-for="item in userList" @click="() => { current = item.id ; currentList = item }" :class="{active: item.id === current}" :key="item.username">{{item.username}}</li>
                         </ul>
                     </div>
                 </el-col>
@@ -41,13 +41,13 @@
         </div>
         <div class="userAlert">
             <el-dialog
-                title="新增用户"
+                :title=userDialogName
                 :visible.sync="dialogVisible"
                 width="500"
                 :before-close="handleClose">
                     <section>
                         <div>
-                            <span>用户名：</span><el-input v-model="userName" placeholder="请输入内容"></el-input>
+                            <span>用户名：</span><el-input v-model="userName" placeholder="请输入内容" :disabled="isUserName"></el-input>
                         </div>
                         <div>
                             <span>权限等级：</span>
@@ -59,7 +59,7 @@
                         </div>
                         <div>
                             <span>特殊操作：</span>
-                            <el-checkbox-group v-model="checkList">
+                            <el-checkbox-group v-model="checkList" :disabled="isCheck">
                                 <el-checkbox label="0">删账单</el-checkbox>
                                 <el-checkbox label="1">赠送游戏币</el-checkbox>
                                 <el-checkbox label="2">扣除游戏币</el-checkbox>
@@ -83,18 +83,47 @@
     export default {
         data () {
             return {
+                isUserName:false,
+                currentList:null,
+                userDialogName:"新增用户",
+                isCheck:true,
                 userList: [],
                 current: 0,
                 userName: '',
                 setLevel: 3,
-                checkList: ['1', '3'],
-                dialogVisible: false
+                checkList: [],
+                dialogVisible: false,
+                checkListNow:[],
+
+                isAddUserFn:true,
             }
         },
         watch: {
             current (current) {
                 if (current) {
-    
+
+                }
+            },
+            setLevel( lev ){
+                if( lev !== undefined && lev !== null ){
+                    switch (Number( lev )){
+                        case 1:
+                            this.isCheck = false;
+                            this.checkList = ['0','1','2','3','4','5']
+                            ;break;
+                        case 2:
+                            this.isCheck = false;
+                            if( this.userDialogName === '新增用户' ){
+                                this.checkList = []
+                            }else{
+                                this.checkList = this.checkListNow;
+                            }
+                            ;break;
+                        case 3:
+                            this.isCheck = true;
+                            this.checkList = []
+                            ;break;
+                    }
                 }
             }
         },
@@ -129,7 +158,7 @@
                                     type: 'success',
                                     message: '删除成功!',
                                     duration: 1200
-                                })
+                                });
                                 this.userList = await this.$store.dispatch(aTypes.adminList)
                             }
                         } catch (e) {
@@ -149,40 +178,142 @@
                 }
             },
             addUser () {
-                this.dialogVisible = true
+                this.dialogVisible = true;
+                this.userDialogName = '新增用户';
+                this.isUserName = false;
+
+                this.isAddUserFn = true;
             },
             async doAddUser () {
-                let cl = [false, false, false, false, false, false]
-                this.checkList.forEach(e => {
-                    cl[e] = true
-                })
-                let args = [this.userName, this.setLevel, ...cl]
-                let result = await this.$store.dispatch(aTypes.addAdmin, args)
-                if (!result.success) {
+                if( this.isAddUserFn ){
+                    let cl = [false, false, false, false, false, false];
+                    this.checkList.forEach(e => {
+                        cl[e] = true
+                    });
+                    if( this.userName === '' ){
+                        this.$message({
+                            message: '请输入用户名',
+                            type: 'error',
+                            duration: 1200
+                        });
+                        return false;
+                    }
+
+                    let args = [this.userName, Number( this.setLevel ) , ...cl];
+                    let result = await this.$store.dispatch(aTypes.addAdmin, args);
+                    if (!result.success) {
+                        this.$message({
+                            message: result.message,
+                            type: 'error',
+                            duration: 1200
+                        })
+                    } else {
+                        this.userList = await this.$store.dispatch(aTypes.adminList)
+                    }
+                    this.dialogVisible = false
+                }else{
+                    // 修改用户 设置
+                    let cl = [false, false, false, false, false, false];
+                    this.checkList.forEach(e => {
+                        cl[e] = true
+                    });
+
+                    let args = [Number( this.current ), Number( this.setLevel ) , ...cl];
+                    let result = await this.$store.dispatch(aTypes.updateAuth , args);
+                    if (!result.success) {
+                        this.$message({
+                            message: result.message,
+                            type: 'error',
+                            duration: 1200
+                        })
+                    } else {
+                        this.userList = await this.$store.dispatch(aTypes.adminList)
+                        this.$message({
+                            message: '权限设置成功',
+                            type: 'success',
+                            duration: 1200
+                        });
+
+                    }
+                    this.dialogVisible = false
+                }
+
+            },
+            async qxSet () {
+                console.log('====55======')
+                console.log( this.currentList )
+                if (!this.current) {
                     this.$message({
-                        message: result.message,
+                        message: '请选择用户',
                         type: 'error',
                         duration: 1200
                     })
-                } else {
-                    this.userList = await this.$store.dispatch(aTypes.adminList)
+                }else{
+                    this.userDialogName = '权限设置';
+                    // 用户名不可点击
+                    this.isUserName = true;
+                    // 展现当前的msg
+                    let newOptionList = [];
+                    if( this.currentList ){
+                        this.userName = this.currentList.username;
+                        if( this.currentList.authDeleteBill ){
+                            newOptionList.push( '0' )
+                        }
+                        if( this.currentList.authGiveGold ){
+                            newOptionList.push( '1' )
+                        }
+
+                        if( this.currentList.authMinusGold ){
+                            newOptionList.push( '2' )
+                        }
+                        if( this.currentList.authHallAdmin ){
+                            newOptionList.push( '3' )
+                        }
+                        if( this.currentList.authPromoter ){
+                            newOptionList.push( '4' )
+                        }
+                        if( this.currentList.authUserRegist ){
+                            newOptionList.push( '5' )
+                        }
+//                        权限类型
+                        this.setLevel = Number( this.currentList.type );
+                        this.checkListNow = newOptionList ;
+
+                    }
+                    this.dialogVisible = true;
+//                    this.doAddUser( true , newOptionList  )
+                    this.isAddUserFn = false;
+
                 }
-                this.dialogVisible = false
             },
-            qxSet () {
-                this.$message({
-                    message: '请选择用户',
-                    type: 'error',
-                    duration: 1200
-                })
-            },
-            resetPass () {
-                this.$message({
-                    message: '请选择用户',
-                    type: 'error',
-                    duration: 1200
-                })
+            async resetPass () {
+                if (!this.current) {
+                    this.$message({
+                        message: '请选择用户',
+                        type: 'error',
+                        duration: 1200
+                    })
+                }else{
+                    let result = await this.$store.dispatch(aTypes.resetPassword, [Number( this.current )]);
+                    if (!result.success) {
+                        this.$message({
+                            message: result.message,
+                            type: 'error',
+                            duration: 1200
+                        })
+                    } else {
+                        this.$message({
+                            message: '重置密码成功',
+                            type: 'success',
+                            duration: 1200
+                        });
+                        setTimeout( async ()=>{
+                            this.userList = await this.$store.dispatch(aTypes.adminList)
+                        },1200)
+                    }
+                }
             }
+
         },
         computed: {
             currInfo () {
@@ -234,7 +365,8 @@
             }
         },
         async mounted () {
-            this.userList = await this.$store.dispatch(aTypes.adminList)
+            // 去用户list
+            this.userList = await this.$store.dispatch(aTypes.adminList,[]);
             console.log(this.userList)
         }
     }

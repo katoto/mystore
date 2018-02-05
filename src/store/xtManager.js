@@ -89,10 +89,10 @@ const actionsInfo = mapActions({
     // 新增服务员（权限按从左至右从上至下的顺序排序）args":["fuwuyuan",3,false,false,false,false,false,false]
     //   新增主管: "args":["zhuguan",2,true,true,false,true,false,true]
     // 新增系统管理员 "args":["guanliyuan",1,true,true,true,true,true,true]
-    async addAdmin ({dispatch, commit}, args = []) {
+    async addAdmin ({dispatch, commit}, args = ['fuwuyuan', 3, false, false, false, false, false, false]) {
         const argsData = await dispatch('invoke', {
             method: 'adminService/addAdmin',
-            args: ['fuwuyuan', 3, false, false, false, false, false, false]
+            args: args
         })
         return argsData[0]
     },
@@ -109,18 +109,18 @@ const actionsInfo = mapActions({
     // 设置权限
     //  给主管设置权限  "args":[14,2,true,true,true,true,true,true]
     // 给管理员设置权限 "args":[16,1,true,true,true,true,false,true]
-    async updateAuth ({dispatch, commit}, args = []) {
+    async updateAuth ({dispatch, commit}, args = [14, 2, true, true, true, true, true, true]) {
         const argsData = await dispatch('invoke', {
             method: 'adminService/updateAuth',
-            args: [14, 2, true, true, true, true, true, true]
+            args: args
         })
         return argsData[0]
     },
     // 重置密码
-    async resetPassword ({dispatch, commit}, args = []) {
+    async resetPassword ({dispatch, commit}, args = [16]) {
         const argsData = await dispatch('invoke', {
             method: 'adminService/resetPassword',
-            args: [16]
+            args:args
         })
         return argsData[0]
     },
