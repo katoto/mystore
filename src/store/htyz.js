@@ -68,6 +68,16 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
 
+    // 新建公告， 更新大厅状态
+    async updateDTStatus ({dispatch, commit}, {content = '', statusIndex = 0, time = 0}) {
+        let args = [{'content': '', 'cooperateEndDate': '——————', 'cooperateMode': 0, 'cooperateStartDate': '——————', 'statusIndex': 0, 'time': 0}]
+        const argsData = await dispatch('invoke', {
+            method: 'systemConfigService/updateGameStatus',
+            args
+        })
+        return argsData[0]
+    },
+
     async getDeskList ({dispatch, commit}, method) {
         const argsData = await dispatch('invoke', {
             method,
@@ -76,6 +86,13 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
     async addDesk ({dispatch, commit}, {method, args}) {
+        const argsData = await dispatch('invoke', {
+            method,
+            args: [args]
+        })
+        return argsData[0]
+    },
+    async updateDesk ({dispatch, commit}, {method, args}) {
         const argsData = await dispatch('invoke', {
             method,
             args: [args]
@@ -91,7 +108,7 @@ const actionsInfo = mapActions({
     //     })
     //     return argsData[0]
     // },
-    // 获取摇钱树桌子
+    // 获取摇钱树桌子 @deprecated
     async getFishDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'deskService/getFishDeskList',
@@ -107,7 +124,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 获取万炮捕鱼
+    // 获取万炮捕鱼 @deprecated
     async getBulletFishDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'deskService/getBulletFishDeskList',
@@ -115,7 +132,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 获取美人鱼
+    // 获取美人鱼 @deprecated
     async getMermaidDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'deskService/getMermaidDeskList',
@@ -123,7 +140,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 获取缺一门
+    // 获取缺一门 @deprecated
     async getLackDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'deskService/getLackDeskList',
@@ -131,7 +148,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 获取欢乐牛牛
+    // 获取欢乐牛牛 @deprecated
     async getJoyDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'deskService/getJoyDeskList',
@@ -139,7 +156,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 获取水浒传
+    // 获取水浒传 @deprecated
     async getWaterDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'waterDeskService/getWaterDeskList',
@@ -147,7 +164,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    // 获取千炮捕鱼
+    // 获取千炮捕鱼 @deprecated
     async getThousandFishDeskList ({dispatch, commit}, args = []) {
         const argsData = await dispatch('invoke', {
             method: 'deskService/getThousandFishDeskList',
@@ -224,6 +241,34 @@ const actionsInfo = mapActions({
     async deleteWaterDesk ({dispatch, commit}, args = [116]) {
         const argsData = await dispatch('invoke', {
             method: 'waterDeskService/deleteWaterDesk',
+            args
+        })
+        return argsData[0]
+    },
+
+    // new
+    // 获取盈利信息
+    //   客户端收到： {"args":[{"sumDeFen":0,"sumYaFen":200}],
+    //   "method":"getDeskData"}
+    async getDeskData ({dispatch, commit}, args = [3]) {
+        const argsData = await dispatch('invoke', {
+            method: 'deskService/getDeskData',
+            args
+        })
+        return argsData[0]
+    },
+
+    // 开奖信息，第三个表格
+    async getDeskResult ({dispatch, commit}, args = [3, '2018-02-04', '2018-02-04',
+        {'list': [],
+            'order': '',
+            'orderBy': '',
+            'pageCount': 0,
+            'pageNumber': 1,
+            'pageSize': 8,
+            'totalCount': 0}]) {
+        const argsData = await dispatch('invoke', {
+            method: 'deskService/getDeskResult',
             args
         })
         return argsData[0]
