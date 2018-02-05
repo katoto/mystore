@@ -248,7 +248,7 @@
 </template>
 <script>
     export default {
-        props: ['init'],
+        props: ['init', 'modify'],
         data () {
             return {
                 'animalDiff': 1,
@@ -281,11 +281,10 @@
             }
         },
         beforeMount () {
-            if(this.init)  {
+            if (this.modify && this.init) {
                 console.log(this.init)
                 Object.assign(this, this.init)
             }
-
         },
         methods: {
             onClose () {
