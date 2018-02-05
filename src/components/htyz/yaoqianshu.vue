@@ -49,13 +49,13 @@
                     <el-select class="" size="small" v-model="siteType" :disabled="roomId===1">
                         <el-option
                             label="大型场地"
-                            :value="0"/>
+                            :value="2"/>
                         <el-option
                             label="中型场地"
                             :value="1"/>
                         <el-option
                             label="小型场地"
-                            :value="2"/>
+                            :value="0"/>
                     </el-select>
                 </td>
             </tr>
@@ -129,7 +129,7 @@
                             :value="1"/>
                         <el-option
                             label="锁定"
-                            :value="2"/>
+                            :value="0"/>
                     </el-select>
                 </td>
             </tr>
@@ -176,7 +176,7 @@
                 "maxGunValue": 1000,
                 "minGold": 1,
                 "minGunValue": 50,
-                "name": "练习厅",
+                "name": "",
                 "onceExchangeValue": 100,
                 "onlineNumber": 0,
                 "orderBy": 1,

@@ -97,7 +97,7 @@
                             :value="1"/>
                         <el-option
                             label="锁定"
-                            :value="2"/>
+                            :value="0"/>
                     </el-select>
                 </td>
             </tr>
@@ -169,7 +169,7 @@
                 "id": 2,
                 "minGold": 1,
                 "minYaFen": 5,
-                "name": "单挑",
+                "name": "",
                 "onceExchangeValue": 100,
                 "onlineNumber": 0,
                 "orderBy": 1,
