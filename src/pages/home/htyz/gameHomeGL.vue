@@ -1,7 +1,15 @@
 <template>
     <div style="height: 770px" class="l-flex-row">
-        <new-xyls v-if="newDesk.xyls" @close="newDesk.xyls = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></new-xyls>
-
+        <!-- newXyls, yaoqianshu, dantiao, wppy, meirenyu, queyimen,huanleniuniu, shuihuzhuan, qianpaobuyu-->
+        <new-xyls v-if="dialogShow && deskIdx === 0" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></new-xyls>
+        <yaoqianshu v-if="dialogShow && deskIdx === 1" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></yaoqianshu>
+        <dantiao v-if="dialogShow && deskIdx === 2" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></dantiao>
+        <wppy v-if="dialogShow && deskIdx === 3" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></wppy>
+        <meirenyu v-if="dialogShow && deskIdx === 4" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></meirenyu>
+        <queyimen v-if="dialogShow && deskIdx === 5" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></queyimen>
+        <huanleniuniu v-if="dialogShow && deskIdx === 6" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></huanleniuniu>
+        <shuihuzhuan v-if="dialogShow && deskIdx === 7" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></shuihuzhuan>
+        <qianpaobuyu v-if="dialogShow && deskIdx === 8" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></qianpaobuyu>
 
         <div class="l-flex-1 l-flex-column">
             <div class=" l-relative" style="height: 150px">
@@ -233,12 +241,21 @@
 <script>
     import {aTypes, mTypes} from '~store/htyz'
     import newXyls from '~components/htyz/new_xyls.vue'
+    import yaoqianshu from '~components/htyz/yaoqianshu.vue'//摇钱树
+    import dantiao from '~components/htyz/dantiao.vue'//单挑
+    import wppy from '~components/htyz/wppy.vue'//万炮捕鱼
+    import meirenyu from '~components/htyz/meirenyu.vue'//美人鱼
+    import queyimen from '~components/htyz/queyimen.vue'//缺一门
+    import huanleniuniu from '~components/htyz/huanleniuniu.vue'//欢乐牛牛
+    import shuihuzhuan from '~components/htyz/shuihuzhuan.vue'//水浒传
+    import qianpaobuyu from '~components/htyz/qianpaobuyu.vue'//千炮捕鱼
     export default {
         data () {
             return {
                 newDesk: {
                     xyls: false
                 },
+                dialogShow: false,
                 isModify: false,
                 form: {
                     hlabel: '0',
@@ -448,7 +465,7 @@
             }
         },
         components: {
-            newXyls
+            newXyls, yaoqianshu, dantiao, wppy, meirenyu, queyimen,huanleniuniu, shuihuzhuan, qianpaobuyu
         },
         watch: {
             async deskIdx () {
@@ -476,19 +493,19 @@
                         duration: 1200
                     })
                 }
-                this.newDesk.xyls = true
+                this.dialogShow = true
             },
             openNewDesk () {
                 this.isModify = false
-                this.newDesk.xyls = true
+                this.dialogShow = true
             },
 
             async onSubmit (args) {
                 let ret
                 if (this.isModify) {
-                    ret = await this.$store.dispatch(aTypes.updateDesk, {method: this.desks[this.deskIdx].updateDesk, args})
+                    ret = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].updateDesk, args})
                 } else {
-                    ret = await this.$store.dispatch(aTypes.addDesk, {method: this.desks[this.deskIdx].addDesk, args})
+                    ret = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].addDesk, args})
                 }
                 if (!ret.success) {
                     this.$message({
