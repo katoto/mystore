@@ -1,6 +1,6 @@
 <template>
     <el-dialog
-        title="新增桌"
+        :title="modify?'参数设置':'新增桌'"
         width="500"
         visible
         :before-close="onClose">
@@ -106,13 +106,13 @@
                     <el-select class="" size="small" v-model="siteType" :disabled="roomId===1">
                         <el-option
                             label="大型场地"
-                            :value="0"/>
+                            :value="2"/>
                         <el-option
                             label="中型场地"
                             :value="1"/>
                         <el-option
                             label="小型场地"
-                            :value="2"/>
+                            :value="0"/>
                     </el-select>
                 </td>
             </tr>
@@ -234,7 +234,7 @@
                             :value="1"/>
                         <el-option
                             label="锁定"
-                            :value="2"/>
+                            :value="0"/>
                     </el-select>
                 </td>
             </tr>
