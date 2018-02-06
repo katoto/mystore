@@ -75,7 +75,7 @@
                         <el-button size="small" type="primary" @click="updateDeskList">刷新</el-button>
                         <el-button style="margin-left: 18px" size="small" @click="openNewDesk" type="primary">新增桌</el-button>
                         <el-button style="margin-left: 18px" size="small" @click="openModifyDesk">参数设置</el-button>
-                        <el-button style="margin-left: 18px" size="small" type="danger">删除桌</el-button>
+                        <el-button style="margin-left: 18px" size="small" type="danger" @click="deleteDesk">删除桌</el-button>
                         <el-button style="margin-left: 18px" size="small" type="primary">桌排序</el-button>
                     </header>
                     <section style="margin-bottom: 10px">
@@ -274,63 +274,71 @@
                         getDeskList: 'deskService/getDeskList',
                         addDesk: 'deskService/addDesk',
                         updateDesk: 'deskService/updateDesk',
-                        deleteDesk: 'waterDeskService/deleteWaterDesk'
+                        deleteDesk: 'deskService/deleteDesk',
                     },
                     {
                         label: '摇钱树',
                         getDesk: 'deskService/getFishDeskList',
                         getDeskList: 'deskService/getFishDeskList',
                         addDesk: 'deskService/addFishDesk',
-                        updateDesk: 'deskService/updateFishDesk'
+                        updateDesk: 'deskService/updateFishDesk',
+                        deleteDesk: 'deskService/deleteFishDesk'
                     },
                     {
                         label: '单挑',
                         getDesk: 'deskService/getCardDeskList',
                         getDeskList: 'deskService/getCardDeskList',
                         addDesk: 'deskService/addCardDesk',
-                        updateDesk: 'deskService/updateCardDesk'
+                        updateDesk: 'deskService/updateCardDesk',
+                        deleteDesk: 'deskService/deleteCardDesk'
                     },
                     {
                         label: '万炮捕鱼',
                         getDesk: 'deskService/getBulletFishDeskList',
                         getDeskList: 'deskService/getBulletFishDeskList',
                         addDesk: 'deskService/addBulletFishDesk',
-                        updateDesk: 'deskService/updateBulletFishDesk'
+                        updateDesk: 'deskService/updateBulletFishDesk',
+                        deleteDesk: 'deskService/deleteBulletFishDesk'
                     },
                     {
                         label: '美人鱼',
                         getDesk: 'deskService/getMermaidDeskList',
                         getDeskList: 'deskService/getMermaidDeskList',
                         addDesk: 'deskService/addMermaidDesk',
-                        updateDesk: 'deskService/updateMermaidDesk'
+                        updateDesk: 'deskService/updateMermaidDesk',
+                        deleteDesk: 'deskService/deleteMermaidDesk'
                     },
                     {
                         label: '缺一门',
                         getDesk: 'deskService/getLackDeskList',
                         getDeskList: 'deskService/getLackDeskList',
                         addDesk: 'deskService/addLackDesk',
-                        updateDesk: 'deskService/updateLackDesk'
+                        updateDesk: 'deskService/updateLackDesk',
+                        deleteDesk: 'deskService/deleteLackDesk'
                     },
                     {
                         label: '欢乐牛牛',
                         getDesk: 'deskService/getJoyDeskList',
                         getDeskList: 'deskService/getJoyDeskList',
                         addDesk: 'deskService/addJoyDesk',
-                        updateDesk: 'deskService/updateJoyDesk'
+                        updateDesk: 'deskService/updateJoyDesk',
+                        deleteDesk: 'deskService/deleteJoyDesk'
                     },
                     {
                         label: '水浒传',
                         getDesk: 'waterDeskService/getWaterDeskList',
                         getDeskList: 'waterDeskService/getWaterDeskList',
-                        addDesk: 'deskService/addWaterDesk',
-                        updateDesk: 'deskService/updateWaterDesk'
+                        addDesk: 'waterDeskService/addWaterDesk',
+                        updateDesk: 'waterDeskService/updateWaterDesk',
+                        deleteDesk: 'waterDeskService/deleteWaterDesk'
                     },
                     {
                         label: '千炮捕鱼',
                         getDesk: 'deskService/getThousandFishDeskList',
                         getDeskList: 'deskService/getThousandFishDeskList',
                         addDesk: 'deskService/addThousandFishDesk',
-                        updateDesk: 'deskService/updateThousandFishDesk'
+                        updateDesk: 'deskService/updateThousandFishDesk',
+                        deleteDesk: 'deskService/deleteThousandFishDesk'
                     }
 
                 ],
@@ -470,6 +478,7 @@
         watch: {
             async deskIdx () {
                 this.currentDesk = null
+                this.deskList = null
                 this.updateDeskList()
             }
         },
@@ -498,6 +507,38 @@
             openNewDesk () {
                 this.isModify = false
                 this.dialogShow = true
+            },
+            async deleteDesk () {
+                if (!this.currentDesk) {
+                    return this.$message({
+                        message: '请选择要删除的桌子',
+                        type: 'error',
+                        duration: 1200
+                    })
+                } else {
+                    this.$confirm('此操作将删除桌子, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(async () => {
+                        let ret = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].deleteDesk, args: this.currentDesk.id})
+                        if(ret.success) {
+                            this.currentDesk = null
+                            this.updateDeskList()
+                        } else {
+                            return this.$message({
+                                message: ret.message,
+                                type: 'error',
+                                duration: 1200
+                            })
+                        }
+                    })
+
+
+
+
+                }
+
             },
 
             async onSubmit (args) {
