@@ -83,19 +83,19 @@
     export default {
         data () {
             return {
-                isUserName:false,
-                currentList:null,
-                userDialogName:"新增用户",
-                isCheck:true,
+                isUserName: false,
+                currentList: null,
+                userDialogName: '新增用户',
+                isCheck: true,
                 userList: [],
                 current: 0,
                 userName: '',
                 setLevel: 3,
                 checkList: [],
                 dialogVisible: false,
-                checkListNow:[],
+                checkListNow: [],
 
-                isAddUserFn:true,
+                isAddUserFn: true
             }
         },
         watch: {
@@ -104,25 +104,25 @@
 
                 }
             },
-            setLevel( lev ){
-                if( lev !== undefined && lev !== null ){
-                    switch (Number( lev )){
-                        case 1:
-                            this.isCheck = false;
-                            this.checkList = ['0','1','2','3','4','5']
-                            ;break;
-                        case 2:
-                            this.isCheck = false;
-                            if( this.userDialogName === '新增用户' ){
-                                this.checkList = []
-                            }else{
-                                this.checkList = this.checkListNow;
-                            }
-                            ;break;
-                        case 3:
-                            this.isCheck = true;
+            setLevel (lev) {
+                if (lev !== undefined && lev !== null) {
+                    switch (Number(lev)) {
+                    case 1:
+                        this.isCheck = false
+                        this.checkList = ['0', '1', '2', '3', '4', '5']
+                        break
+                    case 2:
+                        this.isCheck = false
+                        if (this.userDialogName === '新增用户') {
                             this.checkList = []
-                            ;break;
+                        } else {
+                            this.checkList = this.checkListNow
+                        }
+                        ;break
+                    case 3:
+                        this.isCheck = true
+                        this.checkList = []
+                        break
                     }
                 }
             }
@@ -158,7 +158,7 @@
                                     type: 'success',
                                     message: '删除成功!',
                                     duration: 1200
-                                });
+                                })
                                 this.userList = await this.$store.dispatch(aTypes.adminList)
                             }
                         } catch (e) {
@@ -178,29 +178,29 @@
                 }
             },
             addUser () {
-                this.dialogVisible = true;
-                this.userDialogName = '新增用户';
-                this.isUserName = false;
+                this.dialogVisible = true
+                this.userDialogName = '新增用户'
+                this.isUserName = false
 
-                this.isAddUserFn = true;
+                this.isAddUserFn = true
             },
             async doAddUser () {
-                if( this.isAddUserFn ){
-                    let cl = [false, false, false, false, false, false];
+                if (this.isAddUserFn) {
+                    let cl = [false, false, false, false, false, false]
                     this.checkList.forEach(e => {
                         cl[e] = true
-                    });
-                    if( this.userName === '' ){
+                    })
+                    if (this.userName === '') {
                         this.$message({
                             message: '请输入用户名',
                             type: 'error',
                             duration: 1200
-                        });
-                        return false;
+                        })
+                        return false
                     }
 
-                    let args = [this.userName, Number( this.setLevel ) , ...cl];
-                    let result = await this.$store.dispatch(aTypes.addAdmin, args);
+                    let args = [this.userName, Number(this.setLevel), ...cl]
+                    let result = await this.$store.dispatch(aTypes.addAdmin, args)
                     if (!result.success) {
                         this.$message({
                             message: result.message,
@@ -211,15 +211,15 @@
                         this.userList = await this.$store.dispatch(aTypes.adminList)
                     }
                     this.dialogVisible = false
-                }else{
+                } else {
                     // 修改用户 设置
-                    let cl = [false, false, false, false, false, false];
+                    let cl = [false, false, false, false, false, false]
                     this.checkList.forEach(e => {
                         cl[e] = true
-                    });
+                    })
 
-                    let args = [Number( this.current ), Number( this.setLevel ) , ...cl];
-                    let result = await this.$store.dispatch(aTypes.updateAuth , args);
+                    let args = [Number(this.current), Number(this.setLevel), ...cl]
+                    let result = await this.$store.dispatch(aTypes.updateAuth, args)
                     if (!result.success) {
                         this.$message({
                             message: result.message,
@@ -232,58 +232,54 @@
                             message: '权限设置成功',
                             type: 'success',
                             duration: 1200
-                        });
-
+                        })
                     }
                     this.dialogVisible = false
                 }
-
             },
             async qxSet () {
                 console.log('====55======')
-                console.log( this.currentList )
+                console.log(this.currentList)
                 if (!this.current) {
                     this.$message({
                         message: '请选择用户',
                         type: 'error',
                         duration: 1200
                     })
-                }else{
-                    this.userDialogName = '权限设置';
+                } else {
+                    this.userDialogName = '权限设置'
                     // 用户名不可点击
-                    this.isUserName = true;
+                    this.isUserName = true
                     // 展现当前的msg
-                    let newOptionList = [];
-                    if( this.currentList ){
-                        this.userName = this.currentList.username;
-                        if( this.currentList.authDeleteBill ){
-                            newOptionList.push( '0' )
+                    let newOptionList = []
+                    if (this.currentList) {
+                        this.userName = this.currentList.username
+                        if (this.currentList.authDeleteBill) {
+                            newOptionList.push('0')
                         }
-                        if( this.currentList.authGiveGold ){
-                            newOptionList.push( '1' )
+                        if (this.currentList.authGiveGold) {
+                            newOptionList.push('1')
                         }
 
-                        if( this.currentList.authMinusGold ){
-                            newOptionList.push( '2' )
+                        if (this.currentList.authMinusGold) {
+                            newOptionList.push('2')
                         }
-                        if( this.currentList.authHallAdmin ){
-                            newOptionList.push( '3' )
+                        if (this.currentList.authHallAdmin) {
+                            newOptionList.push('3')
                         }
-                        if( this.currentList.authPromoter ){
-                            newOptionList.push( '4' )
+                        if (this.currentList.authPromoter) {
+                            newOptionList.push('4')
                         }
-                        if( this.currentList.authUserRegist ){
-                            newOptionList.push( '5' )
+                        if (this.currentList.authUserRegist) {
+                            newOptionList.push('5')
                         }
-//                        权限类型
-                        this.setLevel = Number( this.currentList.type );
-                        this.checkListNow = newOptionList ;
-
+                        //                        权限类型
+                        this.setLevel = Number(this.currentList.type)
+                        this.checkListNow = newOptionList
                     }
-                    this.dialogVisible = true;
-//                    this.doAddUser( true , newOptionList  )
-                    this.isAddUserFn = false;
-
+                    this.dialogVisible = true
+                    //                    this.doAddUser( true , newOptionList  )
+                    this.isAddUserFn = false
                 }
             },
             async resetPass () {
@@ -293,8 +289,8 @@
                         type: 'error',
                         duration: 1200
                     })
-                }else{
-                    let result = await this.$store.dispatch(aTypes.resetPassword, [Number( this.current )]);
+                } else {
+                    let result = await this.$store.dispatch(aTypes.resetPassword, [Number(this.current)])
                     if (!result.success) {
                         this.$message({
                             message: result.message,
@@ -306,10 +302,10 @@
                             message: '重置密码成功',
                             type: 'success',
                             duration: 1200
-                        });
-                        setTimeout( async ()=>{
+                        })
+                        setTimeout(async () => {
                             this.userList = await this.$store.dispatch(aTypes.adminList)
-                        },1200)
+                        }, 1200)
                     }
                 }
             }
@@ -366,7 +362,7 @@
         },
         async mounted () {
             // 去用户list
-            this.userList = await this.$store.dispatch(aTypes.adminList,[]);
+            this.userList = await this.$store.dispatch(aTypes.adminList, [])
             console.log(this.userList)
         }
     }

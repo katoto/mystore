@@ -2,7 +2,7 @@
     <div style="position: relative">
         <el-tabs v-model="activeNameTop" type="card" @tab-click="handleClick">
             <el-tab-pane label="会员操作" name="vipOperate"></el-tab-pane>
-            <el-tab-pane label="平板租借记录查询" name="rentSearch" disabled></el-tab-pane>
+            <!--<el-tab-pane label="平板租借记录查询" name="rentSearch" disabled></el-tab-pane>-->
             <!--  暂时不用  -->
         </el-tabs>
         <template>
@@ -18,7 +18,7 @@
                                 :value="item.id" >
                             </el-option>
                         </el-select>
-                        <el-select class="checkID xtSel" size="small" v-model="vipUserName" placeholder="请选择">
+                        <el-select class="checkID xtSel" :disabled="isOption" size="small" v-model="vipUserName" placeholder="请选择">
                             <el-option
                                 v-for="item in vipUserNameOptions"
                                 :key="item.id"
@@ -165,12 +165,14 @@ export default {
             return {
                 activeNameTop: 'vipOperate',
 
-                vipStyle: '',
+                vipStyle: 0,
                 vipStyleOptions: [
-                    { id: 0, name: '直属推广员' },
-                    { id: 1, name: '非直属推广员' }
+                    { id: 0, name: '直属会员' },
+                    { id: 1, name: '非直属会员' },
+                    { id: 2, name: '游客' },
+                    { id: 3, name: '特殊直属会员' }
                 ],
-                vipUserName: '',
+                vipUserName: 0,
                 vipUserNameOptions: [
                     { id: 0, name: '会员账号' }
                 ],
@@ -199,39 +201,44 @@ export default {
                 addUserVisible: false,
                 addUserVal1: '',
                 addUserVal2: '',
-                addUserVal3: ''
+                addUserVal3: '',
+
+                isOption: false
             }
         },
         methods: {
             async ybyzSearchFn () {
-                let searchUser = await this.$store.dispatch(aTypes.searchUser, [ this.vipSearch.toString(), Number(this.vipStyle), Number(this.vipUserName) ])
-                console.log(searchUser)
-                console.log('==一般运作查询按钮回来的数据==')
-
-                if (searchUser) {
-                    if (searchUser.results) {
-                        this.vipUserList = searchUser.results
-                        this.vipUserList.forEach((item) => {
-                            if (item.status === 0) {
-                                item.status = '正常'
-                            } else {
-                                item.status = '禁用'
-                            }
-                            if (item.warningStatus === 0) {
-                                item.warningStatus = '正常'
-                            } else {
-                                item.warningStatus = '异常：存' + item.warningStatus + '币的不明数额'
-                            }
-                            if (item.level !== undefined) {
-                                item.level = item.level + '级推广员'
-                            }
+                if (this.vipSearch === '') {
+                    this.getUserListFn(this.vipStyle)
+                } else {
+                    let searchUser = await this.$store.dispatch(aTypes.searchUser, [ this.vipSearch.toString(), Number(this.vipStyle), Number(this.vipUserName) ])
+                    console.log(searchUser)
+                    console.log('==一般运作查询按钮回来的数据==')
+                    if (searchUser) {
+                        if (searchUser.results) {
+                            this.vipUserList = searchUser.results
+                            this.vipUserList.forEach((item) => {
+                                if (item.status === 0) {
+                                    item.status = '正常'
+                                } else {
+                                    item.status = '禁用'
+                                }
+                                if (item.warningStatus === 0) {
+                                    item.warningStatus = '正常'
+                                } else {
+                                    item.warningStatus = '异常：存' + item.warningStatus + '币的不明数额'
+                                }
+                                if (item.level !== undefined) {
+                                    item.level = item.level + '级推广员'
+                                }
+                            })
+                        }
+                        this.$message({
+                            message: '查询成功',
+                            type: 'success',
+                            duration: 1200
                         })
                     }
-                    this.$message({
-                        message: '查询成功',
-                        type: 'success',
-                        duration: 1200
-                    })
                 }
             },
             handleClickTop (tab, event) {
@@ -258,35 +265,9 @@ export default {
             //                let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList)
             //                console.log(getVipUserList)
             },
-            async handleCurrentChange (val) {
+            async handleCurrentChange (size) {
                 // 分页事件  第一位
-                let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList, [Number(this.curTgyValue), {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': Number(val), 'pageSize': 8, 'totalCount': 0}])
-                console.log(getVipUserList)
-                console.log('==***********===')
-                if (getVipUserList) {
-                    if (getVipUserList.pager && getVipUserList.pager.list) {
-                        this.vipUserList = getVipUserList.pager.list
-                        this.vipUserList.forEach((item) => {
-                            if (item.status === 0) {
-                                item.status = '正常'
-                            } else {
-                                item.status = '禁用'
-                            }
-                            if (item.warningStatus === 0) {
-                                item.warningStatus = '正常'
-                            } else {
-                                item.warningStatus = '异常：存' + item.warningStatus + '币的不明数额'
-                            }
-                            if (item.level !== undefined) {
-                                item.level = item.level + '级推广员'
-                            }
-                        })
-                        // 处理页码
-                        this.totalCount = getPromoter.pager.totalCount
-                        this.pageNumber = getPromoter.pager.pageNumber
-                        this.pageSize = getPromoter.pager.pageSize
-                    }
-                }
+                this.getUserListFn(this.vipStyle, size)
             },
             vipListClick (val) {
                 // 列表点击
@@ -310,8 +291,11 @@ export default {
                 this.$refs.singleTable.setCurrentRow('')
                 this.$store.commit(mTypes.setSelVipVal, null)
                 this.vipSearch = ''
-                this.vipStyle = ''
-                this.vipUserName = ''
+
+                this.getUserListFn(this.vipStyle)
+
+                //                this.vipStyle = ''
+                //                this.vipUserName = ''
             },
             handleClick (tab, event) {
                 /*  路由 跳转  */
@@ -365,9 +349,42 @@ export default {
                     }
                 }
             },
-            clickPage (size) {
-                // 分页
-                console.log(size)
+
+            async getUserListFn (currid = 0, pageNum = 1) {
+                let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList, [currid, {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': Number(pageNum), 'pageSize': 8, 'totalCount': 0}])
+                console.log('=== 会员列表 =====')
+                console.log(getVipUserList)
+                //    this.curTgyValue = 0 ;  //  当前的各种状态
+                if (getVipUserList) {
+                    if (getVipUserList.pager && getVipUserList.pager.list) {
+                        this.vipUserList = getVipUserList.pager.list
+                        this.vipUserList.forEach((item) => {
+                            if (item.status === 0) {
+                                item.status = '正常'
+                            } else {
+                                item.status = '禁用'
+                            }
+                            if (item.warningStatus === 0) {
+                                item.warningStatus = '正常'
+                            } else {
+                                item.warningStatus = '异常：存' + item.warningStatus + '币的不明数额'
+                            }
+                            if (item.level !== undefined) {
+                                item.level = item.level + '级推广员'
+                            }
+                        })
+                        // 处理页码
+                        this.totalCount = getVipUserList.pager.totalCount
+                        this.pageNumber = getVipUserList.pager.pageNumber
+                        this.pageSize = getVipUserList.pager.pageSize
+
+                        this.$message({
+                            message: '已更新',
+                            type: 'success',
+                            duration: 1200
+                        })
+                    }
+                }
             }
         },
         computed: {
@@ -380,40 +397,22 @@ export default {
                 console.log(val)
                 this.$router.push('/home/ybyz/vipOperate')
                 this.activeName = 'vipOperate'
+            },
+            vipStyle (val) {
+                if (val !== undefined || val !== null) {
+                    if (Number(val) === 2) {
+                        this.isOption = true
+                    } else {
+                        this.isOption = false
+                    }
+                }
             }
         },
         async mounted () {
+            console.log(this.vipStyle)
             // 默认第一页。
-            let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList)
-            console.log('=== 会员列表 =====')
-            console.log(getVipUserList)
-            console.log('=== 会员列表 =====')
-            //            this.curTgyValue = 0 ;  //  当前的各种状态
-            if (getVipUserList) {
-                if (getVipUserList.pager && getVipUserList.pager.list) {
-                    this.vipUserList = getVipUserList.pager.list
-                    this.vipUserList.forEach((item) => {
-                        if (item.status === 0) {
-                            item.status = '正常'
-                        } else {
-                            item.status = '禁用'
-                        }
-                        if (item.warningStatus === 0) {
-                            item.warningStatus = '正常'
-                        } else {
-                            item.warningStatus = '异常：存' + item.warningStatus + '币的不明数额'
-                        }
-                        if (item.level !== undefined) {
-                            item.level = item.level + '级推广员'
-                        }
-                    })
-                    // 处理页码
-                    this.totalCount = getVipUserList.pager.totalCount,
-                    this.pageNumber = getVipUserList.pager.pageNumber,
-                    this.pageSize = getVipUserList.pager.pageSize
-                }
-            }
-        }
+            this.getUserListFn()
+    }
     }
 </script>
 <style scoped>

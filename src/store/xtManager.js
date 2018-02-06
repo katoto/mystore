@@ -120,7 +120,7 @@ const actionsInfo = mapActions({
     async resetPassword ({dispatch, commit}, args = [16]) {
         const argsData = await dispatch('invoke', {
             method: 'adminService/resetPassword',
-            args:args
+            args: args
         })
         return argsData[0]
     },

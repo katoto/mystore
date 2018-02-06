@@ -159,37 +159,37 @@
             return {
                 wheelLocal_ext: 1,
                 dayLocal_ext: 1,
-                "autoKick": 3,
-                "baseYaFen": 5,
-                "dataTime": "2018-01-03",
-                "dayLocal": -1,
-                "dayYinLi": 0,
-                "exchange": 10,
-                "gameXianHong": 20000,
-                "id": 2,
-                "minGold": 1,
-                "minYaFen": 5,
-                "name": "",
-                "onceExchangeValue": 100,
-                "onlineNumber": 0,
-                "orderBy": 1,
-                "roomId": 2,
-                "state": 0,
-                "sumDeFen": 3894,
-                "sumYaFen": 5235,
-                "wheelLocal": -1,
+                'autoKick': 3,
+                'baseYaFen': 5,
+                'dataTime': '2018-01-03',
+                'dayLocal': -1,
+                'dayYinLi': 0,
+                'exchange': 10,
+                'gameXianHong': 20000,
+                'id': 2,
+                'minGold': 1,
+                'minYaFen': 5,
+                'name': '',
+                'onceExchangeValue': 100,
+                'onlineNumber': 0,
+                'orderBy': 1,
+                'roomId': 2,
+                'state': 0,
+                'sumDeFen': 3894,
+                'sumYaFen': 5235,
+                'wheelLocal': -1
             }
         },
         watch: {
             wheelLocal_ext (ext) {
-                if(ext === 1) {
+                if (ext === 1) {
                     this.wheelLocal = -1
                 } else {
                     this.wheelLocal = 500000
                 }
             },
             dayLocal_ext (ext) {
-                if(ext === 1) {
+                if (ext === 1) {
                     this.dayLocal = -1
                 } else {
                     this.dayLocal = 999000
@@ -198,7 +198,6 @@
         },
         beforeMount () {
             if (this.modify && this.init) {
-
                 console.log(JSON.stringify(this.init))
                 Object.assign(this, this.init)
             }

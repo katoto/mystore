@@ -241,14 +241,14 @@
 <script>
     import {aTypes, mTypes} from '~store/htyz'
     import newXyls from '~components/htyz/new_xyls.vue'
-    import yaoqianshu from '~components/htyz/yaoqianshu.vue'//摇钱树
-    import dantiao from '~components/htyz/dantiao.vue'//单挑
-    import wppy from '~components/htyz/wppy.vue'//万炮捕鱼
-    import meirenyu from '~components/htyz/meirenyu.vue'//美人鱼
-    import queyimen from '~components/htyz/queyimen.vue'//缺一门
-    import huanleniuniu from '~components/htyz/huanleniuniu.vue'//欢乐牛牛
-    import shuihuzhuan from '~components/htyz/shuihuzhuan.vue'//水浒传
-    import qianpaobuyu from '~components/htyz/qianpaobuyu.vue'//千炮捕鱼
+    import yaoqianshu from '~components/htyz/yaoqianshu.vue'// 摇钱树
+    import dantiao from '~components/htyz/dantiao.vue'// 单挑
+    import wppy from '~components/htyz/wppy.vue'// 万炮捕鱼
+    import meirenyu from '~components/htyz/meirenyu.vue'// 美人鱼
+    import queyimen from '~components/htyz/queyimen.vue'// 缺一门
+    import huanleniuniu from '~components/htyz/huanleniuniu.vue'// 欢乐牛牛
+    import shuihuzhuan from '~components/htyz/shuihuzhuan.vue'// 水浒传
+    import qianpaobuyu from '~components/htyz/qianpaobuyu.vue'// 千炮捕鱼
     export default {
         data () {
             return {
@@ -274,7 +274,7 @@
                         getDeskList: 'deskService/getDeskList',
                         addDesk: 'deskService/addDesk',
                         updateDesk: 'deskService/updateDesk',
-                        deleteDesk: 'deskService/deleteDesk',
+                        deleteDesk: 'deskService/deleteDesk'
                     },
                     {
                         label: '摇钱树',
@@ -473,7 +473,7 @@
             }
         },
         components: {
-            newXyls, yaoqianshu, dantiao, wppy, meirenyu, queyimen,huanleniuniu, shuihuzhuan, qianpaobuyu
+            newXyls, yaoqianshu, dantiao, wppy, meirenyu, queyimen, huanleniuniu, shuihuzhuan, qianpaobuyu
         },
         watch: {
             async deskIdx () {
@@ -522,7 +522,7 @@
                         type: 'warning'
                     }).then(async () => {
                         let ret = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].deleteDesk, args: this.currentDesk.id})
-                        if(ret.success) {
+                        if (ret.success) {
                             this.currentDesk = null
                             this.updateDeskList()
                         } else {
@@ -533,12 +533,7 @@
                             })
                         }
                     })
-
-
-
-
                 }
-
             },
 
             async onSubmit (args) {

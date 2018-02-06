@@ -34,7 +34,7 @@
                         :value="item.value">
                     </el-option>
                 </el-select>
-                <el-select class="checkID xtSel" size="small" v-model="searchUserStyle" placeholder="请选择">
+                <el-select class="checkID xtSel" size="small" :disabled="isOption" v-model="searchUserStyle" placeholder="请选择">
                     <el-option
                         v-for="item in searchUserStyleOption"
                         :key="item.value"
@@ -477,8 +477,8 @@
 
                 dealException: true,
 
-                isShutUpName: '正常'
-
+                isShutUpName: '正常',
+                isOption:false,
             }
         },
         watch: {
@@ -544,6 +544,15 @@
                     this.showNoStopBtn = true
                     this.showStopBtn = false
                 }
+            },
+            searchUserVal( val ){
+                if (val !== undefined || val !== null) {
+                    if (Number(val) === 2) {
+                        this.isOption = true
+                    } else {
+                        this.isOption = false
+                    }
+                }
             }
         },
         methods: {
@@ -576,44 +585,39 @@
                 }
             },
             async searchUser () {
-            //                if( !this.searchUserInpVal ){
-            //                    this.$message({
-            //                        message: '请输入查询内容',
-            //                        type: 'error',
-            //                        duration: 1200
-            //                    })
-            //                    return false;
-            //                }
-
-                let result = await this.$store.dispatch(aTypes.searchUser, [ this.searchUserInpVal, 0, Number(this.searchUserVal) ])
-                console.log(result)
-                console.log('查询内容')
-                if (result) {
-                    this.$message({
-                        message: '查询成功',
-                        type: 'success',
-                        duration: 1200
-                    })
-                    if (result.results) {
-                        this.vvipList = result.results
-                        this.vvipList.forEach((item) => {
-                            if (item.warningStatus === 0) {
-                                item.warningStatus = '正常'
-                            } else {
-                                item.warningStatus = '异常:存在' + item.warningStatus + '不明数额'
-                            }
-                            if (item.status === 0) {
-                                console.log(item.shutupStatus.toString())
-                                console.log('=============')
-                                if (item.shutupStatus.toString() === '0') {
-                                    item.status = '正常'
-                                } else {
-                                    item.status = '禁言'
-                                }
-                            } else {
-                                item.status = '冻结'
-                            }
+                if( this.searchUserInpVal === '' ){
+                    this.getUserManageFn( Number( this.searchUserVal ) );
+                }else{
+                    let result = await this.$store.dispatch(aTypes.searchUser, [ this.searchUserInpVal.toString() , 0, Number(this.searchUserVal) ])
+                    console.log(result)
+                    console.log('查询内容')
+                    if (result) {
+                        this.$message({
+                            message: '查询成功',
+                            type: 'success',
+                            duration: 1200
                         })
+                        if (result.results) {
+                            this.vvipList = result.results
+                            this.vvipList.forEach((item) => {
+                                if (item.warningStatus === 0) {
+                                    item.warningStatus = '正常'
+                                } else {
+                                    item.warningStatus = '异常:存在' + item.warningStatus + '不明数额'
+                                }
+                                if (item.status === 0) {
+                                    console.log(item.shutupStatus.toString())
+                                    console.log('=============')
+                                    if (item.shutupStatus.toString() === '0') {
+                                        item.status = '正常'
+                                    } else {
+                                        item.status = '禁言'
+                                    }
+                                } else {
+                                    item.status = '冻结'
+                                }
+                            })
+                        }
                     }
                 }
             },
@@ -782,17 +786,19 @@
                 this.$refs.singleTable.setCurrentRow(row)
             },
             async clickPage (size) {
-                // 分页  请求数据 ，更新数据
-                let result = null
-                result = await this.$store.dispatch(aTypes.getUserManage, [0, {'list': [],
+                this.getUserManageFn( Number( this.searchUserVal ),size );
+            },
+
+            async getUserManageFn( currid = 0, pageNum = 1 ){
+                let result = await this.$store.dispatch(aTypes.getUserManage ,[ currid, {'list': [],
                     'order': '',
                     'orderBy': '',
                     'pageCount': 0,
-                    'pageNumber': size,
+                    'pageNumber': Number(  pageNum ) ,
                     'pageSize': 12,
-                    'totalCount': 0 } ])
+                    'totalCount': 0}]  )
                 console.log(result)
-                console.log('vvipGL 下一页')
+                console.log('会员高级管理列表')
                 if (result) {
                     if (result.pager && result.pager.list) {
                         this.vvipList = result.pager.list
@@ -823,45 +829,19 @@
                     this.totalCount = result.pager.totalCount
                     this.pageNumber = result.pager.pageNumber
                     this.pageSize = result.pager.pageSize
+
+                    this.$message({
+                        message: '已更新',
+                        type: 'success',
+                        duration: 1200
+                    })
                 }
             }
+
         },
         computed: {},
         async mounted () {
-            let result = await this.$store.dispatch(aTypes.getUserManage)
-            console.log(result)
-            console.log('会员高级管理列表')
-            if (result) {
-                if (result.pager && result.pager.list) {
-                    this.vvipList = result.pager.list
-                    this.vvipList.forEach((item) => {
-                        if (item.warningStatus === 0) {
-                            item.warningStatus = '正常'
-                        } else {
-                            item.warningStatus = '异常:存在' + item.warningStatus + '不明数额'
-                        }
-                        if (item.status === 0) {
-                            if (item.shutupStatus.toString() === '0') {
-                                item.status = '正常'
-                            } else {
-                                item.status = '禁言'
-                            }
-                        } else {
-                            item.status = '冻结'
-                        }
-                    })
-                }
-                if (result.gold) {
-                    this.AllGold = result.gold
-                }
-                if (result.number) {
-                    this.AllNumber = result.number
-                }
-                // 处理页码
-                this.totalCount = result.pager.totalCount
-                this.pageNumber = result.pager.pageNumber
-                this.pageSize = result.pager.pageSize
-            }
+            this.getUserManageFn();
         }
     }
 </script>
