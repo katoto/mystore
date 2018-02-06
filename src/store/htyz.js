@@ -362,7 +362,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    async searchUser ({dispatch, commit}, args =  ["666666",0,3] ) {
+    async searchUser ({dispatch, commit}, args = ['666666', 0, 3]) {
         const argsData = await dispatch('invoke', {
             method: 'memberService/searchUser',
             args
