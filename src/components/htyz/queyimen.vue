@@ -132,26 +132,26 @@
         data () {
             return {
                 dayLocal_ext: 1,
-                "autoKick": 1,
-                "baseYaFen": 5,
-                "dataTime": "2018-01-03",
-                "dayLocal": -1,
-                "dayYinLi": 0,
-                "exchange": 50,
-                "gameXianHong": 100000,
-                "id": 3,
-                "minGold": 1,
-                "minYaFen": 10,
-                "name": "",
-                "onceExchangeValue": 100,
-                "onlineNumber": 0,
-                "orderBy": 1,
-                "roomId": 2,
-                "state": 0,
-                "sumDeFen": 66,
-                "sumYaFen": 84,
-                "roomName": "欢乐竞技厅",
-                "stateName": "锁定"
+                'autoKick': 1,
+                'baseYaFen': 5,
+                'dataTime': '2018-01-03',
+                'dayLocal': -1,
+                'dayYinLi': 0,
+                'exchange': 50,
+                'gameXianHong': 100000,
+                'id': 3,
+                'minGold': 1,
+                'minYaFen': 10,
+                'name': '',
+                'onceExchangeValue': 100,
+                'onlineNumber': 0,
+                'orderBy': 1,
+                'roomId': 2,
+                'state': 0,
+                'sumDeFen': 66,
+                'sumYaFen': 84,
+                'roomName': '欢乐竞技厅',
+                'stateName': '锁定'
             }
         },
         watch: {
@@ -172,7 +172,6 @@
         },
         beforeMount () {
             if (this.modify && this.init) {
-
                 console.log(JSON.stringify(this.init))
                 Object.assign(this, this.init)
             }
