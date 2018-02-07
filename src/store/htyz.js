@@ -94,7 +94,6 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
 
-
     //  获取幸运六师桌子列表
     // async getDeskList ({dispatch, commit}, args = []) {
     //     const argsData = await dispatch('invoke', {
@@ -362,8 +361,14 @@ const actionsInfo = mapActions({
             args
         })
         return argsData[0]
+    },
+    async searchUser ({dispatch, commit}, args =  ["666666",0,3] ) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/searchUser',
+            args
+        })
+        return argsData[0]
     }
-
 }, name)
 
 const actions = actionsInfo.actions
