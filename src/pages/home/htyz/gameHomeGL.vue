@@ -70,8 +70,16 @@
             <div class="l-flex-1 l-relative">
                 <div class="l-full" style="padding: 10px">
 
-                    <p style="border-top: 1px solid #eee;padding: 7px 0">【新手练习厅】已开启1桌，还可以开启0桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启1桌，还可以开启0桌 </p>
-                    <header style="padding: 8px 0;border-top: 1px solid #ddd">
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 0">【新手练习厅】已开启{{roomStatus.room1StartNum}}桌，还可以开启{{roomStatus.room1RemainNum}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum}}桌，还可以开启{{roomStatus.room2RemainNum}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 1">【新手练习厅】已开启{{roomStatus.room1StartNum2}}桌，还可以开启{{roomStatus.room1RemainNum2}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum2}}桌，还可以开启{{roomStatus.room2RemainNum2}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 2">【新手练习厅】已开启{{roomStatus.room1StartNum3}}桌，还可以开启{{roomStatus.room1RemainNum3}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum3}}桌，还可以开启{{roomStatus.room2RemainNum3}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 3">【新手练习厅】已开启{{roomStatus.room1StartNum4}}桌，还可以开启{{roomStatus.room1RemainNum4}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum4}}桌，还可以开启{{roomStatus.room2RemainNum4}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 4">【新手练习厅】已开启{{roomStatus.room1StartNum5}}桌，还可以开启{{roomStatus.room1RemainNum5}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum5}}桌，还可以开启{{roomStatus.room2RemainNum5}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 5">【新手练习厅】已开启{{roomStatus.room1StartNum6}}桌，还可以开启{{roomStatus.room1RemainNum6}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum6}}桌，还可以开启{{roomStatus.room2RemainNum6}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 6">【新手练习厅】已开启{{roomStatus.room1StartNum7}}桌，还可以开启{{roomStatus.room1RemainNum7}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum7}}桌，还可以开启{{roomStatus.room2RemainNum7}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 7">【新手练习厅】已开启{{roomStatus.room1StartNum8}}桌，还可以开启{{roomStatus.room1RemainNum8}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum8}}桌，还可以开启{{roomStatus.room2RemainNum8}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 8">【新手练习厅】已开启{{roomStatus.room1StartNum9}}桌，还可以开启{{roomStatus.room1RemainNum9}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum9}}桌，还可以开启{{roomStatus.room2RemainNum9}}桌 </p>
+                     <header style="padding: 8px 0;border-top: 1px solid #ddd">
                         <el-button size="small" type="primary" @click="updateDeskList">刷新</el-button>
                         <el-button style="margin-left: 18px" size="small" @click="openNewDesk" type="primary">新增桌</el-button>
                         <el-button style="margin-left: 18px" size="small" @click="openModifyDesk">参数设置</el-button>
@@ -475,6 +483,12 @@
         components: {
             newXyls, yaoqianshu, dantiao, wppy, meirenyu, queyimen,huanleniuniu, shuihuzhuan, qianpaobuyu
         },
+        computed: {
+            roomStatus () {
+                return this.$store.state.user.loginInfo.roomStatus
+            }
+
+        },
         watch: {
             async deskIdx () {
                 this.currentDesk = null
@@ -667,7 +681,6 @@
                 }
             }
         },
-        computed: {},
         async mounted () {
             await this.updateDeskList()
         }
