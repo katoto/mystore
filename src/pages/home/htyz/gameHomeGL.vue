@@ -211,7 +211,7 @@
                         <template v-if="deskIdx === 0 || deskIdx === 2 || deskIdx === 5 || deskIdx === 6">
                             <el-table
                                 :data="winMsgList"
-                                height="300"
+                                height="250"
                                 size="small"
                                 border
                                 style="width: 100%">
@@ -244,7 +244,7 @@
                         <template v-if="deskIdx === 1 || deskIdx === 3 || deskIdx === 4 || deskIdx === 7 || deskIdx === 8">
                             <el-table
                                 :data="winMsgList"
-                                height="300"
+                                height="250"
                                 size="small"
                                 border
                                 style="width: 100%">
@@ -328,9 +328,9 @@
                         updateDesk: 'deskService/updateDesk',
                         deleteDesk: 'deskService/deleteDesk',
 
-                        getDeskUser:'deskService/getDeskUser',
-                        getDeskData:'deskService/getDeskData',
-                        getDeskResult:'deskService/getDeskResult'
+                        getUser_:'deskService/getDeskUser',
+                        getData_:'deskService/getDeskData',
+                        getResult_:'deskService/getDeskResult'
                     },
                     {
                         label: '摇钱树',
@@ -340,9 +340,9 @@
                         updateDesk: 'deskService/updateFishDesk',
                         deleteDesk: 'deskService/deleteFishDesk',
 
-                        getFishDeskUser:'deskService/getFishDeskUser',
-                        getFishDeskData:'deskService/getFishDeskData',
-                        getFishDeskResult:'deskService/getFishDeskResult'
+                        getUser_:'deskService/getFishDeskUser',
+                        getData_:'deskService/getFishDeskData',
+                        getResult_:'deskService/getFishDeskResult'
                     },
                     {
                         label: '单挑',
@@ -352,9 +352,9 @@
                         updateDesk: 'deskService/updateCardDesk',
                         deleteDesk: 'deskService/deleteCardDesk',
 
-                        getCardDesk:'deskService/getCardDesk',
-                        getCardDeskData:'deskService/getCardDeskData',
-                        getCardDeskResult:'deskService/getCardDeskResult'
+                        getUser_:'deskService/getCardDesk',
+                        getData_:'deskService/getCardDeskData',
+                        getResult_:'deskService/getCardDeskResult'
                     },
                     {
                         label: '万炮捕鱼',
@@ -364,9 +364,9 @@
                         updateDesk: 'deskService/updateBulletFishDesk',
                         deleteDesk: 'deskService/deleteBulletFishDesk',
 
-                        getBulletFishDesk:'deskService/getBulletFishDesk',
-                        getBulletFishDeskData:'deskService/getBulletFishDeskData',
-                        getBulletFishDeskResult:'deskService/getBulletFishDeskResult'
+                        getUser_:'deskService/getBulletFishDesk',
+                        getData_:'deskService/getBulletFishDeskData',
+                        getResult_:'deskService/getBulletFishDeskResult'
                     },
                     {
                         label: '美人鱼',
@@ -376,9 +376,9 @@
                         updateDesk: 'deskService/updateMermaidDesk',
                         deleteDesk: 'deskService/deleteMermaidDesk',
 
-                        getMermaidDesk:'deskService/getMermaidDesk',
-                        getMermaidDeskData:'deskService/getMermaidDeskData',
-                        getMermaidDeskResult:'deskService/getMermaidDeskResult'
+                        getUser_:'deskService/getMermaidDesk',
+                        getData_:'deskService/getMermaidDeskData',
+                        getResult_:'deskService/getMermaidDeskResult'
 
                     },
                     {
@@ -389,9 +389,9 @@
                         updateDesk: 'deskService/updateLackDesk',
                         deleteDesk: 'deskService/deleteLackDesk',
 
-                        getLackDesk:'deskService/getLackDesk',
-                        getLackDeskData:'deskService/getLackDeskData',
-                        getLackDeskResult:'deskService/getLackDeskResult'
+                        getUser_:'deskService/getLackDesk',
+                        getData_:'deskService/getLackDeskData',
+                        getResult_:'deskService/getLackDeskResult'
                     },
                     {
                         label: '欢乐牛牛',
@@ -401,9 +401,9 @@
                         updateDesk: 'deskService/updateJoyDesk',
                         deleteDesk: 'deskService/deleteJoyDesk',
 
-                        getJoyDesk:'deskService/getJoyDesk',
-                        getJoyDeskData:'deskService/getJoyDeskData',
-                        getJoyDeskResult:'deskService/getJoyDeskResult'
+                        getUser_:'deskService/getJoyDesk',
+                        getData_:'deskService/getJoyDeskData',
+                        getResult_:'deskService/getJoyDeskResult'
                     },
                     {
                         label: '水浒传',
@@ -413,9 +413,9 @@
                         updateDesk: 'waterDeskService/updateWaterDesk',
                         deleteDesk: 'waterDeskService/deleteWaterDesk',
 
-                        getWaterDesk:'deskService/getWaterDesk',
-                        getWaterDeskData:'deskService/getWaterDeskData',
-                        getWaterDeskResult:'deskService/getWaterDeskResult'
+                        getUser_:'waterDeskService/getWaterDesk',
+                        getData_:'waterDeskService/getWaterDeskData',
+                        getResult_:'waterDeskService/getWaterDeskResult'
                     },
                     {
                         label: '千炮捕鱼',
@@ -425,74 +425,56 @@
                         updateDesk: 'deskService/updateThousandFishDesk',
                         deleteDesk: 'deskService/deleteThousandFishDesk',
 
-                        getThousandFishDesk:'deskService/getThousandFishDesk',
-                        getThousandFishDeskData:'deskService/getThousandFishDeskData',
-                        getThousandFishDeskResult:'deskService/getThousandFishDeskResult'
+                        getUser_:'deskService/getThousandFishDesk',
+                        getData_:'deskService/getThousandFishDeskData',
+                        getResult_:'deskService/getThousandFishDeskResult'
                     }
 
                 ],
-                options2: [
-                    {
-                        value: '100万'
-                    },
-                    {
-                        value: '1000万',
-                        disabled: true
-                    },
-                    {
-                        value: '10万'
-                    },
-                    {
-                        value: '1万'
-                    },
-                    {
-                        value: '1000'
-                    }],
-                value: '幸运六狮',
 
                 userMsgList: [
-                    {'answer': '-1',
-                        'bindingName': '',
-                        'borrow': 0,
-                        'boxGameGold': 0,
-                        'boxLottery': 0,
-                        'card': '-1',
-                        'currentGameScore': 19800,
-                        'displayStatus': 0,
-                        'expeGold': 0,
-                        'expeScore': 0,
-                        'expiryNum': 0,
-                        'gameGold': 4600,
-                        'gameScore': 0,
-                        'id': 63,
-                        'lastDeskId': 3,
-                        'lastGame': 0,
-                        'level': 1,
-                        'levelScore': 0,
-                        'loginDate': '2018-02-04 09:26:08',
-                        'lottery': 0,
-                        'name': '',
-                        'nickname': 'ZUK Z2121',
-                        'overflow': 0,
-                        'password': 'e10adc3949ba59abbe56e057f20f883e',
-                        'payMoney': 0,
-                        'phone': '-',
-                        'photoId': 3,
-                        'promoterId': 0,
-                        'promoterName': 'admin',
-                        'question': '-1',
-                        'registDate': '2018-01-27 21:35:37',
-                        'safeBox': 0,
-                        'security': 0,
-                        'sex': '男',
-                        'shareClearingTime': '',
-                        'shutupStatus': 0,
-                        'specialMark': 0,
-                        'status': 0,
-                        'subUserCount': 0,
-                        'type': 1,
-                        'username': '00250000',
-                        'warningStatus': 0}
+//                    {'answer': '-1',
+//                        'bindingName': '',
+//                        'borrow': 0,
+//                        'boxGameGold': 0,
+//                        'boxLottery': 0,
+//                        'card': '-1',
+//                        'currentGameScore': 19800,
+//                        'displayStatus': 0,
+//                        'expeGold': 0,
+//                        'expeScore': 0,
+//                        'expiryNum': 0,
+//                        'gameGold': 4600,
+//                        'gameScore': 0,
+//                        'id': 63,
+//                        'lastDeskId': 3,
+//                        'lastGame': 0,
+//                        'level': 1,
+//                        'levelScore': 0,
+//                        'loginDate': '2018-02-04 09:26:08',
+//                        'lottery': 0,
+//                        'name': '',
+//                        'nickname': 'Z1',
+//                        'overflow': 0,
+//                        'password': 'e10adc3949ba59abbe56e057f20f883e',
+//                        'payMoney': 0,
+//                        'phone': '-',
+//                        'photoId': 3,
+//                        'promoterId': 0,
+//                        'promoterName': 'admin',
+//                        'question': '-1',
+//                        'registDate': '2018-01-27 21:35:37',
+//                        'safeBox': 0,
+//                        'security': 0,
+//                        'sex': '男',
+//                        'shareClearingTime': '',
+//                        'shutupStatus': 0,
+//                        'specialMark': 0,
+//                        'status': 0,
+//                        'subUserCount': 0,
+//                        'type': 1,
+//                        'username': '00250000',
+//                        'warningStatus': 0}
 
                 ],
 
@@ -540,29 +522,31 @@
                 xtStartTime: null,
                 xtEndTime: null,
 
-                winMsgList: [{
-                    animal: 10,
-                    awardGold: 5455,
-                    betPeople: 1,
-                    color: 0,
-                    datetime: '2018-02-04 09:28:57',
-                    deskId: 3,
-                    globalType: 0,
-                    id: 278987,
-                    lightningBeilv: 0,
-                    luckAnimal: 0,
-                    luckNum: 0,
-                    luckType: 0,
-                    moreInfo: '',
-                    result: 200,
-                    resultStr: '闲 普通绿兔子',
-                    roomId: 2,
-                    songDengCount: 0,
-                    sumDeFen: 0,
-                    sumYaFen: 200,
-                    type: 0,
-                    zxh: 2
-                }]
+                winMsgList: [
+//                    {
+//                    animal: 10,
+//                    awardGold: 5455,
+//                    betPeople: 1,
+//                    color: 0,
+//                    datetime: '2018-02-04 09:28:57',
+//                    deskId: 3,
+//                    globalType: 0,
+//                    id: 278987,
+//                    lightningBeilv: 0,
+//                    luckAnimal: 0,
+//                    luckNum: 0,
+//                    luckType: 0,
+//                    moreInfo: '',
+//                    result: 200,
+//                    resultStr: '闲 普通绿兔子',
+//                    roomId: 2,
+//                    songDengCount: 0,
+//                    sumDeFen: 0,
+//                    sumYaFen: 200,
+//                    type: 0,
+//                    zxh: 2
+//                }
+                ]
 
             }
         },
@@ -582,20 +566,68 @@
                 this.updateDeskList()
                 console.log('=========')
                 console.log(val)
+                this.userMsgList = [];
+                this.winMsgList = [];
+
             }
         },
         methods: {
             async deskSelect (desk) {
-                this.currentDesk = desk
+                this.currentDesk = desk;
                 console.log( desk );
                 // 传入桌子id  获取第二列表的头部信息
-                let getDeskData = await this.$store.dispatch(aTypes.getDeskData, [Number( desk.id )])
+                let getData = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getData_, args: Number ( desk.id )})
+                if( Number( this.deskIdx ) === 6 ){
+                    if (getData && getData.sumDeFen !== undefined) {
+                        this.sumYaFen_2 = getData.sumYaFen;
+                        this.sumDeFen_2 = getData.sumDeFen;
+                        this.allGain_2 = getData.sumWin;
+                        this.currDesk6 = getData.currentJackpotScore ;
+                    }
+                }else if( Number( this.deskIdx ) === 7 ){
+                    if (getData && getData.sumDeFen !== undefined) {
+                        this.sumYaFen_2 = getData.mainGameSumYaFen;
+                        this.sumDeFen_2 = getData.mainGameSumDeFen;
+                        this.allGain_2 = Number(getData.mainGameSumYaFen) - Number(getData.mainGameSumDeFen)
 
-                if (getDeskData && getDeskData.sumDeFen !== undefined) {
-                    this.sumYaFen_2 = getDeskData.sumYaFen
-                    this.sumDeFen_2 = getDeskData.sumDeFen
-                    this.allGain_2 = Number(getDeskData.sumYaFen) - Number(getDeskData.sumDeFen)
+                        this.currDesk7_yafen = getData.diceGameSumYaFen ;
+                        this.currDesk7_defen = getData.diceGameSumDeFen ;
+                        this.currDesk7_allGain = Number(getData.diceGameSumYaFen) - Number(getData.diceGameSumDeFen)
+                    }
+                }else{
+                    if (getData && getData.sumDeFen !== undefined) {
+                        this.sumYaFen_2 = getData.sumYaFen;
+                        this.sumDeFen_2 = getData.sumDeFen;
+                        this.allGain_2 = Number(getData.sumYaFen) - Number(getData.sumDeFen)
+                    }
                 }
+
+                let getUser_ = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getUser_, args: Number ( desk.id )})
+
+                console.log('+++++++++++')
+                console.log(getUser_)
+                console.log('_-----------')
+                if( getUser_ && getUser_.length >= 0 ){
+                    this.userMsgList = getUser_ ;
+                }
+
+                let getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
+                    Number ( desk.id ) ,this.format(new Date()) ,this.format(new Date()) ,{ "list":[],"order":"","orderBy":"","pageCount":0,
+                    "pageNumber":1,"pageSize":8,"totalCount":0 }
+                ] });
+                console.log('+++424234+++++++')
+                console.log(getResult_)
+                console.log('_--1231314---')
+                if (getResult_ && getResult_.list) {
+                    let copyList = getResult_.list
+                    this.winMsgList = copyList
+                    // 处理页码
+                    this.totalCount = getResult_.totalCount
+                    this.pageNumber = getResult_.pageNumber
+                    this.pageSize = getResult_.pageSize
+                }
+
+
             },
             openModifyDesk () {
                 this.isModify = true
@@ -609,7 +641,7 @@
                 this.dialogShow = true
             },
             openNewDesk () {
-                this.isModify = false
+                this.isModify = false;
                 this.dialogShow = true
             },
             async deleteDesk () {
@@ -696,18 +728,24 @@
                     return false
                 }
                 //    修改
-                let result = await this.$store.dispatch(aTypes.getDeskResult, [ 3,
-                    this.xtStartTime, this.xtEndTime,
-                    { 'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 8, 'totalCount': this.totalCount }])
-
-                if (result && result.list) {
-                    let copyList = result.list
+                let getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
+                    Number ( desk.id ) ,this.xtStartTime ,this.xtEndTime ,{ "list":[],"order":"","orderBy":"","pageCount":0,
+                        "pageNumber":1,"pageSize":8,"totalCount": this.totalCount }
+                ] });
+                console.log('+++424234+++++++')
+                console.log(getResult_)
+                console.log('_--1231314---')
+                if (getResult_ && getResult_.list) {
+                    let copyList = getResult_.list
                     this.winMsgList = copyList
                     // 处理页码
-                    this.totalCount = result.totalCount
-                    this.pageNumber = result.pageNumber
-                    this.pageSize = result.pageSize
+                    this.totalCount = getResult_.totalCount
+                    this.pageNumber = getResult_.pageNumber
+                    this.pageSize = getResult_.pageSize
                 }
+
+
+
             },
             logTimeChange (val) {
                 console.log(this.format(val[0]))
@@ -741,29 +779,31 @@
             async clickPage (size) {
                 console.log(1234313)
                 // 分页  对应第三个表格的分页
-                let result = null
+                let getResult_ = null
 
                 // 修改 getDeskResult 、 修改id  对应的 方法
                 if (!this.xtStartTime || !this.xtEndTime) {
-                    result = await this.$store.dispatch(aTypes.getDeskResult, [ 3,
-                        this.format(new Date().getTime() - 3600 * 1000 * 24 * 2), this.format(new Date()),
-                        { 'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 8, 'totalCount': this.totalCount }])
+                   getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
+                        Number ( this.currentDesk.id ) ,this.format(new Date().getTime() - 3600 * 1000 * 24 * 2),this.format(new Date()) ,{ "list":[],"order":"","orderBy":"","pageCount":0,
+                            "pageNumber":Number( size ),"pageSize":8,"totalCount": this.totalCount }
+                    ] });
                 } else {
-                    result = await this.$store.dispatch(aTypes.getDeskResult, [ 3,
-                        this.xtStartTime, this.xtEndTime,
-                        { 'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 8, 'totalCount': this.totalCount }])
+                    getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
+                        Number ( this.currentDesk.id ) ,this.xtStartTime ,this.xtEndTime ,{ "list":[],"order":"","orderBy":"","pageCount":0,
+                            "pageNumber":Number( size ) ,"pageSize":8,"totalCount": this.totalCount }
+                    ] });
+
                 }
-                console.log('第三个表格 分页')
-                console.log(result)
-                // 不知是否对应上。
-                if (result && result.list) {
-                    let copyList = result.list
+
+                if (getResult_ && getResult_.list) {
+                    let copyList = getResult_.list
                     this.winMsgList = copyList
                     // 处理页码
-                    this.totalCount = result.totalCount
-                    this.pageNumber = result.pageNumber
-                    this.pageSize = result.pageSize
+                    this.totalCount = getResult_.totalCount
+                    this.pageNumber = getResult_.pageNumber
+                    this.pageSize = getResult_.pageSize
                 }
+
             }
         },
         async mounted () {
