@@ -70,7 +70,16 @@
             <div class="l-flex-1 l-relative">
                 <div class="l-full" style="padding: 10px">
 
-                    <p style="border-top: 1px solid #eee;padding: 7px 0">【新手练习厅】已开启1桌，还可以开启0桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启1桌，还可以开启0桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 0">【新手练习厅】已开启{{roomStatus.room1StartNum}}桌，还可以开启{{roomStatus.room1RemainNum}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum}}桌，还可以开启{{roomStatus.room2RemainNum}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 1">【新手练习厅】已开启{{roomStatus.room1StartNum2}}桌，还可以开启{{roomStatus.room1RemainNum2}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum2}}桌，还可以开启{{roomStatus.room2RemainNum2}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 2">【新手练习厅】已开启{{roomStatus.room1StartNum3}}桌，还可以开启{{roomStatus.room1RemainNum3}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum3}}桌，还可以开启{{roomStatus.room2RemainNum3}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 3">【新手练习厅】已开启{{roomStatus.room1StartNum4}}桌，还可以开启{{roomStatus.room1RemainNum4}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum4}}桌，还可以开启{{roomStatus.room2RemainNum4}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 4">【新手练习厅】已开启{{roomStatus.room1StartNum5}}桌，还可以开启{{roomStatus.room1RemainNum5}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum5}}桌，还可以开启{{roomStatus.room2RemainNum5}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 5">【新手练习厅】已开启{{roomStatus.room1StartNum6}}桌，还可以开启{{roomStatus.room1RemainNum6}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum6}}桌，还可以开启{{roomStatus.room2RemainNum6}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 6">【新手练习厅】已开启{{roomStatus.room1StartNum7}}桌，还可以开启{{roomStatus.room1RemainNum7}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum7}}桌，还可以开启{{roomStatus.room2RemainNum7}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 7">【新手练习厅】已开启{{roomStatus.room1StartNum8}}桌，还可以开启{{roomStatus.room1RemainNum8}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum8}}桌，还可以开启{{roomStatus.room2RemainNum8}}桌 </p>
+                    <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 8">【新手练习厅】已开启{{roomStatus.room1StartNum9}}桌，还可以开启{{roomStatus.room1RemainNum9}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum9}}桌，还可以开启{{roomStatus.room2RemainNum9}}桌 </p>
+
                     <header style="padding: 8px 0;border-top: 1px solid #ddd">
                         <el-button size="small" type="primary" @click="updateDeskList">刷新</el-button>
                         <el-button style="margin-left: 18px" size="small" @click="openNewDesk" type="primary">新增桌</el-button>
@@ -89,13 +98,11 @@
                             style="width: 100%">
                             <el-table-column
                                 prop="id"
-                                label="桌ID"
-                                width="220">
+                                label="桌ID">
                             </el-table-column>
                             <el-table-column
                                 prop="name"
-                                label="桌名"
-                                width="200">
+                                label="桌名">
                             </el-table-column>
                             <el-table-column
                                 prop="roomName"
@@ -122,10 +129,27 @@
                             <el-button style="" size="small" type="primary">刷新</el-button>
                             <el-button style="margin-left: 18px" size="small" type="danger">清零</el-button>
                         </div>
-                        <strong>总押分（游戏分值）: {{ sumYaFen_2 }}</strong>
-                        <strong style="margin-left: 20px">总得分（游戏分值）: {{ sumDeFen_2 }}</strong>
-                        <strong style="margin-left: 20px">总盈利（游戏分值）: {{ allGain_2 }}</strong>
-
+                        <template v-if="deskIdx === 0 || deskIdx === 1 || deskIdx === 2 || deskIdx === 3 ||
+                                deskIdx === 4 || deskIdx === 5 || deskIdx === 8
+                            ">
+                            <strong>总押分（游戏分值）: {{ sumYaFen_2 }}</strong>
+                            <strong style="margin-left: 20px">总得分（游戏分值）: {{ sumDeFen_2 }}</strong>
+                            <strong style="margin-left: 20px">总盈利（游戏分值）: {{ allGain_2 }}</strong>
+                        </template>
+                        <template v-if="deskIdx === 6">
+                            <strong>总押分（游戏分值）: {{ sumYaFen_2 }}</strong>
+                            <strong style="margin-left: 20px">总得分（游戏分值）: {{ sumDeFen_2 }}</strong>
+                            <strong style="margin-left: 20px">总盈利（游戏分值）: {{ allGain_2 }}</strong><br>
+                            <strong>奖池目前分值（游戏分值）: {{ currDesk6 }}</strong>
+                        </template>
+                        <template v-if="deskIdx === 7">
+                            <strong>主游戏总押分（分值）: {{ sumYaFen_2 }}</strong>
+                            <strong style="margin-left: 20px">主游戏总得分（分值）: {{ sumDeFen_2 }}</strong>
+                            <strong style="margin-left: 20px">主游戏总盈利（分值）: {{ allGain_2 }}</strong><br>
+                            <strong>比倍总押分（分值）: {{ currDesk7_yafen }}</strong>
+                            <strong style="margin-left: 20px">比倍总得分（分值）: {{ currDesk7_defen }}</strong>
+                            <strong style="margin-left: 20px">比倍总盈利（分值）: {{ currDesk7_allGain }}</strong>
+                        </template>
                         <section style="margin: 10px 0">
                             <el-table
                                 :data="userMsgList"
@@ -184,22 +208,20 @@
                             </div>
                             <el-button style="margin-left: 15px;float: left" size="small" type="primary" v-tap="{methods:getWinMsgList}">查询</el-button>
                         </header>
-                        <section style="margin: 10px 0">
+                        <template v-if="deskIdx === 0 || deskIdx === 2 || deskIdx === 5 || deskIdx === 6">
                             <el-table
                                 :data="winMsgList"
-                                height="250"
+                                height="300"
                                 size="small"
                                 border
                                 style="width: 100%">
                                 <el-table-column
                                     prop="datetime"
-                                    label="开奖时间"
-                                    width="120">
+                                    label="开奖时间">
                                 </el-table-column>
                                 <el-table-column
                                     prop="sumYaFen"
-                                    label="总押注(游戏分值)"
-                                    width="80">
+                                    label="总押注(游戏分值)">
                                 </el-table-column>
                                 <el-table-column
                                     prop="sumDeFen"
@@ -218,7 +240,37 @@
                                     label="转盘结果">
                                 </el-table-column>
                             </el-table>
-                        </section>
+                        </template>
+                        <template v-if="deskIdx === 1 || deskIdx === 3 || deskIdx === 4 || deskIdx === 7 || deskIdx === 8">
+                            <el-table
+                                :data="winMsgList"
+                                height="300"
+                                size="small"
+                                border
+                                style="width: 100%">
+                                <el-table-column
+                                    prop="startDate"
+                                    label="起始时间">
+                                </el-table-column>
+                                <el-table-column
+                                    prop="endDate"
+                                    label="结束时间">
+                                </el-table-column>
+                                <el-table-column
+                                    prop="sumDeFen"
+                                    label="区段总玩分（sumDeFen）">
+                                </el-table-column>
+                                <el-table-column
+                                    prop="result"
+                                    label="区段结果">
+                                </el-table-column>
+                                <el-table-column
+                                    prop="maxOnlineNum"
+                                    label="最高活跃人数">
+                                </el-table-column>
+                            </el-table>
+                        </template>
+
                         <div class="block">
                             <el-pagination
                                 @current-change="clickPage"
@@ -274,7 +326,11 @@
                         getDeskList: 'deskService/getDeskList',
                         addDesk: 'deskService/addDesk',
                         updateDesk: 'deskService/updateDesk',
-                        deleteDesk: 'deskService/deleteDesk'
+                        deleteDesk: 'deskService/deleteDesk',
+
+                        getDeskUser:'deskService/getDeskUser',
+                        getDeskData:'deskService/getDeskData',
+                        getDeskResult:'deskService/getDeskResult'
                     },
                     {
                         label: '摇钱树',
@@ -282,7 +338,11 @@
                         getDeskList: 'deskService/getFishDeskList',
                         addDesk: 'deskService/addFishDesk',
                         updateDesk: 'deskService/updateFishDesk',
-                        deleteDesk: 'deskService/deleteFishDesk'
+                        deleteDesk: 'deskService/deleteFishDesk',
+
+                        getFishDeskUser:'deskService/getFishDeskUser',
+                        getFishDeskData:'deskService/getFishDeskData',
+                        getFishDeskResult:'deskService/getFishDeskResult'
                     },
                     {
                         label: '单挑',
@@ -290,7 +350,11 @@
                         getDeskList: 'deskService/getCardDeskList',
                         addDesk: 'deskService/addCardDesk',
                         updateDesk: 'deskService/updateCardDesk',
-                        deleteDesk: 'deskService/deleteCardDesk'
+                        deleteDesk: 'deskService/deleteCardDesk',
+
+                        getCardDesk:'deskService/getCardDesk',
+                        getCardDeskData:'deskService/getCardDeskData',
+                        getCardDeskResult:'deskService/getCardDeskResult'
                     },
                     {
                         label: '万炮捕鱼',
@@ -298,7 +362,11 @@
                         getDeskList: 'deskService/getBulletFishDeskList',
                         addDesk: 'deskService/addBulletFishDesk',
                         updateDesk: 'deskService/updateBulletFishDesk',
-                        deleteDesk: 'deskService/deleteBulletFishDesk'
+                        deleteDesk: 'deskService/deleteBulletFishDesk',
+
+                        getBulletFishDesk:'deskService/getBulletFishDesk',
+                        getBulletFishDeskData:'deskService/getBulletFishDeskData',
+                        getBulletFishDeskResult:'deskService/getBulletFishDeskResult'
                     },
                     {
                         label: '美人鱼',
@@ -306,7 +374,12 @@
                         getDeskList: 'deskService/getMermaidDeskList',
                         addDesk: 'deskService/addMermaidDesk',
                         updateDesk: 'deskService/updateMermaidDesk',
-                        deleteDesk: 'deskService/deleteMermaidDesk'
+                        deleteDesk: 'deskService/deleteMermaidDesk',
+
+                        getMermaidDesk:'deskService/getMermaidDesk',
+                        getMermaidDeskData:'deskService/getMermaidDeskData',
+                        getMermaidDeskResult:'deskService/getMermaidDeskResult'
+
                     },
                     {
                         label: '缺一门',
@@ -314,7 +387,11 @@
                         getDeskList: 'deskService/getLackDeskList',
                         addDesk: 'deskService/addLackDesk',
                         updateDesk: 'deskService/updateLackDesk',
-                        deleteDesk: 'deskService/deleteLackDesk'
+                        deleteDesk: 'deskService/deleteLackDesk',
+
+                        getLackDesk:'deskService/getLackDesk',
+                        getLackDeskData:'deskService/getLackDeskData',
+                        getLackDeskResult:'deskService/getLackDeskResult'
                     },
                     {
                         label: '欢乐牛牛',
@@ -322,7 +399,11 @@
                         getDeskList: 'deskService/getJoyDeskList',
                         addDesk: 'deskService/addJoyDesk',
                         updateDesk: 'deskService/updateJoyDesk',
-                        deleteDesk: 'deskService/deleteJoyDesk'
+                        deleteDesk: 'deskService/deleteJoyDesk',
+
+                        getJoyDesk:'deskService/getJoyDesk',
+                        getJoyDeskData:'deskService/getJoyDeskData',
+                        getJoyDeskResult:'deskService/getJoyDeskResult'
                     },
                     {
                         label: '水浒传',
@@ -330,7 +411,11 @@
                         getDeskList: 'waterDeskService/getWaterDeskList',
                         addDesk: 'waterDeskService/addWaterDesk',
                         updateDesk: 'waterDeskService/updateWaterDesk',
-                        deleteDesk: 'waterDeskService/deleteWaterDesk'
+                        deleteDesk: 'waterDeskService/deleteWaterDesk',
+
+                        getWaterDesk:'deskService/getWaterDesk',
+                        getWaterDeskData:'deskService/getWaterDeskData',
+                        getWaterDeskResult:'deskService/getWaterDeskResult'
                     },
                     {
                         label: '千炮捕鱼',
@@ -338,7 +423,11 @@
                         getDeskList: 'deskService/getThousandFishDeskList',
                         addDesk: 'deskService/addThousandFishDesk',
                         updateDesk: 'deskService/updateThousandFishDesk',
-                        deleteDesk: 'deskService/deleteThousandFishDesk'
+                        deleteDesk: 'deskService/deleteThousandFishDesk',
+
+                        getThousandFishDesk:'deskService/getThousandFishDesk',
+                        getThousandFishDeskData:'deskService/getThousandFishDeskData',
+                        getThousandFishDeskResult:'deskService/getThousandFishDeskResult'
                     }
 
                 ],
@@ -411,6 +500,11 @@
                 sumDeFen_2: 0,
                 allGain_2: 0,
 
+                currDesk6:0,
+                currDesk7_yafen:0,
+                currDesk7_defen:0,
+                currDesk7_allGain:0,
+
                 pickerOptions: {
                     shortcuts: [{
                         text: '最近一周',
@@ -438,7 +532,7 @@
                         }
                     }]
                 },
-                totalCount: 20,
+                totalCount: 8,
                 pageNumber: 1,
                 pageSize: 8,
 
@@ -475,18 +569,28 @@
         components: {
             newXyls, yaoqianshu, dantiao, wppy, meirenyu, queyimen, huanleniuniu, shuihuzhuan, qianpaobuyu
         },
+        computed: {
+            roomStatus () {
+                return this.$store.state.user.loginInfo.roomStatus
+            }
+
+        },
         watch: {
-            async deskIdx () {
+            async deskIdx ( val ) {
                 this.currentDesk = null
                 this.deskList = null
                 this.updateDeskList()
+                console.log('=========')
+                console.log(val)
             }
         },
         methods: {
             async deskSelect (desk) {
                 this.currentDesk = desk
+                console.log( desk );
                 // 传入桌子id  获取第二列表的头部信息
-                let getDeskData = await this.$store.dispatch(aTypes.getDeskData, desk.id)
+                let getDeskData = await this.$store.dispatch(aTypes.getDeskData, [Number( desk.id )])
+
                 if (getDeskData && getDeskData.sumDeFen !== undefined) {
                     this.sumYaFen_2 = getDeskData.sumYaFen
                     this.sumDeFen_2 = getDeskData.sumDeFen
@@ -662,7 +766,6 @@
                 }
             }
         },
-        computed: {},
         async mounted () {
             await this.updateDeskList()
         }

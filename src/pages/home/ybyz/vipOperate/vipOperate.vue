@@ -28,7 +28,17 @@ export default {
                     return false
                 }
 
-                let memberPay = await this.$store.dispatch(aTypes.memberPay, [ Number(this.selVipVal.id), Number(this.payNum) / 100, 0])
+
+                if (isNaN(Number(this.payNum))) {
+                    this.$message({
+                        message: '请输入正确的充值数',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+
+                let memberPay = await this.$store.dispatch(aTypes.memberPay, [ Number(this.selVipVal.id), Number(this.payNum), 0])
                 console.log('一般运作 充值数目Msg')
                 console.log(memberPay)
 
@@ -47,7 +57,6 @@ export default {
                     })
                 }
             }
-
         },
         computed: {
             selVipVal () {
