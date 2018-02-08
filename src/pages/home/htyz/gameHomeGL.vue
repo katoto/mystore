@@ -14,6 +14,7 @@
 
         <dantiaosetting v-if="deskIdx === 2 && settingDialog" :init="initSetting" @close="settingDialog = false" @submit="modifyCommonSetting"></dantiaosetting>
         <queyimensetting v-if="deskIdx === 5 && settingDialog" :init="initSetting" @close="settingDialog = false" @submit="modifyCommonSetting"></queyimensetting>
+        <huanleniuniusetting v-if="deskIdx === 6 && settingDialog" :init="initSetting" @close="settingDialog = false" @submit="modifyCommonSetting"></huanleniuniusetting>
 
         <div class="l-flex-1 l-flex-column">
             <div class=" l-relative" style="height: 150px">
@@ -92,6 +93,7 @@
                         <el-button style="margin-left: 18px" size="small" @click="openModifyDesk">参数设置</el-button>
                         <el-button style="margin-left: 18px" size="small" type="danger" @click="deleteDesk">删除桌</el-button>
                         <el-button style="margin-left: 18px" size="small" type="primary">桌排序</el-button>
+                        <el-button v-if="deskIdx === 6" style="margin-left: 18px" size="small" @click="beginSetting" type="primary">疯狂牛牛相关设置</el-button>
                     </header>
                     <section style="margin-bottom: 10px">
                         <el-table
@@ -266,6 +268,7 @@
     import qianpaobuyu from '~components/htyz/qianpaobuyu.vue'// 千炮捕鱼
     import dantiaosetting from '~components/htyz/dantiaosetting.vue'// 单挑公共参数设置
     import queyimensetting from '~components/htyz/queyimensetting.vue'// 缺一门公共参数设置
+    import huanleniuniusetting from '~components/htyz/huanleniuniusetting.vue'// 欢乐牛牛公共参数设置
     export default {
         data () {
             return {
@@ -311,7 +314,7 @@
                         updateDesk: 'deskService/updateCardDesk',
                         deleteDesk: 'deskService/deleteCardDesk',
                         getParameter: 'deskService/getCardParameter',
-                        updateParameter: 'updateCardParameter'
+                        updateParameter: 'deskService/updateCardParameter'
                     },
                     {
                         label: '万炮捕鱼',
@@ -337,7 +340,7 @@
                         updateDesk: 'deskService/updateLackDesk',
                         deleteDesk: 'deskService/deleteLackDesk',
                         getParameter: 'deskService/getLackParameter',
-                        updateParameter: 'updateLackParameter'
+                        updateParameter: 'deskService/updateLackParameter'
                     },
                     {
                         label: '欢乐牛牛',
@@ -345,7 +348,9 @@
                         getDeskList: 'deskService/getJoyDeskList',
                         addDesk: 'deskService/addJoyDesk',
                         updateDesk: 'deskService/updateJoyDesk',
-                        deleteDesk: 'deskService/deleteJoyDesk'
+                        deleteDesk: 'deskService/deleteJoyDesk',
+                        getParameter: 'deskService/getJoyPrivateDeskParameter',
+                        updateParameter: 'updateJoyPrivateDeskParameter'
                     },
                     {
                         label: '水浒传',
@@ -496,7 +501,7 @@
             }
         },
         components: {
-            newXyls, yaoqianshu, dantiao, wppy, meirenyu, queyimen, huanleniuniu, shuihuzhuan, qianpaobuyu, dantiaosetting, queyimensetting
+            newXyls, yaoqianshu, dantiao, wppy, meirenyu, queyimen, huanleniuniu, shuihuzhuan, qianpaobuyu, dantiaosetting, queyimensetting, huanleniuniusetting
         },
         computed: {
             roomStatus () {
