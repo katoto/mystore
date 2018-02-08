@@ -91,7 +91,7 @@
 
                 <td align="center">底分（游戏分值）：</td>
                 <td>
-                    <el-select class="" size="small" v-model="minGold" :disabled="roomId===1">
+                    <el-select class="" size="small" v-model="baseYaFen" :disabled="roomId===1">
                         <el-option v-for="item in [10, 20, 50,100, 200, 500]"
                                    :label="item"
                                    :value="item"/>
@@ -342,7 +342,7 @@
                 <td align="center">最小携带（游戏币）：</td>
                 <td>
                     <el-select class="" size="small" v-model="minGold" :disabled="roomId===1">
-                        <el-option v-for="item in [50,100, 200, 500,1000, 2000, 5000]"
+                        <el-option v-for="item in [10, 20, 50,100, 200, 500,1000]"
                                    :label="item"
                                    :value="item"/>
                     </el-select>
