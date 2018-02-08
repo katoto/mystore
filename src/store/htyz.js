@@ -86,10 +86,10 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
 
-    async commonInvoke ({dispatch, commit}, {method, args}) {
+    async commonInvoke ({dispatch, commit}, {method, args = null}) {
         const argsData = await dispatch('invoke', {
             method,
-            args: [args]
+            args: args ? [args] : []
         })
         return argsData[0]
     },
@@ -362,7 +362,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
-    async searchUser ({dispatch, commit}, args =  ["666666",0,3] ) {
+    async searchUser ({dispatch, commit}, args = ['666666', 0, 3]) {
         const argsData = await dispatch('invoke', {
             method: 'memberService/searchUser',
             args

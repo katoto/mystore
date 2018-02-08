@@ -478,7 +478,7 @@
                 dealException: true,
 
                 isShutUpName: '正常',
-                isOption:false,
+                isOption: false
             }
         },
         watch: {
@@ -545,7 +545,7 @@
                     this.showStopBtn = false
                 }
             },
-            searchUserVal( val ){
+            searchUserVal (val) {
                 if (val !== undefined || val !== null) {
                     if (Number(val) === 2) {
                         this.isOption = true
@@ -585,10 +585,10 @@
                 }
             },
             async searchUser () {
-                if( this.searchUserInpVal === '' ){
-                    this.getUserManageFn( Number( this.searchUserVal ) );
-                }else{
-                    let result = await this.$store.dispatch(aTypes.searchUser, [ this.searchUserInpVal.toString() , 0, Number(this.searchUserVal) ])
+                if (this.searchUserInpVal === '') {
+                    this.getUserManageFn(Number(this.searchUserVal))
+                } else {
+                    let result = await this.$store.dispatch(aTypes.searchUser, [ this.searchUserInpVal.toString(), 0, Number(this.searchUserVal) ])
                     console.log(result)
                     console.log('查询内容')
                     if (result) {
@@ -786,17 +786,17 @@
                 this.$refs.singleTable.setCurrentRow(row)
             },
             async clickPage (size) {
-                this.getUserManageFn( Number( this.searchUserVal ),size );
+                this.getUserManageFn(Number(this.searchUserVal), size)
             },
 
-            async getUserManageFn( currid = 0, pageNum = 1 ){
-                let result = await this.$store.dispatch(aTypes.getUserManage ,[ currid, {'list': [],
+            async getUserManageFn (currid = 0, pageNum = 1) {
+                let result = await this.$store.dispatch(aTypes.getUserManage, [ currid, {'list': [],
                     'order': '',
                     'orderBy': '',
                     'pageCount': 0,
-                    'pageNumber': Number(  pageNum ) ,
+                    'pageNumber': Number(pageNum),
                     'pageSize': 12,
-                    'totalCount': 0}]  )
+                    'totalCount': 0}])
                 console.log(result)
                 console.log('会员高级管理列表')
                 if (result) {
@@ -841,8 +841,8 @@
         },
         computed: {},
         async mounted () {
-            this.getUserManageFn();
-        }
+            this.getUserManageFn()
+    }
     }
 </script>
 <style scoped>

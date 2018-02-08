@@ -11,6 +11,10 @@
         <shuihuzhuan v-if="dialogShow && deskIdx === 7" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></shuihuzhuan>
         <qianpaobuyu v-if="dialogShow && deskIdx === 8" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></qianpaobuyu>
 
+
+        <dantiaosetting v-if="deskIdx === 2 && settingDialog" :init="initSetting" @close="settingDialog = false" @submit="modifyCommonSetting"></dantiaosetting>
+        <queyimensetting v-if="deskIdx === 5 && settingDialog" :init="initSetting" @close="settingDialog = false" @submit="modifyCommonSetting"></queyimensetting>
+
         <div class="l-flex-1 l-flex-column">
             <div class=" l-relative" style="height: 150px">
                 <div class="l-full" style="padding: 10px">
@@ -79,7 +83,10 @@
                     <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 6">【新手练习厅】已开启{{roomStatus.room1StartNum7}}桌，还可以开启{{roomStatus.room1RemainNum7}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum7}}桌，还可以开启{{roomStatus.room2RemainNum7}}桌 </p>
                     <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 7">【新手练习厅】已开启{{roomStatus.room1StartNum8}}桌，还可以开启{{roomStatus.room1RemainNum8}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum8}}桌，还可以开启{{roomStatus.room2RemainNum8}}桌 </p>
                     <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 8">【新手练习厅】已开启{{roomStatus.room1StartNum9}}桌，还可以开启{{roomStatus.room1RemainNum9}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum9}}桌，还可以开启{{roomStatus.room2RemainNum9}}桌 </p>
-                     <header style="padding: 8px 0;border-top: 1px solid #ddd">
+                    <section v-if="deskIdx === 2 || deskIdx === 5">
+                        针对所有桌子：  <el-button style="margin-left: 18px" size="small" @click="beginSetting" type="primary">公共参数设置</el-button>保单箱状态：异常 当前保单箱连接数：0
+                    </section>
+                    <header style="padding: 8px 0;border-top: 1px solid #ddd">
                         <el-button size="small" type="primary" @click="updateDeskList">刷新</el-button>
                         <el-button style="margin-left: 18px" size="small" @click="openNewDesk" type="primary">新增桌</el-button>
                         <el-button style="margin-left: 18px" size="small" @click="openModifyDesk">参数设置</el-button>
@@ -257,6 +264,8 @@
     import huanleniuniu from '~components/htyz/huanleniuniu.vue'// 欢乐牛牛
     import shuihuzhuan from '~components/htyz/shuihuzhuan.vue'// 水浒传
     import qianpaobuyu from '~components/htyz/qianpaobuyu.vue'// 千炮捕鱼
+    import dantiaosetting from '~components/htyz/dantiaosetting.vue'// 单挑公共参数设置
+    import queyimensetting from '~components/htyz/queyimensetting.vue'// 缺一门公共参数设置
     export default {
         data () {
             return {
@@ -264,6 +273,8 @@
                     xyls: false
                 },
                 dialogShow: false,
+                settingDialog: false,
+                initSetting: null,
                 isModify: false,
                 form: {
                     hlabel: '0',
@@ -298,7 +309,9 @@
                         getDeskList: 'deskService/getCardDeskList',
                         addDesk: 'deskService/addCardDesk',
                         updateDesk: 'deskService/updateCardDesk',
-                        deleteDesk: 'deskService/deleteCardDesk'
+                        deleteDesk: 'deskService/deleteCardDesk',
+                        getParameter: 'deskService/getCardParameter',
+                        updateParameter: 'updateCardParameter'
                     },
                     {
                         label: '万炮捕鱼',
@@ -322,7 +335,9 @@
                         getDeskList: 'deskService/getLackDeskList',
                         addDesk: 'deskService/addLackDesk',
                         updateDesk: 'deskService/updateLackDesk',
-                        deleteDesk: 'deskService/deleteLackDesk'
+                        deleteDesk: 'deskService/deleteLackDesk',
+                        getParameter: 'deskService/getLackParameter',
+                        updateParameter: 'updateLackParameter'
                     },
                     {
                         label: '欢乐牛牛',
@@ -481,7 +496,7 @@
             }
         },
         components: {
-            newXyls, yaoqianshu, dantiao, wppy, meirenyu, queyimen, huanleniuniu, shuihuzhuan, qianpaobuyu
+            newXyls, yaoqianshu, dantiao, wppy, meirenyu, queyimen, huanleniuniu, shuihuzhuan, qianpaobuyu, dantiaosetting, queyimensetting
         },
         computed: {
             roomStatus () {
@@ -517,6 +532,43 @@
                     })
                 }
                 this.dialogShow = true
+            },
+            async beginSetting () {
+                if (this.desks[this.deskIdx].getParameter) {
+                    this.initSetting = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getParameter })
+                    this.settingDialog = true
+                }
+            },
+            async modifyCommonSetting (args) {
+                this.$confirm('确认修改?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(async () => {
+                    try {
+                        let ret = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].updateParameter, args})
+                        if (ret.success) {
+                            this.settingDialog = false
+                            return this.$message({
+                                message: '修改成功！',
+                                type: 'success',
+                                duration: 1200
+                            })
+                        } else {
+                            return this.$message({
+                                message: ret.message,
+                                type: 'error',
+                                duration: 1200
+                            })
+                        }
+                    } catch (e) {
+                        return this.$message({
+                            message: '修改失败',
+                            type: 'error',
+                            duration: 1200
+                        })
+                    }
+                })
             },
             openNewDesk () {
                 this.isModify = false
@@ -571,14 +623,13 @@
                             duration: 1200
                         })
                     }
-                }catch (e) {
+                } catch (e) {
                     this.$message({
-                        message: this.isModify?'更新失败': '新增失败',
+                        message: this.isModify ? '更新失败' : '新增失败',
                         type: 'error',
                         duration: 1200
                     })
                 }
-
             },
             async updateDeskList () {
                 this.deskList = await this.$store.dispatch(aTypes.getDeskList, this.desks[this.deskIdx].getDeskList)
