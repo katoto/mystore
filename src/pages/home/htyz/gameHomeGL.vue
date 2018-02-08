@@ -537,21 +537,34 @@
             },
 
             async onSubmit (args) {
-                let ret
-                if (this.isModify) {
-                    ret = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].updateDesk, args})
-                } else {
-                    ret = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].addDesk, args})
-                }
-                if (!ret.success) {
+                try {
+                    let ret
+                    if (this.isModify) {
+                        ret = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].updateDesk, args})
+                    } else {
+                        ret = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].addDesk, args})
+                    }
+                    if (!ret.success) {
+                        this.$message({
+                            message: ret.message,
+                            type: 'error',
+                            duration: 1200
+                        })
+                    } else {
+                        this.$message({
+                            message: '更新成功',
+                            type: 'success',
+                            duration: 1200
+                        })
+                    }
+                }catch (e) {
                     this.$message({
-                        message: ret.message,
+                        message: this.isModify?'更新失败': '新增失败',
                         type: 'error',
                         duration: 1200
                     })
                 }
-                console.log(ret)
-                console.log('submit!')
+
             },
             async updateDeskList () {
                 this.deskList = await this.$store.dispatch(aTypes.getDeskList, this.desks[this.deskIdx].getDeskList)
