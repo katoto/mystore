@@ -8,7 +8,7 @@
             <tr>
                 <td width="26%" align="center">所属房间：</td>
                 <td width="24%">
-                    <el-select class="" size="small" v-model="roomId">
+                    <el-select class="" size="small" v-model="roomId" :disabled="modify">
                         <el-option
                             label="欢乐竞技厅"
                             :value="2"/>

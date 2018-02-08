@@ -86,10 +86,10 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
 
-    async commonInvoke ({dispatch, commit}, {method, args}) {
+    async commonInvoke ({dispatch, commit}, {method, args = null}) {
         const argsData = await dispatch('invoke', {
             method,
-            args: [args]
+            args: args ? [args] : []
         })
         return argsData[0]
     },

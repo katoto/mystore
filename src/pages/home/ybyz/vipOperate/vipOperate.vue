@@ -28,7 +28,6 @@ export default {
                     return false
                 }
 
-
                 if (isNaN(Number(this.payNum))) {
                     this.$message({
                         message: '请输入正确的充值数',
@@ -39,6 +38,7 @@ export default {
                 }
 
                 let memberPay = await this.$store.dispatch(aTypes.memberPay, [ Number(this.selVipVal.id), Number(this.payNum), 0])
+
                 console.log('一般运作 充值数目Msg')
                 console.log(memberPay)
 
