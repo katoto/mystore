@@ -15,15 +15,15 @@ export default {
             return {
                 vipStyle: '',
                 payNum: '',
-                payNumNow:0 ,
+                payNumNow: 0
             }
         },
         watch: {
-            payNum( val ){
-                console.log( this.loginInfoConfig )
-                if( this.loginInfoConfig  && this.loginInfoConfig.payScale ){
-                    this.payNumNow = Number ( val ) / Number ( this.loginInfoConfig.payScale)
-                    console.log( this.payNumNow );
+            payNum (val) {
+                console.log(this.loginInfoConfig)
+                if (this.loginInfoConfig && this.loginInfoConfig.payScale) {
+                    this.payNumNow = Number(val) / Number(this.loginInfoConfig.payScale)
+                    console.log(this.payNumNow)
                 }
             }
         },

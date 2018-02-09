@@ -14,13 +14,13 @@
         data () {
             return {
                 payNum: '',
-                payNumNow:0,
+                payNumNow: 0
             }
         },
         watch: {
-            payNum( val ){
-                if( this.loginInfoConfig  && this.loginInfoConfig.promoterPayScale ){
-                    this.payNumNow = Number ( val ) / Number ( this.loginInfoConfig.promoterPayScale)
+            payNum (val) {
+                if (this.loginInfoConfig && this.loginInfoConfig.promoterPayScale) {
+                    this.payNumNow = Number(val) / Number(this.loginInfoConfig.promoterPayScale)
                 }
             }
         },
@@ -42,7 +42,7 @@
                         message: '充值成功',
                         type: 'success',
                         duration: 1200
-                    });
+                    })
                     this.payNum = 0
                 } else {
                     this.$message({

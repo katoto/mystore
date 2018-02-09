@@ -211,7 +211,7 @@ export default {
                 if (this.vipSearch === '') {
                     this.getUserListFn(this.vipStyle)
                 } else {
-                    let searchUser = await this.$store.dispatch(aTypes.searchUser, [ this.vipSearch.toString(), Number(this.vipUserName) ,Number(this.vipStyle) ] )
+                    let searchUser = await this.$store.dispatch(aTypes.searchUser, [ this.vipSearch.toString(), Number(this.vipUserName), Number(this.vipStyle) ])
                     console.log(searchUser)
                     console.log('==一般运作查询按钮回来的数据==')
                     if (searchUser) {
@@ -267,7 +267,7 @@ export default {
             },
             async handleCurrentChange (size) {
                 // 分页事件  第一位
-                this.vipSearch = '';
+                this.vipSearch = ''
                 this.getUserListFn(this.vipStyle, size)
             },
             vipListClick (val) {
@@ -407,7 +407,7 @@ export default {
                         this.isOption = false
                     }
                 }
-                this.vipSearch = '';
+                this.vipSearch = ''
                 this.getUserListFn(this.vipStyle)
             }
         },

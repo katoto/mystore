@@ -79,7 +79,6 @@
         },
         watch: {
             loginInfoConfig (loginInfoConfig) {
-
                 this.setXTInit({ params: loginInfoConfig })
             }
         },
@@ -110,14 +109,14 @@
                     }
                     if (loginInfoConfig.payScale) {
                         try {
-                            this.payScale =  Number ( loginInfoConfig.payScale ) / 100
+                            this.payScale = Number(loginInfoConfig.payScale) / 100
                         } catch (e) {
                             console.error('userSumMoney error at 387')
                         }
                     }
                     if (loginInfoConfig.promoterPayScale) {
                         try {
-                            this.promoterPayScale = Number ( loginInfoConfig.promoterPayScale ) /100
+                            this.promoterPayScale = Number(loginInfoConfig.promoterPayScale) / 100
                         } catch (e) {
                             console.error('userSumMoney error at 387')
                         }

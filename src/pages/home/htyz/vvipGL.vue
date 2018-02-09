@@ -526,7 +526,7 @@
                         this.isOption = false
                     }
                 }
-                this.searchUserInpVal = '';
+                this.searchUserInpVal = ''
                 this.getUserManageFn(Number(this.searchUserVal))
             }
         },
@@ -555,7 +555,6 @@
                         type: 'success',
                         duration: 1200
                     })
-
                 }
             },
             async searchUser () {

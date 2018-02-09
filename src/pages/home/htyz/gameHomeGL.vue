@@ -340,9 +340,9 @@
                         updateDesk: 'deskService/updateDesk',
                         deleteDesk: 'deskService/deleteDesk',
 
-                        getUser_:'deskService/getDeskUser',
-                        getData_:'deskService/getDeskData',
-                        getResult_:'deskService/getDeskResult'
+                        getUser_: 'deskService/getDeskUser',
+                        getData_: 'deskService/getDeskData',
+                        getResult_: 'deskService/getDeskResult'
                     },
                     {
                         label: '摇钱树',
@@ -352,9 +352,9 @@
                         updateDesk: 'deskService/updateFishDesk',
                         deleteDesk: 'deskService/deleteFishDesk',
 
-                        getUser_:'deskService/getFishDeskUser',
-                        getData_:'deskService/getFishDeskData',
-                        getResult_:'deskService/getFishDeskResult'
+                        getUser_: 'deskService/getFishDeskUser',
+                        getData_: 'deskService/getFishDeskData',
+                        getResult_: 'deskService/getFishDeskResult'
                     },
                     {
                         label: '单挑',
@@ -364,9 +364,9 @@
                         updateDesk: 'deskService/updateCardDesk',
                         deleteDesk: 'deskService/deleteCardDesk',
 
-                        getUser_:'deskService/getCardDesk',
-                        getData_:'deskService/getCardDeskData',
-                        getResult_:'deskService/getCardDeskResult',
+                        getUser_: 'deskService/getCardDesk',
+                        getData_: 'deskService/getCardDeskData',
+                        getResult_: 'deskService/getCardDeskResult',
 
                         getParameter: 'deskService/getCardParameter',
                         updateParameter: 'deskService/updateCardParameter'
@@ -379,9 +379,9 @@
                         updateDesk: 'deskService/updateBulletFishDesk',
                         deleteDesk: 'deskService/deleteBulletFishDesk',
 
-                        getUser_:'deskService/getBulletFishDeskUser',
-                        getData_:'deskService/getBulletFishDeskData',
-                        getResult_:'deskService/getBulletFishDeskResult'
+                        getUser_: 'deskService/getBulletFishDeskUser',
+                        getData_: 'deskService/getBulletFishDeskData',
+                        getResult_: 'deskService/getBulletFishDeskResult'
                     },
                     {
                         label: '美人鱼',
@@ -391,9 +391,9 @@
                         updateDesk: 'deskService/updateMermaidDesk',
                         deleteDesk: 'deskService/deleteMermaidDesk',
 
-                        getUser_:'deskService/getMermaidDeskUser',
-                        getData_:'deskService/getMermaidDeskData',
-                        getResult_:'deskService/getMermaidDeskResult'
+                        getUser_: 'deskService/getMermaidDeskUser',
+                        getData_: 'deskService/getMermaidDeskData',
+                        getResult_: 'deskService/getMermaidDeskResult'
 
                     },
                     {
@@ -404,9 +404,9 @@
                         updateDesk: 'deskService/updateLackDesk',
                         deleteDesk: 'deskService/deleteLackDesk',
 
-                        getUser_:'deskService/getLackDeskUser',
-                        getData_:'deskService/getLackDeskData',
-                        getResult_:'deskService/getLackDeskResult',
+                        getUser_: 'deskService/getLackDeskUser',
+                        getData_: 'deskService/getLackDeskData',
+                        getResult_: 'deskService/getLackDeskResult',
 
                         getParameter: 'deskService/getLackParameter',
                         updateParameter: 'deskService/updateLackParameter'
@@ -419,9 +419,9 @@
                         updateDesk: 'deskService/updateJoyDesk',
                         deleteDesk: 'deskService/deleteJoyDesk',
 
-                        getUser_:'deskService/getJoyDeskUser',
-                        getData_:'deskService/getJoyDeskData',
-                        getResult_:'deskService/getJoyDeskResult',
+                        getUser_: 'deskService/getJoyDeskUser',
+                        getData_: 'deskService/getJoyDeskData',
+                        getResult_: 'deskService/getJoyDeskResult',
                         getParameter: 'deskService/getJoyPrivateDeskParameter',
                         updateParameter: 'updateJoyPrivateDeskParameter'
                     },
@@ -433,9 +433,9 @@
                         updateDesk: 'waterDeskService/updateWaterDesk',
                         deleteDesk: 'waterDeskService/deleteWaterDesk',
 
-                        getUser_:'waterDeskService/getWaterDeskUser',
-                        getData_:'waterDeskService/getWaterDeskData',
-                        getResult_:'waterDeskService/getWaterDeskResult'
+                        getUser_: 'waterDeskService/getWaterDeskUser',
+                        getData_: 'waterDeskService/getWaterDeskData',
+                        getResult_: 'waterDeskService/getWaterDeskResult'
                     },
                     {
                         label: '千炮捕鱼',
@@ -445,56 +445,56 @@
                         updateDesk: 'deskService/updateThousandFishDesk',
                         deleteDesk: 'deskService/deleteThousandFishDesk',
 
-                        getUser_:'deskService/getThousandFishDeskUser',
-                        getData_:'deskService/getThousandFishDeskData',
-                        getResult_:'deskService/getThousandFishDeskResult'
+                        getUser_: 'deskService/getThousandFishDeskUser',
+                        getData_: 'deskService/getThousandFishDeskData',
+                        getResult_: 'deskService/getThousandFishDeskResult'
                     }
 
                 ],
 
                 userMsgList: [
-//                    {'answer': '-1',
-//                        'bindingName': '',
-//                        'borrow': 0,
-//                        'boxGameGold': 0,
-//                        'boxLottery': 0,
-//                        'card': '-1',
-//                        'currentGameScore': 19800,
-//                        'displayStatus': 0,
-//                        'expeGold': 0,
-//                        'expeScore': 0,
-//                        'expiryNum': 0,
-//                        'gameGold': 4600,
-//                        'gameScore': 0,
-//                        'id': 63,
-//                        'lastDeskId': 3,
-//                        'lastGame': 0,
-//                        'level': 1,
-//                        'levelScore': 0,
-//                        'loginDate': '2018-02-04 09:26:08',
-//                        'lottery': 0,
-//                        'name': '',
-//                        'nickname': 'Z1',
-//                        'overflow': 0,
-//                        'password': 'e10adc3949ba59abbe56e057f20f883e',
-//                        'payMoney': 0,
-//                        'phone': '-',
-//                        'photoId': 3,
-//                        'promoterId': 0,
-//                        'promoterName': 'admin',
-//                        'question': '-1',
-//                        'registDate': '2018-01-27 21:35:37',
-//                        'safeBox': 0,
-//                        'security': 0,
-//                        'sex': '男',
-//                        'shareClearingTime': '',
-//                        'shutupStatus': 0,
-//                        'specialMark': 0,
-//                        'status': 0,
-//                        'subUserCount': 0,
-//                        'type': 1,
-//                        'username': '00250000',
-//                        'warningStatus': 0}
+                //                    {'answer': '-1',
+                //                        'bindingName': '',
+                //                        'borrow': 0,
+                //                        'boxGameGold': 0,
+                //                        'boxLottery': 0,
+                //                        'card': '-1',
+                //                        'currentGameScore': 19800,
+                //                        'displayStatus': 0,
+                //                        'expeGold': 0,
+                //                        'expeScore': 0,
+                //                        'expiryNum': 0,
+                //                        'gameGold': 4600,
+                //                        'gameScore': 0,
+                //                        'id': 63,
+                //                        'lastDeskId': 3,
+                //                        'lastGame': 0,
+                //                        'level': 1,
+                //                        'levelScore': 0,
+                //                        'loginDate': '2018-02-04 09:26:08',
+                //                        'lottery': 0,
+                //                        'name': '',
+                //                        'nickname': 'Z1',
+                //                        'overflow': 0,
+                //                        'password': 'e10adc3949ba59abbe56e057f20f883e',
+                //                        'payMoney': 0,
+                //                        'phone': '-',
+                //                        'photoId': 3,
+                //                        'promoterId': 0,
+                //                        'promoterName': 'admin',
+                //                        'question': '-1',
+                //                        'registDate': '2018-01-27 21:35:37',
+                //                        'safeBox': 0,
+                //                        'security': 0,
+                //                        'sex': '男',
+                //                        'shareClearingTime': '',
+                //                        'shutupStatus': 0,
+                //                        'specialMark': 0,
+                //                        'status': 0,
+                //                        'subUserCount': 0,
+                //                        'type': 1,
+                //                        'username': '00250000',
+                //                        'warningStatus': 0}
 
                 ],
 
@@ -502,10 +502,10 @@
                 sumDeFen_2: 0,
                 allGain_2: 0,
 
-                currDesk6:0,
-                currDesk7_yafen:0,
-                currDesk7_defen:0,
-                currDesk7_allGain:0,
+                currDesk6: 0,
+                currDesk7_yafen: 0,
+                currDesk7_defen: 0,
+                currDesk7_allGain: 0,
 
                 pickerOptions: {
                     disabledDate (time) {
@@ -546,29 +546,29 @@
                 xtEndTime: null,
 
                 winMsgList: [
-//                    {
-//                    animal: 10,
-//                    awardGold: 5455,
-//                    betPeople: 1,
-//                    color: 0,
-//                    datetime: '2018-02-04 09:28:57',
-//                    deskId: 3,
-//                    globalType: 0,
-//                    id: 278987,
-//                    lightningBeilv: 0,
-//                    luckAnimal: 0,
-//                    luckNum: 0,
-//                    luckType: 0,
-//                    moreInfo: '',
-//                    result: 200,
-//                    resultStr: '闲 普通绿兔子',
-//                    roomId: 2,
-//                    songDengCount: 0,
-//                    sumDeFen: 0,
-//                    sumYaFen: 200,
-//                    type: 0,
-//                    zxh: 2
-//                }
+                //                    {
+                //                    animal: 10,
+                //                    awardGold: 5455,
+                //                    betPeople: 1,
+                //                    color: 0,
+                //                    datetime: '2018-02-04 09:28:57',
+                //                    deskId: 3,
+                //                    globalType: 0,
+                //                    id: 278987,
+                //                    lightningBeilv: 0,
+                //                    luckAnimal: 0,
+                //                    luckNum: 0,
+                //                    luckType: 0,
+                //                    moreInfo: '',
+                //                    result: 200,
+                //                    resultStr: '闲 普通绿兔子',
+                //                    roomId: 2,
+                //                    songDengCount: 0,
+                //                    sumDeFen: 0,
+                //                    sumYaFen: 200,
+                //                    type: 0,
+                //                    zxh: 2
+                //                }
                 ]
 
             }
@@ -583,61 +583,66 @@
 
         },
         watch: {
-            async deskIdx ( val ) {
+            async deskIdx (val) {
                 this.currentDesk = null
                 this.deskList = null
                 this.updateDeskList()
 
-                this.userMsgList = [];
-                this.winMsgList = [];
-                this.xtLogTime = null;
-
+                this.userMsgList = []
+                this.winMsgList = []
+                this.xtLogTime = null
             }
         },
         methods: {
             async deskSelect (desk) {
-                this.currentDesk = desk;
-                console.log( desk );
+                this.currentDesk = desk
+                console.log(desk)
                 // 传入桌子id  获取第二列表的头部信息
-                let getData = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getData_, args: Number ( desk.id )})
-                if( Number( this.deskIdx ) === 6 ){
+                let getData = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getData_, args: Number(desk.id)})
+                if (Number(this.deskIdx) === 6) {
                     if (getData && getData.sumDeFen !== undefined) {
-                        this.sumYaFen_2 = getData.sumYaFen;
-                        this.sumDeFen_2 = getData.sumDeFen;
-                        this.allGain_2 = getData.sumWin;
-                        this.currDesk6 = getData.currentJackpotScore ;
+                        this.sumYaFen_2 = getData.sumYaFen
+                        this.sumDeFen_2 = getData.sumDeFen
+                        this.allGain_2 = getData.sumWin
+                        this.currDesk6 = getData.currentJackpotScore
                     }
-                }else if( Number( this.deskIdx ) === 7 ){
+                } else if (Number(this.deskIdx) === 7) {
                     if (getData && getData.sumDeFen !== undefined) {
-                        this.sumYaFen_2 = getData.mainGameSumYaFen;
-                        this.sumDeFen_2 = getData.mainGameSumDeFen;
+                        this.sumYaFen_2 = getData.mainGameSumYaFen
+                        this.sumDeFen_2 = getData.mainGameSumDeFen
                         this.allGain_2 = Number(getData.mainGameSumYaFen) - Number(getData.mainGameSumDeFen)
 
-                        this.currDesk7_yafen = getData.diceGameSumYaFen ;
-                        this.currDesk7_defen = getData.diceGameSumDeFen ;
+                        this.currDesk7_yafen = getData.diceGameSumYaFen
+                        this.currDesk7_defen = getData.diceGameSumDeFen
                         this.currDesk7_allGain = Number(getData.diceGameSumYaFen) - Number(getData.diceGameSumDeFen)
                     }
-                }else{
+                } else {
                     if (getData && getData.sumDeFen !== undefined) {
-                        this.sumYaFen_2 = getData.sumYaFen;
-                        this.sumDeFen_2 = getData.sumDeFen;
+                        this.sumYaFen_2 = getData.sumYaFen
+                        this.sumDeFen_2 = getData.sumDeFen
                         this.allGain_2 = Number(getData.sumYaFen) - Number(getData.sumDeFen)
                     }
                 }
 
-                let getUser_ = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getUser_, args: Number ( desk.id )})
+                let getUser_ = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getUser_, args: Number(desk.id)})
 
                 console.log('+++++++++++')
                 console.log(getUser_)
                 console.log('_-----------')
-                if( getUser_ && getUser_.length >= 0 ){
-                    this.userMsgList = getUser_ ;
+                if (getUser_ && getUser_.length >= 0) {
+                    this.userMsgList = getUser_
                 }
 
-                let getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
-                    Number ( desk.id ) ,this.format(new Date()) ,this.format(new Date()) ,{ "list":[],"order":"","orderBy":"","pageCount":0,
-                    "pageNumber":1,"pageSize":8,"totalCount":0 }
-                ] });
+                let getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_,
+                    args: [
+                        Number(desk.id), this.format(new Date()), this.format(new Date()), { 'list': [],
+                            'order': '',
+                            'orderBy': '',
+                            'pageCount': 0,
+                            'pageNumber': 1,
+                            'pageSize': 8,
+                            'totalCount': 0 }
+                    ] })
                 console.log('+++424234+++++++')
                 console.log(getResult_)
                 console.log('_--1231314---')
@@ -649,8 +654,6 @@
                     this.pageNumber = getResult_.pageNumber
                     this.pageSize = getResult_.pageSize
                 }
-
-
             },
             openModifyDesk () {
                 this.isModify = true
@@ -701,7 +704,7 @@
                 })
             },
             openNewDesk () {
-                this.isModify = false;
+                this.isModify = false
                 this.dialogShow = true
             },
             async deleteDesk () {
@@ -800,10 +803,16 @@
                     return false
                 }
                 //    修改
-                let getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
-                    Number ( this.currentDesk.id ) ,this.xtStartTime ,this.xtEndTime ,{ "list":[],"order":"","orderBy":"","pageCount":0,
-                        "pageNumber":1,"pageSize":8,"totalCount": this.totalCount }
-                ] });
+                let getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_,
+                    args: [
+                        Number(this.currentDesk.id), this.xtStartTime, this.xtEndTime, { 'list': [],
+                            'order': '',
+                            'orderBy': '',
+                            'pageCount': 0,
+                            'pageNumber': 1,
+                            'pageSize': 8,
+                            'totalCount': this.totalCount }
+                    ] })
                 console.log('+++424234+++++++')
                 console.log(getResult_)
                 console.log('_--1231314---')
@@ -815,9 +824,6 @@
                     this.pageNumber = getResult_.pageNumber
                     this.pageSize = getResult_.pageSize
                 }
-
-
-
             },
             logTimeChange (val) {
                 console.log(this.format(val[0]))
@@ -855,16 +861,27 @@
 
                 // 修改 getDeskResult 、 修改id  对应的 方法
                 if (!this.xtStartTime || !this.xtEndTime) {
-                   getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
-                        Number ( this.currentDesk.id ) ,this.format(new Date().getTime() - 3600 * 1000 * 24 * 2),this.format(new Date()) ,{ "list":[],"order":"","orderBy":"","pageCount":0,
-                            "pageNumber":Number( size ),"pageSize":8,"totalCount": this.totalCount }
-                    ] });
+                    getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_,
+                        args: [
+                            Number(this.currentDesk.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 2), this.format(new Date()), { 'list': [],
+                                'order': '',
+                                'orderBy': '',
+                                'pageCount': 0,
+                                'pageNumber': Number(size),
+                                'pageSize': 8,
+                                'totalCount': this.totalCount }
+                        ] })
                 } else {
-                    getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
-                        Number ( this.currentDesk.id ) ,this.xtStartTime ,this.xtEndTime ,{ "list":[],"order":"","orderBy":"","pageCount":0,
-                            "pageNumber":Number( size ) ,"pageSize":8,"totalCount": this.totalCount }
-                    ] });
-
+                    getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_,
+                        args: [
+                            Number(this.currentDesk.id), this.xtStartTime, this.xtEndTime, { 'list': [],
+                                'order': '',
+                                'orderBy': '',
+                                'pageCount': 0,
+                                'pageNumber': Number(size),
+                                'pageSize': 8,
+                                'totalCount': this.totalCount }
+                        ] })
                 }
 
                 if (getResult_ && getResult_.list) {
@@ -875,7 +892,6 @@
                     this.pageNumber = getResult_.pageNumber
                     this.pageSize = getResult_.pageSize
                 }
-
             }
         },
         async mounted () {
