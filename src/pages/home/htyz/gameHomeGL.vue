@@ -50,12 +50,8 @@
                                 维护公告内容:
                                 <el-input size="small" v-model="form.content" style="width: 50%"></el-input>
                             </div>
-
-
                         </div>
-
-
-                        <el-button style="margin-left: 45px" size="small" type="primary" @click="updateDTStatus()">
+                        <el-button style="margin-top: 15px" size="small" type="primary" @click="updateDTStatus()">
                             更新大厅状态
                         </el-button>
                     </div>

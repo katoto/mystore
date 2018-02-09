@@ -143,9 +143,9 @@ const actionsInfo = mapActions({
 }, name)
 
 const mutationsInfo = mapMutations({
-    setLoginInfoCofig (state, info) {
-
-    }
+    // setLoginInfoCofig (state, info) {
+    //
+    // }
 }, name)
 
 const actions = actionsInfo.actions

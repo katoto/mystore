@@ -1,6 +1,7 @@
 /**
  * Created by lichun on 2017/1/18.
  */
+
 import 'es6-promise/auto'
 import Vue from 'vue'
 import App from './pages/App.vue'

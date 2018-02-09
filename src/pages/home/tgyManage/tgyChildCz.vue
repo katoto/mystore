@@ -20,7 +20,7 @@
         watch: {
             payNum (val) {
                 if (this.loginInfoConfig && this.loginInfoConfig.promoterPayScale) {
-                    this.payNumNow = Number(val) / Number(this.loginInfoConfig.promoterPayScale)
+                    this.payNumNow = Number(val) / (Number(this.loginInfoConfig.promoterPayScale) / 100)
                 }
             }
         },
