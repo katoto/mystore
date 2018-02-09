@@ -66,8 +66,6 @@
                             :label="item.label"
                             :value="idx">
                         </el-option>
-
-
                     </el-select>
                 </div>
             </div>
@@ -84,13 +82,10 @@
                     <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 6">【新手练习厅】已开启{{roomStatus.room1StartNum7}}桌，还可以开启{{roomStatus.room1RemainNum7}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum7}}桌，还可以开启{{roomStatus.room2RemainNum7}}桌 </p>
                     <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 7">【新手练习厅】已开启{{roomStatus.room1StartNum8}}桌，还可以开启{{roomStatus.room1RemainNum8}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum8}}桌，还可以开启{{roomStatus.room2RemainNum8}}桌 </p>
                     <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 8">【新手练习厅】已开启{{roomStatus.room1StartNum9}}桌，还可以开启{{roomStatus.room1RemainNum9}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum9}}桌，还可以开启{{roomStatus.room2RemainNum9}}桌 </p>
-<<<<<<< HEAD
 
-=======
                     <section v-if="deskIdx === 2 || deskIdx === 5">
                         针对所有桌子：  <el-button style="margin-left: 18px" size="small" @click="beginSetting" type="primary">公共参数设置</el-button>保单箱状态：异常 当前保单箱连接数：0
                     </section>
->>>>>>> 4511367e4444d128a77e4365b732f5d46882b277
                     <header style="padding: 8px 0;border-top: 1px solid #ddd">
                         <el-button size="small" type="primary" @click="updateDeskList">刷新</el-button>
                         <el-button style="margin-left: 18px" size="small" @click="openNewDesk" type="primary">新增桌</el-button>
@@ -270,7 +265,7 @@
                                 </el-table-column>
                                 <el-table-column
                                     prop="sumDeFen"
-                                    label="区段总玩分（sumDeFen）">
+                                    label="区段总玩分">
                                 </el-table-column>
                                 <el-table-column
                                     prop="result"
@@ -384,7 +379,7 @@
                         updateDesk: 'deskService/updateBulletFishDesk',
                         deleteDesk: 'deskService/deleteBulletFishDesk',
 
-                        getUser_:'deskService/getBulletFishDesk',
+                        getUser_:'deskService/getBulletFishDeskUser',
                         getData_:'deskService/getBulletFishDeskData',
                         getResult_:'deskService/getBulletFishDeskResult'
                     },
@@ -396,7 +391,7 @@
                         updateDesk: 'deskService/updateMermaidDesk',
                         deleteDesk: 'deskService/deleteMermaidDesk',
 
-                        getUser_:'deskService/getMermaidDesk',
+                        getUser_:'deskService/getMermaidDeskUser',
                         getData_:'deskService/getMermaidDeskData',
                         getResult_:'deskService/getMermaidDeskResult'
 
@@ -409,7 +404,7 @@
                         updateDesk: 'deskService/updateLackDesk',
                         deleteDesk: 'deskService/deleteLackDesk',
 
-                        getUser_:'deskService/getLackDesk',
+                        getUser_:'deskService/getLackDeskUser',
                         getData_:'deskService/getLackDeskData',
                         getResult_:'deskService/getLackDeskResult',
 
@@ -424,7 +419,7 @@
                         updateDesk: 'deskService/updateJoyDesk',
                         deleteDesk: 'deskService/deleteJoyDesk',
 
-                        getUser_:'deskService/getJoyDesk',
+                        getUser_:'deskService/getJoyDeskUser',
                         getData_:'deskService/getJoyDeskData',
                         getResult_:'deskService/getJoyDeskResult',
                         getParameter: 'deskService/getJoyPrivateDeskParameter',
@@ -438,7 +433,7 @@
                         updateDesk: 'waterDeskService/updateWaterDesk',
                         deleteDesk: 'waterDeskService/deleteWaterDesk',
 
-                        getUser_:'waterDeskService/getWaterDesk',
+                        getUser_:'waterDeskService/getWaterDeskUser',
                         getData_:'waterDeskService/getWaterDeskData',
                         getResult_:'waterDeskService/getWaterDeskResult'
                     },
@@ -450,7 +445,7 @@
                         updateDesk: 'deskService/updateThousandFishDesk',
                         deleteDesk: 'deskService/deleteThousandFishDesk',
 
-                        getUser_:'deskService/getThousandFishDesk',
+                        getUser_:'deskService/getThousandFishDeskUser',
                         getData_:'deskService/getThousandFishDeskData',
                         getResult_:'deskService/getThousandFishDeskResult'
                     }
@@ -513,6 +508,9 @@
                 currDesk7_allGain:0,
 
                 pickerOptions: {
+                    disabledDate (time) {
+                        return time.getTime() > Date.now()
+                    },
                     shortcuts: [{
                         text: '最近一周',
                         onClick (picker) {
@@ -589,10 +587,10 @@
                 this.currentDesk = null
                 this.deskList = null
                 this.updateDeskList()
-                console.log('=========')
-                console.log(val)
+
                 this.userMsgList = [];
                 this.winMsgList = [];
+                this.xtLogTime = null;
 
             }
         },
@@ -803,7 +801,7 @@
                 }
                 //    修改
                 let getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
-                    Number ( desk.id ) ,this.xtStartTime ,this.xtEndTime ,{ "list":[],"order":"","orderBy":"","pageCount":0,
+                    Number ( this.currentDesk.id ) ,this.xtStartTime ,this.xtEndTime ,{ "list":[],"order":"","orderBy":"","pageCount":0,
                         "pageNumber":1,"pageSize":8,"totalCount": this.totalCount }
                 ] });
                 console.log('+++424234+++++++')
@@ -890,14 +888,11 @@
         text-align: center;
         margin: 25px 0;
     }
-
     .gameHomeSel {
         padding: 10px 0;
     }
-
     .dailyPicker {
         margin-bottom: 10px;
         float: left;
     }
-
 </style>

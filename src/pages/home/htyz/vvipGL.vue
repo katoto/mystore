@@ -11,7 +11,7 @@
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeAwardGameGold }">游戏币赠送</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeChangeUserLevel }">修改等级</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: resetPass }">重置密码</el-button>
-                    <el-button size="small" :disabled="dealException" type="primary" v-tap="{methods: dealException }" >删除异常</el-button>
+                    <el-button size="small" :disabled="dealException" type="primary" v-tap="{methods: dealException2 }" >删除异常</el-button>
 
                     <!--<el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: minusGameGold }" disabled>身份信息查询与修改</el-button>-->
                     <!--<el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: modifySafeBoxPwd }">口令修改</el-button>-->
@@ -391,33 +391,6 @@
                     name: '',
                     desc: ''
                 },
-                pickerOptions2: {
-                    shortcuts: [{
-                        text: '最近一周',
-                        onClick (picker) {
-                            const end = new Date()
-                            const start = new Date()
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-                            picker.$emit('pick', [start, end])
-                        }
-                    }, {
-                        text: '最近一个月',
-                        onClick (picker) {
-                            const end = new Date()
-                            const start = new Date()
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-                            picker.$emit('pick', [start, end])
-                        }
-                    }, {
-                        text: '最近三个月',
-                        onClick (picker) {
-                            const end = new Date()
-                            const start = new Date()
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-                            picker.$emit('pick', [start, end])
-                        }
-                    }]
-                },
 
                 vvipList: [{
                     answer: '-1',
@@ -553,10 +526,12 @@
                         this.isOption = false
                     }
                 }
+                this.searchUserInpVal = '';
+                this.getUserManageFn(Number(this.searchUserVal))
             }
         },
         methods: {
-            async dealException () {
+            async dealException2 () {
                 let result = await this.$store.dispatch(aTypes.dealException, [ Number(this.currvvipList.id)])
                 console.log(result)
                 console.log('解除异常')
@@ -580,8 +555,7 @@
                         type: 'success',
                         duration: 1200
                     })
-                //                    this.clickPage(1);
-                //                    this.initSearch(false)
+
                 }
             },
             async searchUser () {

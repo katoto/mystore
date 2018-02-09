@@ -79,8 +79,7 @@
         },
         watch: {
             loginInfoConfig (loginInfoConfig) {
-                console.log(111)
-                console.log('=******===')
+
                 this.setXTInit({ params: loginInfoConfig })
             }
         },
@@ -111,14 +110,14 @@
                     }
                     if (loginInfoConfig.payScale) {
                         try {
-                            this.payScale = loginInfoConfig.payScale
+                            this.payScale =  Number ( loginInfoConfig.payScale ) / 100
                         } catch (e) {
                             console.error('userSumMoney error at 387')
                         }
                     }
                     if (loginInfoConfig.promoterPayScale) {
                         try {
-                            this.promoterPayScale = loginInfoConfig.promoterPayScale
+                            this.promoterPayScale = Number ( loginInfoConfig.promoterPayScale ) /100
                         } catch (e) {
                             console.error('userSumMoney error at 387')
                         }
@@ -158,7 +157,7 @@
                     newInteractPassword = -1
                 }
 
-                let result = await this.$store.dispatch(actionTypes.updateSales, [this.payScale / 100 + '', this.promoterPayScale / 100 + '', newSwitchType, newInteractPassword, newExpiry ])
+                let result = await this.$store.dispatch(actionTypes.updateSales, [this.payScale * 100 + '', this.promoterPayScale * 100 + '', newSwitchType, newInteractPassword, newExpiry ])
                 console.log(result)
                 // 需要再一次 更新用户信息 !!!!!
                 if (result && result.success === true) {

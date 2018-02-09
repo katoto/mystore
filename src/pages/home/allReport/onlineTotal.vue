@@ -59,6 +59,9 @@
         data () {
             return {
                 pickerOptions: {
+                    disabledDate (time) {
+                        return time.getTime() > Date.now()
+                    },
                     shortcuts: [{
                         text: '最近一周',
                         onClick (picker) {

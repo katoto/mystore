@@ -2,7 +2,7 @@
     <div id="vipOperate">
         <div :class="{'disable':!selVipVal }">
             <span>请输入充值数目：</span><el-input :disabled=!selVipVal size="small" v-model="payNum" placeholder="请输入充值数目"></el-input>
-            <span>元宝，&nbsp;共&nbsp;{{  payNum  }}&nbsp;游戏币！</span>&nbsp;&nbsp;
+            <span>元宝，&nbsp;共&nbsp;{{  payNumNow  }}&nbsp;游戏币！</span>&nbsp;&nbsp;
             <el-button size="small" :disabled=!selVipVal type="danger" v-tap="{ methods:setPay }">确认充值</el-button>
         </div>
     </div>
@@ -14,7 +14,17 @@ export default {
         data () {
             return {
                 vipStyle: '',
-                payNum: ''
+                payNum: '',
+                payNumNow:0 ,
+            }
+        },
+        watch: {
+            payNum( val ){
+                console.log( this.loginInfoConfig )
+                if( this.loginInfoConfig  && this.loginInfoConfig.payScale ){
+                    this.payNumNow = Number ( val ) / Number ( this.loginInfoConfig.payScale)
+                    console.log( this.payNumNow );
+                }
             }
         },
         methods: {
@@ -37,7 +47,7 @@ export default {
                     return false
                 }
 
-                let memberPay = await this.$store.dispatch(aTypes.memberPay, [ Number(this.selVipVal.id), Number(this.payNum), 0])
+                let memberPay = await this.$store.dispatch(aTypes.memberPay, [ Number(this.selVipVal.id), Number(this.payNumNow), 0])
 
                 console.log('一般运作 充值数目Msg')
                 console.log(memberPay)
@@ -61,6 +71,12 @@ export default {
         computed: {
             selVipVal () {
                 return this.$store.state.ybyz.selVipVal
+            },
+            loginInfoConfig () {
+                if (this.$store.state.user.loginInfo) {
+                    return this.$store.state.user.loginInfo.config
+                }
+                return false
             }
         },
         async mounted () {
