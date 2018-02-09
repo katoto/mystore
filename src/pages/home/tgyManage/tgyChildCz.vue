@@ -34,6 +34,16 @@
                     })
                     return false
                 }
+
+                if (Math.round(Number(this.payNumNow)) !== Number(this.payNumNow)) {
+                    this.$message({
+                        message: '请充值整数游戏币',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+
                 let promoter = await this.$store.dispatch(actionTypes.promoterPay, [ Number(this.selTgyVal.id), Number(this.payNumNow), 0])
                 console.log('充值数目Msg')
                 console.log(promoter)
@@ -44,6 +54,8 @@
                         duration: 1200
                     })
                     this.payNum = 0
+
+                    this.$store.commit(mutationTypes.updataSetPromoter, new Date().getTime())
                 } else {
                     this.$message({
                         message: promoter.message,

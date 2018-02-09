@@ -8,11 +8,17 @@ const name = 'ybyz'
 const state = {
     loginInfo: null,
     userList: null,
-    selVipVal: null
+    selVipVal: null,
+
+    updataybyzSearchFn: null
 }
 
 const mutationsInfo = mapMutations({
-//  new
+    updataybyzSearchFn (state, info) {
+        // 充值之后更新上面的列表
+        state.updataybyzSearchFn = info
+    },
+    //  new
     setSelVipVal (state, info) {
         state.selVipVal = info
     },

@@ -47,6 +47,15 @@ export default {
                     return false
                 }
 
+                if (Math.round(Number(this.payNumNow)) !== Number(this.payNumNow)) {
+                    this.$message({
+                        message: '请充值整数游戏币',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+
                 let memberPay = await this.$store.dispatch(aTypes.memberPay, [ Number(this.selVipVal.id), Number(this.payNumNow), 0])
 
                 console.log('一般运作 充值数目Msg')
@@ -59,6 +68,8 @@ export default {
                         duration: 1200
                     })
                     this.payNum = 0
+
+                    this.$store.commit(mTypes.updataybyzSearchFn, new Date().getTime())
                 } else {
                     this.$message({
                         message: memberPay.message,

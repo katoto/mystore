@@ -391,9 +391,15 @@ export default {
         computed: {
             selVipVal () {
                 return this.$store.state.ybyz.selVipVal
+            },
+            updataybyzSearchFn () {
+                return this.$store.state.ybyz.updataybyzSearchFn
             }
         },
         watch: {
+            updataybyzSearchFn () {
+                this.ybyzSearchFn()
+            },
             selVipVal (val) {
                 console.log(val)
                 this.$router.push('/home/ybyz/vipOperate')

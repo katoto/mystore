@@ -742,9 +742,15 @@
         computed: {
             selTgyVal () {
                 return this.$store.state.tgyManager.selTgyVal
+            },
+            updataSetPromoter () {
+                return this.$store.state.tgyManager.updataSetPromoter
             }
         },
         watch: {
+            updataSetPromoter () {
+                this.setPromoter()
+            },
             selTgyVal (val) {
                 console.log(val)
                 this.$router.push('/home/tgyManage/tgyChild/tgyChildCz')

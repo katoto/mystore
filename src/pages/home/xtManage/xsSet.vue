@@ -216,7 +216,7 @@
                     })
                 }
 
-                let result = await this.$store.dispatch(actionTypes.updateSales, [ Number(this.payScale) * 100 + '', Number(this.promoterPayScale) * 100 + '', newSwitchType, newInteractPassword, newExpiry ])
+                let result = await this.$store.dispatch(actionTypes.updateSales, [ Number(this.payScale) + '', Number(this.promoterPayScale) + '', newSwitchType, newInteractPassword, newExpiry ])
                 console.log(result)
                 // 需要再一次 更新用户信息 !!!!!
                 if (result && result.success === true) {
