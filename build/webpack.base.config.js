@@ -8,11 +8,9 @@ const srcPath = path.resolve(__dirname, '../src')
 module.exports = {
     context: srcPath,
     entry: {
-        "babel-polyfill":"babel-polyfill",
         app: [path.join(srcPath, 'main.js')],
         vendor: ['vue', 'vue-router', 'vuex', 'v-tap', 'vuex-router-sync', 'es6-promise', 'axios']
     },
-
     module: {
         rules: [
             {
