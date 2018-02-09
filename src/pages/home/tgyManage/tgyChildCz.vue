@@ -35,7 +35,7 @@
                     return false
                 }
 
-                if (Math.round(Number(this.payNumNow)) !== Number(this.payNumNow)) {
+                if (Math.round(Number(this.payNum)) !== Number(this.payNum)) {
                     this.$message({
                         message: '请充值整数游戏币',
                         type: 'error',
@@ -44,7 +44,7 @@
                     return false
                 }
 
-                let promoter = await this.$store.dispatch(actionTypes.promoterPay, [ Number(this.selTgyVal.id), Number(this.payNumNow), 0])
+                let promoter = await this.$store.dispatch(actionTypes.promoterPay, [ Number(this.selTgyVal.id), Number(this.payNum), 0])
                 console.log('充值数目Msg')
                 console.log(promoter)
                 if (promoter && promoter.success) {

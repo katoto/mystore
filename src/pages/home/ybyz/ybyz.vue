@@ -294,9 +294,6 @@ export default {
                 this.vipSearch = ''
 
                 this.getUserListFn(this.vipStyle)
-
-                //                this.vipStyle = ''
-                //                this.vipUserName = ''
             },
             handleClick (tab, event) {
                 /*  路由 跳转  */
@@ -399,6 +396,7 @@ export default {
         watch: {
             updataybyzSearchFn () {
                 this.ybyzSearchFn()
+                this.initSearch(false)
             },
             selVipVal (val) {
                 console.log(val)

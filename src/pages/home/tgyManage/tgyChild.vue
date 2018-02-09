@@ -750,6 +750,7 @@
         watch: {
             updataSetPromoter () {
                 this.setPromoter()
+                this.initSearch(false)
             },
             selTgyVal (val) {
                 console.log(val)
