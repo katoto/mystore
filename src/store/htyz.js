@@ -83,6 +83,7 @@ const actionsInfo = mapActions({
             method,
             args: []
         })
+        console.log( argsData );
         return argsData[0]
     },
 

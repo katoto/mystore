@@ -762,6 +762,8 @@
             },
             async updateDeskList () {
                 this.deskList = await this.$store.dispatch(aTypes.getDeskList, this.desks[this.deskIdx].getDeskList)
+                console.log('========')
+                console.log( this.deskList )
                 this.deskList.forEach((desk) => {
                     desk.roomName = desk.roomId === 2 ? '欢乐竞技厅' : '新手练习厅'
                     desk.stateName = desk.state === 1 ? '开放' : '锁定'

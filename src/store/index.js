@@ -128,7 +128,14 @@ const actions = {
                 const encodedData = JSON.stringify(data)
                 const len = encodedData.length
                 const lenInfo = new Uint8Array([(len >> 24) & 0xFF, (len >> 16) & 0xFF, (len >> 8) & 0xFF, (len) & 0xFF])
-
+                console.log('------------')
+                console.log(len)
+                console.log('***len******')
+                console.log(lenInfo)
+                console.log('***lenInfo******')
+                console.log(encodedData)
+                console.log('***encodedData********')
+                console.log('------------')
                 // 发送4字节的长度信息
                 state.websocket.connect.send(lenInfo)
                 // 发送消息内容
