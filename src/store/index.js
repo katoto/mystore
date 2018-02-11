@@ -124,8 +124,23 @@ const actions = {
                         }
                     }
                 }
+                console.log('-----data-------');
+                console.log(data)
+                console.log('-----data-------');
+
+                var b = function strToHexCharCode(str) {
+                    if(str === "")
+                        return "";
+                    var hexCharCode = [];
+                    hexCharCode.push("0x");
+                    for(var i = 0; i < str.length; i++) {
+                        hexCharCode.push((str.charCodeAt(i)).toString(16));
+                    }
+                    return hexCharCode.join("");
+                }
 
                 const encodedData = JSON.stringify(data)
+                // const len = b( encodedData ).length / 2 - 1 ;
                 const len = encodedData.length
                 const lenInfo = new Uint8Array([(len >> 24) & 0xFF, (len >> 16) & 0xFF, (len >> 8) & 0xFF, (len) & 0xFF])
                 console.log('------------')
@@ -138,8 +153,11 @@ const actions = {
                 console.log('------------')
                 // 发送4字节的长度信息
                 state.websocket.connect.send(lenInfo)
-                // 发送消息内容
+                // // 发送消息内容
                 state.websocket.connect.send(encodedData)
+
+
+
 
                 if (method === 'adminService/heart') {
                     resolve(true)
@@ -192,7 +210,8 @@ const actions = {
         setTimeout(() => {
             commit('hideToast')
         }, 3000)
-    }
+    },
+
 
 }
 
