@@ -20,10 +20,8 @@ export default {
         },
         watch: {
             payNum (val) {
-                console.log(this.loginInfoConfig)
                 if (this.loginInfoConfig && this.loginInfoConfig.payScale) {
                     this.payNumNow = Number(val) / (Number(this.loginInfoConfig.payScale) / 100)
-                    console.log(this.payNumNow)
                 }
             }
         },

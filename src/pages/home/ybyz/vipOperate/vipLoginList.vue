@@ -137,7 +137,6 @@
             },
             async clickPage (size) {
                 // 分页  请求数据 ，更新数据
-                console.log(size)
                 let result = null
                 if (!this.xtStartTime || !this.xtEndTime) {
                     result = await this.$store.dispatch(aTypes.getUserLoginRec, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
@@ -158,8 +157,8 @@
                     let copyList = result.pager.list
                     this.vipLoginList = copyList
                     // 处理页码
-                    this.totalCount = result.pager.totalCount,
-                    this.pageNumber = result.pager.pageNumber,
+                    this.totalCount = result.pager.totalCount
+                    this.pageNumber = result.pager.pageNumber
                     this.pageSize = result.pager.pageSize
                 }
             },
@@ -188,8 +187,8 @@
                     let copyList = result.pager.list
                     this.vipLoginList = copyList
                     // 处理页码
-                    this.totalCount = result.pager.totalCount,
-                    this.pageNumber = result.pager.pageNumber,
+                    this.totalCount = result.pager.totalCount
+                    this.pageNumber = result.pager.pageNumber
                     this.pageSize = result.pager.pageSize
 
                     this.$message({
@@ -223,8 +222,8 @@
                 let copyList = result.pager.list
                 this.vipLoginList = copyList
                 // 处理页码
-                this.totalCount = result.pager.totalCount,
-                this.pageNumber = result.pager.pageNumber,
+                this.totalCount = result.pager.totalCount
+                this.pageNumber = result.pager.pageNumber
                 this.pageSize = result.pager.pageSize
             }
         }
