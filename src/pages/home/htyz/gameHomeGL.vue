@@ -17,24 +17,24 @@
         <huanleniuniusetting v-if="deskIdx === 6 && settingDialog" :init="initSetting" @close="settingDialog = false" @submit="modifyCommonSetting"></huanleniuniusetting>
 
         <div class="l-flex-1 l-flex-column">
-            <div class=" l-relative" style="height: 150px">
+            <div class=" l-relative" style="height: 150px" :class="{ newTop :form.hlabel === '-1',newTop2: form.hlabel === '-1' && form.flabel === '2' }">
                 <div class="l-full" style="padding: 10px">
                     <div style="padding-bottom: 10px;border-bottom: 1px solid #ddd">
                         <h4 style="margin-bottom: 10px">新建公告：</h4>
-                        <div stygile="margin: 10px">
+                        <div style="margin: 10px">
                             <el-radio-group v-model="form.hlabel">
                                 <el-radio label="0">运营状态</el-radio>
                                 <el-radio label="-1">维护状态</el-radio>
                             </el-radio-group>
                         </div>
-                        <div v-if="form.hlabel === '-1'" style="margin: 20px">
+                        <div v-if="form.hlabel === '-1'" style="margin:10px 0 10px 10px">
                             <el-radio-group v-model="form.flabel">
                                 <el-radio label="1">立刻进入</el-radio>
                                 <el-radio label="2">预定时间进入</el-radio>
                             </el-radio-group>
                         </div>
 
-                        <div style="margin: 20px" v-if="form.hlabel === '-1' && form.flabel === '2'">
+                        <div v-if="form.hlabel === '-1' && form.flabel === '2'">
                             <div style="margin: 20px">
                                 <el-select class="" size="small" v-model="form.time" placeholder="请选择时间">
                                     <el-option
@@ -51,7 +51,7 @@
                                 <el-input size="small" v-model="form.content" style="width: 50%"></el-input>
                             </div>
                         </div>
-                        <el-button style="margin-top: 15px" size="small" type="primary" @click="updateDTStatus()">
+                        <el-button size="small" type="primary" @click="updateDTStatus()">
                             更新大厅状态
                         </el-button>
                     </div>
@@ -80,7 +80,7 @@
                     <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 8">【新手练习厅】已开启{{roomStatus.room1StartNum9}}桌，还可以开启{{roomStatus.room1RemainNum9}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum9}}桌，还可以开启{{roomStatus.room2RemainNum9}}桌 </p>
 
                     <section v-if="deskIdx === 2 || deskIdx === 5">
-                        针对所有桌子：  <el-button style="margin-left: 18px" size="small" @click="beginSetting" type="primary">公共参数设置</el-button>保单箱状态：异常 当前保单箱连接数：0
+                        针对所有桌子：<el-button style="margin: 0 4px" size="small" @click="beginSetting" type="primary">公共参数设置</el-button> 保单箱状态：异常 当前保单箱连接数：0
                     </section>
                     <header style="padding: 8px 0;border-top: 1px solid #ddd">
                         <el-button size="small" type="primary" @click="updateDeskList">刷新</el-button>
@@ -90,7 +90,38 @@
                         <el-button style="margin-left: 18px" size="small" type="primary">桌排序</el-button>
                         <el-button v-if="deskIdx === 6" style="margin-left: 18px" size="small" @click="beginSetting" type="primary">疯狂牛牛相关设置</el-button>
                     </header>
-                    <section style="margin-bottom: 10px">
+                    <section style="margin-bottom: 10px" v-if="deskIdx === 7">
+                        <el-table
+                            :data="deskList"
+                            height="300"
+                            highlight-current-row
+                            size="small"
+                            border
+                            @cell-click="deskSelect"
+                            style="width: 100%">
+                            <el-table-column
+                                prop="id"
+                                label="桌ID">
+                            </el-table-column>
+                            <el-table-column
+                                prop="name"
+                                label="桌名">
+                            </el-table-column>
+                            <el-table-column
+                                prop="roomName"
+                                label="所属房间">
+                            </el-table-column>
+                            <el-table-column
+                                prop="onLineNumber"
+                                label="在线人数">
+                            </el-table-column>
+                            <el-table-column
+                                prop="stateName"
+                                label="桌状态">
+                            </el-table-column>
+                        </el-table>
+                    </section>
+                    <section v-else style="margin-bottom: 10px">
                         <el-table
                             :data="deskList"
                             height="300"
@@ -129,8 +160,8 @@
                 <div class="l-full" style="padding: 10px">
                     <section style="padding-top: 20px;border-top: 1px solid #ddd;">
                         <div style="margin-bottom: 10px">
-                            <el-button style="" size="small" type="primary">刷新</el-button>
-                            <el-button style="margin-left: 18px" size="small" type="danger">清零</el-button>
+                            <el-button size="small" type="primary" v-tap="{methods: refleshDeskMsg }" :disabled="!this.currentDesk">刷新</el-button>
+                            <el-button style="margin-left: 18px" size="small" type="danger" disabled >清零</el-button>
                         </div>
                         <template v-if="deskIdx === 0 || deskIdx === 1 || deskIdx === 2 || deskIdx === 3 ||
                                 deskIdx === 4 || deskIdx === 5 || deskIdx === 8
@@ -268,8 +299,9 @@
                                     label="区段结果">
                                 </el-table-column>
                                 <el-table-column
-                                    prop="maxOnlineNum"
-                                    label="最高活跃人数">
+                                     prop="maxOnlineNum"
+                                     :label="lastLabel"
+                                >
                                 </el-table-column>
                             </el-table>
                         </template>
@@ -310,6 +342,7 @@
     export default {
         data () {
             return {
+                lastLabel: '最高活跃人数',
                 newDesk: {
                     xyls: false
                 },
@@ -360,7 +393,7 @@
                         updateDesk: 'deskService/updateCardDesk',
                         deleteDesk: 'deskService/deleteCardDesk',
 
-                        getUser_: 'deskService/getCardDesk',
+                        getUser_: 'deskService/getCardDeskUser',
                         getData_: 'deskService/getCardDeskData',
                         getResult_: 'deskService/getCardDeskResult',
 
@@ -431,7 +464,7 @@
 
                         getUser_: 'waterDeskService/getWaterDeskUser',
                         getData_: 'waterDeskService/getWaterDeskData',
-                        getResult_: 'waterDeskService/getWaterDeskResult'
+                        getResult_: 'waterDeskThirtyMinResultService/getWaterDeskThirtyMinResult'
                     },
                     {
                         label: '千炮捕鱼',
@@ -587,12 +620,23 @@
                 this.userMsgList = []
                 this.winMsgList = []
                 this.xtLogTime = null
+
+                if (Number(val) === 7) {
+                    this.lastLabel = ''
+                } else {
+                    this.lastLabel = '最高活跃人数'
+                }
             }
         },
         methods: {
+            refleshDeskMsg(){
+                if( this.currentDesk ){
+                    this.deskSelect( this.currentDesk );
+                }
+            },
             async deskSelect (desk) {
                 this.currentDesk = desk
-                console.log(desk)
+
                 // 传入桌子id  获取第二列表的头部信息
                 let getData = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getData_, args: Number(desk.id)})
                 if (Number(this.deskIdx) === 6) {
@@ -622,9 +666,7 @@
 
                 let getUser_ = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getUser_, args: Number(desk.id)})
 
-                console.log('+++++++++++')
                 console.log(getUser_)
-                console.log('_-----------')
                 if (getUser_ && getUser_.length >= 0) {
                     this.userMsgList = getUser_
                 }
@@ -639,9 +681,7 @@
                             'pageSize': 8,
                             'totalCount': 0 }
                     ] })
-                console.log('+++424234+++++++')
                 console.log(getResult_)
-                console.log('_--1231314---')
                 if (getResult_ && getResult_.list) {
                     let copyList = getResult_.list
                     this.winMsgList = copyList
@@ -763,7 +803,7 @@
             async updateDeskList () {
                 this.deskList = await this.$store.dispatch(aTypes.getDeskList, this.desks[this.deskIdx].getDeskList)
                 console.log('========')
-                console.log( this.deskList )
+                console.log(this.deskList)
                 this.deskList.forEach((desk) => {
                     desk.roomName = desk.roomId === 2 ? '欢乐竞技厅' : '新手练习厅'
                     desk.stateName = desk.state === 1 ? '开放' : '锁定'
@@ -811,9 +851,7 @@
                             'pageSize': 8,
                             'totalCount': this.totalCount }
                     ] })
-                console.log('+++424234+++++++')
                 console.log(getResult_)
-                console.log('_--1231314---')
                 if (getResult_ && getResult_.list) {
                     let copyList = getResult_.list
                     this.winMsgList = copyList
@@ -824,8 +862,6 @@
                 }
             },
             logTimeChange (val) {
-                console.log(this.format(val[0]))
-                console.log(this.format(val[1]))
                 //                取到值
                 this.xtStartTime = this.format(val[0])
                 this.xtEndTime = this.format(val[1])
@@ -853,7 +889,6 @@
                 })
             },
             async clickPage (size) {
-                console.log(1234313)
                 // 分页  对应第三个表格的分页
                 let getResult_ = null
 
@@ -908,5 +943,11 @@
     .dailyPicker {
         margin-bottom: 10px;
         float: left;
+    }
+    .newTop{
+        height: 180px !important;
+    }
+    .newTop2{
+        height: 290px !important;
     }
 </style>
