@@ -149,29 +149,23 @@
             },
             async clickPage (size) {
                 // 分页  请求数据 ，更新数据
-                console.log(size)
                 let result = null
                 if (!this.xtStartTime || !this.xtEndTime) {
                     result = await this.$store.dispatch(aTypes.getUserAward, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
-                    console.log('全部分页')
-                    console.log(result)
                 } else {
                     result = await this.$store.dispatch(aTypes.getUserAward, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
-                    console.log('选择时间分页')
-                    console.log(result)
                 }
-                console.log(result)
-                console.log('赠送查询查询')
+
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
                     this.giveSeaList = copyList
                     // 处理页码
-                    this.totalCount = result.pager.totalCount,
-                    this.pageNumber = result.pager.pageNumber,
+                    this.totalCount = result.pager.totalCount
+                    this.pageNumber = result.pager.pageNumber
                     this.pageSize = result.pager.pageSize
                 }
             },
@@ -195,13 +189,12 @@
                 let result = await this.$store.dispatch(aTypes.getUserAward, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                     {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
                 ])
-                console.log('赠送查询查询按钮')
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
                     this.giveSeaList = copyList
                     // 处理页码
-                    this.totalCount = result.pager.totalCount,
-                    this.pageNumber = result.pager.pageNumber,
+                    this.totalCount = result.pager.totalCount
+                    this.pageNumber = result.pager.pageNumber
                     this.pageSize = result.pager.pageSize
                 }
             }
@@ -223,14 +216,13 @@
             let result = await this.$store.dispatch(aTypes.getUserAward, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                 {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
             ])
-            console.log(result)
-            console.log('赠送查询查询')
+
             if (result && result.pager.list) {
                 let copyList = result.pager.list
                 this.giveSeaList = copyList
                 // 处理页码
-                this.totalCount = result.pager.totalCount,
-                this.pageNumber = result.pager.pageNumber,
+                this.totalCount = result.pager.totalCount
+                this.pageNumber = result.pager.pageNumber
                 this.pageSize = result.pager.pageSize
             }
 

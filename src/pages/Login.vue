@@ -29,8 +29,6 @@ export default {
             }
             setTimeout(() => {
                 //  处理规则
-                if (value === '') {
-                }
                 callback()
             }, 10)
         }

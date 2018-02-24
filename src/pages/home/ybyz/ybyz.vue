@@ -212,8 +212,7 @@ export default {
                     this.getUserListFn(this.vipStyle)
                 } else {
                     let searchUser = await this.$store.dispatch(aTypes.searchUser, [ this.vipSearch.toString(), Number(this.vipUserName), Number(this.vipStyle) ])
-                    console.log(searchUser)
-                    console.log('==一般运作查询按钮回来的数据==')
+
                     if (searchUser) {
                         if (searchUser.results) {
                             this.vipUserList = searchUser.results
@@ -350,9 +349,6 @@ export default {
 
             async getUserListFn (currid = 0, pageNum = 1) {
                 let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList, [currid, {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': Number(pageNum), 'pageSize': 8, 'totalCount': 0}])
-                console.log('=== 会员列表 =====')
-                console.log(getVipUserList)
-                //    this.curTgyValue = 0 ;  //  当前的各种状态
                 if (getVipUserList) {
                     if (getVipUserList.pager && getVipUserList.pager.list) {
                         this.vipUserList = getVipUserList.pager.list
@@ -399,7 +395,6 @@ export default {
                 this.initSearch(false)
             },
             selVipVal (val) {
-                console.log(val)
                 this.$router.push('/home/ybyz/vipOperate')
                 this.activeName = 'vipOperate'
             },
@@ -416,7 +411,6 @@ export default {
             }
         },
         async mounted () {
-            console.log(this.vipStyle)
             // 默认第一页。
             this.getUserListFn()
     }
@@ -468,5 +462,4 @@ export default {
         text-align: center;
         margin-top: 20px;
     }
-
 </style>

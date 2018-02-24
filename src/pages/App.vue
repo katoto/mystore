@@ -1,6 +1,5 @@
 <template>
     <div id="app" class="l-full">
-        <!--<div class="toast" style="z-index: 1000" v-show="showToast">{{ showToast }}</div>-->
         <router-view v-if="serverTime"></router-view>
         <el-button type="text" @click="openError" style="display: none">点击打开 Message Box</el-button>
     </div>

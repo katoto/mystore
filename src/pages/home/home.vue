@@ -62,7 +62,6 @@ export default {
                     break
                 }
             }
-            console.log(tab.label)
         }
     }
 }

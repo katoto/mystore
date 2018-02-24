@@ -73,7 +73,7 @@
 </template>
 
 <script>
-    import { aTypes, mTypes } from '~store/ybyz'
+    import { aTypes } from '~store/ybyz'
     export default {
         data () {
             return {
@@ -156,7 +156,6 @@
             },
             async clickPage (size) {
                 // 分页  请求数据 ，更新数据
-                console.log(size)
                 let result = null
                 if (!this.xtStartTime || !this.xtEndTime) {
                     result = await this.$store.dispatch(aTypes.getUserPayLog, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
@@ -177,8 +176,8 @@
                     let copyList = result.pager.list
                     this.reSearchList = copyList
                     // 处理页码
-                    this.totalCount = result.pager.totalCount,
-                    this.pageNumber = result.pager.pageNumber,
+                    this.totalCount = result.pager.totalCount
+                    this.pageNumber = result.pager.pageNumber
                     this.pageSize = result.pager.pageSize
                 }
             },
@@ -207,8 +206,8 @@
                     let copyList = result.pager.list
                     this.reSearchList = copyList
                     // 处理页码
-                    this.totalCount = result.pager.totalCount,
-                    this.pageNumber = result.pager.pageNumber,
+                    this.totalCount = result.pager.totalCount
+                    this.pageNumber = result.pager.pageNumber
                     this.pageSize = result.pager.pageSize
                     this.$message({
                         message: '已更新',
@@ -241,8 +240,8 @@
                 let copyList = result.pager.list
                 this.reSearchList = copyList
                 // 处理页码
-                this.totalCount = result.pager.totalCount,
-                this.pageNumber = result.pager.pageNumber,
+                this.totalCount = result.pager.totalCount
+                this.pageNumber = result.pager.pageNumber
                 this.pageSize = result.pager.pageSize
             }
             if (result && result.lastTotalMoney) {
