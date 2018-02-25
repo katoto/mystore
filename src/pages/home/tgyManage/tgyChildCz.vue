@@ -87,4 +87,5 @@
     .disable span{
         color: #ccc;
     }
+
 </style>

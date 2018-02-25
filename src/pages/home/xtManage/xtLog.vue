@@ -271,4 +271,18 @@
         text-align: center;
         margin-top: 20px;
     }
+    @media (max-width: 768px) {
+        header button{
+            margin-left:15px;
+        }
+        header .xtPicker{
+            max-width:100%;
+        }
+        header .xtSpan{
+            margin-left:0;
+        }
+        header button{
+            margin:10px 0 0 0 !important;
+        }
+    }
 </style>

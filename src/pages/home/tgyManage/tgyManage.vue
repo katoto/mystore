@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="overflow">
+        <div class="overflow title">
             <h2 class="fl">推广员管理</h2>
             <p class="fr red">当前可处理的订单数：充值申请0个，兑奖申请0个</p>
         </div>
@@ -42,5 +42,16 @@
     }
     .red{
         color: red;
+    }
+
+    @media (max-width: 768px) {
+        .title h2{
+            font-size:12px;
+        }
+        .title p{
+            width:100%;
+            text-align: left;
+            font-size:10px;
+        }
     }
 </style>

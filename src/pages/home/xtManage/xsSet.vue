@@ -286,4 +286,12 @@
     .btnBox{
         margin-top:20px;
     }
+    @media (max-width: 768px) {
+        .el-radio+.el-radio{
+            margin-left:20px;
+        }
+        [class*=el-col-] {
+            width:100%;
+        }
+    }
 </style>
