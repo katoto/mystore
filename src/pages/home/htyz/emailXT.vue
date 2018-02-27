@@ -27,10 +27,10 @@
         <!-- 底部已知内容 -->
         <section style="margin-bottom: 50px">
             <header class="clearfix" style="padding: 10px 0;border-top: 1px solid #000">
-                <span>发件箱（已发邮件）：</span>
-                <el-button  style="margin-left: 18px" size="small" type="primary" v-tap="{methods: upDataNotice }" >更新已发邮件</el-button>
-                <el-button :disabled="!selEmailVal" style="margin-left: 18px" size="small" type="warning" v-tap="{methods: initSearch}">重置</el-button>
-                <el-button :disabled="!selEmailVal" style="margin-left: 18px" size="small" type="danger" v-tap="{methods: delSelNotice}" >删除</el-button>
+                <span class="mobile-fjx">发件箱（已发邮件）：</span>
+                <el-button size="small" type="primary" v-tap="{methods: upDataNotice }" >更新已发邮件</el-button>
+                <el-button :disabled="!selEmailVal" size="small" type="warning" v-tap="{methods: initSearch}">重置</el-button>
+                <el-button :disabled="!selEmailVal" size="small" type="danger" v-tap="{methods: delSelNotice}" >删除</el-button>
 
             </header>
             <section >
@@ -339,5 +339,13 @@
     .el-pagination{
         text-align: center;
         margin: 25px 0;
+    }
+    @media (max-width: 768px) {
+        .el-radio{
+            margin-left: 10px;
+        }
+        .el-button--small{
+            padding: 9px 5px;
+        }
     }
 </style>

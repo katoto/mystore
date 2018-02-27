@@ -242,10 +242,19 @@ li {
 body {
   font-size: 14px;
 }
-
-/*@media screen and (max-width: 550px){*/
-    /*body {*/
-        /*background-color: #000 !important;*/
-    /*}*/
-/*}*/
+@media (max-width: 768px) {
+    .el-radio__label{
+        font-size:12px;
+    }
+    .el-message-box{
+        width:100%;
+    }
+    .el-dialog{
+        width:95% !important;
+    }
+    .el-dialog__body{
+        padding: 10px 5px;
+        font-size:10px;
+    }
+}
 </style>

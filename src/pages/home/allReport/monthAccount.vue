@@ -12,9 +12,9 @@
                     placeholder="选择查询月份">
                 </el-date-picker>
             </div>
-            <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
-            <el-button style="margin-left: 18px" size="small" type="danger" v-tap="{ methods:beforeDelMsg }">删除</el-button>
-            <el-button style="margin-left: 18px" size="small" type="success" v-tap="{ methods:exportExcel }">导出</el-button>
+            <el-button size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
+            <el-button size="small" type="danger" v-tap="{ methods:beforeDelMsg }">删除</el-button>
+            <el-button size="small" type="success" v-tap="{ methods:exportExcel }">导出</el-button>
         </header>
         <section>
             <el-table
@@ -234,4 +234,23 @@ export default {
         text-align: center;
     }
 
+    .el-button{
+        margin-left: 10px;
+    }
+    @media (max-width: 768px) {
+        header .dailyPicker{
+            width:100%;
+            max-width: 100%;
+        }
+        header .dailyCX{
+            margin-left:0;
+            margin-bottom:10px;
+        }
+        header .el-button:first-child{
+            margin-left:0 !important;
+        }
+        button.el-button.el-button--danger.el-button--small {
+             margin-top: 0;
+        }
+    }
 </style>

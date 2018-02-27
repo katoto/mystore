@@ -210,4 +210,10 @@
         text-align: center;
         margin-top: 20px;
     }
+
+    @media (max-width: 768px) {
+        header .xtSpan{
+            margin-left: 0;
+        }
+    }
 </style>

@@ -2,7 +2,7 @@
     <div>
         <h4 style="margin-left: 25px">新建公告：</h4>
         <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="范围：">
+            <el-form-item label="范围：" class="mobie-gg">
                 <el-radio-group v-model="form.resource">
                     <el-radio label="0" >全服，所有在线会员</el-radio>
                     <el-radio label="1" disabled >新手练习厅所有桌</el-radio>
@@ -23,10 +23,10 @@
         <section style="margin-bottom: 50px">
             <header class="clearfix" style="padding: 10px 0;border-top: 1px solid #000">
                 <span>已发公告：</span>
-                <el-button  style="margin-left: 18px" size="small" type="primary" v-tap="{methods: upDataNotice }" >更新已发公告</el-button>
+                <el-button  size="small" type="primary" v-tap="{methods: upDataNotice }" >更新已发公告</el-button>
                 <!--  <el-button style="margin-left: 18px" size="small" disabled  type="primary">再次发送</el-button>  -->
-                <el-button :disabled="!selNoticeVal" style="margin-left: 18px" size="small" type="warning" v-tap="{methods: initSearch}">重置</el-button>
-                <el-button :disabled="!selNoticeVal" style="margin-left: 18px" size="small" type="danger" v-tap="{methods: delSelNotice}" >删除</el-button>
+                <el-button :disabled="!selNoticeVal" size="small" type="warning" v-tap="{methods: initSearch}">重置</el-button>
+                <el-button :disabled="!selNoticeVal" size="small" type="danger" v-tap="{methods: delSelNotice}" >删除</el-button>
 
             </header>
             <section>
@@ -211,5 +211,13 @@
     .el-pagination{
         text-align: center;
         margin: 25px 0;
+    }
+    @media (max-width: 768px) {
+        .el-radio{
+            margin-left: 10px;
+        }
+        .el-button--small{
+            padding: 9px 5px;
+        }
     }
 </style>

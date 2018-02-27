@@ -379,4 +379,12 @@
         margin-top: 14px;
         text-align: center;
     }
+    @media (max-width: 768px) {
+        .el-col-11 {
+            width: 100%;
+        }
+        .el-date-editor--daterange.el-input__inner{
+            width:70%;
+        }
+    }
 </style>
