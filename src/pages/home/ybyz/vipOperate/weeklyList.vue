@@ -7,7 +7,7 @@
     export default {
         data () {
             return {
-                title: '我是頭部'
+                title: ''
             }
         },
         watch: {},

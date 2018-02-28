@@ -427,4 +427,34 @@
     #userSet section span{
         color: #303133;
     }
+    .el-dialog{
+        width:90%;
+    }
+    @media (max-width: 768px) {
+        .el-button+.el-button{
+            margin-left:4px;
+        }
+        #userSet .el-button{
+            padding:9px 12px;
+        }
+        #userSet ul li{
+            font-size:12px;
+        }
+        .grid-content strong,.grid-content span{
+            font-size:14px;
+        }
+
+        .el-checkbox{
+            display: block;
+        }
+        .el-checkbox+.el-checkbox {
+            margin-left: 0;
+        }
+        .el-radio+.el-radio {
+            margin-left: 20px;
+        }
+        .el-message-box{
+            width:80%;
+        }
+    }
 </style>

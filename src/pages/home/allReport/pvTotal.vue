@@ -54,6 +54,9 @@
         data () {
             return {
                 pickerOptions: {
+                    disabledDate (time) {
+                        return time.getTime() > Date.now()
+                    },
                     shortcuts: [{
                         text: '最近一周',
                         onClick (picker) {
@@ -206,5 +209,11 @@
     .el-pagination{
         text-align: center;
         margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+        header .xtSpan{
+            margin-left: 0;
+        }
     }
 </style>

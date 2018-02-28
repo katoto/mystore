@@ -348,8 +348,6 @@
         },
         watch: {
             loginInfoConfig (loginInfoConfig) {
-                console.log(111)
-                console.log('============')
                 this.setXTInit({ params: loginInfoConfig })
             }
         },

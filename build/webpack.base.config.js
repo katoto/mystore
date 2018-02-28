@@ -11,7 +11,6 @@ module.exports = {
         app: [path.join(srcPath, 'main.js')],
         vendor: ['vue', 'vue-router', 'vuex', 'v-tap', 'vuex-router-sync', 'es6-promise', 'axios']
     },
-
     module: {
         rules: [
             {

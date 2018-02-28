@@ -742,9 +742,16 @@
         computed: {
             selTgyVal () {
                 return this.$store.state.tgyManager.selTgyVal
+            },
+            updataSetPromoter () {
+                return this.$store.state.tgyManager.updataSetPromoter
             }
         },
         watch: {
+            updataSetPromoter () {
+                this.setPromoter()
+                this.initSearch(false)
+            },
             selTgyVal (val) {
                 console.log(val)
                 this.$router.push('/home/tgyManage/tgyChild/tgyChildCz')
@@ -834,5 +841,11 @@
     }
     .tgyChild-nav a+a{
         border-left:1px solid #dcdfe6;
+    }
+
+    @media (max-width: 768px) {
+        .tgyChild-findBox>*,.tgyChild-btnBox>*{
+            margin:0 5px 5px 0;
+        }
     }
 </style>

@@ -1,5 +1,6 @@
 <template>
     <div style="position: relative">
+        <p class="tipsStyle red">当前可处理的订单数：充值申请0个，兑奖申请0个</p>
         <el-tabs v-model="activeNameTop" type="card" @tab-click="handleClick">
             <el-tab-pane label="会员操作" name="vipOperate"></el-tab-pane>
             <!--<el-tab-pane label="平板租借记录查询" name="rentSearch" disabled></el-tab-pane>-->
@@ -152,8 +153,6 @@
             </div>
             <router-view></router-view>
         </template>
-        <p class="tipsStyle red">当前可处理的订单数：充值申请0个，兑奖申请0个</p>
-
     </div>
 </template>
 
@@ -211,9 +210,8 @@ export default {
                 if (this.vipSearch === '') {
                     this.getUserListFn(this.vipStyle)
                 } else {
-                    let searchUser = await this.$store.dispatch(aTypes.searchUser, [ this.vipSearch.toString(), Number(this.vipStyle), Number(this.vipUserName) ])
-                    console.log(searchUser)
-                    console.log('==一般运作查询按钮回来的数据==')
+                    let searchUser = await this.$store.dispatch(aTypes.searchUser, [ this.vipSearch.toString(), Number(this.vipUserName), Number(this.vipStyle) ])
+
                     if (searchUser) {
                         if (searchUser.results) {
                             this.vipUserList = searchUser.results
@@ -267,6 +265,7 @@ export default {
             },
             async handleCurrentChange (size) {
                 // 分页事件  第一位
+                this.vipSearch = ''
                 this.getUserListFn(this.vipStyle, size)
             },
             vipListClick (val) {
@@ -293,9 +292,6 @@ export default {
                 this.vipSearch = ''
 
                 this.getUserListFn(this.vipStyle)
-
-                //                this.vipStyle = ''
-                //                this.vipUserName = ''
             },
             handleClick (tab, event) {
                 /*  路由 跳转  */
@@ -352,9 +348,6 @@ export default {
 
             async getUserListFn (currid = 0, pageNum = 1) {
                 let getVipUserList = await this.$store.dispatch(aTypes.getVipUserList, [currid, {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': Number(pageNum), 'pageSize': 8, 'totalCount': 0}])
-                console.log('=== 会员列表 =====')
-                console.log(getVipUserList)
-                //    this.curTgyValue = 0 ;  //  当前的各种状态
                 if (getVipUserList) {
                     if (getVipUserList.pager && getVipUserList.pager.list) {
                         this.vipUserList = getVipUserList.pager.list
@@ -390,11 +383,17 @@ export default {
         computed: {
             selVipVal () {
                 return this.$store.state.ybyz.selVipVal
+            },
+            updataybyzSearchFn () {
+                return this.$store.state.ybyz.updataybyzSearchFn
             }
         },
         watch: {
+            updataybyzSearchFn () {
+                this.ybyzSearchFn()
+                this.initSearch(false)
+            },
             selVipVal (val) {
-                console.log(val)
                 this.$router.push('/home/ybyz/vipOperate')
                 this.activeName = 'vipOperate'
             },
@@ -406,10 +405,11 @@ export default {
                         this.isOption = false
                     }
                 }
+                this.vipSearch = ''
+                this.getUserListFn(this.vipStyle)
             }
         },
         async mounted () {
-            console.log(this.vipStyle)
             // 默认第一页。
             this.getUserListFn()
     }
@@ -462,4 +462,16 @@ export default {
         margin-top: 20px;
     }
 
+    @media (max-width: 768px) {
+        .tipsStyle{
+            top: 20px;
+            font-size:8px;
+        }
+        #vipOperate header .el-button,header .xtInp{
+            margin-top: 10px;
+        }
+        #vipOperate{
+            font-size:12px;
+        }
+    }
 </style>

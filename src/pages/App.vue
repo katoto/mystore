@@ -1,7 +1,7 @@
 <template>
     <div id="app" class="l-full">
-        <!--<div class="toast" style="z-index: 1000" v-show="showToast">{{ showToast }}</div>-->
         <router-view v-if="serverTime"></router-view>
+        <el-button type="text" @click="openError" style="display: none">点击打开 Message Box</el-button>
     </div>
 </template>
 <script>
@@ -12,16 +12,32 @@ export default {
         },
         loginInfo () {
             return this.$store.state.user.loginInfo
+        },
+        showErrorBox () {
+            return this.$store.state.showErrorBox
         }
-
+    },
+    methods: {
+        openError () {
+            this.$alert('网络连接异常，请重新进入', '网络连接异常', {
+                confirmButtonText: '刷新',
+                callback: action => {
+                    if (action === 'confirm') {
+                        window.location.reload()
+                    }
+                }
+            })
+        }
     },
     watch: {
+        showErrorBox () {
+            this.openError()
+        },
         loginInfo (loginInfo) {
             if (!loginInfo) {
                 this.$router.replace('/login')
             }
         }
-
     },
     async mounted () {
         if (this.$route.path !== '/login') {
@@ -226,10 +242,19 @@ li {
 body {
   font-size: 14px;
 }
-
-/*@media screen and (max-width: 550px){*/
-    /*body {*/
-        /*background-color: #000 !important;*/
-    /*}*/
-/*}*/
+@media (max-width: 768px) {
+    .el-radio__label{
+        font-size:12px;
+    }
+    .el-message-box{
+        width:100%;
+    }
+    .el-dialog{
+        width:95% !important;
+    }
+    .el-dialog__body{
+        padding: 10px 5px;
+        font-size:10px;
+    }
+}
 </style>

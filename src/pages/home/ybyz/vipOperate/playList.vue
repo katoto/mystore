@@ -170,20 +170,15 @@
             },
             async clickPage (size) {
                 // 分页  请求数据 ，更新数据
-                console.log(size)
                 let result = null
                 if (!this.xtStartTime || !this.xtEndTime) {
                     result = await this.$store.dispatch(aTypes.getUserPlayLog, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
-                    console.log('全部分页')
-                    console.log(result)
                 } else {
                     result = await this.$store.dispatch(aTypes.getUserPlayLog, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
-                    console.log('选择时间分页')
-                    console.log(result)
                 }
                 console.log(result)
                 console.log('游玩记录查询')
@@ -191,8 +186,8 @@
                     let copyList = result.pager.list
                     this.playList = copyList
                     // 处理页码
-                    this.totalCount = result.pager.totalCount,
-                    this.pageNumber = result.pager.pageNumber,
+                    this.totalCount = result.pager.totalCount
+                    this.pageNumber = result.pager.pageNumber
                     this.pageSize = result.pager.pageSize
                 }
             },
@@ -216,13 +211,12 @@
                 let result = await this.$store.dispatch(aTypes.getUserPlayLog, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                     {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
                 ])
-                console.log('游玩记录查询按钮')
                 if (result && result.pager.list) {
                     let copyList = result.pager.list
                     this.playList = copyList
                     // 处理页码
-                    this.totalCount = result.pager.totalCount,
-                    this.pageNumber = result.pager.pageNumber,
+                    this.totalCount = result.pager.totalCount
+                    this.pageNumber = result.pager.pageNumber
                     this.pageSize = result.pager.pageSize
 
                     this.$message({
@@ -256,8 +250,8 @@
                 let copyList = result.pager.list
                 this.playList = copyList
                 // 处理页码
-                this.totalCount = result.pager.totalCount,
-                this.pageNumber = result.pager.pageNumber,
+                this.totalCount = result.pager.totalCount
+                this.pageNumber = result.pager.pageNumber
                 this.pageSize = result.pager.pageSize
             }
             if (result && result.lastTotalGain) {

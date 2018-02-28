@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 770px" class="l-flex-row">
+    <div style="height: 870px" class="l-flex-row mobile-gg">
         <!-- newXyls, yaoqianshu, dantiao, wppy, meirenyu, queyimen,huanleniuniu, shuihuzhuan, qianpaobuyu-->
         <new-xyls v-if="dialogShow && deskIdx === 0" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></new-xyls>
         <yaoqianshu v-if="dialogShow && deskIdx === 1" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></yaoqianshu>
@@ -17,24 +17,24 @@
         <huanleniuniusetting v-if="deskIdx === 6 && settingDialog" :init="initSetting" @close="settingDialog = false" @submit="modifyCommonSetting"></huanleniuniusetting>
 
         <div class="l-flex-1 l-flex-column">
-            <div class=" l-relative" style="height: 150px">
+            <div class=" l-relative" style="height: 150px" :class="{ newTop :form.hlabel === '-1',newTop2: form.hlabel === '-1' && form.flabel === '2' }">
                 <div class="l-full" style="padding: 10px">
                     <div style="padding-bottom: 10px;border-bottom: 1px solid #ddd">
                         <h4 style="margin-bottom: 10px">新建公告：</h4>
-                        <div stygile="margin: 10px">
+                        <div style="margin: 10px">
                             <el-radio-group v-model="form.hlabel">
                                 <el-radio label="0">运营状态</el-radio>
                                 <el-radio label="-1">维护状态</el-radio>
                             </el-radio-group>
                         </div>
-                        <div v-if="form.hlabel === '-1'" style="margin: 20px">
+                        <div v-if="form.hlabel === '-1'" style="margin:10px 0 10px 10px">
                             <el-radio-group v-model="form.flabel">
                                 <el-radio label="1">立刻进入</el-radio>
                                 <el-radio label="2">预定时间进入</el-radio>
                             </el-radio-group>
                         </div>
 
-                        <div style="margin: 20px" v-if="form.hlabel === '-1' && form.flabel === '2'">
+                        <div v-if="form.hlabel === '-1' && form.flabel === '2'">
                             <div style="margin: 20px">
                                 <el-select class="" size="small" v-model="form.time" placeholder="请选择时间">
                                     <el-option
@@ -50,12 +50,8 @@
                                 维护公告内容:
                                 <el-input size="small" v-model="form.content" style="width: 50%"></el-input>
                             </div>
-
-
                         </div>
-
-
-                        <el-button style="margin-left: 45px" size="small" type="primary" @click="updateDTStatus()">
+                        <el-button size="small" type="primary" @click="updateDTStatus()">
                             更新大厅状态
                         </el-button>
                     </div>
@@ -66,8 +62,6 @@
                             :label="item.label"
                             :value="idx">
                         </el-option>
-
-
                     </el-select>
                 </div>
             </div>
@@ -84,22 +78,50 @@
                     <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 6">【新手练习厅】已开启{{roomStatus.room1StartNum7}}桌，还可以开启{{roomStatus.room1RemainNum7}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum7}}桌，还可以开启{{roomStatus.room2RemainNum7}}桌 </p>
                     <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 7">【新手练习厅】已开启{{roomStatus.room1StartNum8}}桌，还可以开启{{roomStatus.room1RemainNum8}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum8}}桌，还可以开启{{roomStatus.room2RemainNum8}}桌 </p>
                     <p style="border-top: 1px solid #eee;padding: 7px 0" v-if="deskIdx === 8">【新手练习厅】已开启{{roomStatus.room1StartNum9}}桌，还可以开启{{roomStatus.room1RemainNum9}}桌 &nbsp;&nbsp;&nbsp;【欢乐竞技厅】已开启{{roomStatus.room2StartNum9}}桌，还可以开启{{roomStatus.room2RemainNum9}}桌 </p>
-<<<<<<< HEAD
 
-=======
                     <section v-if="deskIdx === 2 || deskIdx === 5">
-                        针对所有桌子：  <el-button style="margin-left: 18px" size="small" @click="beginSetting" type="primary">公共参数设置</el-button>保单箱状态：异常 当前保单箱连接数：0
+                        针对所有桌子：<el-button style="margin: 0 4px" size="small" @click="beginSetting" type="primary">公共参数设置</el-button> 保单箱状态：异常 当前保单箱连接数：0
                     </section>
->>>>>>> 4511367e4444d128a77e4365b732f5d46882b277
                     <header style="padding: 8px 0;border-top: 1px solid #ddd">
                         <el-button size="small" type="primary" @click="updateDeskList">刷新</el-button>
-                        <el-button style="margin-left: 18px" size="small" @click="openNewDesk" type="primary">新增桌</el-button>
-                        <el-button style="margin-left: 18px" size="small" @click="openModifyDesk">参数设置</el-button>
-                        <el-button style="margin-left: 18px" size="small" type="danger" @click="deleteDesk">删除桌</el-button>
-                        <el-button style="margin-left: 18px" size="small" type="primary">桌排序</el-button>
-                        <el-button v-if="deskIdx === 6" style="margin-left: 18px" size="small" @click="beginSetting" type="primary">疯狂牛牛相关设置</el-button>
+                        <el-button size="small" @click="openNewDesk" type="primary">新增桌</el-button>
+                        <el-button size="small" @click="openModifyDesk">参数设置</el-button>
+                        <el-button size="small" type="danger" @click="deleteDesk">删除桌</el-button>
+                        <el-button size="small" type="primary">桌排序</el-button>
+                        <el-button v-if="deskIdx === 6" size="small" @click="beginSetting" type="primary">疯狂牛牛相关设置</el-button>
                     </header>
-                    <section style="margin-bottom: 10px">
+                    <section style="margin-bottom: 10px" v-if="deskIdx === 7">
+                        <el-table
+                            :data="deskList"
+                            height="300"
+                            highlight-current-row
+                            size="small"
+                            border
+                            @cell-click="deskSelect"
+                            style="width: 100%">
+                            <el-table-column
+                                prop="id"
+                                label="桌ID">
+                            </el-table-column>
+                            <el-table-column
+                                prop="name"
+                                label="桌名">
+                            </el-table-column>
+                            <el-table-column
+                                prop="roomName"
+                                label="所属房间">
+                            </el-table-column>
+                            <el-table-column
+                                prop="onLineNumber"
+                                label="在线人数">
+                            </el-table-column>
+                            <el-table-column
+                                prop="stateName"
+                                label="桌状态">
+                            </el-table-column>
+                        </el-table>
+                    </section>
+                    <section v-else style="margin-bottom: 10px">
                         <el-table
                             :data="deskList"
                             height="300"
@@ -138,8 +160,8 @@
                 <div class="l-full" style="padding: 10px">
                     <section style="padding-top: 20px;border-top: 1px solid #ddd;">
                         <div style="margin-bottom: 10px">
-                            <el-button style="" size="small" type="primary">刷新</el-button>
-                            <el-button style="margin-left: 18px" size="small" type="danger">清零</el-button>
+                            <el-button size="small" type="primary" v-tap="{methods: refleshDeskMsg }" :disabled="!this.currentDesk">刷新</el-button>
+                            <el-button style="margin-left: 18px" size="small" type="danger" disabled >清零</el-button>
                         </div>
                         <template v-if="deskIdx === 0 || deskIdx === 1 || deskIdx === 2 || deskIdx === 3 ||
                                 deskIdx === 4 || deskIdx === 5 || deskIdx === 8
@@ -270,15 +292,16 @@
                                 </el-table-column>
                                 <el-table-column
                                     prop="sumDeFen"
-                                    label="区段总玩分（sumDeFen）">
+                                    label="区段总玩分">
                                 </el-table-column>
                                 <el-table-column
                                     prop="result"
                                     label="区段结果">
                                 </el-table-column>
                                 <el-table-column
-                                    prop="maxOnlineNum"
-                                    label="最高活跃人数">
+                                     prop="maxOnlineNum"
+                                     :label="lastLabel"
+                                >
                                 </el-table-column>
                             </el-table>
                         </template>
@@ -319,6 +342,7 @@
     export default {
         data () {
             return {
+                lastLabel: '最高活跃人数',
                 newDesk: {
                     xyls: false
                 },
@@ -345,9 +369,9 @@
                         updateDesk: 'deskService/updateDesk',
                         deleteDesk: 'deskService/deleteDesk',
 
-                        getUser_:'deskService/getDeskUser',
-                        getData_:'deskService/getDeskData',
-                        getResult_:'deskService/getDeskResult'
+                        getUser_: 'deskService/getDeskUser',
+                        getData_: 'deskService/getDeskData',
+                        getResult_: 'deskService/getDeskResult'
                     },
                     {
                         label: '摇钱树',
@@ -357,9 +381,9 @@
                         updateDesk: 'deskService/updateFishDesk',
                         deleteDesk: 'deskService/deleteFishDesk',
 
-                        getUser_:'deskService/getFishDeskUser',
-                        getData_:'deskService/getFishDeskData',
-                        getResult_:'deskService/getFishDeskResult'
+                        getUser_: 'deskService/getFishDeskUser',
+                        getData_: 'deskService/getFishDeskData',
+                        getResult_: 'deskService/getFishDeskResult'
                     },
                     {
                         label: '单挑',
@@ -369,9 +393,9 @@
                         updateDesk: 'deskService/updateCardDesk',
                         deleteDesk: 'deskService/deleteCardDesk',
 
-                        getUser_:'deskService/getCardDesk',
-                        getData_:'deskService/getCardDeskData',
-                        getResult_:'deskService/getCardDeskResult',
+                        getUser_: 'deskService/getCardDeskUser',
+                        getData_: 'deskService/getCardDeskData',
+                        getResult_: 'deskService/getCardDeskResult',
 
                         getParameter: 'deskService/getCardParameter',
                         updateParameter: 'deskService/updateCardParameter'
@@ -384,9 +408,9 @@
                         updateDesk: 'deskService/updateBulletFishDesk',
                         deleteDesk: 'deskService/deleteBulletFishDesk',
 
-                        getUser_:'deskService/getBulletFishDesk',
-                        getData_:'deskService/getBulletFishDeskData',
-                        getResult_:'deskService/getBulletFishDeskResult'
+                        getUser_: 'deskService/getBulletFishDeskUser',
+                        getData_: 'deskService/getBulletFishDeskData',
+                        getResult_: 'deskService/getBulletFishDeskResult'
                     },
                     {
                         label: '美人鱼',
@@ -396,9 +420,9 @@
                         updateDesk: 'deskService/updateMermaidDesk',
                         deleteDesk: 'deskService/deleteMermaidDesk',
 
-                        getUser_:'deskService/getMermaidDesk',
-                        getData_:'deskService/getMermaidDeskData',
-                        getResult_:'deskService/getMermaidDeskResult'
+                        getUser_: 'deskService/getMermaidDeskUser',
+                        getData_: 'deskService/getMermaidDeskData',
+                        getResult_: 'deskService/getMermaidDeskResult'
 
                     },
                     {
@@ -409,9 +433,9 @@
                         updateDesk: 'deskService/updateLackDesk',
                         deleteDesk: 'deskService/deleteLackDesk',
 
-                        getUser_:'deskService/getLackDesk',
-                        getData_:'deskService/getLackDeskData',
-                        getResult_:'deskService/getLackDeskResult',
+                        getUser_: 'deskService/getLackDeskUser',
+                        getData_: 'deskService/getLackDeskData',
+                        getResult_: 'deskService/getLackDeskResult',
 
                         getParameter: 'deskService/getLackParameter',
                         updateParameter: 'deskService/updateLackParameter'
@@ -424,9 +448,9 @@
                         updateDesk: 'deskService/updateJoyDesk',
                         deleteDesk: 'deskService/deleteJoyDesk',
 
-                        getUser_:'deskService/getJoyDesk',
-                        getData_:'deskService/getJoyDeskData',
-                        getResult_:'deskService/getJoyDeskResult',
+                        getUser_: 'deskService/getJoyDeskUser',
+                        getData_: 'deskService/getJoyDeskData',
+                        getResult_: 'deskService/getJoyDeskResult',
                         getParameter: 'deskService/getJoyPrivateDeskParameter',
                         updateParameter: 'updateJoyPrivateDeskParameter'
                     },
@@ -438,9 +462,9 @@
                         updateDesk: 'waterDeskService/updateWaterDesk',
                         deleteDesk: 'waterDeskService/deleteWaterDesk',
 
-                        getUser_:'waterDeskService/getWaterDesk',
-                        getData_:'waterDeskService/getWaterDeskData',
-                        getResult_:'waterDeskService/getWaterDeskResult'
+                        getUser_: 'waterDeskService/getWaterDeskUser',
+                        getData_: 'waterDeskService/getWaterDeskData',
+                        getResult_: 'waterDeskThirtyMinResultService/getWaterDeskThirtyMinResult'
                     },
                     {
                         label: '千炮捕鱼',
@@ -450,56 +474,56 @@
                         updateDesk: 'deskService/updateThousandFishDesk',
                         deleteDesk: 'deskService/deleteThousandFishDesk',
 
-                        getUser_:'deskService/getThousandFishDesk',
-                        getData_:'deskService/getThousandFishDeskData',
-                        getResult_:'deskService/getThousandFishDeskResult'
+                        getUser_: 'deskService/getThousandFishDeskUser',
+                        getData_: 'deskService/getThousandFishDeskData',
+                        getResult_: 'deskService/getThousandFishDeskResult'
                     }
 
                 ],
 
                 userMsgList: [
-//                    {'answer': '-1',
-//                        'bindingName': '',
-//                        'borrow': 0,
-//                        'boxGameGold': 0,
-//                        'boxLottery': 0,
-//                        'card': '-1',
-//                        'currentGameScore': 19800,
-//                        'displayStatus': 0,
-//                        'expeGold': 0,
-//                        'expeScore': 0,
-//                        'expiryNum': 0,
-//                        'gameGold': 4600,
-//                        'gameScore': 0,
-//                        'id': 63,
-//                        'lastDeskId': 3,
-//                        'lastGame': 0,
-//                        'level': 1,
-//                        'levelScore': 0,
-//                        'loginDate': '2018-02-04 09:26:08',
-//                        'lottery': 0,
-//                        'name': '',
-//                        'nickname': 'Z1',
-//                        'overflow': 0,
-//                        'password': 'e10adc3949ba59abbe56e057f20f883e',
-//                        'payMoney': 0,
-//                        'phone': '-',
-//                        'photoId': 3,
-//                        'promoterId': 0,
-//                        'promoterName': 'admin',
-//                        'question': '-1',
-//                        'registDate': '2018-01-27 21:35:37',
-//                        'safeBox': 0,
-//                        'security': 0,
-//                        'sex': '男',
-//                        'shareClearingTime': '',
-//                        'shutupStatus': 0,
-//                        'specialMark': 0,
-//                        'status': 0,
-//                        'subUserCount': 0,
-//                        'type': 1,
-//                        'username': '00250000',
-//                        'warningStatus': 0}
+                //                    {'answer': '-1',
+                //                        'bindingName': '',
+                //                        'borrow': 0,
+                //                        'boxGameGold': 0,
+                //                        'boxLottery': 0,
+                //                        'card': '-1',
+                //                        'currentGameScore': 19800,
+                //                        'displayStatus': 0,
+                //                        'expeGold': 0,
+                //                        'expeScore': 0,
+                //                        'expiryNum': 0,
+                //                        'gameGold': 4600,
+                //                        'gameScore': 0,
+                //                        'id': 63,
+                //                        'lastDeskId': 3,
+                //                        'lastGame': 0,
+                //                        'level': 1,
+                //                        'levelScore': 0,
+                //                        'loginDate': '2018-02-04 09:26:08',
+                //                        'lottery': 0,
+                //                        'name': '',
+                //                        'nickname': 'Z1',
+                //                        'overflow': 0,
+                //                        'password': 'e10adc3949ba59abbe56e057f20f883e',
+                //                        'payMoney': 0,
+                //                        'phone': '-',
+                //                        'photoId': 3,
+                //                        'promoterId': 0,
+                //                        'promoterName': 'admin',
+                //                        'question': '-1',
+                //                        'registDate': '2018-01-27 21:35:37',
+                //                        'safeBox': 0,
+                //                        'security': 0,
+                //                        'sex': '男',
+                //                        'shareClearingTime': '',
+                //                        'shutupStatus': 0,
+                //                        'specialMark': 0,
+                //                        'status': 0,
+                //                        'subUserCount': 0,
+                //                        'type': 1,
+                //                        'username': '00250000',
+                //                        'warningStatus': 0}
 
                 ],
 
@@ -507,12 +531,15 @@
                 sumDeFen_2: 0,
                 allGain_2: 0,
 
-                currDesk6:0,
-                currDesk7_yafen:0,
-                currDesk7_defen:0,
-                currDesk7_allGain:0,
+                currDesk6: 0,
+                currDesk7_yafen: 0,
+                currDesk7_defen: 0,
+                currDesk7_allGain: 0,
 
                 pickerOptions: {
+                    disabledDate (time) {
+                        return time.getTime() > Date.now()
+                    },
                     shortcuts: [{
                         text: '最近一周',
                         onClick (picker) {
@@ -548,29 +575,29 @@
                 xtEndTime: null,
 
                 winMsgList: [
-//                    {
-//                    animal: 10,
-//                    awardGold: 5455,
-//                    betPeople: 1,
-//                    color: 0,
-//                    datetime: '2018-02-04 09:28:57',
-//                    deskId: 3,
-//                    globalType: 0,
-//                    id: 278987,
-//                    lightningBeilv: 0,
-//                    luckAnimal: 0,
-//                    luckNum: 0,
-//                    luckType: 0,
-//                    moreInfo: '',
-//                    result: 200,
-//                    resultStr: '闲 普通绿兔子',
-//                    roomId: 2,
-//                    songDengCount: 0,
-//                    sumDeFen: 0,
-//                    sumYaFen: 200,
-//                    type: 0,
-//                    zxh: 2
-//                }
+                //                    {
+                //                    animal: 10,
+                //                    awardGold: 5455,
+                //                    betPeople: 1,
+                //                    color: 0,
+                //                    datetime: '2018-02-04 09:28:57',
+                //                    deskId: 3,
+                //                    globalType: 0,
+                //                    id: 278987,
+                //                    lightningBeilv: 0,
+                //                    luckAnimal: 0,
+                //                    luckNum: 0,
+                //                    luckType: 0,
+                //                    moreInfo: '',
+                //                    result: 200,
+                //                    resultStr: '闲 普通绿兔子',
+                //                    roomId: 2,
+                //                    songDengCount: 0,
+                //                    sumDeFen: 0,
+                //                    sumYaFen: 200,
+                //                    type: 0,
+                //                    zxh: 2
+                //                }
                 ]
 
             }
@@ -585,64 +612,76 @@
 
         },
         watch: {
-            async deskIdx ( val ) {
+            async deskIdx (val) {
                 this.currentDesk = null
                 this.deskList = null
                 this.updateDeskList()
-                console.log('=========')
-                console.log(val)
-                this.userMsgList = [];
-                this.winMsgList = [];
 
+                this.userMsgList = []
+                this.winMsgList = []
+                this.xtLogTime = null
+
+                if (Number(val) === 7) {
+                    this.lastLabel = ''
+                } else {
+                    this.lastLabel = '最高活跃人数'
+                }
             }
         },
         methods: {
+            refleshDeskMsg(){
+                if( this.currentDesk ){
+                    this.deskSelect( this.currentDesk );
+                }
+            },
             async deskSelect (desk) {
-                this.currentDesk = desk;
-                console.log( desk );
+                this.currentDesk = desk
+
                 // 传入桌子id  获取第二列表的头部信息
-                let getData = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getData_, args: Number ( desk.id )})
-                if( Number( this.deskIdx ) === 6 ){
+                let getData = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getData_, args: Number(desk.id)})
+                if (Number(this.deskIdx) === 6) {
                     if (getData && getData.sumDeFen !== undefined) {
-                        this.sumYaFen_2 = getData.sumYaFen;
-                        this.sumDeFen_2 = getData.sumDeFen;
-                        this.allGain_2 = getData.sumWin;
-                        this.currDesk6 = getData.currentJackpotScore ;
+                        this.sumYaFen_2 = getData.sumYaFen
+                        this.sumDeFen_2 = getData.sumDeFen
+                        this.allGain_2 = getData.sumWin
+                        this.currDesk6 = getData.currentJackpotScore
                     }
-                }else if( Number( this.deskIdx ) === 7 ){
+                } else if (Number(this.deskIdx) === 7) {
                     if (getData && getData.sumDeFen !== undefined) {
-                        this.sumYaFen_2 = getData.mainGameSumYaFen;
-                        this.sumDeFen_2 = getData.mainGameSumDeFen;
+                        this.sumYaFen_2 = getData.mainGameSumYaFen
+                        this.sumDeFen_2 = getData.mainGameSumDeFen
                         this.allGain_2 = Number(getData.mainGameSumYaFen) - Number(getData.mainGameSumDeFen)
 
-                        this.currDesk7_yafen = getData.diceGameSumYaFen ;
-                        this.currDesk7_defen = getData.diceGameSumDeFen ;
+                        this.currDesk7_yafen = getData.diceGameSumYaFen
+                        this.currDesk7_defen = getData.diceGameSumDeFen
                         this.currDesk7_allGain = Number(getData.diceGameSumYaFen) - Number(getData.diceGameSumDeFen)
                     }
-                }else{
+                } else {
                     if (getData && getData.sumDeFen !== undefined) {
-                        this.sumYaFen_2 = getData.sumYaFen;
-                        this.sumDeFen_2 = getData.sumDeFen;
+                        this.sumYaFen_2 = getData.sumYaFen
+                        this.sumDeFen_2 = getData.sumDeFen
                         this.allGain_2 = Number(getData.sumYaFen) - Number(getData.sumDeFen)
                     }
                 }
 
-                let getUser_ = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getUser_, args: Number ( desk.id )})
+                let getUser_ = await this.$store.dispatch(aTypes.commonInvoke, {method: this.desks[this.deskIdx].getUser_, args: Number(desk.id)})
 
-                console.log('+++++++++++')
                 console.log(getUser_)
-                console.log('_-----------')
-                if( getUser_ && getUser_.length >= 0 ){
-                    this.userMsgList = getUser_ ;
+                if (getUser_ && getUser_.length >= 0) {
+                    this.userMsgList = getUser_
                 }
 
-                let getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
-                    Number ( desk.id ) ,this.format(new Date()) ,this.format(new Date()) ,{ "list":[],"order":"","orderBy":"","pageCount":0,
-                    "pageNumber":1,"pageSize":8,"totalCount":0 }
-                ] });
-                console.log('+++424234+++++++')
+                let getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_,
+                    args: [
+                        Number(desk.id), this.format(new Date()), this.format(new Date()), { 'list': [],
+                            'order': '',
+                            'orderBy': '',
+                            'pageCount': 0,
+                            'pageNumber': 1,
+                            'pageSize': 8,
+                            'totalCount': 0 }
+                    ] })
                 console.log(getResult_)
-                console.log('_--1231314---')
                 if (getResult_ && getResult_.list) {
                     let copyList = getResult_.list
                     this.winMsgList = copyList
@@ -651,8 +690,6 @@
                     this.pageNumber = getResult_.pageNumber
                     this.pageSize = getResult_.pageSize
                 }
-
-
             },
             openModifyDesk () {
                 this.isModify = true
@@ -703,7 +740,7 @@
                 })
             },
             openNewDesk () {
-                this.isModify = false;
+                this.isModify = false
                 this.dialogShow = true
             },
             async deleteDesk () {
@@ -765,6 +802,8 @@
             },
             async updateDeskList () {
                 this.deskList = await this.$store.dispatch(aTypes.getDeskList, this.desks[this.deskIdx].getDeskList)
+                console.log('========')
+                console.log(this.deskList)
                 this.deskList.forEach((desk) => {
                     desk.roomName = desk.roomId === 2 ? '欢乐竞技厅' : '新手练习厅'
                     desk.stateName = desk.state === 1 ? '开放' : '锁定'
@@ -802,13 +841,17 @@
                     return false
                 }
                 //    修改
-                let getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
-                    Number ( desk.id ) ,this.xtStartTime ,this.xtEndTime ,{ "list":[],"order":"","orderBy":"","pageCount":0,
-                        "pageNumber":1,"pageSize":8,"totalCount": this.totalCount }
-                ] });
-                console.log('+++424234+++++++')
+                let getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_,
+                    args: [
+                        Number(this.currentDesk.id), this.xtStartTime, this.xtEndTime, { 'list': [],
+                            'order': '',
+                            'orderBy': '',
+                            'pageCount': 0,
+                            'pageNumber': 1,
+                            'pageSize': 8,
+                            'totalCount': this.totalCount }
+                    ] })
                 console.log(getResult_)
-                console.log('_--1231314---')
                 if (getResult_ && getResult_.list) {
                     let copyList = getResult_.list
                     this.winMsgList = copyList
@@ -817,13 +860,8 @@
                     this.pageNumber = getResult_.pageNumber
                     this.pageSize = getResult_.pageSize
                 }
-
-
-
             },
             logTimeChange (val) {
-                console.log(this.format(val[0]))
-                console.log(this.format(val[1]))
                 //                取到值
                 this.xtStartTime = this.format(val[0])
                 this.xtEndTime = this.format(val[1])
@@ -851,22 +889,32 @@
                 })
             },
             async clickPage (size) {
-                console.log(1234313)
                 // 分页  对应第三个表格的分页
                 let getResult_ = null
 
                 // 修改 getDeskResult 、 修改id  对应的 方法
                 if (!this.xtStartTime || !this.xtEndTime) {
-                   getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
-                        Number ( this.currentDesk.id ) ,this.format(new Date().getTime() - 3600 * 1000 * 24 * 2),this.format(new Date()) ,{ "list":[],"order":"","orderBy":"","pageCount":0,
-                            "pageNumber":Number( size ),"pageSize":8,"totalCount": this.totalCount }
-                    ] });
+                    getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_,
+                        args: [
+                            Number(this.currentDesk.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 2), this.format(new Date()), { 'list': [],
+                                'order': '',
+                                'orderBy': '',
+                                'pageCount': 0,
+                                'pageNumber': Number(size),
+                                'pageSize': 8,
+                                'totalCount': this.totalCount }
+                        ] })
                 } else {
-                    getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_, args: [
-                        Number ( this.currentDesk.id ) ,this.xtStartTime ,this.xtEndTime ,{ "list":[],"order":"","orderBy":"","pageCount":0,
-                            "pageNumber":Number( size ) ,"pageSize":8,"totalCount": this.totalCount }
-                    ] });
-
+                    getResult_ = await this.$store.dispatch(aTypes.commonInvoke_arr, {method: this.desks[this.deskIdx].getResult_,
+                        args: [
+                            Number(this.currentDesk.id), this.xtStartTime, this.xtEndTime, { 'list': [],
+                                'order': '',
+                                'orderBy': '',
+                                'pageCount': 0,
+                                'pageNumber': Number(size),
+                                'pageSize': 8,
+                                'totalCount': this.totalCount }
+                        ] })
                 }
 
                 if (getResult_ && getResult_.list) {
@@ -877,7 +925,6 @@
                     this.pageNumber = getResult_.pageNumber
                     this.pageSize = getResult_.pageSize
                 }
-
             }
         },
         async mounted () {
@@ -890,14 +937,40 @@
         text-align: center;
         margin: 25px 0;
     }
-
     .gameHomeSel {
         padding: 10px 0;
     }
-
     .dailyPicker {
         margin-bottom: 10px;
         float: left;
     }
+    .newTop{
+        height: 180px !important;
+    }
+    .newTop2{
+        height: 290px !important;
+    }
 
+    .el-select>.el-input {
+        margin-top: 10px;
+    }
+    @media (max-width: 768px) {
+        .top button{
+            margin-left:10px;
+        }
+        header button{
+            padding:9px 6px;
+        }
+        .el-date-editor--daterange.el-input__inner{
+            width:100%;
+        }
+       .mobile-gg.l-flex-row{
+           display: block;
+       }
+        header button{
+            padding: 9px 4px;
+            font-size:10px;
+        }
+
+    }
 </style>

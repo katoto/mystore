@@ -32,9 +32,9 @@
                     :disabled="item.disabled">
                 </el-option>
             </el-select>
-            <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
-            <el-button style="margin-left: 18px" size="small" type="danger" disabled>删除</el-button>
-            <el-button style="margin-left: 18px" size="small" type="success" v-tap="{ methods:exportExcel }">导出</el-button>
+            <el-button size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
+            <el-button size="small" type="danger" disabled>删除</el-button>
+            <el-button size="small" type="success" v-tap="{ methods:exportExcel }">导出</el-button>
         </header>
         <section>
             <el-table id="out-table"
@@ -299,5 +299,22 @@ export default {
         max-width: 130px ;
         float: left;
         margin-left: 10px;
+    }
+    .el-button{
+        margin-left: 10px;
+    }
+    @media (max-width: 768px) {
+        header .dailyPicker{
+            width:100%;
+            max-width: 100%;
+        }
+        header .dailyCX{
+            margin-left:0;
+            margin-bottom:10px;
+        }
+        header .userSel{
+            max-width: 100%;
+            margin-bottom:10px;
+        }
     }
 </style>

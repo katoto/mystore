@@ -49,6 +49,9 @@
 
 <script>
     import { actionTypes, mutationTypes } from '~store/xtManager'
+
+    import { aTypes, mTypes } from '~store/user'
+
     export default {
         data () {
             return {
@@ -79,8 +82,6 @@
         },
         watch: {
             loginInfoConfig (loginInfoConfig) {
-                console.log(111)
-                console.log('=******===')
                 this.setXTInit({ params: loginInfoConfig })
             }
         },
@@ -111,14 +112,14 @@
                     }
                     if (loginInfoConfig.payScale) {
                         try {
-                            this.payScale = loginInfoConfig.payScale
+                            this.payScale = Number(loginInfoConfig.payScale) / 100
                         } catch (e) {
                             console.error('userSumMoney error at 387')
                         }
                     }
                     if (loginInfoConfig.promoterPayScale) {
                         try {
-                            this.promoterPayScale = loginInfoConfig.promoterPayScale
+                            this.promoterPayScale = Number(loginInfoConfig.promoterPayScale) / 100
                         } catch (e) {
                             console.error('userSumMoney error at 387')
                         }
@@ -134,6 +135,7 @@
             },
 
             async upxtSetMsg () {
+                let newUpxtSetMsg
                 let newInteractPassword = null
                 let newSwitchType = null
                 let newExpiry = null
@@ -158,7 +160,63 @@
                     newInteractPassword = -1
                 }
 
-                let result = await this.$store.dispatch(actionTypes.updateSales, [this.payScale / 100 + '', this.promoterPayScale / 100 + '', newSwitchType, newInteractPassword, newExpiry ])
+                if (this.loginInfoConfig) {
+                    let copyLoginConfig = this.loginInfoConfig
+                    newUpxtSetMsg = [{
+
+                        'payScale': Number(this.payScale) * 100,
+                        'promoterPayScale': Number(this.promoterPayScale) * 100,
+                        'switchType': newSwitchType,
+                        'expiry': newExpiry,
+                        'interactPassword': newInteractPassword,
+
+                        'authorize': copyLoginConfig.authorize,
+                        'chat': copyLoginConfig.chat,
+                        'moneyOverrun': copyLoginConfig.moneyOverrun,
+                        'notActive': copyLoginConfig.notActive,
+                        'expiryCheckMoney': copyLoginConfig.expiryCheckMoney,
+                        'payCheckMoney': copyLoginConfig.payCheckMoney,
+                        'promoterSumMoney': copyLoginConfig.promoterSumMoney,
+                        'registVerify': copyLoginConfig.registVerify,
+                        'sumExpiryMoney': copyLoginConfig.sumExpiryMoney,
+                        'sumPayMoney': copyLoginConfig.sumPayMoney,
+                        'userCheck': copyLoginConfig.userCheck,
+                        'userSumMoney': copyLoginConfig.userSumMoney,
+                        // none
+                        'baodanPwd': copyLoginConfig.baodanPwd,
+                        'baodanStatus': copyLoginConfig.baodanStatus,
+                        'content': copyLoginConfig.content,
+                        'gameStatus': copyLoginConfig.gameStatus,
+                        'id': copyLoginConfig.id,
+                        'lackBaodanStatus': copyLoginConfig.lackBaodanStatus,
+                        'leaseCheck': copyLoginConfig.leaseCheck,
+                        'openBulletGame': copyLoginConfig.openBulletGame,
+                        'openCardGame': copyLoginConfig.openCardGame,
+                        'openFishGame': copyLoginConfig.openFishGame,
+                        'openJoyGame': copyLoginConfig.openJoyGame,
+                        'openLackGame': copyLoginConfig.openLackGame,
+                        'openLuckGame': copyLoginConfig.openLuckGame,
+                        'openMermaidGame': copyLoginConfig.openMermaidGame,
+                        'openThousandFishGame': copyLoginConfig.openThousandFishGame,
+                        'openWaterGame': copyLoginConfig.openWaterGame,
+                        'operationDate': copyLoginConfig.operationDate,
+                        'operationStatus': copyLoginConfig.operationStatus,
+                        'operationStopDate': copyLoginConfig.operationStopDate,
+                        'tempPromoterSumMoney': copyLoginConfig.tempPromoterSumMoney,
+                        'tempSumExpiryMoney': copyLoginConfig.tempSumExpiryMoney,
+                        'tempSumPayMoney': copyLoginConfig.tempSumPayMoney,
+                        'tempUserSumMoney': copyLoginConfig.tempUserSumMoney,
+                        'weihuTime': copyLoginConfig.weihuTime
+                    }]
+                } else {
+                    this.$message({
+                        message: 'loginInfo data error ',
+                        type: 'error',
+                        duration: 1200
+                    })
+                }
+
+                let result = await this.$store.dispatch(actionTypes.updateSales, [ Number(this.payScale) + '', Number(this.promoterPayScale) + '', newSwitchType, newInteractPassword, newExpiry ])
                 console.log(result)
                 // 需要再一次 更新用户信息 !!!!!
                 if (result && result.success === true) {
@@ -167,11 +225,12 @@
                         type: 'success',
                         duration: 1200
                     })
-                //                    newUpxtSetMsg[0].registVerify = !!this.openVIP
-                //                    newUpxtSetMsg[0].authorize = !!this.SQWarning
-                //                    newUpxtSetMsg[0].chat = !!this.OpenChat
-                //                    newUpxtSetMsg[0].userCheck = !!this.openUserChat
-                //                    this.$store.dispatch(actionTypes.upLocalMsg, newUpxtSetMsg[0])
+
+                    newUpxtSetMsg[0].registVerify = !!this.openVIP
+                    newUpxtSetMsg[0].authorize = !!this.SQWarning
+                    newUpxtSetMsg[0].chat = !!this.OpenChat
+                    newUpxtSetMsg[0].userCheck = !!this.openUserChat
+                    this.$store.dispatch(actionTypes.upLocalMsg, newUpxtSetMsg[0])
                 }
             }
         },
@@ -226,5 +285,13 @@
     }
     .btnBox{
         margin-top:20px;
+    }
+    @media (max-width: 768px) {
+        .el-radio+.el-radio{
+            margin-left:20px;
+        }
+        [class*=el-col-] {
+            width:100%;
+        }
     }
 </style>

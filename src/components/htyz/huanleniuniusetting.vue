@@ -56,7 +56,7 @@
     export default {
         props: ['init'],
         data () {
-            return {"enterLimitLevel":1,"level":2,"gameGold":100}
+            return {'enterLimitLevel': 1, 'level': 2, 'gameGold': 100}
         },
         watch: {},
         beforeMount () {

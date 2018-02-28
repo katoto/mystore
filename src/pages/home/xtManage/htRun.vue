@@ -130,6 +130,9 @@
             return {
                 htRunVipTime: '',
                 pickerOptions: {
+                    disabledDate (time) {
+                        return time.getTime() > Date.now()
+                    },
                     shortcuts: [{
                         text: '最近一周',
                         onClick (picker) {
@@ -170,6 +173,9 @@
 
                 htRunDTTime: '',
                 pickerOptions2: {
+                    disabledDate (time) {
+                        return time.getTime() > Date.now()
+                    },
                     shortcuts: [{
                         text: '最近一周',
                         onClick (picker) {
@@ -372,5 +378,13 @@
     #htRun .el-pagination{
         margin-top: 14px;
         text-align: center;
+    }
+    @media (max-width: 768px) {
+        .el-col-11 {
+            width: 100%;
+        }
+        .el-date-editor--daterange.el-input__inner{
+            width:70%;
+        }
     }
 </style>

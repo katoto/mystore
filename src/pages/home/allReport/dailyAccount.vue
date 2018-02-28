@@ -340,4 +340,14 @@
         margin-top: 10px;
         padding-left: 35px;
     }
+
+    @media (max-width: 768px) {
+        header .dailyPicker{
+            width:100%;
+            max-width: 100%;
+        }
+        header .dailyCX{
+            margin-left:0;
+        }
+    }
 </style>

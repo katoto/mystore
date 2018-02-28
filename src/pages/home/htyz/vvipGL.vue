@@ -1,8 +1,8 @@
 <template>
     <div>
         <header class="clearfix">
-            <el-form ref="form" :model="form" label-width="80px">
-                <div style="height: 36px">
+            <el-form ref="form" :model="form">
+                <div style="overflow: hidden">
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: moreMess }">详情</el-button>
                     <el-button size="small" :disabled=showStopBtn type="primary" v-tap="{methods: lockUser }">封号</el-button>
                     <el-button size="small" :disabled=showNoStopBtn type="primary" v-tap="{methods: unlockUser }">解禁</el-button>
@@ -11,12 +11,12 @@
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeAwardGameGold }">游戏币赠送</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: beforeChangeUserLevel }">修改等级</el-button>
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: resetPass }">重置密码</el-button>
-                    <el-button size="small" :disabled="dealException" type="primary" v-tap="{methods: dealException }" >删除异常</el-button>
+                    <el-button size="small" :disabled="dealException" type="primary" v-tap="{methods: dealException2 }" >删除异常</el-button>
 
                     <!--<el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: minusGameGold }" disabled>身份信息查询与修改</el-button>-->
                     <!--<el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: modifySafeBoxPwd }">口令修改</el-button>-->
                 </div>
-                <el-form-item label="禁言：">
+                <el-form-item label="禁言：" class="jy">
                     <el-radio-group :disabled="!currvvipList" v-model="shutupStatusVal">
                         <el-radio label="0">正常</el-radio>
                         <el-radio label="1">20分钟禁言</el-radio>
@@ -391,33 +391,6 @@
                     name: '',
                     desc: ''
                 },
-                pickerOptions2: {
-                    shortcuts: [{
-                        text: '最近一周',
-                        onClick (picker) {
-                            const end = new Date()
-                            const start = new Date()
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-                            picker.$emit('pick', [start, end])
-                        }
-                    }, {
-                        text: '最近一个月',
-                        onClick (picker) {
-                            const end = new Date()
-                            const start = new Date()
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-                            picker.$emit('pick', [start, end])
-                        }
-                    }, {
-                        text: '最近三个月',
-                        onClick (picker) {
-                            const end = new Date()
-                            const start = new Date()
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-                            picker.$emit('pick', [start, end])
-                        }
-                    }]
-                },
 
                 vvipList: [{
                     answer: '-1',
@@ -553,10 +526,12 @@
                         this.isOption = false
                     }
                 }
+                this.searchUserInpVal = ''
+                this.getUserManageFn(Number(this.searchUserVal))
             }
         },
         methods: {
-            async dealException () {
+            async dealException2 () {
                 let result = await this.$store.dispatch(aTypes.dealException, [ Number(this.currvvipList.id)])
                 console.log(result)
                 console.log('解除异常')
@@ -580,8 +555,6 @@
                         type: 'success',
                         duration: 1200
                     })
-                //                    this.clickPage(1);
-                //                    this.initSearch(false)
                 }
             },
             async searchUser () {
@@ -894,5 +867,23 @@
 
     .el-row{
         padding: 1px 0;
+    }
+
+    @media (max-width: 768px) {
+        header button{
+            margin:0 10px 10px 0;
+        }
+        .el-button+.el-button {
+            margin-left:0;
+        }
+        .el-radio+.el-radio {
+            margin-left: 10px;
+        }
+        header .xtSpan,header .xtSel{
+            margin:0 10px 10px 0;
+        }
+        header .xtInp{
+            max-width: 120px;
+        }
     }
 </style>

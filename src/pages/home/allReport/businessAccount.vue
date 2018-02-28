@@ -2,8 +2,8 @@
     <div id="busAccountCss">
         <section>
             <div class="clearfix" >
-                <p style="float:left;margin:0 0 5px 0;font-weight: 700">各营业日总计</p>
-                <p style="float: right;color: #f56c6c;font-weight: 600;margin-right: 20px">说明：营收=充值-兑奖+平板租借-平板归还</p>
+                <p style="float:left;margin:0 0 5px 0;font-weight: 700" class="title01">各营业日总计</p>
+                <p style="float: right;color: #f56c6c;font-weight: 600;margin-right: 20px" class="title02">说明：营收=充值-兑奖+平板租借-平板归还</p>
             </div>
             <header class="clearfix">
                 <div  class="dailyPicker">
@@ -261,4 +261,15 @@
         border-top: 1px solid #000;
     }
 
+
+
+    @media (max-width: 768px) {
+        .el-main .title01{
+            font-size: 12px !important;
+        }
+        .title02{
+            font-size: 8px !important;
+            margin-top:4px;
+        }
+    }
 </style>

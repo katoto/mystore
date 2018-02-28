@@ -7,7 +7,9 @@ import { mTypes } from '~store/user'
 
 const name = 'tgyManager'
 const state = {
-    selTgyVal: null
+    selTgyVal: null,
+
+    updataSetPromoter: null
 }
 const actionsInfo = mapActions({
 
@@ -154,8 +156,8 @@ const actionsInfo = mapActions({
 }, name)
 
 const mutationsInfo = mapMutations({
-    setLoginInfoCofig (state, info) {
-
+    updataSetPromoter (state, info) {
+        state.updataSetPromoter = info
     },
     setSelTgyVal (state, val) {
         state.selTgyVal = val
