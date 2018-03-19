@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import Web3 from 'web3'
+//    import Web3 from 'web3'
     export default {
         data(){
             return {
@@ -16,20 +16,20 @@
         methods: {},
         computed: {},
         mounted(){
-            if (typeof web3 !== 'undefined') {
+/*            if (typeof web3 !== 'undefined') {
                 web3 = new Web3(web3.currentProvider);
                 console.log( web3.currentProvider )
                 console.log( 3 )
                 console.log( web3.version )
                 console.log( web3.utils )
-                /* 区块信息 */
+                /!* 区块信息 *!/
                 web3.eth.getBlock(48, function(error, result){
                     if(!error)
                         console.log(JSON.stringify(result));
                     else
                         console.error(error);
                 })
-                /* 账号 address 0xa4B6CE77E56C10f2cAf11BaAe7416612C5EC98b0  */
+                /!* 账号 address 0xa4B6CE77E56C10f2cAf11BaAe7416612C5EC98b0  *!/
                 web3.eth.getAccounts(function (error ,account) {
                     if(!error){
                         console.log(account)
@@ -65,7 +65,7 @@
                 console.log( web3 )
                 console.log( 2)
                 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-            }
+            }*/
         }
     }
 </script>
