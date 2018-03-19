@@ -1,5 +1,6 @@
 <template>
     <div style="position: relative">
+        <p class="tipsStyle red">当前可处理的订单数：充值申请0个，兑奖申请0个</p>
         <el-tabs v-model="activeNameTop" type="card" @tab-click="handleClick">
             <el-tab-pane label="会员操作" name="vipOperate"></el-tab-pane>
             <!--<el-tab-pane label="平板租借记录查询" name="rentSearch" disabled></el-tab-pane>-->
@@ -152,8 +153,6 @@
             </div>
             <router-view></router-view>
         </template>
-        <p class="tipsStyle red">当前可处理的订单数：充值申请0个，兑奖申请0个</p>
-
     </div>
 </template>
 
@@ -461,5 +460,18 @@ export default {
     .el-pagination{
         text-align: center;
         margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .tipsStyle{
+            top: 20px;
+            font-size:8px;
+        }
+        #vipOperate header .el-button,header .xtInp{
+            margin-top: 10px;
+        }
+        #vipOperate{
+            font-size:12px;
+        }
     }
 </style>

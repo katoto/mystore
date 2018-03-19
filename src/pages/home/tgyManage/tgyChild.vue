@@ -842,4 +842,10 @@
     .tgyChild-nav a+a{
         border-left:1px solid #dcdfe6;
     }
+
+    @media (max-width: 768px) {
+        .tgyChild-findBox>*,.tgyChild-btnBox>*{
+            margin:0 5px 5px 0;
+        }
+    }
 </style>

@@ -1,8 +1,8 @@
 <template>
     <div>
         <header class="clearfix">
-            <el-form ref="form" :model="form" label-width="80px">
-                <div style="height: 36px">
+            <el-form ref="form" :model="form">
+                <div style="overflow: hidden">
                     <el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: moreMess }">详情</el-button>
                     <el-button size="small" :disabled=showStopBtn type="primary" v-tap="{methods: lockUser }">封号</el-button>
                     <el-button size="small" :disabled=showNoStopBtn type="primary" v-tap="{methods: unlockUser }">解禁</el-button>
@@ -16,7 +16,7 @@
                     <!--<el-button size="small" :disabled="!currvvipList" type="primary" v-tap="{methods: minusGameGold }" disabled>身份信息查询与修改</el-button>-->
                     <!--<el-button size="small" :disabled="!currvvipList" type="primary" disabled v-tap="{methods: modifySafeBoxPwd }">口令修改</el-button>-->
                 </div>
-                <el-form-item label="禁言：">
+                <el-form-item label="禁言：" class="jy">
                     <el-radio-group :disabled="!currvvipList" v-model="shutupStatusVal">
                         <el-radio label="0">正常</el-radio>
                         <el-radio label="1">20分钟禁言</el-radio>
@@ -867,5 +867,23 @@
 
     .el-row{
         padding: 1px 0;
+    }
+
+    @media (max-width: 768px) {
+        header button{
+            margin:0 10px 10px 0;
+        }
+        .el-button+.el-button {
+            margin-left:0;
+        }
+        .el-radio+.el-radio {
+            margin-left: 10px;
+        }
+        header .xtSpan,header .xtSel{
+            margin:0 10px 10px 0;
+        }
+        header .xtInp{
+            max-width: 120px;
+        }
     }
 </style>

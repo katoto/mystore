@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 770px" class="l-flex-row">
+    <div style="height: 870px" class="l-flex-row mobile-gg">
         <!-- newXyls, yaoqianshu, dantiao, wppy, meirenyu, queyimen,huanleniuniu, shuihuzhuan, qianpaobuyu-->
         <new-xyls v-if="dialogShow && deskIdx === 0" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></new-xyls>
         <yaoqianshu v-if="dialogShow && deskIdx === 1" @close="dialogShow = false" @submit="onSubmit" :init="currentDesk" :modify="isModify"></yaoqianshu>
@@ -84,11 +84,11 @@
                     </section>
                     <header style="padding: 8px 0;border-top: 1px solid #ddd">
                         <el-button size="small" type="primary" @click="updateDeskList">刷新</el-button>
-                        <el-button style="margin-left: 18px" size="small" @click="openNewDesk" type="primary">新增桌</el-button>
-                        <el-button style="margin-left: 18px" size="small" @click="openModifyDesk">参数设置</el-button>
-                        <el-button style="margin-left: 18px" size="small" type="danger" @click="deleteDesk">删除桌</el-button>
-                        <el-button style="margin-left: 18px" size="small" type="primary">桌排序</el-button>
-                        <el-button v-if="deskIdx === 6" style="margin-left: 18px" size="small" @click="beginSetting" type="primary">疯狂牛牛相关设置</el-button>
+                        <el-button size="small" @click="openNewDesk" type="primary">新增桌</el-button>
+                        <el-button size="small" @click="openModifyDesk">参数设置</el-button>
+                        <el-button size="small" type="danger" @click="deleteDesk">删除桌</el-button>
+                        <el-button size="small" type="primary">桌排序</el-button>
+                        <el-button v-if="deskIdx === 6" size="small" @click="beginSetting" type="primary">疯狂牛牛相关设置</el-button>
                     </header>
                     <section style="margin-bottom: 10px" v-if="deskIdx === 7">
                         <el-table
@@ -949,5 +949,28 @@
     }
     .newTop2{
         height: 290px !important;
+    }
+
+    .el-select>.el-input {
+        margin-top: 10px;
+    }
+    @media (max-width: 768px) {
+        .top button{
+            margin-left:10px;
+        }
+        header button{
+            padding:9px 6px;
+        }
+        .el-date-editor--daterange.el-input__inner{
+            width:100%;
+        }
+       .mobile-gg.l-flex-row{
+           display: block;
+       }
+        header button{
+            padding: 9px 4px;
+            font-size:10px;
+        }
+
     }
 </style>

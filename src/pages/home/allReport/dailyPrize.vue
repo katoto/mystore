@@ -233,4 +233,14 @@
         margin-top: 20px;
         text-align: center;
     }
+
+    @media (max-width: 768px) {
+        header .dailyPicker{
+            width:100%;
+            max-width: 100%;
+        }
+        header .dailyCX{
+            margin-left:0;
+        }
+    }
 </style>
