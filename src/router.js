@@ -8,6 +8,9 @@ import VueRouter from 'vue-router'
 // home  first tab
 import Home from '~pages/home/home.vue'
 
+import test from '~pages/test.vue'
+
+
 const Login = () => import('~pages/Login' /* webpackChunkName: "chunks/Login" */)
 
 const xtManage = () => import('~pages/home/xtManage/xtManage.vue' /* webpackChunkName: "chunks/home/xtManage/xtManage" */)
@@ -299,9 +302,12 @@ export default new VueRouter({
             component: Login
         },
         {
+            path: '/test',
+            component: test
+        },
+        {
             path: '*',
             redirect: '/login'
         }
-
     ]
 })

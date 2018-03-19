@@ -130,7 +130,16 @@ const actionsInfo = mapActions({
             args
         })
         return argsData[0]
-    }
+    },
+
+    // 礼品兑换
+    async getUserExpiry ({dispatch, commit}, args = [ 67 ]) {
+        const argsData = await dispatch('invoke', {
+            method: 'payLogService/getUserExpiry',
+            args
+        })
+        return argsData[0]
+    },
 
 }, name)
 

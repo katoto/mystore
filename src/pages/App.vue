@@ -35,11 +35,14 @@ export default {
         },
         loginInfo (loginInfo) {
             if (!loginInfo) {
-                this.$router.replace('/login')
+                this.$router.replace('/test')
             }
         }
     },
     async mounted () {
+//        if (this.$route.path !== '/test') {
+//            this.$router.replace('/test')
+//        }
         if (this.$route.path !== '/login') {
             this.$router.replace('/login')
         }

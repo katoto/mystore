@@ -132,7 +132,7 @@
 
                 <el-tabs disabled id="vipOperate" v-model="activeName" type="card" @tab-click="handleClick">
                     <el-tab-pane :disabled=!selVipVal label="会员充值" name="vipOperate"></el-tab-pane>
-                    <el-tab-pane :disabled=!selVipVal label="礼品兑换" disabled name="giftExchange" ></el-tab-pane>
+                    <el-tab-pane :disabled=!selVipVal label="礼品兑换" name="giftExchange" ></el-tab-pane>
                     <el-tab-pane :disabled=!selVipVal label="充值查询" name="rechargeSearch" ></el-tab-pane>
                     <el-tab-pane :disabled=!selVipVal label="兑奖查询" disabled name="DJSearch" ></el-tab-pane>
                     <el-tab-pane :disabled=!selVipVal label="赠送查询" name="giveSearch" ></el-tab-pane>
