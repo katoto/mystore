@@ -141,6 +141,24 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
 
+    // 验证密码
+    async enterSelfPwd ({dispatch, commit}, args = [ '888888' ]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/enterSelfPwd',
+            args
+        })
+        return argsData[0]
+    },
+
+    // 处理兑换
+    async expiry ({dispatch, commit}, args = [67,1000,1] ) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/expiry',
+            args
+        })
+        return argsData[0]
+    },
+
 }, name)
 
 const actions = actionsInfo.actions

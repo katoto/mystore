@@ -25,12 +25,42 @@
         },
         methods: {
             openInpPass() {
-                this.$prompt('请输入密码', '提示', {
+                this.$prompt('请输入密码!', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
-                }).then(({ value }) => {
+                }).then(async ({ value }) => {
                     // 输入的值 ！！
                     console.log( value );
+                    if( value === '' ){
+                        this.$message({
+                            message: '密码不能为空',
+                            type: 'error',
+                            duration: 1200
+                        });
+                      return false;
+                    }
+                    let sendPassword = await this.$store.dispatch(aTypes.enterSelfPwd, [ value ]);
+                    console.log(sendPassword)
+                    if( sendPassword && sendPassword === true ){
+                        let expiryNumber = await this.$store.dispatch(aTypes.expiry, [ this.selVipVal.id ,Number( this.payNum ) , 1 ]);
+                        console.log(expiryNumber)
+                        if( expiryNumber && expiryNumber === false ){
+                            this.$message({
+                                message: expiryNumber.message,
+                                type: 'error',
+                                duration: 1200
+                            });
+                            return false;
+                        }
+                    }else{
+                        this.$message({
+                            message: '密码有误' ,
+                            type: 'error',
+                            duration: 1200
+                        });
+                        return false;
+                    }
+
                 }).catch(() => {
                     this.$message({
                         type: 'info',
