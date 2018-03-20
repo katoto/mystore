@@ -6,17 +6,17 @@
 
 <script>
 //    import Web3 from 'web3'
-    export default {
-        data(){
-            return {
-                title: ''
-            }
-        },
-        watch: {},
-        methods: {},
-        computed: {},
-        mounted(){
-/*            if (typeof web3 !== 'undefined') {
+export default {
+    data () {
+        return {
+            title: ''
+        }
+    },
+    watch: {},
+    methods: {},
+    computed: {},
+    mounted () {
+        /*            if (typeof web3 !== 'undefined') {
                 web3 = new Web3(web3.currentProvider);
                 console.log( web3.currentProvider )
                 console.log( 3 )
@@ -60,14 +60,13 @@
                         console.error(error);
                 })
 
-
             } else {
                 console.log( web3 )
                 console.log( 2)
                 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-            }*/
-        }
+            } */
     }
+}
 </script>
 <style>
 </style>

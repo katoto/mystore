@@ -20,53 +20,62 @@
             return {
                 vipStyle: '',
                 payNum: '1',
-                initMsg:'暂无兑换请求'
+                initMsg: '暂无兑换请求'
             }
         },
         methods: {
-            openInpPass() {
+            openInpPass () {
                 this.$prompt('请输入密码!', '提示', {
                     confirmButtonText: '确定',
-                    cancelButtonText: '取消',
+                    cancelButtonText: '取消'
                 }).then(async ({ value }) => {
                     // 输入的值 ！！
-                    console.log( value );
-                    if( value === '' ){
+                    console.log(value)
+                    if (value === '') {
                         this.$message({
                             message: '密码不能为空',
                             type: 'error',
                             duration: 1200
-                        });
-                      return false;
+                        })
+                        return false
                     }
-                    let sendPassword = await this.$store.dispatch(aTypes.enterSelfPwd, [ value ]);
+                    let sendPassword = await this.$store.dispatch(aTypes.enterSelfPwd, [ value ])
                     console.log(sendPassword)
-                    if( sendPassword && sendPassword === true ){
-                        let expiryNumber = await this.$store.dispatch(aTypes.expiry, [ this.selVipVal.id ,Number( this.payNum ) , 1 ]);
+                    if (sendPassword && sendPassword === true) {
+                        let expiryNumber = await this.$store.dispatch(aTypes.expiry, [ this.selVipVal.id, Number(this.payNum), 1 ])
                         console.log(expiryNumber)
-                        if( expiryNumber && expiryNumber === false ){
+                        if (expiryNumber && expiryNumber === false) {
                             this.$message({
                                 message: expiryNumber.message,
                                 type: 'error',
                                 duration: 1200
-                            });
-                            return false;
+                            })
+                            return false
+                        }else{
+                            this.$message({
+                                message: '兑换成功',
+                                type: 'success',
+                                duration: 1200
+                            })
                         }
-                    }else{
+                    } else {
                         this.$message({
-                            message: '密码有误' ,
+                            message: '密码有误',
                             type: 'error',
                             duration: 1200
-                        });
-                        return false;
+                        })
+                        return false
                     }
-
                 }).catch(() => {
                     this.$message({
                         type: 'info',
-                        message: '取消输入'
+                        message: '取消兑换',
+                        duration: 1200
                     });
-                });
+
+                    this.payNum = '1';
+                    this.initMsg = '暂无兑换请求'
+                })
             },
             async setPay () {
                 if (!this.selVipVal) {
@@ -74,29 +83,31 @@
                         message: '没有选择对应选项',
                         type: 'error',
                         duration: 1200
-                    });
+                    })
                     return false
                 }
-                if( Number( this.payNum ) > Number( this.selVipVal.gameGold )){
+                if (Number(this.payNum) > Number(this.selVipVal.gameGold)) {
                     this.$message({
                         message: '超过可兑奖数目',
                         type: 'error',
                         duration: 1200
-                    });
+                    })
                     return false
                 }
 
-//                let newExpiryNumber = await this.$store.dispatch(aTypes.getUserExpiry, [ Number( this.selVipVal.id ) ])
-////                1.先查询该会员对应的兑换数量
-//                if( newExpiryNumber.success === false ){
-//                    this.$message({
-//                        message: newExpiryNumber.message ,
-//                        type: 'error',
-//                        duration: 1200
-//                    });
-//                    return false
-//                }
-//                2.界面显示请输入管理员密码
+            //                let newExpiryNumber = await this.$store.dispatch(aTypes.getUserExpiry, [ Number( this.selVipVal.id ) ])
+            /// /                1.先查询该会员对应的兑换数量
+                            if( newExpiryNumber.success === false ){
+                                this.$message({
+                                    message: newExpiryNumber.message ,
+                                    type: 'error',
+                                    duration: 1200
+                                });
+                                return false
+                            }else if( newExpiryNumber.success === true ){
+                                this.initMsg = newExpiryNumber.remark;
+                            }
+            //                2.界面显示请输入管理员密码
 
             }
         },

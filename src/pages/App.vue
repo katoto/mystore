@@ -40,9 +40,9 @@ export default {
         }
     },
     async mounted () {
-//        if (this.$route.path !== '/test') {
-//            this.$router.replace('/test')
-//        }
+        //        if (this.$route.path !== '/test') {
+        //            this.$router.replace('/test')
+        //        }
         if (this.$route.path !== '/login') {
             this.$router.replace('/login')
         }
