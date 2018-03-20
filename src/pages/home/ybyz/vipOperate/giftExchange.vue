@@ -9,7 +9,6 @@
             </section>
             <el-button size="small" :disabled=!selVipVal type="danger" v-tap="{ methods:setPay }">下一步</el-button>
         </div>
-        <el-button type="text" @click="openInpPass">14234</el-button>
     </div>
 </template>
 
@@ -30,7 +29,6 @@
                     cancelButtonText: '取消'
                 }).then(async ({ value }) => {
                     // 输入的值 ！！
-                    console.log(value)
                     if (value === '') {
                         this.$message({
                             message: '密码不能为空',
@@ -40,18 +38,17 @@
                         return false
                     }
                     let sendPassword = await this.$store.dispatch(aTypes.enterSelfPwd, [ value ])
-                    console.log(sendPassword)
                     if (sendPassword && sendPassword === true) {
                         let expiryNumber = await this.$store.dispatch(aTypes.expiry, [ this.selVipVal.id, Number(this.payNum), 1 ])
                         console.log(expiryNumber)
-                        if (expiryNumber && expiryNumber === false) {
+                        if (expiryNumber && expiryNumber.success === false) {
                             this.$message({
                                 message: expiryNumber.message,
                                 type: 'error',
                                 duration: 1200
                             })
                             return false
-                        }else{
+                        } else {
                             this.$message({
                                 message: '兑换成功',
                                 type: 'success',
@@ -71,9 +68,9 @@
                         type: 'info',
                         message: '取消兑换',
                         duration: 1200
-                    });
+                    })
 
-                    this.payNum = '1';
+                    this.payNum = '1'
                     this.initMsg = '暂无兑换请求'
                 })
             },
@@ -95,20 +92,22 @@
                     return false
                 }
 
-            //                let newExpiryNumber = await this.$store.dispatch(aTypes.getUserExpiry, [ Number( this.selVipVal.id ) ])
-            /// /                1.先查询该会员对应的兑换数量
-                            if( newExpiryNumber.success === false ){
-                                this.$message({
-                                    message: newExpiryNumber.message ,
-                                    type: 'error',
-                                    duration: 1200
-                                });
-                                return false
-                            }else if( newExpiryNumber.success === true ){
-                                this.initMsg = newExpiryNumber.remark;
-                            }
-            //                2.界面显示请输入管理员密码
+                let newExpiryNumber = await this.$store.dispatch(aTypes.getUserExpiry, [ Number(this.selVipVal.id) ])
+                /// /                1.先查询该会员对应的兑换数量
 
+                if (newExpiryNumber.success === false) {
+                    this.$message({
+                        message: newExpiryNumber.message,
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                } else if (newExpiryNumber.success === true) {
+                    this.initMsg = newExpiryNumber.remark
+                    // 出现输入密码
+                    this.openInpPass()
+                }
+            //    2.界面显示请输入管理员密码
             }
         },
         computed: {

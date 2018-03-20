@@ -105,9 +105,9 @@
         <div class="tgyChild2" >
             <el-tabs v-model="activeName" type="card" @tab-click="handleClick" class="tgyChild-nav">
                 <el-tab-pane label="推广员充值" :disabled=!selTgyVal name="tgyChildCz"></el-tab-pane>
-                <el-tab-pane label="推广员兑换" disabled name="tgyChildDh"></el-tab-pane>
+                <el-tab-pane label="推广员兑换" :disabled=!selTgyVal name="tgyChildDh"></el-tab-pane>
                 <el-tab-pane label="充值查询" :disabled=!selTgyVal name="tgyChildCzcx" ></el-tab-pane>
-                <el-tab-pane label="兑奖查询" disabled name="tgyChildDjcx" ></el-tab-pane>
+                <el-tab-pane label="兑奖查询" :disabled=!selTgyVal name="tgyChildDjcx" ></el-tab-pane>
                 <el-tab-pane label="游玩记录" :disabled=!selTgyVal name="tgyChildYwjl" ></el-tab-pane>
                 <el-tab-pane label="推广员登录IP记录" :disabled=!selTgyVal name="tgyChildIpjl" ></el-tab-pane>
             </el-tabs>

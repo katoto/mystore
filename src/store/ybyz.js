@@ -157,6 +157,20 @@ const actionsInfo = mapActions({
             args
         })
         return argsData[0]
+    },
+    // 一般运作兑奖
+    async getUserExchangeLog ({dispatch, commit}, args = [67, '2018-03-01', '2018-03-19', {'list': [],
+        'order': '',
+        'orderBy': '',
+        'pageCount': 0,
+        'pageNumber': 1,
+        'pageSize': 6,
+        'totalCount': 0}]) {
+        const argsData = await dispatch('invoke', {
+            method: 'payLogService/getUserExchangeLog',
+            args
+        })
+        return argsData[0]
     }
 
 }, name)
