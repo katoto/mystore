@@ -5,8 +5,7 @@
             <span>游戏币，&nbsp;折合礼品价值&nbsp;{{  payNum  }}&nbsp;元宝。</span><br>
             <span style="margin-top: 10px;display: inline-block;">备注信息：</span>
             <section id="js_section">
-                <textarea cols="25" rows="4">
-                </textarea>
+                <p >{{ initMsg }}</p>
             </section>
             <el-button size="small" :disabled=!selVipVal type="danger" v-tap="{ methods:setPay }">下一步</el-button>
         </div>
@@ -20,7 +19,8 @@
         data () {
             return {
                 vipStyle: '',
-                payNum: '1'
+                payNum: '1',
+                initMsg:'暂无兑换请求'
             }
         },
         methods: {
@@ -98,7 +98,6 @@
 //                }
 //                2.界面显示请输入管理员密码
 
-
             }
         },
         computed: {
@@ -121,7 +120,12 @@
     #js_section{
         margin-top: 10px;
     }
-    #js_section textarea{
-        font-size: 16px;
+    #js_section p{
+        padding: 5px;
+        width: 300px;
+        height: 40px;
+        color: #404040;
+        border: 1px solid #747474;
+        margin-top: 10px;
     }
 </style>
