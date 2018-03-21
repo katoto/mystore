@@ -1,13 +1,15 @@
 <template>
     <div id="vipOperate">
         <div :class="{'disable':!selVipVal }">
-            <span>请输入兑奖数目(最多可兑：{{selVipVal.gameGold}} )：</span><el-input :disabled=!selVipVal size="small" v-model="payNum" placeholder="请输入兑奖数目"></el-input>
-            <span>游戏币，&nbsp;折合礼品价值&nbsp;{{  payNum  }}&nbsp;元宝。</span><br>
+            <section :class="{'hide':!isShowNextBtn}">
+                <span>请输入兑奖数目(最多可兑：{{selVipVal.gameGold}} )：</span><el-input :disabled=!selVipVal readonly size="small" v-model="payNum" placeholder="请输入兑奖数目"></el-input>
+                <span>游戏币，&nbsp;折合礼品价值&nbsp;{{  payNum  }}&nbsp;元宝。</span><br>
+            </section>
             <span style="margin-top: 10px;display: inline-block;">备注信息：</span>
             <section id="js_section">
                 <p >{{ initMsg }}</p>
             </section>
-            <el-button size="small" :disabled=!selVipVal type="danger" v-tap="{ methods:setPay }">下一步</el-button>
+            <el-button :class="{'hide':!isShowNextBtn}" size="small" :disabled=!selVipVal type="danger" v-tap="{ methods:setPay }">下一步</el-button>
         </div>
     </div>
 </template>
@@ -18,8 +20,9 @@
         data () {
             return {
                 vipStyle: '',
-                payNum: '1',
-                initMsg: '暂无兑换请求'
+                payNum: '0',
+                initMsg: '暂无兑换请求',
+                isShowNextBtn:false,
             }
         },
         methods: {
@@ -54,6 +57,9 @@
                                 type: 'success',
                                 duration: 1200
                             })
+                            this.isShowNextBtn = false;
+                            this.payNum = '0'
+                            this.initMsg = '暂无兑换请求'
                         }
                     } else {
                         this.$message({
@@ -83,30 +89,8 @@
                     })
                     return false
                 }
-                if (Number(this.payNum) > Number(this.selVipVal.gameGold)) {
-                    this.$message({
-                        message: '超过可兑奖数目',
-                        type: 'error',
-                        duration: 1200
-                    })
-                    return false
-                }
-
-                let newExpiryNumber = await this.$store.dispatch(aTypes.getUserExpiry, [ Number(this.selVipVal.id) ])
-                /// /                1.先查询该会员对应的兑换数量
-
-                if (newExpiryNumber.success === false) {
-                    this.$message({
-                        message: newExpiryNumber.message,
-                        type: 'error',
-                        duration: 1200
-                    })
-                    return false
-                } else if (newExpiryNumber.success === true) {
-                    this.initMsg = newExpiryNumber.remark
-                    // 出现输入密码
-                    this.openInpPass()
-                }
+                // 出现输入密码
+                this.openInpPass()
             //    2.界面显示请输入管理员密码
             }
         },
@@ -114,6 +98,18 @@
             selVipVal () {
                 return this.$store.state.ybyz.selVipVal
             }
+        },
+        async mounted (){
+            let newExpiryNumber = await this.$store.dispatch(aTypes.getUserExpiry, [ Number(this.selVipVal.id) ]);
+            //     1.先查询该会员对应的兑换数量
+            if (newExpiryNumber.success === false) {
+                return false
+            } else if (newExpiryNumber.success === true) {
+                this.isShowNextBtn = true;
+                this.initMsg = newExpiryNumber.remark;
+                this.payNum = newExpiryNumber.gold
+            }
+
         }
     }
 </script>
@@ -137,5 +133,8 @@
         color: #404040;
         border: 1px solid #747474;
         margin-top: 10px;
+    }
+    .hide{
+        display: none;
     }
 </style>

@@ -160,7 +160,32 @@ const actionsInfo = mapActions({
             args
         })
         return argsData[0]
-    }
+    },
+
+    // 推广员兑换 查询
+    async getPromoterExpiry ({dispatch, commit}, args = [ 2 ]) {
+        const argsData = await dispatch('invoke', {
+            method: 'promoterService/getPromoterExpiry',
+            args
+        })
+        return argsData[0]
+    },
+    //  输入密码   客户端收到： {"args":[true],"method":"enterSelfPwd"}
+    async enterSelfPwd ({dispatch, commit}, args = [ '888888' ]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/enterSelfPwd',
+            args
+        })
+        return argsData[0]
+    },
+    // 兑奖确认
+    async promoterExpiry ({dispatch, commit}, args = [ 2,1000,1] ) {
+        const argsData = await dispatch('invoke', {
+            method: 'promoterService/promoterExpiry',
+            args
+        })
+        return argsData[0]
+    },
 
 }, name)
 
