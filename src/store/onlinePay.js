@@ -34,6 +34,7 @@ const actionsInfo = mapActions({
         })
         return argsData[0]
     },
+
     async confirmOrder ({dispatch, commit}, data) {
         let doLoginData = null
         doLoginData = await ajax.post(`http://www.2jx2.xin:8081/paylog.jsp?way=modify&order_no=` + data)

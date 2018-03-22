@@ -31,7 +31,7 @@
                     prop=""
                     label="操作">
                     <template slot-scope="scope">
-                        <el-button @click="confirmWebSock(scope.row)" type="text" size="small">查看</el-button>
+                        <el-button @click="confirmWebSock(scope.row)" type="text" size="small">确认充值</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -125,9 +125,39 @@
             },
             async confirmWebSock (data) {
                 if (this.loginInfoConfig) {
-                    let websockData = await this.$store.dispatch(aTypes.confirmWebSock, [ Number(data.id), Number(this.loginInfoConfig.payScale) / 100 ])
-                    console.log(data)
+                    let websockData = await this.$store.dispatch(aTypes.confirmWebSock, [ Number(data.id), Number( data.amount ) / ( Number(this.loginInfoConfig.payScale) / 100 ) ])
+                    console.log(websockData)
                     console.log('==================')
+                    console.log('====123======')
+                    if( websockData && websockData.success === true ){
+                        let againPay = await this.$store.dispatch(aTypes.confirmOrder ,data.order_no)
+                        console.log(againPay)
+                        console.log('**********')
+
+                        if( againPay && againPay.result === 'success' ){
+                            this.$message({
+                                message: '确认充值成功',
+                                type: 'success',
+                                duration: 1200
+                            });
+
+                            let getManageList = await this.$store.dispatch(aTypes.getOnlinePayList)
+                            if (getManageList && getManageList.length >= 0) {
+                                this.xtLogList = getManageList
+                            } else {
+                                console.error('getManageList error at onlinePay')
+                            }
+
+                        }else{
+                            this.$message({
+                                message: '确认充值失败',
+                                type: 'success',
+                                duration: 1200
+                            })
+                        }
+
+                    }
+
                 }
             }
         },
