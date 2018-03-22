@@ -23,7 +23,6 @@ const actionsInfo = mapActions({
     async getOnlinePayList ({ dispatch, commit }) {
         let doLoginData = null
         doLoginData = await ajax.post(`http://www.2jx2.xin:8081/paylog.jsp?way=query`)
-        console.log(doLoginData)
         return doLoginData
     },
 
@@ -38,6 +37,12 @@ const actionsInfo = mapActions({
     async confirmOrder ({dispatch, commit}, data) {
         let doLoginData = null
         doLoginData = await ajax.post(`http://www.2jx2.xin:8081/paylog.jsp?way=modify&order_no=` + data)
+        return doLoginData
+    },
+
+    async onlineSearch ({dispatch, commit}, data) {
+        let doLoginData = null
+        doLoginData = await ajax.post(`http://www.2jx2.xin:8081/paylog.jsp?way=search&username=` + data)
         console.log(doLoginData)
         return doLoginData
     }

@@ -1,9 +1,15 @@
 <template>
     <div id="xtLog">
+        <header class="clearfix">
+            <el-input style="float: left" size="small" v-model="onlineSearchInp" placeholder="请输入查询用户名"></el-input>
+            <el-button style="float: left;margin-left: 20px" size="small" v-tap="{ methods:onlineSearch }" type="primary">查找</el-button>
+            <el-button style="float: left;margin-left: 20px" size="small" v-tap="{ methods:onlineReset }" type="danger">重置</el-button>
+            <h2 style="float: right;margin-right: 30px">总金额：{{ totalMoney }}</h2>
+        </header>
         <section>
             <el-table
                 :data="xtLogList"
-                height="350"
+                height="450"
                 size="small"
                 border
                 style="width: 100%">
@@ -28,24 +34,10 @@
                     label="时间">
                 </el-table-column>
                 <el-table-column
-                    prop=""
-                    label="操作">
-                    <template slot-scope="scope">
-                        <el-button @click="confirmWebSock(scope.row)" type="text" size="small">确认充值</el-button>
-                    </template>
+                    prop="promoter"
+                    label="所属推广员">
                 </el-table-column>
             </el-table>
-            <div class="block">
-                <el-pagination
-                    @current-change="clickPage"
-                    background
-                    :current-page.sync="pageNumber"
-                    size="small"
-                    :page-size="pageSize"
-                    layout="prev, pager, next,jumper"
-                    :total="totalCount">
-                </el-pagination>
-            </div>
         </section>
     </div>
 </template>
@@ -55,9 +47,9 @@
     export default {
         data () {
             return {
-                totalCount: 20,
-                pageNumber: 1,
-                pageSize: 16,
+                onlineSearchInp: '',
+                totalMoney: 0,
+
                 xtLogList: [
                     {
                         username: 'qwerty', // 用户名
@@ -66,80 +58,78 @@
                         time: 'fadsfdsd', // 时间
                         order_no: '111111', // 订单编号
                         id: 67 //  用户id，确认充值时会用到，表格里不需要显示
-                    }],
-                xtInpVal: '',
-                xtLogTime: '',
-                xtStartTime: null,
-                xtEndTime: null,
-
-                adminList: [],
-                xtUserSel: ''
+                    }]
 
             }
         },
-        watch: {},
         methods: {
-            format (time, format = 'yyyy-MM-dd') {
-                let t = new Date(time)
-                let tf = function (i) {
-                    return (i < 10 ? '0' : '') + i
-                }
-                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
-                    switch (a) {
-                    case 'yyyy':
-                        return tf(t.getFullYear())
-                    case 'MM':
-                        return tf(t.getMonth() + 1)
-                    case 'mm':
-                        return tf(t.getMinutes())
-                    case 'dd':
-                        return tf(t.getDate())
-                    case 'HH':
-                        return tf(t.getHours())
-                    case 'ss':
-                        return tf(t.getSeconds())
-                    }
-                })
-            },
-            async clickPage (size) {
-                // 分页  请求数据 ，更新数据
-                console.log(size)
-                let result = null
-                if (!this.xtStartTime || !this.xtEndTime || !this.xtUserSel) {
-                    result = await this.$store.dispatch(actionTypes.getXtLog, { userId: -1, starttime: this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), endtime: this.format(new Date()), pageNumber: size})
-                    console.log('全部分页')
-                    console.log(result)
+            async onlineReset () {
+                let getManageList = await this.$store.dispatch(aTypes.getOnlinePayList)
+                if (getManageList && getManageList.length >= 0) {
+                    this.xtLogList = getManageList
+                    this.xtLogList.forEach((val, index) => {
+                        if (val && val.amount) {
+                            this.totalMoney += Number(val.amount)
+                        }
+                    })
+                    this.$message({
+                        message: '重置成功',
+                        type: 'success',
+                        duration: 1200
+                    })
                 } else {
-                    result = await this.$store.dispatch(actionTypes.getXtLog, { userId: this.xtUserSel, starttime: this.xtStartTime, endtime: this.xtEndTime, pageNumber: size})
-                    console.log('选择分页')
-                    console.log(result)
+                    console.error('getManageList error at onlinePay')
                 }
-                if (result && result.list) {
-                    let copyList = result.list
-                    this.xtLogList = copyList
-                    // 处理页码
-                    this.totalCount = result.totalCount,
-                    this.pageNumber = result.pageNumber,
-                    this.pageSize = result.pageSize
+            },
+            async onlineSearch (data) {
+                if (this.onlineSearchInp === '') {
+                    this.$message({
+                        message: '请输入查询用户名',
+                        type: 'error',
+                        duration: 1200
+                    })
+                    return false
+                }
+                let websockData = await this.$store.dispatch(aTypes.onlineSearch, this.onlineSearchInp)
+                if (websockData && websockData.length >= 0) {
+                    this.$message({
+                        message: '查询成功',
+                        type: 'success',
+                        duration: 1200
+                    })
+
+                    this.xtLogList = websockData
+
+                    this.xtLogList.forEach((val, index) => {
+                        if (val && val.amount) {
+                            this.totalMoney += Number(val.amount)
+                        }
+                    })
+                } else {
+                    this.$message({
+                        message: '查询失败',
+                        type: 'success',
+                        duration: 1200
+                    })
                 }
             },
             async confirmWebSock (data) {
                 if (this.loginInfoConfig) {
-                    let websockData = await this.$store.dispatch(aTypes.confirmWebSock, [ Number(data.id), Number( data.amount ) / ( Number(this.loginInfoConfig.payScale) / 100 ) ])
+                    let websockData = await this.$store.dispatch(aTypes.confirmWebSock, [ Number(data.id), Number(data.amount) / (Number(this.loginInfoConfig.payScale) / 100) ])
                     console.log(websockData)
                     console.log('==================')
                     console.log('====123======')
-                    if( websockData && websockData.success === true ){
-                        let againPay = await this.$store.dispatch(aTypes.confirmOrder ,data.order_no)
+                    if (websockData && websockData.success === true) {
+                        let againPay = await this.$store.dispatch(aTypes.confirmOrder, data.order_no)
                         console.log(againPay)
                         console.log('**********')
 
-                        if( againPay && againPay.result === 'success' ){
+                        if (againPay && againPay.result === 'success') {
                             this.$message({
                                 message: '确认充值成功',
                                 type: 'success',
                                 duration: 1200
-                            });
+                            })
 
                             let getManageList = await this.$store.dispatch(aTypes.getOnlinePayList)
                             if (getManageList && getManageList.length >= 0) {
@@ -147,17 +137,14 @@
                             } else {
                                 console.error('getManageList error at onlinePay')
                             }
-
-                        }else{
+                        } else {
                             this.$message({
                                 message: '确认充值失败',
                                 type: 'success',
                                 duration: 1200
                             })
                         }
-
                     }
-
                 }
             }
         },
@@ -174,6 +161,11 @@
 
             if (getManageList && getManageList.length >= 0) {
                 this.xtLogList = getManageList
+                this.xtLogList.forEach((val, index) => {
+                    if (val && val.amount) {
+                        this.totalMoney += Number(val.amount)
+                    }
+                })
             } else {
                 console.error('getManageList error at onlinePay')
             }
@@ -181,6 +173,9 @@
     }
 </script>
 <style scoped>
+    .el-input{
+        width:210px;
+    }
     header{
         margin-bottom: 16px;
     }
@@ -188,21 +183,6 @@
         margin-bottom: 16px;
         max-width: 280px ;
         float: left;
-    }
-    header .xtSpan{
-        float: left;
-        line-height: 32px;
-        margin-left: 10px;
-    }
-    header .xtSel{
-        max-width: 100px ;
-        float: left;
-        margin-left: 10px;
-    }
-    header .xtInp{
-        max-width: 120px ;
-        float: left;
-        margin-left: 10px;
     }
     header button{
         float: left;

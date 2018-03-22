@@ -480,7 +480,6 @@ const actionsInfo = mapActions({
         return argsData[0]
     }
 
-
 }, name)
 
 const actions = actionsInfo.actions
