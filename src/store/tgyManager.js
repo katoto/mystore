@@ -179,13 +179,13 @@ const actionsInfo = mapActions({
         return argsData[0]
     },
     // 兑奖确认
-    async promoterExpiry ({dispatch, commit}, args = [ 2,1000,1] ) {
+    async promoterExpiry ({dispatch, commit}, args = [ 2, 1000, 1]) {
         const argsData = await dispatch('invoke', {
             method: 'promoterService/promoterExpiry',
             args
         })
         return argsData[0]
-    },
+    }
 
 }, name)
 

@@ -22,7 +22,7 @@
                 vipStyle: '',
                 payNum: '0',
                 initMsg: '暂无兑换请求',
-                isShowNextBtn:false,
+                isShowNextBtn: false
             }
         },
         methods: {
@@ -57,7 +57,7 @@
                                 type: 'success',
                                 duration: 1200
                             })
-                            this.isShowNextBtn = false;
+                            this.isShowNextBtn = false
                             this.payNum = '0'
                             this.initMsg = '暂无兑换请求'
                         }
@@ -99,17 +99,16 @@
                 return this.$store.state.ybyz.selVipVal
             }
         },
-        async mounted (){
-            let newExpiryNumber = await this.$store.dispatch(aTypes.getUserExpiry, [ Number(this.selVipVal.id) ]);
+        async mounted () {
+            let newExpiryNumber = await this.$store.dispatch(aTypes.getUserExpiry, [ Number(this.selVipVal.id) ])
             //     1.先查询该会员对应的兑换数量
             if (newExpiryNumber.success === false) {
                 return false
             } else if (newExpiryNumber.success === true) {
-                this.isShowNextBtn = true;
-                this.initMsg = newExpiryNumber.remark;
+                this.isShowNextBtn = true
+                this.initMsg = newExpiryNumber.remark
                 this.payNum = newExpiryNumber.gold
             }
-
         }
     }
 </script>

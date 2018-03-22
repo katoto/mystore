@@ -76,6 +76,9 @@ const onlineTotal = () => import('~pages/home/allReport/onlineTotal.vue' /* webp
 const keepOnline = () => import('~pages/home/allReport/keepOnline.vue' /* webpackChunkName: "chunks/home/allReport/keepOnline" */)
 const payTotal = () => import('~pages/home/allReport/payTotal.vue' /* webpackChunkName: "chunks/home/allReport/payTotal" */)
 
+// 6
+const onlinePay = () => import('~pages/home/onlinePay/onlinePay.vue' /* webpackChunkName: "chunks/home/onlinePay/onlinePay" */)
+
 Vue.use(VueRouter)
 export default new VueRouter({
     mode: 'hash',
@@ -289,6 +292,11 @@ export default new VueRouter({
                             component: payTotal
                         }
                     ]
+                },
+                {
+                    path: 'onlinePay',
+                    component: onlinePay,
+                    meta: { requireAuth: true }
                 },
                 {
                     path: '*',

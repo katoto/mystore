@@ -23,7 +23,7 @@
                 vipStyle: '',
                 payNum: '0',
                 initMsg: '暂无兑换请求',
-                isShowNextBtn:false,
+                isShowNextBtn: false
             }
         },
         methods: {
@@ -58,7 +58,7 @@
                                 type: 'success',
                                 duration: 1200
                             })
-                            this.isShowNextBtn = false;
+                            this.isShowNextBtn = false
                             this.payNum = '0'
                             this.initMsg = '暂无兑换请求'
                         }
@@ -91,8 +91,8 @@
                     return false
                 }
                 // 出现输入密码
-                this.openInpPass();
-                //    2.界面显示请输入管理员密码
+                this.openInpPass()
+            //    2.界面显示请输入管理员密码
             }
         },
         computed: {
@@ -100,20 +100,19 @@
                 return this.$store.state.tgyManager.selTgyVal
             }
         },
-        async mounted (){
-            let newExpiryNumber = await this.$store.dispatch(actionTypes.getPromoterExpiry, [ Number(this.selTgyVal.id) ]);
+        async mounted () {
+            let newExpiryNumber = await this.$store.dispatch(actionTypes.getPromoterExpiry, [ Number(this.selTgyVal.id) ])
             //     1.先查询该会员对应的兑换数量
 
-            console.log(newExpiryNumber);
-            console.log('');
+            console.log(newExpiryNumber)
+            console.log('')
             if (newExpiryNumber.success === false) {
                 return false
             } else if (newExpiryNumber.success === true) {
-                this.isShowNextBtn = true;
+                this.isShowNextBtn = true
                 this.initMsg = newExpiryNumber.remark
                 this.payNum = newExpiryNumber.gold
             }
-
         }
     }
 </script>
