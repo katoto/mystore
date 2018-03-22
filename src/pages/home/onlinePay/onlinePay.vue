@@ -66,6 +66,7 @@
             async onlineReset () {
                 let getManageList = await this.$store.dispatch(aTypes.getOnlinePayList)
                 if (getManageList && getManageList.length >= 0) {
+                    this.totalMoney = 0;
                     this.xtLogList = getManageList
                     this.xtLogList.forEach((val, index) => {
                         if (val && val.amount) {
@@ -83,11 +84,23 @@
             },
             async onlineSearch (data) {
                 if (this.onlineSearchInp === '') {
-                    this.$message({
-                        message: '请输入查询用户名',
-                        type: 'error',
-                        duration: 1200
-                    })
+                    let getManageList = await this.$store.dispatch(aTypes.getOnlinePayList)
+                    if (getManageList && getManageList.length >= 0) {
+                        this.totalMoney = 0;
+                        this.xtLogList = getManageList
+                        this.xtLogList.forEach((val, index) => {
+                            if (val && val.amount) {
+                                this.totalMoney += Number(val.amount)
+                            }
+                        })
+                        this.$message({
+                            message: '查询成功',
+                            type: 'success',
+                            duration: 1200
+                        })
+                    } else {
+                        console.error('getManageList error at onlinePay')
+                    }
                     return false
                 }
                 let websockData = await this.$store.dispatch(aTypes.onlineSearch, this.onlineSearchInp)
@@ -99,7 +112,7 @@
                     })
 
                     this.xtLogList = websockData
-
+                    this.totalMoney = 0;
                     this.xtLogList.forEach((val, index) => {
                         if (val && val.amount) {
                             this.totalMoney += Number(val.amount)
@@ -158,8 +171,8 @@
         },
         async mounted () {
             let getManageList = await this.$store.dispatch(aTypes.getOnlinePayList)
-
             if (getManageList && getManageList.length >= 0) {
+                this.totalMoney = 0;
                 this.xtLogList = getManageList
                 this.xtLogList.forEach((val, index) => {
                     if (val && val.amount) {
