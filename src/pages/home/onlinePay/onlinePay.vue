@@ -14,10 +14,6 @@
                 border
                 style="width: 100%">
                 <el-table-column
-                    prop="order_no"
-                    label="订单编号">
-                </el-table-column>
-                <el-table-column
                     prop="username"
                     label="用户名">
                 </el-table-column>
@@ -30,12 +26,20 @@
                     label="实际金额">
                 </el-table-column>
                 <el-table-column
+                    prop="pay_method"
+                    label="支付方式">
+                </el-table-column>
+                <el-table-column
                     prop="time"
                     label="时间">
                 </el-table-column>
                 <el-table-column
                     prop="promoter"
                     label="所属推广员">
+                </el-table-column>
+                <el-table-column
+                    prop="order_no"
+                    label="订单编号">
                 </el-table-column>
             </el-table>
         </section>
@@ -66,7 +70,7 @@
             async onlineReset () {
                 let getManageList = await this.$store.dispatch(aTypes.getOnlinePayList)
                 if (getManageList && getManageList.length >= 0) {
-                    this.totalMoney = 0;
+                    this.totalMoney = 0
                     this.xtLogList = getManageList
                     this.xtLogList.forEach((val, index) => {
                         if (val && val.amount) {
@@ -86,7 +90,7 @@
                 if (this.onlineSearchInp === '') {
                     let getManageList = await this.$store.dispatch(aTypes.getOnlinePayList)
                     if (getManageList && getManageList.length >= 0) {
-                        this.totalMoney = 0;
+                        this.totalMoney = 0
                         this.xtLogList = getManageList
                         this.xtLogList.forEach((val, index) => {
                             if (val && val.amount) {
@@ -112,7 +116,7 @@
                     })
 
                     this.xtLogList = websockData
-                    this.totalMoney = 0;
+                    this.totalMoney = 0
                     this.xtLogList.forEach((val, index) => {
                         if (val && val.amount) {
                             this.totalMoney += Number(val.amount)
@@ -172,7 +176,7 @@
         async mounted () {
             let getManageList = await this.$store.dispatch(aTypes.getOnlinePayList)
             if (getManageList && getManageList.length >= 0) {
-                this.totalMoney = 0;
+                this.totalMoney = 0
                 this.xtLogList = getManageList
                 this.xtLogList.forEach((val, index) => {
                     if (val && val.amount) {
