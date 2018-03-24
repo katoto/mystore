@@ -70,12 +70,13 @@ const actionsInfo = mapActions({
 
     // 新建公告， 更新大厅状态
     async updateDTStatus ({dispatch, commit}, {content = '', statusIndex = 0, time = 0}) {
-        let args = [{'content': '', 'cooperateEndDate': '', 'cooperateMode': 0, 'cooperateStartDate': '', 'statusIndex': 0, 'time': 0}]
+        let args = [{'content': content , 'cooperateEndDate': '', 'cooperateMode': 0, 'cooperateStartDate': '', 'statusIndex': statusIndex , 'time': time }]
+        console.log(args)
+        console.log('00423')
         const argsData = await dispatch('invoke', {
             method: 'systemConfigService/updateGameStatus',
             args
         })
-        console.log('00000000')
         console.log(argsData[0])
         return argsData[0]
     },
