@@ -17,7 +17,7 @@
                 </el-date-picker>
             </div>
             <el-button style="margin-left: 18px" size="small" type="primary" v-tap="{ methods:getMsg }">查询</el-button>
-            <span style="float: right;line-height: 32px;right: 20px;font-weight: 600">（按情况改波改波）历史兑奖 {{ lastTotalMoney }} 元宝</span>
+            <span style="float: right;line-height: 32px;right: 20px;font-weight: 600">历史兑奖 {{ lastTotalMoney }} 元宝</span>
         </header>
         <section>
             <el-table
@@ -38,11 +38,11 @@
                 </el-table-column>
                 <el-table-column
                     prop="expiryType"
-                    label="充值类型">
+                    label="兑奖类型">
                 </el-table-column>
                 <el-table-column
                     prop="money"
-                    label="充值数目（元宝）">
+                    label="兑奖数目（元宝）">
                 </el-table-column>
                 <el-table-column
                     prop="gameGold"
@@ -85,13 +85,13 @@
                 pageSize: 16,
                 DJSList: [
                     {
+                        expiryType: '玩家发起',
+                        username: 'qwerty',
+                        remark: '兑换1000个',
                         admin: 'admin',
-                        datetime: '2018-01-08 15:33:59',
-                        expiryType: '主动发起',
-                        gameGold: 0,
-                        money: 0,
-                        remark: null,
-                        username: '99999'
+                        money: 1000,
+                        datetime: '2018-03-19 10:53:55',
+                        gameGold: 5000
                     }],
                 xtInpVal: '',
                 pickerOptions: {
@@ -128,7 +128,6 @@
                 adminList: []
             }
         },
-        watch: {},
         methods: {
             logTimeChange (val) {
                 this.xtStartTime = this.format(val[0])
@@ -160,12 +159,11 @@
                 // 分页  请求数据 ，更新数据
                 let result = null
                 if (!this.xtStartTime || !this.xtEndTime) {
-                    result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+                    result = await this.$store.dispatch(aTypes.getUserExchangeLog, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
-
                 } else {
-                    result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
+                    result = await this.$store.dispatch(aTypes.getUserExchangeLog, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
                 }
@@ -196,7 +194,7 @@
                     })
                     return false
                 }
-                let result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
+                let result = await this.$store.dispatch(aTypes.getUserExchangeLog, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                     {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
                 ])
                 if (result && result.pager.list) {
@@ -223,8 +221,8 @@
                 })
                 return false
             }
-            let result = await this.$store.dispatch(actionTypes.getUserAward, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
-                {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': 1, 'pageSize': 6, 'totalCount': 0 }
+            let result = await this.$store.dispatch(aTypes.getUserExchangeLog, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
+                {'list': [], 'order': '', 'orderBy': '', pageCount: 0, pageNumber: 1, pageSize: 6, totalCount: 0 }
             ])
 
             if (result && result.pager.list) {

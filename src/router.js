@@ -8,6 +8,8 @@ import VueRouter from 'vue-router'
 // home  first tab
 import Home from '~pages/home/home.vue'
 
+import test from '~pages/test.vue'
+
 const Login = () => import('~pages/Login' /* webpackChunkName: "chunks/Login" */)
 
 const xtManage = () => import('~pages/home/xtManage/xtManage.vue' /* webpackChunkName: "chunks/home/xtManage/xtManage" */)
@@ -73,6 +75,9 @@ const pvTotal = () => import('~pages/home/allReport/pvTotal.vue' /* webpackChunk
 const onlineTotal = () => import('~pages/home/allReport/onlineTotal.vue' /* webpackChunkName: "chunks/home/allReport/onlineTotal" */)
 const keepOnline = () => import('~pages/home/allReport/keepOnline.vue' /* webpackChunkName: "chunks/home/allReport/keepOnline" */)
 const payTotal = () => import('~pages/home/allReport/payTotal.vue' /* webpackChunkName: "chunks/home/allReport/payTotal" */)
+
+// 6
+const onlinePay = () => import('~pages/home/onlinePay/onlinePay.vue' /* webpackChunkName: "chunks/home/onlinePay/onlinePay" */)
 
 Vue.use(VueRouter)
 export default new VueRouter({
@@ -289,6 +294,11 @@ export default new VueRouter({
                     ]
                 },
                 {
+                    path: 'onlinePay',
+                    component: onlinePay,
+                    meta: { requireAuth: true }
+                },
+                {
                     path: '*',
                     redirect: '/home/xtManage/xtSet'
                 }
@@ -299,9 +309,12 @@ export default new VueRouter({
             component: Login
         },
         {
+            path: '/test',
+            component: test
+        },
+        {
             path: '*',
             redirect: '/login'
         }
-
     ]
 })

@@ -629,9 +629,9 @@
             }
         },
         methods: {
-            refleshDeskMsg(){
-                if( this.currentDesk ){
-                    this.deskSelect( this.currentDesk );
+            refleshDeskMsg () {
+                if (this.currentDesk) {
+                    this.deskSelect(this.currentDesk)
                 }
             },
             async deskSelect (desk) {

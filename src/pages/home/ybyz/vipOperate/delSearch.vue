@@ -146,12 +146,10 @@
                     result = await this.$store.dispatch(aTypes.getUserMinus, [ Number(this.selVipVal.id), this.format(new Date().getTime() - 3600 * 1000 * 24 * 10), this.format(new Date()),
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
-
                 } else {
                     result = await this.$store.dispatch(aTypes.getUserMinus, [ Number(this.selVipVal.id), this.xtStartTime, this.xtEndTime,
                         {'list': [], 'order': '', 'orderBy': '', 'pageCount': 0, 'pageNumber': size, 'pageSize': 6, 'totalCount': 0 }
                     ])
-
                 }
 
                 if (result && result.pager.list) {

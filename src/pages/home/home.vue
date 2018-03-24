@@ -8,6 +8,7 @@
                 <el-tab-pane label="一般运作" name="ybyz"></el-tab-pane>
                 <el-tab-pane label="后台运作" name="htyz"></el-tab-pane>
                 <el-tab-pane label="总结报告" name="allReport"></el-tab-pane>
+                <el-tab-pane label="在线充值" name="onlinePay"></el-tab-pane>
             </el-tabs>
             <router-view></router-view>
         </el-main>
@@ -59,6 +60,9 @@ export default {
                     break
                 case 'allReport':
                     this.$router.push('/home/allReport/dailyRecharge')
+                    break
+                case 'onlinePay':
+                    this.$router.push('/home/onlinePay')
                     break
                 }
             }

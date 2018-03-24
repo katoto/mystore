@@ -59,10 +59,14 @@
                 switchTypeVal: 0,
 
                 expiry: null,
-                expiryVal: '10分钟',
+                expiryVal: '10',
                 expiryOptions: [
                     {value: '10', label: '10分钟'},
-                    {value: '30', label: '30分钟'}
+                    {value: '30', label: '30分钟'},
+                    {value: '120', label: '2小时'},
+                    {value: '360', label: '6小时'},
+                    {value: '720', label: '12小时'},
+                    {value: '1440', label: '24小时'}
                 ],
 
                 xsSet: '',
@@ -73,11 +77,7 @@
 
                 jjb: '',
                 interactPassword: false,
-                isShop: false,
-                options: [
-                    {value: '10min', label: '10分钟'},
-                    {value: '30min', label: '30分钟'}
-                ]
+                isShop: false
             }
         },
         watch: {
@@ -98,7 +98,20 @@
                         this.switchType = false
                     }
                     if (loginInfoConfig.expiry !== 0) {
-                        this.expiryVal = loginInfoConfig.expiry + '分钟'
+                        if( Number( loginInfoConfig.expiry ) <= 60 ){
+                            this.expiryVal = loginInfoConfig.expiry + '分钟';
+                        }else if( loginInfoConfig.expiry == 120 ){
+                            this.expiryVal ='2小时';
+                        }else if( loginInfoConfig.expiry == 360 ){
+                            this.expiryVal ='6小时';
+                        }else if( loginInfoConfig.expiry == 720 ){
+                            this.expiryVal ='12小时';
+                        }else if(  loginInfoConfig.expiry == 1440 ){
+                            this.expiryVal ='24小时';
+                        }else{
+                            this.expiryVal = loginInfoConfig.expiry + '分钟';
+                        }
+
                         this.expiry = true
                         console.log(this.expiryVal)
                         console.log('====expiryVal====')
@@ -149,7 +162,22 @@
                 }
                 if (this.expiry) {
                     if (this.expiryVal !== undefined) {
-                        newExpiry = Number(this.expiryVal.replace('分钟', ''))
+                        console.log('===this.expiryVal===')
+                        console.log(this.expiryVal)
+                        if( this.expiryVal.indexOf('分钟') > -1 ){
+                            newExpiry = Number(this.expiryVal.replace('分钟', ''))
+                        }else if( this.expiryVal == '2小时' ){
+                            newExpiry = 120
+                        }else if( this.expiryVal == '6小时' ){
+                            newExpiry = 360
+                        }else if( this.expiryVal == '12小时' ){
+                            newExpiry = 720
+                        }else if( this.expiryVal == '24小时'  ){
+                            newExpiry = 1440
+                        }else{
+                            newExpiry = Number(this.expiryVal.replace('分钟', ''))
+                        }
+
                     }
                 } else {
                     newExpiry = 0

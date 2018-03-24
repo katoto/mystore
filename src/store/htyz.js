@@ -378,7 +378,108 @@ const actionsInfo = mapActions({
             args
         })
         return argsData[0]
+    },
+
+    //  封号
+    async lockUser ({dispatch, commit}, args = [55]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/lockUser',
+            args
+        })
+        return argsData[0]
+    },
+    //  解封
+    async unlockUser ({dispatch, commit}, args = [55]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/unlockUser',
+            args
+        })
+        return argsData[0]
+    },
+    //  删号
+    async deleteUser ({dispatch, commit}, args = [55]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/deleteUser',
+            args
+        })
+        return argsData[0]
+    },
+    //  扣除游戏币
+    async minusGameGold ({dispatch, commit}, args = [56, 100]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/minusGameGold',
+            args
+        })
+        return argsData[0]
+    },
+    //  赠送游戏币
+    async awardGameGold ({dispatch, commit}, args = [56, 100]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/awardGameGold',
+            args
+        })
+        return argsData[0]
+    },
+    //  修改等级
+    async changeUserLevel ({dispatch, commit}, args = [56, 1]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/changeUserLevel',
+            args
+        })
+        return argsData[0]
+    },
+    // 身份证修改 暂时不需要
+    //  重置密码  分两步  getShutupType   resetUserPassword  ( 暂时只写了第二步 )
+    async getShutupType ({dispatch, commit}, args = [56]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/getShutupType',
+            args
+        })
+        return argsData[0]
+    },
+    async resetUserPassword ({dispatch, commit}, args = [56]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/resetUserPassword',
+            args
+        })
+        return argsData[0]
+    },
+    // 解除异常
+    async dealException ({dispatch, commit}, args = [3]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/dealException',
+            args
+        })
+        return argsData[0]
+    },
+    // 口令修改 参数 id  与 新密码 ( 暂放 )
+    async modifySafeBoxPwd ({dispatch, commit}, args = [3, '123456']) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/modifySafeBoxPwd',
+            args
+        })
+        return argsData[0]
+    },
+    // 禁言
+    // 第一个参数 用户id、第二个参数代表禁言时长：0正常 1是20分钟...2/3...
+    async shutupUser ({dispatch, commit}, args = [3, 2]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/shutupUser',
+            args
+        })
+        return argsData[0]
+    },
+
+    // 按账号查找会员
+    // 第一个参数查找账号字符串、第二个固定、第三个会员类别
+    async searchUser ({dispatch, commit}, args = ['666666', 0, 3]) {
+        const argsData = await dispatch('invoke', {
+            method: 'memberService/searchUser',
+            args
+        })
+        return argsData[0]
     }
+
 }, name)
 
 const actions = actionsInfo.actions
