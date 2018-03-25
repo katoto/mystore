@@ -835,6 +835,12 @@
                         time: this.form.time
                     })
                 }
+
+                this.$message({
+                    message: '更新成功',
+                    type: 'sucess',
+                    duration: 1200
+                })
             },
 
             // new
