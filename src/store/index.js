@@ -14,7 +14,7 @@ import htyz from './htyz'
 import allReport from './allReport'
 import onlinePay from './onlinePay'
 
-import {wait} from '../common/util'
+import {wait, str2Bytes} from '../common/util'
 
 Vue.use(Vuex)
 
@@ -136,8 +136,10 @@ const actions = {
                     }
                 }
 
+
                 const encodedData = JSON.stringify(data)
-                const len = encodedData.length
+                const len = str2Bytes(encodedData).length
+            // console.log(len + '---------' + encodedData.length)
                 const lenInfo = new Uint8Array([(len >> 24) & 0xFF, (len >> 16) & 0xFF, (len >> 8) & 0xFF, (len) & 0xFF])
                 // 发送4字节的长度信息
                 state.websocket.connect.send(lenInfo)
