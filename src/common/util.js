@@ -34,20 +34,23 @@ export function wait (time) {
 }
 
 export function str2Bytes(str) {
-    var ch, st, re = [];
-    for (var i = 0; i < str.length; i++ ) {
-        ch = str.charCodeAt(i);  // get char
-        st = [];                 // set up "stack"
-        do {
-            st.push( ch & 0xFF );  // push byte to stack
-            ch = ch >> 8;          // shift value down by 1 byte
+    var result = new Array()
+
+    var k = 0
+    for (var i = 0; i < str.length; i++) {
+        var j = encodeURI(str[i])
+        if (j.length == 1) {
+            // 未转换的字符
+            result[k++] = j.charCodeAt(0)
+        } else {
+            // 转换成%XX形式的字符
+            var bytes = j.split('%')
+            for (var l = 1; l < bytes.length; l++) {
+                result[k++] = parseInt('0x' + bytes[l])
+            }
         }
-        while ( ch );
-        // add stack contents to result
-        // done because chars have "wrong" endianness
-        re = re.concat( st.reverse() );
     }
-    // return an array of bytes
-    return re;
+
+    return result
 }
 
