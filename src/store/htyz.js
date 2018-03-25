@@ -70,7 +70,7 @@ const actionsInfo = mapActions({
 
     // 新建公告， 更新大厅状态
     async updateDTStatus ({dispatch, commit}, {content = '', statusIndex = 0, time = 0}) {
-        let args = [{'content': content , 'cooperateEndDate': '', 'cooperateMode': 0, 'cooperateStartDate': '', 'statusIndex': statusIndex , 'time': time }]
+        let args = [{'content': content , 'cooperateEndDate': '——————', 'cooperateMode': 0, 'cooperateStartDate': '——————', 'statusIndex': statusIndex , 'time': time }]
         console.log(args)
         console.log('00423')
         const argsData = await dispatch('invoke', {
@@ -179,8 +179,8 @@ const actionsInfo = mapActions({
     },
 
     // 2 更新大厅状态  运营转态 立刻进入 3点开始
-    //  刷新 ，就是获取一次桌子。
-    async updateGameStatus ({dispatch, commit}, args = [{'content': '', 'cooperateEndDate': '', 'cooperateMode': 0, 'cooperateStartDate': '', 'statusIndex': 0, 'time': 0}]) {
+    //  刷新 ，就是获取一次桌子。--
+    async updateGameStatus ({dispatch, commit}, args = [{'content': '', 'cooperateEndDate': '——————', 'cooperateMode': 0, 'cooperateStartDate': '——————', 'statusIndex': 0, 'time': 0}]) {
         const argsData = await dispatch('invoke', {
             method: 'systemConfigService/updateGameStatus',
             args
@@ -189,7 +189,7 @@ const actionsInfo = mapActions({
     },
 
     // 3 .新增桌：幸运六狮addDesk 然后依次addFishDesk、addCardDesk、addBulletFishDesk、addMermaidDesk、addLackDesk、addJoyDesk、addWaterDesk、addThousandFishDesk
-    async deskServiceAllAdd ({dispatch, commit}, methodName = 'deskService/addDesk', args = [{'content': '', 'cooperateEndDate': '', 'cooperateMode': 0, 'cooperateStartDate': '', 'statusIndex': 0, 'time': 0}]) {
+    async deskServiceAllAdd ({dispatch, commit}, methodName = 'deskService/addDesk', args = [{'content': '', 'cooperateEndDate': '——————', 'cooperateMode': 0, 'cooperateStartDate': '——————', 'statusIndex': 0, 'time': 0}]) {
         const argsData = await dispatch('invoke', {
             method: methodName,
             args
