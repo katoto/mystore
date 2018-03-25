@@ -32,7 +32,7 @@ const state = {
         data: null, // websocket 返回来的数据， 用到推送过来的数据的地方 watch一下就好了
         reconnect: 0 // socket 记录重连次数， 起到辅助作用， 比如websocket断开了连接， 重新请求接口， 避免推送丢失引发的问题
     },
-    newGameGLState:null,
+    newGameGLState: null,
     showErrorBox: false
 
 }
@@ -46,7 +46,7 @@ const mutations = {
     updateSocketData (state, data) {
         console.log(JSON.stringify(data))
         console.log('------------')
-        if( data && data.method === 'syncGameStatus' ){
+        if (data && data.method === 'syncGameStatus') {
             state.newGameGLState = data
         }
         state.websocket.data = data

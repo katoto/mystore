@@ -351,11 +351,11 @@
                 initSetting: null,
                 isModify: false,
                 form: {
-//                    hlabel: '0',
-//                    flabel: '1',
-//                    time: 1,
-//                    timeOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-//                    content: ''
+                //                    hlabel: '0',
+                //                    flabel: '1',
+                //                    time: 1,
+                //                    timeOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+                //                    content: ''
                     hlabel: null,
                     flabel: null,
                     time: null,
@@ -614,7 +614,7 @@
             roomStatus () {
                 return this.$store.state.user.loginInfo.roomStatus
             },
-            gameStatus(){
+            gameStatus () {
                 return this.$store.state.user.loginInfo.gameStatus
             }
         },
@@ -935,21 +935,20 @@
             }
         },
         async mounted () {
-            await this.updateDeskList();
+            await this.updateDeskList()
 
-            if( this.gameStatus  ){
-                if( this.gameStatus.statusIndex === 0 ){
+            if (this.gameStatus) {
+                if (this.gameStatus.statusIndex === 0) {
                     this.form.hlabel = '0'
-                }else if( this.gameStatus.statusIndex === 1 ){
+                } else if (this.gameStatus.statusIndex === 1) {
                     this.form.hlabel = '-1'
                     this.form.flabel = '1'
-                }else if( this.gameStatus.statusIndex === 2 ){
+                } else if (this.gameStatus.statusIndex === 2) {
                     console.log(555)
                     this.form.hlabel = '-1'
                     this.form.flabel = '2'
                     this.form.content = this.gameStatus.content
                     this.form.time = this.gameStatus.time
-
                 }
             }
         }

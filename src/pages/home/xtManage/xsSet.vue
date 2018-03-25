@@ -98,18 +98,18 @@
                         this.switchType = false
                     }
                     if (loginInfoConfig.expiry !== 0) {
-                        if( Number( loginInfoConfig.expiry ) <= 60 ){
-                            this.expiryVal = loginInfoConfig.expiry + '分钟';
-                        }else if( loginInfoConfig.expiry == 120 ){
-                            this.expiryVal ='2小时';
-                        }else if( loginInfoConfig.expiry == 360 ){
-                            this.expiryVal ='6小时';
-                        }else if( loginInfoConfig.expiry == 720 ){
-                            this.expiryVal ='12小时';
-                        }else if(  loginInfoConfig.expiry == 1440 ){
-                            this.expiryVal ='24小时';
-                        }else{
-                            this.expiryVal = loginInfoConfig.expiry + '分钟';
+                        if (Number(loginInfoConfig.expiry) <= 60) {
+                            this.expiryVal = loginInfoConfig.expiry + '分钟'
+                        } else if (loginInfoConfig.expiry == 120) {
+                            this.expiryVal = '2小时'
+                        } else if (loginInfoConfig.expiry == 360) {
+                            this.expiryVal = '6小时'
+                        } else if (loginInfoConfig.expiry == 720) {
+                            this.expiryVal = '12小时'
+                        } else if (loginInfoConfig.expiry == 1440) {
+                            this.expiryVal = '24小时'
+                        } else {
+                            this.expiryVal = loginInfoConfig.expiry + '分钟'
                         }
 
                         this.expiry = true
@@ -164,20 +164,19 @@
                     if (this.expiryVal !== undefined) {
                         console.log('===this.expiryVal===')
                         console.log(this.expiryVal)
-                        if( this.expiryVal.indexOf('分钟') > -1 ){
+                        if (this.expiryVal.indexOf('分钟') > -1) {
                             newExpiry = Number(this.expiryVal.replace('分钟', ''))
-                        }else if( this.expiryVal == '2小时' ){
+                        } else if (this.expiryVal == '2小时') {
                             newExpiry = 120
-                        }else if( this.expiryVal == '6小时' ){
+                        } else if (this.expiryVal == '6小时') {
                             newExpiry = 360
-                        }else if( this.expiryVal == '12小时' ){
+                        } else if (this.expiryVal == '12小时') {
                             newExpiry = 720
-                        }else if( this.expiryVal == '24小时'  ){
+                        } else if (this.expiryVal == '24小时') {
                             newExpiry = 1440
-                        }else{
+                        } else {
                             newExpiry = Number(this.expiryVal.replace('分钟', ''))
                         }
-
                     }
                 } else {
                     newExpiry = 0
