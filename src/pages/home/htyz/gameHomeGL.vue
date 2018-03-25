@@ -816,11 +816,11 @@
                     desk.stateName = desk.state === 1 ? '开放' : '锁定'
                 })
             },
-            updateDTStatus () {
+            async updateDTStatus () {
                 if (this.form.hlabel === '0') {
-                    this.$store.dispatch(aTypes.updateDTStatus, {})
+                    await this.$store.dispatch(aTypes.updateDTStatus, {})
                 } else if (this.form.hlabel === '-1' && this.form.flabel === '1') {
-                    this.$store.dispatch(aTypes.updateDTStatus, {statusIndex: 1})
+                    await this.$store.dispatch(aTypes.updateDTStatus, {statusIndex: 1})
                 } else if (this.form.hlabel === '-1' && this.form.flabel === '2') {
                     if (this.form.content === '') {
                         return this.$message({
@@ -829,7 +829,7 @@
                             duration: 1200
                         })
                     }
-                    this.$store.dispatch(aTypes.updateDTStatus, {
+                    await this.$store.dispatch(aTypes.updateDTStatus, {
                         statusIndex: 2,
                         content: this.form.content,
                         time: this.form.time
