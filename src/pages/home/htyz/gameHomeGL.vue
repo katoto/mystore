@@ -48,7 +48,7 @@
                             </div>
                             <div style="margin: 20px">
                                 维护公告内容:
-                                <el-input size="small" v-model="form.content" style="width: 50%"></el-input>
+                                <el-input size="small" :title=form.content v-model="form.content" style="width: 50%"></el-input>
                             </div>
                         </div>
                         <el-button size="small" type="primary" @click="updateDTStatus()">
@@ -351,11 +351,16 @@
                 initSetting: null,
                 isModify: false,
                 form: {
-                    hlabel: '0',
-                    flabel: '1',
-                    time: 1,
+                //                    hlabel: '0',
+                //                    flabel: '1',
+                //                    time: 1,
+                //                    timeOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+                //                    content: ''
+                    hlabel: null,
+                    flabel: null,
+                    time: null,
                     timeOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-                    content: ''
+                    content: null
                 },
                 deskIdx: 0,
                 currentDesk: null,
@@ -608,8 +613,10 @@
         computed: {
             roomStatus () {
                 return this.$store.state.user.loginInfo.roomStatus
+            },
+            gameStatus () {
+                return this.$store.state.user.loginInfo.gameStatus
             }
-
         },
         watch: {
             async deskIdx (val) {
@@ -823,7 +830,7 @@
                         })
                     }
                     this.$store.dispatch(aTypes.updateDTStatus, {
-                        statusIndex: 1,
+                        statusIndex: 2,
                         content: this.form.content,
                         time: this.form.time
                     })
@@ -929,6 +936,21 @@
         },
         async mounted () {
             await this.updateDeskList()
+
+            if (this.gameStatus) {
+                if (this.gameStatus.statusIndex === 0) {
+                    this.form.hlabel = '0'
+                } else if (this.gameStatus.statusIndex === 1) {
+                    this.form.hlabel = '-1'
+                    this.form.flabel = '1'
+                } else if (this.gameStatus.statusIndex === 2) {
+                    console.log(555)
+                    this.form.hlabel = '-1'
+                    this.form.flabel = '2'
+                    this.form.content = this.gameStatus.content
+                    this.form.time = this.gameStatus.time
+                }
+            }
         }
     }
 </script>
