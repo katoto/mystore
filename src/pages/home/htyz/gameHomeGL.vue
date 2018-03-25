@@ -838,7 +838,7 @@
 
                 this.$message({
                     message: '更新成功',
-                    type: 'sucess',
+                    type: 'success',
                     duration: 1200
                 })
             },
