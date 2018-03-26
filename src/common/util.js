@@ -33,7 +33,7 @@ export function wait (time) {
     })
 }
 
-export function str2Bytes(str) {
+export function str2Bytes (str) {
     var result = new Array()
 
     var k = 0
@@ -53,4 +53,3 @@ export function str2Bytes(str) {
 
     return result
 }
-

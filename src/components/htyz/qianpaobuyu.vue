@@ -173,7 +173,7 @@
                 'autoKick': 10,
                 'exchange': 100,
                 'gameDiff': 0,
-                'id': 3,
+                'id': 0,
                 'maxGunValue': 1000,
                 'minGold': 1,
                 'minGunValue': 50,
@@ -193,9 +193,7 @@
                 'sumSeat3YaFen': 34150,
                 'sumSeat4DeFen': 0,
                 'sumSeat4YaFen': 0,
-                'sumYaFen': 34150,
-                'roomName': '欢乐竞技厅',
-                'stateName': '开放'
+                'sumYaFen': 34150
             }
         },
         beforeMount () {

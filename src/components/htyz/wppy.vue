@@ -192,9 +192,7 @@
                 'sumSeat3YaFen': 1568500,
                 'sumSeat4DeFen': 0,
                 'sumSeat4YaFen': 0,
-                'sumYaFen': 1568500,
-                'roomName': '欢乐竞技厅',
-                'stateName': '锁定'
+                'sumYaFen': 1568500
             }
         },
         beforeMount () {

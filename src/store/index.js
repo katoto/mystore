@@ -44,8 +44,8 @@ const mutations = {
         state.websocket.reconnect++
     },
     updateSocketData (state, data) {
-        console.log(JSON.stringify(data))
-        console.log('------------')
+        // console.log(JSON.stringify(data))
+        // console.log('------------')
         if (data && data.method === 'syncGameStatus') {
             state.newGameGLState = data
         }
@@ -136,10 +136,9 @@ const actions = {
                     }
                 }
 
-
                 const encodedData = JSON.stringify(data)
                 const len = str2Bytes(encodedData).length
-            // console.log(len + '---------' + encodedData.length)
+                // console.log(len + '---------' + encodedData.length)
                 const lenInfo = new Uint8Array([(len >> 24) & 0xFF, (len >> 16) & 0xFF, (len >> 8) & 0xFF, (len) & 0xFF])
                 // 发送4字节的长度信息
                 state.websocket.connect.send(lenInfo)

@@ -223,7 +223,7 @@
                 'diceSwitch': 1,
                 'exchange': 50,
                 'full': false,
-                'id': 122,
+                'id': 0,
                 'mainGameDiff': 2,
                 'mainGameSumDeFen': 0,
                 'mainGameSumYaFen': 0,
@@ -242,9 +242,7 @@
                 'sumYaFen': 0,
                 'userId': -1,
                 'userPhotoId': -1,
-                'weaponsOrfigure': 0,
-                'roomName': '欢乐竞技厅',
-                'stateName': '开放'
+                'weaponsOrfigure': 0
             }
         },
         beforeMount () {

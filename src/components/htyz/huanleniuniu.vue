@@ -394,7 +394,7 @@
                 'datetime': '',
                 'dealerLimit': 500000,
                 'exchange': 100,
-                'id': 26,
+                'id': 0,
                 'maxUser': 20,
                 'minGold': 10,
                 'modeId': 3,
@@ -411,9 +411,7 @@
                 'sumDeFen': 0,
                 'sumYaFen': 0,
                 'userId': 0,
-                'waterValue': 3,
-                'roomName': '欢乐竞技厅',
-                'stateName': '开放'
+                'waterValue': 3
             }
         },
         beforeMount () {

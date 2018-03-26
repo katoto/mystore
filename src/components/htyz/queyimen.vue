@@ -149,9 +149,7 @@
                 'roomId': 2,
                 'state': 0,
                 'sumDeFen': 66,
-                'sumYaFen': 84,
-                'roomName': '欢乐竞技厅',
-                'stateName': '锁定'
+                'sumYaFen': 84
             }
         },
         watch: {
@@ -182,6 +180,7 @@
             },
             onSubmit () {
                 let param = JSON.parse(JSON.stringify(this.$data))
+                delete param.dayLocal_ext
                 this.$emit('submit', param)
             }
         }

@@ -793,6 +793,8 @@
                             duration: 1200
                         })
                     } else {
+                        this.updateDeskList()
+                        this.dialogShow = false
                         this.$message({
                             message: '更新成功',
                             type: 'success',

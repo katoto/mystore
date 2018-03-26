@@ -208,6 +208,8 @@
             },
             onSubmit () {
                 let param = JSON.parse(JSON.stringify(this.$data))
+                delete param.wheelLocal_ext
+                delete param.dayLocal_ext
                 this.$emit('submit', param)
             }
         }

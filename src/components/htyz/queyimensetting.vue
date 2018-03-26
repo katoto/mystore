@@ -109,7 +109,7 @@
                 'caiJin': 1,
                 'dateTime': '2018-02-08',
                 'gameDiff': 0,
-                'id': 1,
+                'id': 0,
                 'roundCount': 19,
                 'totalPlay': 0,
                 'totalWin': 0,
