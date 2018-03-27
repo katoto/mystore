@@ -176,7 +176,7 @@
                 'maxGunValue': 1000,
                 'minGold': 1,
                 'minGunValue': 50,
-                'name': 'v1',
+                'name': '',
                 'onceExchangeValue': 100,
                 'onlineNumber': 0,
                 'orderBy': 1,
@@ -206,6 +206,13 @@
                 this.$emit('close')
             },
             onSubmit () {
+                if (!this.name) {
+                    return this.$message({
+                        message: '桌名不能为空',
+                        type: 'error',
+                        duration: 1200
+                    })
+                }
                 let param = JSON.parse(JSON.stringify(this.$data))
                 this.$emit('submit', param)
             }

@@ -19,7 +19,7 @@ const actionsInfo = mapActions({
             const result = args[0]
             if (result.success) {
                 commit(mTypes.setLoginInfo, result)
-                console.log(JSON.stringify(result))
+                // console.log(JSON.stringify(result))
             } else {
                 console.log(result.message)
                 throw new Error(result.message)
@@ -36,6 +36,9 @@ const actionsInfo = mapActions({
 }, name)
 
 const mutationsInfo = mapMutations({
+    updateRoomStatus (state, status) {
+        state.loginInfo.roomStatus = status
+    },
     setLoginInfo (state, info) {
         state.loginInfo = info
     },

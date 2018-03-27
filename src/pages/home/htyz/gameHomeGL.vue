@@ -326,7 +326,8 @@
 </template>
 
 <script>
-    import {aTypes, mTypes} from '~store/htyz'
+    import {aTypes} from '~store/htyz'
+    import { mTypes as userMType} from '~store/user'
     import newXyls from '~components/htyz/new_xyls.vue'
     import yaoqianshu from '~components/htyz/yaoqianshu.vue'// 摇钱树
     import dantiao from '~components/htyz/dantiao.vue'// 单挑
@@ -616,9 +617,19 @@
             },
             gameStatus () {
                 return this.$store.state.user.loginInfo.gameStatus
+            },
+            socketData () {
+                return this.$store.state.websocket.data
             }
         },
         watch: {
+            socketData (data) {
+                if (data && data.method === 'syncRoomStatus') {
+                    this.$store.commit(userMType.updateRoomStatus, data.args[0])
+                    // console.log(data.args[0])
+                }
+            },
+
             async deskIdx (val) {
                 this.currentDesk = null
                 this.deskList = null
@@ -811,8 +822,6 @@
             },
             async updateDeskList () {
                 this.deskList = await this.$store.dispatch(aTypes.getDeskList, this.desks[this.deskIdx].getDeskList)
-                console.log('========')
-                console.log(this.deskList)
                 this.deskList.forEach((desk) => {
                     desk.roomName = desk.roomId === 2 ? '欢乐竞技厅' : '新手练习厅'
                     desk.stateName = desk.state === 1 ? '开放' : '锁定'

@@ -43,13 +43,13 @@
                     <el-select class="" size="small" v-model="zxhDiff" :disabled="roomId===1">
                         <el-option
                             label="难"
-                            value="0"/>
+                            :value="0"/>
                         <el-option
                             label="中"
-                            value="1"/>
+                            :value="1"/>
                         <el-option
                             label="易"
-                            value="2"/>
+                            :value="2"/>
                         <el-option v-for="item in [90, 91,92, 93,94,95, 96,97,98,99]"
                                    :label="item"
                                    :value="item"/>
@@ -291,6 +291,13 @@
                 this.$emit('close')
             },
             onSubmit () {
+                if (!this.name) {
+                    return this.$message({
+                        message: '桌名不能为空',
+                        type: 'error',
+                        duration: 1200
+                    })
+                }
                 let param = JSON.parse(JSON.stringify(this.$data))
                 this.$emit('submit', param)
             }

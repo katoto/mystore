@@ -425,6 +425,13 @@
                 this.$emit('close')
             },
             onSubmit () {
+                if (!this.name) {
+                    return this.$message({
+                        message: '桌名不能为空',
+                        type: 'error',
+                        duration: 1200
+                    })
+                }
                 let param = JSON.parse(JSON.stringify(this.$data))
                 this.$emit('submit', param)
             }
