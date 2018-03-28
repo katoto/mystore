@@ -54,7 +54,7 @@
                 </td>
                 <td align="center">自动提出挂机玩家：</td>
                 <td>
-                    <el-select class="" size="small" v-model="autoKick">
+                    <el-select class="" size="small" v-model="autoKickOut">
                         <el-option
                             label="关闭"
                             :value="0"/>
@@ -163,7 +163,7 @@
                 </td>
                 <td align="center">自动提出挂机玩家：</td>
                 <td>
-                    <el-select class="" size="small" v-model="autoKick">
+                    <el-select class="" size="small" v-model="autoKickOut">
                         <el-option
                             label="关闭"
                             :value="0"/>
@@ -303,7 +303,7 @@
             <tr>
                 <td align="center">自动提出挂机玩家：</td>
                 <td>
-                    <el-select class="" size="small" v-model="autoKick">
+                    <el-select class="" size="small" v-model="autoKickOut">
                         <el-option
                             label="关闭"
                             :value="0"/>
@@ -399,7 +399,7 @@
                 'minGold': 10,
                 'modeId': 3,
                 'multiple': 0,
-                'name': '111',
+                'name': '',
                 'onlineNumber': 0,
                 'orderBy': 1,
                 'password': '',

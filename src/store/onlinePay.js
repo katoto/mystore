@@ -5,6 +5,8 @@
 import { mapActions, mapMutations } from '~common/util'
 import ajax from '~common/ajax'
 
+import { onlinePayAjax } from '~common/config'
+
 const name = 'onlinePay'
 const state = {
     loginInfo: null
@@ -22,7 +24,7 @@ const mutationsInfo = mapMutations({
 const actionsInfo = mapActions({
     async getOnlinePayList ({ dispatch, commit }) {
         let doLoginData = null
-        doLoginData = await ajax.post(`http://www.2jx2.xin:8081/paylog.jsp?way=query`)
+        doLoginData = await ajax.post( `${onlinePayAjax}?way=query`)
         return doLoginData
     },
 
@@ -36,13 +38,13 @@ const actionsInfo = mapActions({
 
     async confirmOrder ({dispatch, commit}, data) {
         let doLoginData = null
-        doLoginData = await ajax.post(`http://www.2jx2.xin:8081/paylog.jsp?way=modify&order_no=` + data)
+        doLoginData = await ajax.post(`${onlinePayAjax}?way=modify&order_no=` + data)
         return doLoginData
     },
 
     async onlineSearch ({dispatch, commit}, data) {
         let doLoginData = null
-        doLoginData = await ajax.post(`http://www.2jx2.xin:8081/paylog.jsp?way=search&username=` + data)
+        doLoginData = await ajax.post(`${onlinePayAjax}?way=search&username=` + data)
         console.log(doLoginData)
         return doLoginData
     }

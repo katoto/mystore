@@ -132,7 +132,7 @@
         data () {
             return {
                 dayLocal_ext: 1,
-                'autoKick': 1,
+                'autoKick': 10,
                 'baseYaFen': 5,
                 'dataTime': '2018-01-03',
                 'dayLocal': -1,
@@ -147,7 +147,7 @@
                 'onlineNumber': 0,
                 'orderBy': 1,
                 'roomId': 2,
-                'state': 0,
+                'state': 1,
                 'sumDeFen': 66,
                 'sumYaFen': 84
             }
