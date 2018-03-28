@@ -24,7 +24,7 @@ const mutationsInfo = mapMutations({
 const actionsInfo = mapActions({
     async getOnlinePayList ({ dispatch, commit }) {
         let doLoginData = null
-        doLoginData = await ajax.post( `${onlinePayAjax}?way=query`)
+        doLoginData = await ajax.post(`${onlinePayAjax}?way=query`)
         return doLoginData
     },
 

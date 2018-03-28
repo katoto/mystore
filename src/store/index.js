@@ -17,7 +17,6 @@ import onlinePay from './onlinePay'
 import {wait, str2Bytes} from '../common/util'
 import { globalWebsockUrl } from '../common/config'
 
-
 Vue.use(Vuex)
 
 const state = {
@@ -73,7 +72,7 @@ const mutations = {
     }
 }
 const actions = {
-    initWebsocket ({commit, dispatch, state}, url = globalWebsockUrl ) {
+    initWebsocket ({commit, dispatch, state}, url = globalWebsockUrl) {
         return new Promise((resolve, reject) => {
             if (state.websocket.connect) return resolve()
             const connect = new WebSocket(url)
